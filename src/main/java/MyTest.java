@@ -39,6 +39,15 @@ public class MyTest {
 //        Person person = space.takeById(personIdQuery);
 //        System.out.println(person);
 
+        Person p1 = new Person("1", "aaa");
+
+        XapRepositoryFactory f = new XapRepositoryFactory(space, null);
+        PersonRepository repository = f.getRepository(PersonRepository.class);
+
+        repository.save(p1);
+
+        System.out.println(repository);
+
 
     }
 }
