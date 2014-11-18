@@ -1,12 +1,7 @@
-import com.gigaspaces.query.IdQuery;
-import com.gigaspaces.spring.data.repository.support.XapRepositoryFactory;
-import com.j_spaces.core.client.SQLQuery;
+import org.springframework.data.xap.repository.support.XapRepositoryFactory;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.UrlSpaceConfigurer;
-import org.openspaces.extensions.QueryExtension;
-
-import java.util.Arrays;
 
 /**
  * @author Oleksiy_Dyagilev

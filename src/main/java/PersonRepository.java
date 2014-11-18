@@ -1,4 +1,4 @@
-import com.gigaspaces.spring.data.repository.XapRepository;
+import org.springframework.data.xap.repository.XapRepository;
 
 /**
  * @author Oleksiy_Dyagilev

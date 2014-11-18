@@ -1,9 +1,10 @@
-package com.gigaspaces.spring.data.repository.support;
+package org.springframework.data.xap.repository.support;
 
-import com.gigaspaces.spring.data.repository.mapping.XapMappingContext;
-import com.gigaspaces.spring.data.repository.mapping.XapPersistentEntity;
-import com.gigaspaces.spring.data.repository.mapping.XapPersistentProperty;
-import com.gigaspaces.spring.data.repository.query.DefaultXapEntityInformation;
+import org.springframework.data.xap.mapping.XapMappingContext;
+import org.springframework.data.xap.mapping.XapPersistentEntity;
+
+import org.springframework.data.xap.mapping.XapPersistentProperty;
+import org.springframework.data.xap.repository.query.DefaultXapEntityInformation;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.repository.core.EntityInformation;

@@ -1,9 +1,8 @@
-package com.gigaspaces.spring.data.repository.support;
+package org.springframework.data.xap.repository.support;
 
-import com.gigaspaces.client.ReadByIdsResult;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
-import com.gigaspaces.spring.data.repository.XapRepository;
+import org.springframework.data.xap.repository.XapRepository;
 import com.j_spaces.core.client.SQLQuery;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.extensions.QueryExtension;

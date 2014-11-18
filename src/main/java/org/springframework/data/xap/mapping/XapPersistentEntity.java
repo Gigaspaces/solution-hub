@@ -1,9 +1,7 @@
-package com.gigaspaces.spring.data.repository.mapping;
+package org.springframework.data.xap.mapping;
 
 import org.springframework.data.mapping.model.BasicPersistentEntity;
 import org.springframework.data.util.TypeInformation;
-
-import java.util.Comparator;
 
 /**
  * @author Oleksiy_Dyagilev

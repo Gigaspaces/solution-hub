@@ -1,6 +1,5 @@
-package com.gigaspaces.spring.data.repository;
+package org.springframework.data.xap.repository;
 
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.io.Serializable;

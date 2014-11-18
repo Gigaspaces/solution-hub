@@ -1,4 +1,4 @@
-package com.gigaspaces.spring.data.repository.mapping;
+package org.springframework.data.xap.mapping;
 
 import org.springframework.data.mapping.context.AbstractMappingContext;
 import org.springframework.data.mapping.model.SimpleTypeHolder;

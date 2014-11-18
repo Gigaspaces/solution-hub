@@ -1,4 +1,4 @@
-package com.gigaspaces.spring.data.repository.query;
+package org.springframework.data.xap.repository.query;
 
 import org.springframework.data.repository.core.EntityInformation;
 
