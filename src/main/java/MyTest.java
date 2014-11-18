@@ -45,6 +45,7 @@ public class MyTest {
         PersonRepository repository = f.getRepository(PersonRepository.class);
 
         repository.save(p1);
+        repository.delete("1");
 
         System.out.println(repository);
 

@@ -7,6 +7,9 @@ import com.gigaspaces.spring.data.repository.XapRepository;
 import com.j_spaces.core.client.SQLQuery;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.extensions.QueryExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
 
 import java.io.Serializable;
@@ -115,5 +118,19 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
             arrayList.add(elem);
         }
         return (E[]) arrayList.toArray();
+    }
+
+    @Override
+    public Iterable<T> findAll(Sort sort) {
+        Class<T> aClass = entityInformation.getJavaType();
+        SQLQuery<T> query = new SQLQuery<>(aClass, "");
+        // TODO:
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
+    public Page<T> findAll(Pageable pageable) {
+        // TODO:
+        throw new RuntimeException("Not implemented yet");
     }
 }
