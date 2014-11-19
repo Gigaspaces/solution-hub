@@ -16,7 +16,9 @@
        http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
 
-    <xap-data:repositories base-package="com.acme.repository" />
+    <context:component-scan base-package="mytest" />
+
+    <xap-data:repositories base-package="mytest" />
 
     <!--
         Enables the usage of @GigaSpaceContext annotation based injection.
@@ -36,7 +38,7 @@
     <!--
         A bean representing a space (an IJSpace implementation).
     -->
-    <os-core:space id="space" url="/./space"/>
+    <os-core:space id="space" url="jini://*/*/space?groups=fe2s"/>
 
     <!--
         OpenSpaces simplified space API built on top of IJSpace/JavaSpace.

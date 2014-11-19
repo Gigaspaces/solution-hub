@@ -1,3 +1,5 @@
+package mytest;
+
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 

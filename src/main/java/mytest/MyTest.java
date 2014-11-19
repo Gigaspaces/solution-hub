@@ -1,3 +1,5 @@
+package mytest;
+
 import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
 import com.j_spaces.core.client.GSIterator;
 import org.openspaces.core.IteratorBuilder;
@@ -27,14 +29,17 @@ public class MyTest {
 //        System.out.println(repository);
 
 
-        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/test-context.xml");
+        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/mytest/test-context.xml");
 
 
 //        ISpaceProxy iSpaceProxy;
 //        iSpaceProxy.
 
-
-
         System.out.println(appContext);
+
+        PersonService personService = appContext.getBeansOfType(PersonService.class).values().iterator().next();
+        personService.addPerson(new Person("1", "aaaaa"));
+
+        System.exit(0);
     }
 }

@@ -1,3 +1,5 @@
+package mytest;
+
 import org.springframework.data.xap.repository.XapRepository;
 
 /**
