@@ -6,6 +6,7 @@
        xmlns:os-remoting="http://www.openspaces.org/schema/remoting"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:repository="http://www.springframework.org/schema/data/repository"
        xmlns:xap-data="http://www.springframework.org/schema/data/xap"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.openspaces.org/schema/core http://www.openspaces.org/schema/10.0/core/openspaces-core.xsd
@@ -13,12 +14,15 @@
        http://www.openspaces.org/schema/remoting http://www.openspaces.org/schema/10.0/remoting/openspaces-remoting.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository.xsd
        http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
 
-    <context:component-scan base-package="mytest" />
+    <context:component-scan base-package="mytest"/>
 
-    <xap-data:repositories base-package="mytest" />
+    <xap-data:repositories base-package="mytest">
+        <!--<repository:exclude-filter type="regex" expression=".*Repository" />-->
+    </xap-data:repositories>
 
     <!--
         Enables the usage of @GigaSpaceContext annotation based injection.

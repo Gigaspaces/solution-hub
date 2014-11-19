@@ -29,6 +29,7 @@
         <xsd:complexType>
             <xsd:complexContent>
                 <xsd:extension base="repository:repositories">
+                    <xsd:attributeGroup ref="repository:repository-attributes" />
                     <!-- TODO: ? -->
                 </xsd:extension>
             </xsd:complexContent>
