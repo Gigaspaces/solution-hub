@@ -1,3 +1,8 @@
+import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
+import com.j_spaces.core.client.GSIterator;
+import org.openspaces.core.IteratorBuilder;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.data.xap.repository.support.XapRepositoryFactory;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
@@ -8,42 +13,28 @@ import org.openspaces.core.space.UrlSpaceConfigurer;
  */
 public class MyTest {
     public static void main(String[] args) {
-        UrlSpaceConfigurer urlSpaceConfigurer = new UrlSpaceConfigurer("jini://*/*/space");
-        GigaSpace space = new GigaSpaceConfigurer(urlSpaceConfigurer).create();
-////
-//        space.write(new Person("1", "aaa"));
-//        space.write(new Person("2", "bbb"));
-//        space.write(new Person("3", "ccc"));
-//        space.write(new Person("4", "1111111111"));
+//        UrlSpaceConfigurer urlSpaceConfigurer = new UrlSpaceConfigurer("jini://*/*/space");
+//        GigaSpace space = new GigaSpaceConfigurer(urlSpaceConfigurer).create();
 //
+//        Person p1 = new Person("1", "aaa");
 //
-//        Class<Person> aClass = Person.class;
-////        SQLQuery<Person> query = new SQLQuery<>(aClass, "");
-////        Person[] persons = space.readMultiple(query);
-////        System.out.println("persons = " + Arrays.toString(persons));
+//        XapRepositoryFactory f = new XapRepositoryFactory(space, null);
+//        PersonRepository repository = f.getRepository(PersonRepository.class);
 //
-////        space.a
+//        repository.save(p1);
+//        repository.delete("1");
 //
-////        SQLQuery<Person> query = new SQLQuery<>(aClass, "");
-////        long count = QueryExtension.count(space, query, "");
-////        System.out.println(count);
-//
-//        IdQuery<Person> personIdQuery = new IdQuery<Person>(aClass, "4");
-//        personIdQuery.setProjections("");
-//
-//        Person person = space.takeById(personIdQuery);
-//        System.out.println(person);
-
-        Person p1 = new Person("1", "aaa");
-
-        XapRepositoryFactory f = new XapRepositoryFactory(space, null);
-        PersonRepository repository = f.getRepository(PersonRepository.class);
-
-        repository.save(p1);
-        repository.delete("1");
-
-        System.out.println(repository);
+//        System.out.println(repository);
 
 
+        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/test-context.xml");
+
+
+//        ISpaceProxy iSpaceProxy;
+//        iSpaceProxy.
+
+
+
+        System.out.println(appContext);
     }
 }
