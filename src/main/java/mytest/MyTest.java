@@ -1,14 +1,7 @@
 package mytest;
 
-import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
-import com.j_spaces.core.client.GSIterator;
-import org.openspaces.core.IteratorBuilder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.springframework.data.xap.repository.support.XapRepositoryFactory;
-import org.openspaces.core.GigaSpace;
-import org.openspaces.core.GigaSpaceConfigurer;
-import org.openspaces.core.space.UrlSpaceConfigurer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -29,16 +22,15 @@ public class MyTest {
 //        System.out.println(repository);
 
 
-        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/mytest/test-context.xml");
+//        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/mytest/test-context.xml");
+//        System.out.println(appContext);
+//        PersonService personService = appContext.getBeansOfType(PersonService.class).values().iterator().next();
+//        personService.addPerson(new Person("1", "aaaaa"));
 
-
-//        ISpaceProxy iSpaceProxy;
-//        iSpaceProxy.
-
-        System.out.println(appContext);
-
-        PersonService personService = appContext.getBeansOfType(PersonService.class).values().iterator().next();
-        personService.addPerson(new Person("1", "aaaaa"));
+        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConf.class);
+        PersonRepository repo = context.getBeansOfType(PersonRepository.class).values().iterator().next();
+        System.out.println(repo);
+        repo.save(new Person("1", "aaaaa"));
 
         System.exit(0);
     }
