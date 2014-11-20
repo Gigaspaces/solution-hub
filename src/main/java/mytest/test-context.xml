@@ -2,19 +2,25 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:repository="http://www.springframework.org/schema/data/repository"
        xmlns:xap-data="http://www.springframework.org/schema/data/xap"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-
-
-
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository.xsd
 
        http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
-
     <context:component-scan base-package="mytest"/>
-
     <xap-data:repositories base-package="mytest"/>
+
+    <xap-data:repositories base-package="mytest">
+        <!--<repository:exclude-filter type="regex" expression=".*Repository" />-->
+    </xap-data:repositories>
+
 
     <!--
         Enables the usage of @GigaSpaceContext annotation based injection.
@@ -44,14 +50,15 @@
 
 
     <!--A bean representing a space -->
-    <bean id="space"
-          class="com.j_spaces.core.client.SpaceFinder"
-          factory-method="find">
-        <constructor-arg value="jini://*/*/space"/>
-    </bean>
+    <!--<bean id="space"-->
+          <!--class="com.j_spaces.core.client.SpaceFinder"-->
+          <!--factory-method="find">-->
+        <!--<constructor-arg value="jini://*/*/space"/>-->
+    <!--</bean>-->
 
-    <!-- Instead GigaSpace interface implementation -->
-    <bean id="gigaSpace" class="org.springframework.data.xap.wrappers.ISpaceWrapper">
-        <property name="space" ref="space"></property>
-    </bean>
+    <!--&lt;!&ndash; Instead GigaSpace interface implementation &ndash;&gt;-->
+    <!--<bean id="gigaSpace" class="org.springframework.data.xap.wrappers.ISpaceWrapper">-->
+        <!--<property name="space" ref="space"></property>-->
+    <!--</bean>-->
+
 </beans>
