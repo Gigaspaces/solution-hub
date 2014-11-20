@@ -1,7 +1,7 @@
 package org.springframework.data.xap.repository.config;
 
-import org.springframework.data.xap.repository.support.XapRepositoryFactoryBean;
 import org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport;
+import org.springframework.data.xap.repository.support.XapRepositoryFactoryBean;
 
 /**
  * @author Oleksiy_Dyagilev

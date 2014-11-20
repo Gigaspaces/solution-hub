@@ -1,8 +1,8 @@
 package org.springframework.data.xap.config;
 
-import org.springframework.data.xap.repository.config.XapRepositoryConfigurationExtension;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 import org.springframework.data.repository.config.RepositoryBeanDefinitionParser;
+import org.springframework.data.xap.repository.config.XapRepositoryConfigurationExtension;
 
 /**
  * @author Oleksiy_Dyagilev

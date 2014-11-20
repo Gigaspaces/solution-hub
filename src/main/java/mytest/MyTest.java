@@ -1,14 +1,6 @@
 package mytest;
 
-import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
-import com.j_spaces.core.client.GSIterator;
-import org.openspaces.core.IteratorBuilder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.springframework.data.xap.repository.support.XapRepositoryFactory;
-import org.openspaces.core.GigaSpace;
-import org.openspaces.core.GigaSpaceConfigurer;
-import org.openspaces.core.space.UrlSpaceConfigurer;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -29,7 +21,7 @@ public class MyTest {
 //        System.out.println(repository);
 
 
-        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/mytest/test-context.xml");
+        FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("D:\\xap\\SPRING\\xap-spring-data\\src\\main\\java\\mytest\\test-context.xml");
 
 
 //        ISpaceProxy iSpaceProxy;

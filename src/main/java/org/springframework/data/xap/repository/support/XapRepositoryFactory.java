@@ -1,15 +1,14 @@
 package org.springframework.data.xap.repository.support;
 
-import org.springframework.data.xap.mapping.XapMappingContext;
-import org.springframework.data.xap.mapping.XapPersistentEntity;
-
-import org.springframework.data.xap.mapping.XapPersistentProperty;
-import org.springframework.data.xap.repository.query.DefaultXapEntityInformation;
-import org.openspaces.core.GigaSpace;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+import org.springframework.data.xap.mapping.XapMappingContext;
+import org.springframework.data.xap.mapping.XapPersistentEntity;
+import org.springframework.data.xap.mapping.XapPersistentProperty;
+import org.springframework.data.xap.repository.query.DefaultXapEntityInformation;
+import org.springframework.data.xap.wrappers.ISpaceWrapper;
 
 import java.io.Serializable;
 
@@ -17,10 +16,11 @@ import java.io.Serializable;
  * @author Oleksiy_Dyagilev
  */
 public class XapRepositoryFactory extends RepositoryFactorySupport {
-    private GigaSpace space;
+    private ISpaceWrapper space;
+
     private MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context;
 
-    public XapRepositoryFactory(GigaSpace space, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
+    public XapRepositoryFactory(ISpaceWrapper space, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
         this.space = space;
         this.context = context == null ? new XapMappingContext() : context;
     }

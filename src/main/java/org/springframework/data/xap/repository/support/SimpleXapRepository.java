@@ -2,14 +2,14 @@ package org.springframework.data.xap.repository.support;
 
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
-import org.springframework.data.xap.repository.XapRepository;
+import com.gigaspaces.query.aggregators.AggregationSet;
 import com.j_spaces.core.client.SQLQuery;
-import org.openspaces.core.GigaSpace;
-import org.openspaces.extensions.QueryExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
+import org.springframework.data.xap.repository.XapRepository;
+import org.springframework.data.xap.wrappers.ISpaceWrapper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class SimpleXapRepository<T, ID extends Serializable> implements XapRepository<T, ID> {
 
-    private GigaSpace space;
+    private ISpaceWrapper space;
     private EntityInformation<T, ID> entityInformation;
 
-    public SimpleXapRepository(GigaSpace space, EntityInformation<T, ID> entityInformation) {
+    public SimpleXapRepository(ISpaceWrapper space, EntityInformation<T, ID> entityInformation) {
         this.space = space;
         this.entityInformation = entityInformation;
     }
@@ -72,7 +72,8 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     public long count() {
         Class<T> aClass = entityInformation.getJavaType();
         SQLQuery<T> query = new SQLQuery<>(aClass, "");
-        return QueryExtension.count(space, query, "");
+        // Changed from QueryExtension.count(space, query, "");
+        return space.aggregate(query, new AggregationSet().count("")).getLong(0);
     }
 
     @Override
@@ -98,7 +99,6 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         Object[] idArray = idList.toArray();
         Class<T> aClass = entityInformation.getJavaType();
         IdsQuery<T> idsQuery = new IdsQuery<T>(aClass, idArray).setProjections("");
-
         space.takeByIds(idsQuery);
     }
 
