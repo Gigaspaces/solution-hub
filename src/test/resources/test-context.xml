@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xmlns:xap-data="http://www.springframework.org/schema/data/xap"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
+
+    <context:component-scan base-package="org.springframework.data.xap.test"/>
+    <xap-data:repositories base-package="org.springframework.data.xap.test"/>
+
+    <xap-data:repositories base-package="org.springframework.data.xap.test">
+        <!--<repository:exclude-filter type="regex" expression=".*Repository" />-->
+    </xap-data:repositories>
+
+    <!--A bean representing a space -->
+    <bean id="space"
+          class="com.j_spaces.core.client.SpaceFinder"
+          factory-method="find">
+        <constructor-arg value="jini://*/*/space"/>
+    </bean>
+
+    <!-- Instead GigaSpace interface implementation -->
+    <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
+        <property name="space" ref="space"></property>
+    </bean>
+
+</beans>

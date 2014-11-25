@@ -1,4 +1,4 @@
-package org.springframework.data.xap.wrappers;
+package org.springframework.data.xap.spaceclient;
 
 import com.gigaspaces.client.*;
 import com.gigaspaces.internal.client.QueryResultTypeInternal;
@@ -16,7 +16,7 @@ import net.jini.core.transaction.Transaction;
 /**
  * @author Anna_Babich
  */
-public class ISpaceWrapper {
+public class SpaceClient {
 
     private ISpaceProxy space;
 

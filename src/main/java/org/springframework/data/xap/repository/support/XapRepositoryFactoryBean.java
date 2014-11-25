@@ -9,7 +9,7 @@ import org.springframework.data.repository.core.support.RepositoryFactoryBeanSup
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.data.xap.mapping.XapPersistentEntity;
 import org.springframework.data.xap.mapping.XapPersistentProperty;
-import org.springframework.data.xap.wrappers.ISpaceWrapper;
+import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 
@@ -20,11 +20,11 @@ public class XapRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends
         RepositoryFactoryBeanSupport<T, S, ID> implements ApplicationContextAware {
 
     private MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context;
-    private ISpaceWrapper space;
+    private SpaceClient space;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.space = applicationContext.getBean(ISpaceWrapper.class);
+        this.space = applicationContext.getBean(SpaceClient.class);
     }
 
     @Override

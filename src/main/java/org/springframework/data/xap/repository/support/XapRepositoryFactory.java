@@ -8,7 +8,7 @@ import org.springframework.data.xap.mapping.XapMappingContext;
 import org.springframework.data.xap.mapping.XapPersistentEntity;
 import org.springframework.data.xap.mapping.XapPersistentProperty;
 import org.springframework.data.xap.repository.query.DefaultXapEntityInformation;
-import org.springframework.data.xap.wrappers.ISpaceWrapper;
+import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 
@@ -16,11 +16,11 @@ import java.io.Serializable;
  * @author Oleksiy_Dyagilev
  */
 public class XapRepositoryFactory extends RepositoryFactorySupport {
-    private ISpaceWrapper space;
+    private SpaceClient space;
 
     private MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context;
 
-    public XapRepositoryFactory(ISpaceWrapper space, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
+    public XapRepositoryFactory(SpaceClient space, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
         this.space = space;
         this.context = context == null ? new XapMappingContext() : context;
     }

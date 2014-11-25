@@ -1,4 +1,4 @@
-package org.springframework.data.xap.wrappers;
+package org.springframework.data.xap.spaceclient;
 
 /**
  * @author Anna_Babich

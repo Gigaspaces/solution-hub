@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.repository.XapRepository;
-import org.springframework.data.xap.wrappers.ISpaceWrapper;
+import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class SimpleXapRepository<T, ID extends Serializable> implements XapRepository<T, ID> {
 
-    private ISpaceWrapper space;
+    private SpaceClient space;
     private EntityInformation<T, ID> entityInformation;
 
-    public SimpleXapRepository(ISpaceWrapper space, EntityInformation<T, ID> entityInformation) {
+    public SimpleXapRepository(SpaceClient space, EntityInformation<T, ID> entityInformation) {
         this.space = space;
         this.entityInformation = entityInformation;
     }

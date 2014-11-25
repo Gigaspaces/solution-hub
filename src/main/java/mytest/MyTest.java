@@ -25,18 +25,18 @@ public class MyTest {
 
 
 
-       // FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("D:\\xap\\SPRING\\xap-spring-data\\src\\main\\java\\mytest\\test-context.xml");
+       FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("D:\\xap\\SPRING\\xap-spring-data\\src\\main\\java\\mytest\\test-context.xml");
 
-//        //FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/mytest/test-context.xml");
-//        System.out.println(appContext);
-//        PersonService personService = appContext.getBeansOfType(PersonService.class).values().iterator().next();
-//        personService.addPerson(new Person("2", "aaa2aa"));
+        //FileSystemXmlApplicationContext appContext = new FileSystemXmlApplicationContext("//home/pivot/Projects/xap-spring-data/src/main/java/mytest/test-context.xml");
+        System.out.println(appContext);
+        PersonService personService = appContext.getBeansOfType(PersonService.class).values().iterator().next();
+        personService.addPerson(new Person("2", "aaa2aa"));
 
 //
-        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConf.class);
-        PersonRepository repo = context.getBeansOfType(PersonRepository.class).values().iterator().next();
-        System.out.println(repo);
-        repo.save(new Person("3", "aaaaa"));
+//        ApplicationContext context = new AnnotationConfigApplicationContext(JavaConf.class);
+//        PersonRepository repo = context.getBeansOfType(PersonRepository.class).values().iterator().next();
+//        System.out.println(repo);
+//        repo.save(new Person("3", "aaaaa"));
 
         System.exit(0);
     }

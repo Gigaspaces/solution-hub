@@ -50,15 +50,15 @@
 
 
     <!--A bean representing a space -->
-    <!--<bean id="space"-->
-          <!--class="com.j_spaces.core.client.SpaceFinder"-->
-          <!--factory-method="find">-->
-        <!--<constructor-arg value="jini://*/*/space"/>-->
-    <!--</bean>-->
+    <bean id="space"
+          class="com.j_spaces.core.client.SpaceFinder"
+          factory-method="find">
+        <constructor-arg value="jini://*/*/space"/>
+    </bean>
 
-    <!--&lt;!&ndash; Instead GigaSpace interface implementation &ndash;&gt;-->
-    <!--<bean id="gigaSpace" class="org.springframework.data.xap.wrappers.ISpaceWrapper">-->
-        <!--<property name="space" ref="space"></property>-->
-    <!--</bean>-->
+    <!-- Instead GigaSpace interface implementation -->
+    <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
+        <property name="space" ref="space"></property>
+    </bean>
 
 </beans>
