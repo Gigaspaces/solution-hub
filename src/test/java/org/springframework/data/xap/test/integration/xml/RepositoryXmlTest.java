@@ -1,4 +1,4 @@
-package org.springframework.data.xap.test.integration;
+package org.springframework.data.xap.test.integration.xml;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Anna_Babich
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-context.xml")
+@ContextConfiguration("classpath:RepositoryXmlTest-context.xml")
 public class RepositoryXmlTest {
 
     @Autowired
