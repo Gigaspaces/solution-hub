@@ -1,4 +1,4 @@
-package org.springframework.data.xap.test.model;
+package org.springframework.data.xap.model;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;

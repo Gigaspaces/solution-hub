@@ -1,7 +1,8 @@
-package org.springframework.data.xap.test.repository;
+package org.springframework.data.xap.repository;
 
+import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.repository.XapRepository;
-import org.springframework.data.xap.test.model.Person;
+
 
 /**
  * @author Oleksiy_Dyagilev

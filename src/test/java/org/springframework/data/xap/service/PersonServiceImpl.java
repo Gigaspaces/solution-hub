@@ -1,9 +1,11 @@
-package org.springframework.data.xap.test.service;
+package org.springframework.data.xap.service;
+
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.xap.test.repository.PersonRepository;
-import org.springframework.data.xap.test.model.Person;
+import org.springframework.data.xap.model.Person;
+import org.springframework.data.xap.repository.PersonRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

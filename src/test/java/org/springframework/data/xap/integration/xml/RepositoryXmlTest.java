@@ -1,4 +1,4 @@
-package org.springframework.data.xap.test.integration.xml;
+package org.springframework.data.xap.integration.xml;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.xap.spaceclient.SpaceClient;
-import org.springframework.data.xap.test.model.Person;
-import org.springframework.data.xap.test.service.PersonService;
+import org.springframework.data.xap.model.Person;
+import org.springframework.data.xap.service.PersonService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
