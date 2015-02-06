@@ -4,15 +4,15 @@
        xmlns:context="http://www.springframework.org/schema/context"
 
        xmlns:xap-data="http://www.springframework.org/schema/data/xap"
+       xmlns:repository="http://www.springframework.org/schema/data/repository"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
-    <context:component-scan base-package="org.springframework.data.xap.test"/>
-    <xap-data:repositories base-package="org.springframework.data.xap.test"/>
+    <context:component-scan base-package="org.springframework.data.xap"/>
 
-    <xap-data:repositories base-package="org.springframework.data.xap.test">
-        <!--<repository:exclude-filter type="regex" expression=".*Repository" />-->
+    <xap-data:repositories base-package="org.springframework.data.xap">
+        <repository:exclude-filter type="regex" expression=".*XapRepository" />
     </xap-data:repositories>
 
     <!--A bean representing a space -->

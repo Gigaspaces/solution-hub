@@ -25,7 +25,7 @@ import static junit.framework.TestCase.assertEquals;
  * @author Anna_Babich
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:RepositoryXmlTest-context.xml")
+@ContextConfiguration
 public class RepositoryXmlTest {
 
     private static final Person nick = new Person("1", "Nick");
