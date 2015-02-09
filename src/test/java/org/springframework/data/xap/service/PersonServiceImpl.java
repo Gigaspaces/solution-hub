@@ -42,7 +42,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> getAll() {
-        return (List<Person>)personRepository.findAll();
+        return (List<Person>) personRepository.findAll();
     }
 
     @Override
