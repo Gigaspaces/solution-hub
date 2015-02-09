@@ -28,7 +28,7 @@ public class RepositoryJavaConfigTest extends AbstractRepositoryTest{
     public static class ContextConfiguration {
 
         @Bean
-        public SpaceClient gigaSpaceBean() {
+        public SpaceClient gigaSpace() {
             SpaceClient gigaSpace;
             try {
                 ISpaceProxy iSpace = (ISpaceProxy) SpaceFinder.find("jini://*/*/space?groups=anna");
