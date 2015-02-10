@@ -13,13 +13,15 @@
         <context:exclude-filter type="regex" expression="org.springframework.data.xap.integration.javaconfig.*"/>
     </context:component-scan>
 
+    <context:property-placeholder location="config.properties"/>
+
     <xap-data:repositories base-package="org.springframework.data.xap"/>
 
     <!--A bean representing a space -->
     <bean id="space"
           class="com.j_spaces.core.client.SpaceFinder"
           factory-method="find">
-        <constructor-arg value="jini://*/*/space?groups=pavlo"/>
+        <constructor-arg value="jini://*/*/space?groups=${space.groups}"/>
     </bean>
 
     <!-- Instead GigaSpace interface implementation -->
