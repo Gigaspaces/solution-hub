@@ -160,6 +160,9 @@ public class SpaceClient {
         this.space = space;
     }
 
+    public ISpaceProxy getSpace() {
+        return space;
+    }
 
     public <T> AggregationResult aggregate(ISpaceQuery<T> query, AggregationSet aggregationSet) {
         try {

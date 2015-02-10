@@ -19,7 +19,7 @@
     <bean id="space"
           class="com.j_spaces.core.client.SpaceFinder"
           factory-method="find">
-        <constructor-arg value="jini://*/*/space"/>
+        <constructor-arg value="jini://*/*/space?groups=pavlo"/>
     </bean>
 
     <!-- Instead GigaSpace interface implementation -->

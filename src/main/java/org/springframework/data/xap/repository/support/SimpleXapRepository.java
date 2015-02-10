@@ -1,10 +1,19 @@
 package org.springframework.data.xap.repository.support;
 
+import com.gigaspaces.client.iterator.GSIteratorConfig;
+import com.gigaspaces.client.iterator.IteratorScope;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
+import com.j_spaces.core.client.GSIterator;
 import com.j_spaces.core.client.SQLQuery;
+import mytest.Person;
+import net.jini.core.entry.UnusableEntryException;
+import net.jini.core.transaction.TransactionException;
+import org.openspaces.core.IteratorBuilder;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
@@ -12,8 +21,10 @@ import org.springframework.data.xap.repository.XapRepository;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -130,6 +141,30 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     @Override
     public Page<T> findAll(Pageable pageable) {
         // TODO:
-        throw new RuntimeException("Not implemented yet");
+        List<Object> templates = new ArrayList<Object>();
+        Sort sort = pageable.getSort();
+        StringBuilder stringBuilder = new StringBuilder("");
+        if (sort != null){
+            Iterator<Sort.Order> iterator = sort.iterator();
+            while (iterator.hasNext()){
+                Sort.Order order = iterator.next();
+                String property = order.getProperty();
+                String name = order.getDirection().name();
+                stringBuilder.append("ORDER BY ").append(property).append(" ").append(name);
+            }
+        }
+        SQLQuery<Person> e1 = new SQLQuery<Person>(Person.class, stringBuilder.toString());
+
+        templates.add(e1);
+        GSIteratorConfig config = new GSIteratorConfig();
+        config.setIteratorScope(IteratorScope.CURRENT);
+        try {
+            GSIterator gsIterator = new GSIterator(space.getSpace(), templates, config);
+            Object[] objects = gsIterator.nextBatch(pageable.getPageSize());
+            System.out.println(objects);
+        } catch (RemoteException | UnusableEntryException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
