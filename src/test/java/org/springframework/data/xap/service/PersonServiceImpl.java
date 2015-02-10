@@ -3,7 +3,11 @@ package org.springframework.data.xap.service;
 
 
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.repository.PersonRepository;
 import org.springframework.stereotype.Component;
@@ -72,4 +76,15 @@ public class PersonServiceImpl implements PersonService {
         personRepository.deleteAll();
     }
 
+    @Override
+    public List<Person> findPersons(Sort sort) {
+        Iterable<Person> all = personRepository.findAll(sort);
+        return Lists.newArrayList(all);
+    }
+
+    @Override
+    public List<Person> findPersons(Pageable pageable) {
+        Page<Person> all = personRepository.findAll(pageable);
+        return Lists.newArrayList(all);
+    }
 }

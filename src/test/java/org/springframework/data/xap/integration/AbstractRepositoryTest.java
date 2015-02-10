@@ -1,10 +1,14 @@
 package org.springframework.data.xap.integration;
 
+import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.service.PersonService;
 import org.springframework.data.xap.spaceclient.SpaceClient;
@@ -89,5 +93,36 @@ public abstract class AbstractRepositoryTest {
         assertTrue(resultList.contains(cris));
         assertTrue(resultList.contains(paul));
         assertFalse(resultList.contains(nick));
+    }
+
+    @Test
+    public void testGetAllWithSorting(){
+        personService.addPerson(nick);
+        personService.addPerson(new Person("4", "Cris"));
+        personService.addPerson(new Person("5", "Cris"));
+        personService.addPerson(new Person("6", "Paul"));
+        List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
+        Sort sorting = new Sort(orders);
+        List<Person> persons = personService.findPersons(sorting);
+        assertEquals("5", persons.get(0).getId());
+        assertEquals("4", persons.get(1).getId());
+        assertEquals("2", persons.get(2).getId());
+        assertEquals("1", persons.get(3).getId());
+        assertEquals("6", persons.get(4).getId());
+        assertEquals("3", persons.get(5).getId());
+    }
+
+    @Test
+    public void testGetAllWithPaging(){
+        personService.addPerson(nick);
+        personService.addPerson(new Person("4", "Cris"));
+        personService.addPerson(new Person("5", "Cris"));
+        personService.addPerson(new Person("6", "Paul"));
+        List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
+        Sort sorting = new Sort(orders);
+        Pageable pageable = new PageRequest(1, 2, sorting);
+        List<Person> persons = personService.findPersons(pageable);
+        assertEquals("2", persons.get(0).getId());
+        assertEquals("1", persons.get(1).getId());
     }
 }

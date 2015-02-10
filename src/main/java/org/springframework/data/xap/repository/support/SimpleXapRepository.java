@@ -1,17 +1,13 @@
 package org.springframework.data.xap.repository.support;
 
-import com.gigaspaces.client.iterator.GSIteratorConfig;
-import com.gigaspaces.client.iterator.IteratorScope;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
-import com.j_spaces.core.client.GSIterator;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.j_spaces.core.client.SQLQuery;
-import mytest.Person;
-import net.jini.core.entry.UnusableEntryException;
-import net.jini.core.transaction.TransactionException;
-import org.openspaces.core.IteratorBuilder;
-import org.springframework.core.annotation.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +17,6 @@ import org.springframework.data.xap.repository.XapRepository;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -132,39 +127,39 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Iterable<T> findAll(Sort sort) {
-        Class<T> aClass = entityInformation.getJavaType();
-        SQLQuery<T> query = new SQLQuery<>(aClass, "");
-        // TODO:
-        throw new RuntimeException("Not implemented yet");
+        return findAllSortedInternal(sort, 0);
     }
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        // TODO:
-        List<Object> templates = new ArrayList<Object>();
-        Sort sort = pageable.getSort();
+        int pageSize = pageable.getPageSize();
+        int offset = pageable.getOffset();
+        List<T> allSortedInternal = findAllSortedInternal(pageable.getSort(), offset + pageSize);
+        return new PageImpl<T>(allSortedInternal.subList(offset, allSortedInternal.size()));
+    }
+
+    private List<T> findAllSortedInternal(Sort sort, int count){
+        //TODO: null handling, ignore case
+        Class<T> aClass = entityInformation.getJavaType();
         StringBuilder stringBuilder = new StringBuilder("");
+        if (count > 0 ){
+            stringBuilder.append(" rownum <=").append(count);
+        }
         if (sort != null){
             Iterator<Sort.Order> iterator = sort.iterator();
-            while (iterator.hasNext()){
-                Sort.Order order = iterator.next();
-                String property = order.getProperty();
-                String name = order.getDirection().name();
-                stringBuilder.append("ORDER BY ").append(property).append(" ").append(name);
+            if (iterator.hasNext()){
+                stringBuilder.append("ORDER BY ");
             }
+            Iterable<String> orders = Iterables.transform(sort, new Function<Sort.Order, String>() {
+                @Override
+                public String apply(Sort.Order s) {
+                    return s.getProperty() + " " + s.getDirection();
+                }
+            });
+            stringBuilder.append(Joiner.on(", ").join(orders));
         }
-        SQLQuery<Person> e1 = new SQLQuery<Person>(Person.class, stringBuilder.toString());
-
-        templates.add(e1);
-        GSIteratorConfig config = new GSIteratorConfig();
-        config.setIteratorScope(IteratorScope.CURRENT);
-        try {
-            GSIterator gsIterator = new GSIterator(space.getSpace(), templates, config);
-            Object[] objects = gsIterator.nextBatch(pageable.getPageSize());
-            System.out.println(objects);
-        } catch (RemoteException | UnusableEntryException e) {
-            e.printStackTrace();
-        }
-        return null;
+        SQLQuery<T> query = new SQLQuery<>(aClass, stringBuilder.toString());
+        T[] entities = space.readMultiple(query);
+        return Lists.newArrayList(entities);
     }
 }
