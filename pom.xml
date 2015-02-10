@@ -19,6 +19,7 @@
         <spring.version>4.0.7.RELEASE</spring.version>
         <spring.dao.version>2.0.8</spring.dao.version>
         <junit.version>4.11</junit.version>
+        <guava.version>18.0</guava.version>
     </properties>
 
     <repositories>
@@ -36,6 +37,9 @@
 
     <build>
         <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
             <resource>
                 <directory>src/test/resources</directory>
             </resource>
@@ -128,6 +132,12 @@
             <version>${spring.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>org.springframework</groupId>-->
         <!--<artifactId>spring-context-support</artifactId>-->
@@ -164,6 +174,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
