@@ -9,7 +9,6 @@ import com.j_spaces.core.client.FinderException;
 import com.j_spaces.core.client.SpaceFinder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +28,7 @@ public class RepositoryJavaConfigTest extends AbstractRepositoryTest{
     @Configuration
     @ComponentScan("org.springframework.data.xap")
     @PropertySource("classpath:config.properties")
-    @EnableXapRepositories("org.springframework.data.xap")
+    @EnableXapRepositories("org.springframework.data.xap.repository")
     public static class ContextConfiguration {
 
         @Autowired

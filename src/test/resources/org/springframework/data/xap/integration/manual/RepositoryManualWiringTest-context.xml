@@ -8,13 +8,20 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
+    <!-- Manual wiring -->
+    <bean id="personRepositoryExtendedImpl"
+          class="org.springframework.data.xap.integration.manual.PersonRepositoryExtendedFooBar">
+        <!-- Do whatever you need for your custom methods implementation -->
+        <property name="message" value="Hello, world!"/>
+    </bean>
+
+    <context:property-placeholder location="config.properties"/>
+
     <context:component-scan base-package="org.springframework.data.xap">
         <context:exclude-filter type="regex" expression="org.springframework.data.xap.integration.javaconfig.*"/>
     </context:component-scan>
 
-    <context:property-placeholder location="config.properties"/>
-
-    <xap-data:repositories base-package="org.springframework.data.xap.repository"/>
+    <xap-data:repositories base-package="org.springframework.data.xap.integration.manual"/>
 
     <!--A bean representing a space -->
     <bean id="space"
