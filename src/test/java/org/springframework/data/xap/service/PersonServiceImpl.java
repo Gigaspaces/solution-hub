@@ -87,4 +87,9 @@ public class PersonServiceImpl implements PersonService {
         Page<Person> all = personRepository.findAll(pageable);
         return Lists.newArrayList(all);
     }
+
+    @Override
+    public Person findByName(String name) {
+        return personRepository.findByName(name);
+    }
 }

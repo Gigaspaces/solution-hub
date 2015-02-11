@@ -45,6 +45,12 @@ public abstract class AbstractRepositoryTest {
     }
 
     @Test
+    public void testFindByName(){
+        Person person = personService.findByName("Cris");
+        assertEquals(cris, person);
+    }
+
+    @Test
     public void save() {
         personService.addPerson(nick);
         Person result = personService.getById(nick.getId());
