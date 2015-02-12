@@ -11,7 +11,7 @@ import java.util.Iterator;
 /**
  * @author Anna_Babich.
  */
-public class XapQueryCreator extends AbstractQueryCreator<String, Predicates>{
+public class XapQueryCreator extends AbstractQueryCreator<String, QueryBuilder>{
 
     public XapQueryCreator(PartTree tree, ParameterAccessor parameters) {
         super(tree, parameters);
@@ -22,22 +22,42 @@ public class XapQueryCreator extends AbstractQueryCreator<String, Predicates>{
     }
 
     @Override
-    protected Predicates create(Part part, Iterator iterator) {
-        return Predicates.create(part, iterator);
+    protected QueryBuilder create(Part part, Iterator iterator) {
+        return new QueryBuilder(part);
     }
 
     @Override
-    protected Predicates and(Part part, Predicates base, Iterator iterator) {
-        return base.and(Predicates.create(part, iterator));
+    protected QueryBuilder and(Part part, QueryBuilder base, Iterator iterator) {
+        return base.and(new QueryBuilder(part));
     }
 
     @Override
-    protected Predicates or(Predicates base, Predicates criteria) {
+    protected QueryBuilder or(QueryBuilder base, QueryBuilder criteria) {
         return base.or(criteria);
     }
 
     @Override
-    protected String complete(Predicates criteria, Sort sort) {
-        return criteria.toString();
+    protected String complete(QueryBuilder criteria, Sort sort) {
+        return criteria.buildQuery();
     }
+
+//    @Override
+//    protected Predicates create(Part part, Iterator iterator) {
+//        return Predicates.create(part, iterator);
+//    }
+//
+//    @Override
+//    protected Predicates and(Part part, Predicates base, Iterator iterator) {
+//        return base.and(Predicates.create(part, iterator));
+//    }
+//
+//    @Override
+//    protected Predicates or(Predicates base, Predicates criteria) {
+//        return base.or(criteria);
+//    }
+//
+//    @Override
+//    protected String complete(Predicates criteria, Sort sort) {
+//        return criteria.toString();
+//    }
 }

@@ -3,107 +3,43 @@ package org.springframework.data.xap.repository.query;
 import org.springframework.data.repository.query.parser.Part;
 import org.springframework.util.Assert;
 
-import java.util.Iterator;
+public class QueryBuilder {
 
+    private String query;
 
-public class Predicates implements Predicate{
-
-    private final Predicate current;
-
-    /**
-     * Creates a new {@link Predicates} wrapper instance.
-     *
-     * @param predicate must not be {@literal null}.
-     */
-    private Predicates(Predicate predicate) {
-        this.current = predicate;
+    public QueryBuilder(Part part){
+        query = new AtomicPredicate(part).toString();
     }
 
-    private static Predicates create(Predicate predicate) {
-        return new Predicates(predicate);
+    public String buildQuery(){
+        return query;
     }
 
-    /**
-     * Creates a new Predicate for the given {@link org.springframework.data.repository.query.parser.Part} and index iterator.
-     *
-     * @param part must not be {@literal null}.
-     * @param value must not be {@literal null}.
-     * @return
-     */
-    public static Predicates create(Part part, Iterator<Integer> value) {
-        return create(new AtomicPredicate(part, value));
+    public QueryBuilder and(QueryBuilder queryBuilder) {
+        query = query + " AND " + queryBuilder.query;
+        return this;
     }
 
-    /**
-     * And-concatenates the given {@link Predicate} to the current one.
-     *
-     * @param predicate must not be {@literal null}.
-     * @return
-     */
-    public Predicates and(final Predicate predicate) {
-
-        return create(new Predicate() {
-            @Override
-            public String toString() {
-                return String.format("%s AND %s", Predicates.this.current.toString(), predicate.toString());
-            }
-        });
+    public QueryBuilder or(QueryBuilder criteria) {
+        query = query + " OR " + criteria.query;
+        return this;
     }
 
-    /**
-     * Or-concatenates the given {@link Predicate} to the current one.
-     *
-     * @param predicate must not be {@literal null}.
-     * @return
-     */
-    public Predicates or(final Predicate predicate) {
 
-        return create(new Predicate() {
-            @Override
-            public String toString() {
-                return String.format("%s OR %s", Predicates.this.current.toString(), predicate.toString());
-            }
-        });
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.gemfire.repository.query.Predicate#toString(java.lang.String)
-     */
-    @Override
-    public String toString() {
-        return current.toString();
-    }
-
-    /**
-     * Predicate to create a predicate expression for a {@link Part}.
-     *
-     * @author Oliver Gierke
-     */
-    public static class AtomicPredicate implements Predicate {
+    public static class AtomicPredicate {
 
         private final Part part;
-        private final Iterator<Integer> value;
 
         /**
          * Creates a new {@link AtomicPredicate}.
          *
          * @param part must not be {@literal null}.
-         * @param value must not be {@literal null}.
          */
-        public AtomicPredicate(Part part, Iterator<Integer> value) {
-
+        public AtomicPredicate(Part part) {
             Assert.notNull(part);
-            Assert.notNull(value);
-
             this.part = part;
-            this.value = value;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.springframework.data.gemfire.repository.query.Predicate#toString(java.lang.String)
-         */
         @Override
         public String toString() {
             Part.Type type = part.getType();
@@ -169,5 +105,6 @@ public class Predicates implements Predicate{
             }
         }
     }
+
 
 }
