@@ -41,23 +41,4 @@ public class XapQueryCreator extends AbstractQueryCreator<String, QueryBuilder>{
         return criteria.buildQuery();
     }
 
-//    @Override
-//    protected Predicates create(Part part, Iterator iterator) {
-//        return Predicates.create(part, iterator);
-//    }
-//
-//    @Override
-//    protected Predicates and(Part part, Predicates base, Iterator iterator) {
-//        return base.and(Predicates.create(part, iterator));
-//    }
-//
-//    @Override
-//    protected Predicates or(Predicates base, Predicates criteria) {
-//        return base.or(criteria);
-//    }
-//
-//    @Override
-//    protected String complete(Predicates criteria, Sort sort) {
-//        return criteria.toString();
-//    }
 }

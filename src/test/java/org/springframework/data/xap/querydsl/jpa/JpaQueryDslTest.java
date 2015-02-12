@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class JpaQueryDslTest extends AbstractRepositoryTest {
-    private static final BooleanExpression crisPredicate = QPerson.person.name.eq(cris.getName());
+    private static final BooleanExpression crisPredicate = QPerson.person.name.eq(chris.getName());
     private static final BooleanExpression paulPredicate = QPerson.person.name.eq(paul.getName());
     private static final BooleanExpression crisOrPaulPredicate = crisPredicate.or(paulPredicate);
 
@@ -30,8 +30,12 @@ public class JpaQueryDslTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindOneWithPredicate() {
+        //TODO clean test data up
+        personService.delete("4");
+        personService.delete("5");
+
         assertEquals(
-                cris,
+                chris,
                 new JPAQuery(entityManager)
                         .from(QPerson.person)
                         .where(crisPredicate)
@@ -41,8 +45,12 @@ public class JpaQueryDslTest extends AbstractRepositoryTest {
 
     @Test
     public void testFindTwoWithPredicate() {
+        //TODO clean test data up
+        personService.delete("4");
+        personService.delete("5");
+        personService.delete("6");
         assertEquals(
-                newHashSet(cris, paul),
+                newHashSet(chris, paul),
                 newHashSet(new JPAQuery(entityManager)
                         .from(QPerson.person)
                         .where(crisOrPaulPredicate)

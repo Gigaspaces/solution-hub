@@ -24,24 +24,24 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class PredicateQueryDslTest extends AbstractRepositoryTest {
-    private static final BooleanExpression crisPredicate = QPerson.person.name.eq(cris.getName());
+    private static final BooleanExpression chrisPredicate = QPerson.person.name.eq(chris.getName());
     private static final BooleanExpression paulPredicate = QPerson.person.name.eq(paul.getName());
-    private static final BooleanExpression crisOrPaulPredicate = crisPredicate.or(paulPredicate);
+    private static final BooleanExpression chrisOrPaulPredicate = chrisPredicate.or(paulPredicate);
 
     @Autowired
     private PredicatePersonRepository predicateRepository;
 
     @Test
     public void testFindOneWithPredicate() {
-        assertEquals(cris, predicateRepository.findOne(crisPredicate));
+        assertEquals(chris, predicateRepository.findOne(chrisPredicate));
     }
 
     @Test
     public void testFindAllWithPredicate() {
         assertEquals(
-                newHashSet(cris, paul),
+                newHashSet(chris, paul),
                 newHashSet(
-                        predicateRepository.findAll(crisOrPaulPredicate)
+                        predicateRepository.findAll(chrisOrPaulPredicate)
                 )
         );
     }
@@ -49,9 +49,9 @@ public class PredicateQueryDslTest extends AbstractRepositoryTest {
     @Test
     public void testFindAllSortedWithPredicate() {
         assertEquals(
-                newArrayList(paul, cris),
+                newArrayList(paul, chris),
                 newArrayList(
-                        predicateRepository.findAll(crisOrPaulPredicate, QPerson.person.id.desc())
+                        predicateRepository.findAll(chrisOrPaulPredicate, QPerson.person.id.desc())
                 )
         );
     }
@@ -63,7 +63,7 @@ public class PredicateQueryDslTest extends AbstractRepositoryTest {
         assertEquals(
                 newArrayList(paul),
                 newArrayList(
-                        predicateRepository.findAll(crisOrPaulPredicate, paging)
+                        predicateRepository.findAll(chrisOrPaulPredicate, paging)
                 )
         );
     }
@@ -72,7 +72,7 @@ public class PredicateQueryDslTest extends AbstractRepositoryTest {
     public void testCountPredicate() {
         assertEquals(
                 2,
-                predicateRepository.count(crisOrPaulPredicate)
+                predicateRepository.count(chrisOrPaulPredicate)
         );
     }
 
