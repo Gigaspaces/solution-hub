@@ -5,13 +5,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.service.PersonService;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +22,9 @@ import static junit.framework.TestCase.assertEquals;
  * @author Anna_Babich
  */
 public abstract class AbstractRepositoryTest {
-    private static final Person nick = new Person("1", "Nick");
-    private static final Person cris = new Person("2", "Cris");
-    private static final Person paul = new Person("3", "Paul");
+    protected static final Person nick = new Person("1", "Nick");
+    protected static final Person cris = new Person("2", "Cris");
+    protected static final Person paul = new Person("3", "Paul");
 
     @Autowired
     private PersonService personService;
@@ -34,7 +32,7 @@ public abstract class AbstractRepositoryTest {
     private List<Person> list;
 
     @Before
-    public void init(){
+    public void init() {
         list = new ArrayList<>();
         list.add(cris);
         list.add(paul);
@@ -54,7 +52,7 @@ public abstract class AbstractRepositoryTest {
     }
 
     @Test
-    public void saveMultiple(){
+    public void saveMultiple() {
         Person result2 = personService.getById(cris.getId());
         Person result3 = personService.getById(paul.getId());
         assertEquals(cris, result2);
@@ -62,29 +60,30 @@ public abstract class AbstractRepositoryTest {
     }
 
     @Test
-    public void exists(){
+    public void exists() {
         assertTrue(personService.exists(cris.getId()));
     }
 
     @Test
-    public void count(){
+    public void count() {
         assertEquals(personService.count(), list.size());
     }
 
     @Test
-    public void delete(){
+    public void delete() {
         personService.delete(paul.getId());
         assertFalse(personService.exists(paul.getId()));
     }
 
     @Test
-    public void getAll(){
+    public void getAll() {
         List<Person> resultList = personService.getAll();
         assertTrue(resultList.contains(paul));
         assertTrue(resultList.contains(cris));
     }
 
-    @Test public void getAllById(){
+    @Test
+    public void getAllById() {
         personService.addPerson(nick);
         List<String> idList = new ArrayList<>();
         idList.add(cris.getId());
@@ -96,7 +95,7 @@ public abstract class AbstractRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithSorting(){
+    public void testGetAllWithSorting() {
         personService.addPerson(nick);
         personService.addPerson(new Person("4", "Cris"));
         personService.addPerson(new Person("5", "Cris"));
@@ -113,7 +112,7 @@ public abstract class AbstractRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithPaging(){
+    public void testGetAllWithPaging() {
         personService.addPerson(nick);
         personService.addPerson(new Person("4", "Cris"));
         personService.addPerson(new Person("5", "Cris"));

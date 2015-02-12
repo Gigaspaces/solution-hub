@@ -3,16 +3,18 @@ package org.springframework.data.xap.model;
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author Oleksiy_Dyagilev
  */
+@Entity
 @SpaceClass
 public class Person {
-
+    @Id
     private String id;
-
     private String name;
-
 
     public Person() {
     }
@@ -30,6 +32,10 @@ public class Person {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @SpaceId(autoGenerate = false)
     public String getId() {
         return id;
@@ -37,10 +43,6 @@ public class Person {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
