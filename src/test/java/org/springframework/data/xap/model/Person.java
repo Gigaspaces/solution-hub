@@ -9,7 +9,7 @@ import javax.persistence.Id;
 /**
  * @author Oleksiy_Dyagilev
  */
-@Entity
+@Entity // required for JPA
 @SpaceClass
 public class Person {
     @Id
