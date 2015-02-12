@@ -33,6 +33,8 @@ public interface PersonService {
 
     List<Person> findPersons(Pageable pageable);
 
-    Person findByName(String name);
+    List<Person> findByName(String name);
+
+    List<Person> findByAge(Integer age);
 
 }

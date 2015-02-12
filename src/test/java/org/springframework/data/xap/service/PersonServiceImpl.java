@@ -89,7 +89,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person findByName(String name) {
+    public List<Person> findByName(String name) {
         return personRepository.findByName(name);
+    }
+
+    @Override
+    public List<Person> findByAge(Integer age) {
+        return personRepository.findByAge(age);
     }
 }

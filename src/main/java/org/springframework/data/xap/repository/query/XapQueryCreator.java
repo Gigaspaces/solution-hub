@@ -11,7 +11,7 @@ import java.util.Iterator;
 /**
  * @author Anna_Babich.
  */
-public class XapQueryCreator extends AbstractQueryCreator{
+public class XapQueryCreator extends AbstractQueryCreator<String, Predicates>{
 
     public XapQueryCreator(PartTree tree, ParameterAccessor parameters) {
         super(tree, parameters);
@@ -22,26 +22,22 @@ public class XapQueryCreator extends AbstractQueryCreator{
     }
 
     @Override
-    protected Object create(Part part, Iterator iterator) {
-        //TODO
-        return null;
+    protected Predicates create(Part part, Iterator iterator) {
+        return Predicates.create(part, iterator);
     }
 
     @Override
-    protected Object and(Part part, Object base, Iterator iterator) {
-        //TODO
-        return null;
+    protected Predicates and(Part part, Predicates base, Iterator iterator) {
+        return base.and(Predicates.create(part, iterator));
     }
 
     @Override
-    protected Object or(Object base, Object criteria) {
-        //TODO
-        return null;
+    protected Predicates or(Predicates base, Predicates criteria) {
+        return base.or(criteria);
     }
 
     @Override
-    protected Object complete(Object criteria, Sort sort) {
-        //TODO
-        return null;
+    protected String complete(Predicates criteria, Sort sort) {
+        return criteria.toString();
     }
 }

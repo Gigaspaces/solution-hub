@@ -6,16 +6,16 @@ import org.springframework.data.repository.query.RepositoryQuery;
 /**
  * @author Anna_Babich.
  */
-public class XapRepositoryQuery implements RepositoryQuery{
-    @Override
-    public Object execute(Object[] parameters) {
-        //TODO
-        return null;
+public abstract class XapRepositoryQuery implements RepositoryQuery{
+
+    private XapQueryMethod queryMethod;
+
+    public XapRepositoryQuery(XapQueryMethod queryMethod) {
+        this.queryMethod = queryMethod;
     }
 
     @Override
     public QueryMethod getQueryMethod() {
-        //TODO
-        return null;
+        return queryMethod;
     }
 }

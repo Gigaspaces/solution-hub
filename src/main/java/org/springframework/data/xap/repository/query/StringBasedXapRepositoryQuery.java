@@ -17,7 +17,7 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
     private final String query;
 
     public StringBasedXapRepositoryQuery(String query, XapQueryMethod method, SpaceClient space){
-
+        super(method);
         this.userDefinedQuery |= !StringUtils.hasText(query);
         this.method = method;
         this.spaceClient = space;
@@ -40,6 +40,7 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
         return spaceClient.readMultiple(sqlQuery);
     }
 
+    //TODO check do we need this?
     public boolean isUserDefinedQuery() {
         return userDefinedQuery;
     }
