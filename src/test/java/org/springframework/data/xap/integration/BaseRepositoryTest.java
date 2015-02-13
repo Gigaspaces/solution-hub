@@ -192,6 +192,16 @@ public abstract class BaseRepositoryTest {
         assertEquals("1", persons.get(1).getId());
     }
 
+    @Test
+    public void testGetAllWithPagingEmptyResult(){
+        prepareDataForSortingTest();
+        List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
+        Sort sorting = new Sort(orders);
+        Pageable pageable = new PageRequest(100500, 2, sorting);
+        List<Person> persons = personService.findPersons(pageable);
+        assertTrue(persons.isEmpty());
+    }
+
     private void prepareDataForSortingTest() {
         personService.addPerson(nick);
         personService.delete("4");

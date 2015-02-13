@@ -17,6 +17,7 @@ import org.springframework.data.xap.spaceclient.SpaceClient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -132,7 +133,8 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         int pageSize = pageable.getPageSize();
         int offset = pageable.getOffset();
         List<T> allSortedInternal = findAllSortedInternal(pageable.getSort(), offset + pageSize);
-        return new PageImpl<T>(allSortedInternal.subList(offset, allSortedInternal.size()));
+        List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList() ;
+        return new PageImpl<T>(result);
     }
 
     private List<T> findAllSortedInternal(Sort sort, int count){
