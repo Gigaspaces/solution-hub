@@ -24,8 +24,8 @@ import static junit.framework.TestCase.assertEquals;
 public abstract class BaseRepositoryTest {
 
     protected static final Person nick = new Person("1", "Nick", 20);
-    protected static final Person chris = new Person("2", "Chris", 30);
-    protected static final Person paul = new Person("3", "Paul", 40);
+    protected static final Person chris = new Person("2", "Chris", 30, new Person("10", "Ann", 25));
+    protected static final Person paul = new Person("3", "Paul", 40, new Person("11", "Mary", 25));
     protected static final Person chris2 = new Person("4", "Chris", 50);
     protected static final Person chris3 = new Person("5", "Chris", 30);
     protected static final Person paul2 = new Person("6", "Paul", 30);
@@ -49,6 +49,13 @@ public abstract class BaseRepositoryTest {
     @After
     public void clear() {
         personService.deleteAll();
+    }
+
+    @Test
+    public void testFindBySpouseNameCreatedQuery(){
+        List<Person> person = personService.findBySpouseName("Ann");
+        assertEquals(1, person.size());
+        assertTrue(person.contains(chris));
     }
 
     @Test

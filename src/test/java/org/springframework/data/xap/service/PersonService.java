@@ -40,4 +40,6 @@ public interface PersonService {
     List<Person> findByNameAndAge(String name, Integer age);
 
     List<Person> findByNameOrAge(String name, Integer age);
+
+    List<Person> findBySpouseName(String name);
 }
