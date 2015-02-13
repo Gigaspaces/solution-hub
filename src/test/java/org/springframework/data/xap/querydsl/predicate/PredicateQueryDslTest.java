@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.xap.integration.AbstractRepositoryTest;
+import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.model.QPerson;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class PredicateQueryDslTest extends AbstractRepositoryTest {
+public class PredicateQueryDslTest extends BaseRepositoryTest {
     private static final BooleanExpression chrisPredicate = QPerson.person.name.eq(chris.getName());
     private static final BooleanExpression paulPredicate = QPerson.person.name.eq(paul.getName());
     private static final BooleanExpression chrisOrPaulPredicate = chrisPredicate.or(paulPredicate);

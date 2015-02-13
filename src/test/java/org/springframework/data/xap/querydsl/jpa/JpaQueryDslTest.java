@@ -4,7 +4,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.data.xap.integration.AbstractRepositoryTest;
+import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.model.QPerson;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class JpaQueryDslTest extends AbstractRepositoryTest {
+public class JpaQueryDslTest extends BaseRepositoryTest {
     private static final BooleanExpression crisPredicate = QPerson.person.name.eq(chris.getName());
     private static final BooleanExpression paulPredicate = QPerson.person.name.eq(paul.getName());
     private static final BooleanExpression crisOrPaulPredicate = crisPredicate.or(paulPredicate);

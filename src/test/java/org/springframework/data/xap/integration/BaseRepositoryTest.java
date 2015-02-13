@@ -21,7 +21,8 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * @author Anna_Babich
  */
-public abstract class AbstractRepositoryTest {
+public abstract class BaseRepositoryTest {
+
     protected static final Person nick = new Person("1", "Nick", 20);
     protected static final Person chris = new Person("2", "Chris", 30);
     protected static final Person paul = new Person("3", "Paul", 40);
@@ -123,7 +124,8 @@ public abstract class AbstractRepositoryTest {
         assertTrue(resultList.contains(chris));
     }
 
-    @Test public void getAllById(){
+    @Test
+    public void getAllById(){
         personService.addPerson(nick);
         List<String> idList = new ArrayList<>();
         idList.add(chris.getId());

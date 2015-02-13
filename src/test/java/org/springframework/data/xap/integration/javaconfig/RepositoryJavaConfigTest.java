@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.xap.integration.AbstractRepositoryTest;
+import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.repository.config.EnableXapRepositories;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-public class RepositoryJavaConfigTest extends AbstractRepositoryTest{
+public class RepositoryJavaConfigTest extends BaseRepositoryTest {
 
     @Configuration
     @ComponentScan("org.springframework.data.xap")

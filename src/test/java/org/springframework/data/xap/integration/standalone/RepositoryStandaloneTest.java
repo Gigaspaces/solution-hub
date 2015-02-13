@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
-import org.springframework.data.xap.integration.AbstractRepositoryTest;
+import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.repository.PersonRepository;
 import org.springframework.data.xap.repository.support.XapRepositoryFactory;
 import org.springframework.data.xap.service.PersonService;
@@ -22,7 +22,7 @@ import java.util.Properties;
  * @author Leonid_Poliakov
  */
 @RunWith(JUnit4.class)
-public class RepositoryStandaloneTest extends AbstractRepositoryTest {
+public class RepositoryStandaloneTest extends BaseRepositoryTest {
     @Before
     public void init() {
         try {
