@@ -1,6 +1,7 @@
 package org.springframework.data.xap.repository.support;
 
 import org.springframework.data.mapping.context.MappingContext;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.NamedQueries;
 import org.springframework.data.repository.core.RepositoryMetadata;
@@ -32,6 +33,10 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
         this.context = context == null ? new XapMappingContext() : context;
     }
 
+    private static boolean isQueryDslRepository(Class<?> repositoryInterface) {
+        return QueryDslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T, ID extends Serializable> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
@@ -41,13 +46,18 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
 
     @Override
     protected Object getTargetRepository(RepositoryMetadata metadata) {
+        Class<?> repositoryInterface = metadata.getRepositoryInterface();
         EntityInformation<?, Serializable> entityInformation = getEntityInformation(metadata.getDomainType());
-        return new SimpleXapRepository<>(space, entityInformation);
+        if (isQueryDslRepository(repositoryInterface)) {
+            return new QueryDslXapRepository<>(space, entityInformation);
+        } else {
+            return new SimpleXapRepository<>(space, entityInformation);
+        }
     }
 
     @Override
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-        return SimpleXapRepository.class;
+        return isQueryDslRepository(metadata.getRepositoryInterface()) ? QueryDslXapRepository.class : SimpleXapRepository.class;
     }
 
     /*

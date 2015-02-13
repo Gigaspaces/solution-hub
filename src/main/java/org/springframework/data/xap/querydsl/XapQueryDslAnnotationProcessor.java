@@ -15,7 +15,7 @@ import java.util.Collections;
  * @author Leonid_Poliakov
  */
 @SupportedAnnotationTypes({"com.gigaspaces.annotation.pojo.SpaceClass"})
-public class XapAnnotationProcessor extends AbstractQuerydslProcessor {
+public class XapQueryDslAnnotationProcessor extends AbstractQuerydslProcessor {
     private static final Class<? extends Annotation> ENTITIES = null;
     private static final Class<? extends Annotation> ENTITY = SpaceClass.class;
     private static final Class<? extends Annotation> SUPER_TYPE = null;

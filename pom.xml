@@ -18,6 +18,7 @@
         <spring.data.commons.version>1.9.1.RELEASE</spring.data.commons.version>
         <spring.version>4.0.7.RELEASE</spring.version>
         <spring.dao.version>2.0.8</spring.dao.version>
+        <spring.data.jpa.version>1.7.2.RELEASE</spring.data.jpa.version>
         <junit.version>4.11</junit.version>
         <guava.version>18.0</guava.version>
         <querydsl.version>3.6.0</querydsl.version>
@@ -78,7 +79,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>target/generated-test-sources/java</outputDirectory>
-                            <processor>org.springframework.data.xap.querydsl.XapAnnotationProcessor</processor>
+                            <processor>org.springframework.data.xap.querydsl.XapQueryDslAnnotationProcessor</processor>
                         </configuration>
                     </execution>
                 </executions>
@@ -263,11 +264,5 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- TODO: TEMP -->
-        <!--<dependency>-->
-        <!--<groupId>com.mysema.querydsl</groupId>-->
-        <!--<artifactId>querydsl-mongodb</artifactId>-->
-        <!--<version>3.6.0</version>-->
-        <!--</dependency>-->
     </dependencies>
 </project>

@@ -36,6 +36,18 @@ public class SpaceClient {
 
     private TakeModifiers defaultTakeModifiers = TakeModifiers.NONE;
 
+    private static QueryResultTypeInternal toInternal(QueryResultType queryResultType) {
+        if (queryResultType == null)
+            return null;
+        if (queryResultType == QueryResultType.DEFAULT || queryResultType == QueryResultType.NOT_SET)
+            return QueryResultTypeInternal.NOT_SET;
+        if (queryResultType == QueryResultType.OBJECT)
+            return QueryResultTypeInternal.OBJECT_JAVA;
+        if (queryResultType == QueryResultType.DOCUMENT)
+            return QueryResultTypeInternal.DOCUMENT_ENTRY;
+
+        throw new IllegalArgumentException("Unsupported query result type: " + queryResultType);
+    }
 
     public <T> LeaseContext<T> write(T entry) {
         return write(entry, defaultWriteLease);
@@ -49,7 +61,6 @@ public class SpaceClient {
             throw new DataAccessException(e);
         }
     }
-
 
     public <T> LeaseContext<T>[] writeMultiple(T[] entries) {
         return writeMultiple(entries, defaultWriteLease);
@@ -78,6 +89,15 @@ public class SpaceClient {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> T read(ISpaceQuery<T> template) {
+        try {
+            return (T) space.read(template, getCurrentTransaction(), defaultReadTimeout, defaultReadModifiers.getCode(), true);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
     public <T> T[] readMultiple(ISpaceQuery<T> template) {
         return readMultiple(template, Integer.MAX_VALUE);
     }
@@ -85,7 +105,6 @@ public class SpaceClient {
     public <T> T[] readMultiple(ISpaceQuery<T> template, int maxEntries) {
         return readMultiple(template, maxEntries, defaultReadModifiers);
     }
-
 
     @SuppressWarnings("unchecked")
     public <T> T[] readMultiple(ISpaceQuery<T> template, int maxEntries, ReadModifiers modifiers) {
@@ -117,7 +136,6 @@ public class SpaceClient {
         }
     }
 
-
     @SuppressWarnings("unchecked")
     public <T> TakeByIdsResult<T> takeByIds(IdsQuery<T> query) {
         try {
@@ -143,29 +161,16 @@ public class SpaceClient {
         }
     }
 
-
-    private static QueryResultTypeInternal toInternal(QueryResultType queryResultType) {
-        if (queryResultType == null)
-            return null;
-        if (queryResultType == QueryResultType.DEFAULT || queryResultType == QueryResultType.NOT_SET)
-            return QueryResultTypeInternal.NOT_SET;
-        if (queryResultType == QueryResultType.OBJECT)
-            return QueryResultTypeInternal.OBJECT_JAVA;
-        if (queryResultType == QueryResultType.DOCUMENT)
-            return QueryResultTypeInternal.DOCUMENT_ENTRY;
-
-        throw new IllegalArgumentException("Unsupported query result type: " + queryResultType);
-    }
     public Transaction getCurrentTransaction() {
         return null;
     }
 
-    public void setSpace(ISpaceProxy space) {
-        this.space = space;
-    }
-
     public ISpaceProxy getSpace() {
         return space;
+    }
+
+    public void setSpace(ISpaceProxy space) {
+        this.space = space;
     }
 
     public <T> AggregationResult aggregate(ISpaceQuery<T> query, AggregationSet aggregationSet) {
