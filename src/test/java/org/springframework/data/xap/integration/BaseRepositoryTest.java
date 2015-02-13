@@ -52,6 +52,15 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
+    public void testFindByAgeSortedCreatedQuery(){
+        List<Person> person = personService.findByAge(30, new Sort(new Sort.Order(Sort.Direction.ASC, "id")));
+        assertEquals(3, person.size());
+        assertEquals(chris, person.get(0));
+        assertEquals(chris3, person.get(1));
+        assertEquals(paul2, person.get(2));
+    }
+
+    @Test
     public void testFindBySpouseNameCreatedQuery(){
         List<Person> person = personService.findBySpouseName("Ann");
         assertEquals(1, person.size());

@@ -38,7 +38,7 @@ public class XapQueryCreator extends AbstractQueryCreator<String, QueryBuilder>{
 
     @Override
     protected String complete(QueryBuilder criteria, Sort sort) {
-        return criteria.buildQuery();
+        return criteria.sort(sort).buildQuery();
     }
 
 }

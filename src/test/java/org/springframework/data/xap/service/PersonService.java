@@ -37,6 +37,8 @@ public interface PersonService {
 
     List<Person> findByAge(Integer age);
 
+    List<Person> findByAge(Integer age, Sort sort);
+
     List<Person> findByNameAndAge(String name, Integer age);
 
     List<Person> findByNameOrAge(String name, Integer age);

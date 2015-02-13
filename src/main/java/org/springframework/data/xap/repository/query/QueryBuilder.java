@@ -1,14 +1,24 @@
 package org.springframework.data.xap.repository.query;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.parser.Part;
 import org.springframework.util.Assert;
 
+import java.util.Iterator;
+
 public class QueryBuilder {
 
-    private String query;
+    private String query = new String();
 
     public QueryBuilder(Part part){
         query = new AtomicPredicate(part).toString();
+    }
+
+    public QueryBuilder(Sort sort){
+        applySort(sort);
     }
 
     public String buildQuery(){
@@ -25,6 +35,28 @@ public class QueryBuilder {
         return this;
     }
 
+    public QueryBuilder sort(Sort sort){
+        applySort(sort);
+        return this;
+    }
+
+    private void applySort(Sort sort) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (sort != null){
+            Iterator<Sort.Order> iterator = sort.iterator();
+            if (iterator.hasNext()){
+                stringBuilder.append("ORDER BY ");
+            }
+            Iterable<String> orders = Iterables.transform(sort, new Function<Sort.Order, String>() {
+                @Override
+                public String apply(Sort.Order s) {
+                    return s.getProperty() + " " + s.getDirection();
+                }
+            });
+            stringBuilder.append(Joiner.on(", ").join(orders));
+        }
+        query = query + stringBuilder;
+    }
 
     public static class AtomicPredicate {
 

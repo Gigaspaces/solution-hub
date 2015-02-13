@@ -1,5 +1,6 @@
 package org.springframework.data.xap.repository;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.xap.model.Person;
 
@@ -20,4 +21,6 @@ public interface PersonRepository extends XapRepository<Person, String>{
     List<Person> findByNameOrAge(String name, Integer age);
 
     List<Person> findBySpouseName(String name);
+
+    List<Person> findByAge(Integer age, Sort sort);
 }

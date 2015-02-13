@@ -3,9 +3,6 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.j_spaces.core.client.SQLQuery;
 import org.springframework.data.domain.Page;
@@ -14,12 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.repository.XapRepository;
+import org.springframework.data.xap.repository.query.QueryBuilder;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -145,19 +142,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         if (count > 0 ){
             stringBuilder.append(" rownum <=").append(count);
         }
-        if (sort != null){
-            Iterator<Sort.Order> iterator = sort.iterator();
-            if (iterator.hasNext()){
-                stringBuilder.append("ORDER BY ");
-            }
-            Iterable<String> orders = Iterables.transform(sort, new Function<Sort.Order, String>() {
-                @Override
-                public String apply(Sort.Order s) {
-                    return s.getProperty() + " " + s.getDirection();
-                }
-            });
-            stringBuilder.append(Joiner.on(", ").join(orders));
-        }
+        stringBuilder.append(new QueryBuilder(sort).buildQuery());
         SQLQuery<T> query = new SQLQuery<>(aClass, stringBuilder.toString());
         T[] entities = space.readMultiple(query);
         return Lists.newArrayList(entities);
