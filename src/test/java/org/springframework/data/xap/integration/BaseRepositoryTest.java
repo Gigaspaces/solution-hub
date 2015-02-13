@@ -52,6 +52,21 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
+    public void testFindByAgePagedCreatedQuery(){
+        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
+        Pageable pageable = new PageRequest(1, 2, sorting);
+        List<Person> person = personService.findByAge(30, pageable);
+        assertEquals(1, person.size());
+        assertEquals(paul2, person.get(0));
+
+        Pageable pageable2 = new PageRequest(0, 2, sorting);
+        List<Person> persons2 = personService.findByAge(30, pageable2);
+        assertEquals(2, persons2.size());
+        assertEquals(chris, persons2.get(0));
+        assertEquals(chris3, persons2.get(1));
+    }
+
+    @Test
     public void testFindByAgeSortedCreatedQuery(){
         List<Person> person = personService.findByAge(30, new Sort(new Sort.Order(Sort.Direction.ASC, "id")));
         assertEquals(3, person.size());

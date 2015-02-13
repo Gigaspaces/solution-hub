@@ -1,7 +1,7 @@
 package org.springframework.data.xap.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.xap.model.Person;
 
 import java.util.List;
@@ -23,4 +23,6 @@ public interface PersonRepository extends XapRepository<Person, String>{
     List<Person> findBySpouseName(String name);
 
     List<Person> findByAge(Integer age, Sort sort);
+
+    List<Person> findByAge(Integer age, Pageable pageable);
 }

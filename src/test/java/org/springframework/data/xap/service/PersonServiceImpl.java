@@ -1,8 +1,5 @@
 package org.springframework.data.xap.service;
 
-
-
-
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -101,6 +98,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<Person> findByAge(Integer age, Sort sort) {
         return personRepository.findByAge(age, sort);
+    }
+
+    @Override
+    public List<Person> findByAge(Integer age, Pageable pageable) {
+        return personRepository.findByAge(age, pageable);
     }
 
     @Override
