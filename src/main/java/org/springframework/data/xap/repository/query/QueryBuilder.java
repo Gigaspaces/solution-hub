@@ -69,6 +69,7 @@ public class QueryBuilder {
          * @return
          */
         private String getOperator(Part.Type type) {
+            //TODO check all operators
             switch (type) {
                 case IN:
                     return "IN SET";
@@ -85,11 +86,6 @@ public class QueryBuilder {
                 case IS_NOT_NULL:
                 case NEGATING_SIMPLE_PROPERTY:
                     return "!=";
-				/*
-				NOTE unfortunately, 'NOT LIKE' operator is not supported by GemFire's Query/OQL syntax
-				case NOT_LIKE:
-					return "NOT LIKE";
-				*/
                 case LIKE:
                 case STARTING_WITH:
                 case ENDING_WITH:
