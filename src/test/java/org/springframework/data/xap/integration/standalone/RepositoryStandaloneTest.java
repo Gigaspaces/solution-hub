@@ -13,12 +13,15 @@ import org.springframework.data.xap.repository.support.XapRepositoryFactory;
 import org.springframework.data.xap.service.PersonService;
 import org.springframework.data.xap.service.PersonServiceImpl;
 import org.springframework.data.xap.spaceclient.SpaceClient;
+import org.springframework.data.xap.utils.TestUtils;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 import java.util.Properties;
 
 /**
+ * Test for Repository standalone usage.
+ *
  * @author Leonid_Poliakov
  */
 @RunWith(JUnit4.class)
@@ -35,14 +38,9 @@ public class RepositoryStandaloneTest extends BaseRepositoryTest {
     }
 
     private PersonRepository initRepository() throws FinderException, IOException {
-        Properties properties = new Properties();
-        properties.load(this.getClass().getClassLoader().getResourceAsStream("config.properties"));
+        SpaceClient spaceClient = TestUtils.initSpaceClient();
 
-        ISpaceProxy space = (ISpaceProxy) SpaceFinder.find("jini://*/*/space?groups=" + properties.getProperty("space.groups"));
-        SpaceClient gigaSpace = new SpaceClient();
-        gigaSpace.setSpace(space);
-
-        RepositoryFactorySupport factory = new XapRepositoryFactory(gigaSpace, null);
+        RepositoryFactorySupport factory = new XapRepositoryFactory(spaceClient, null);
         return factory.getRepository(PersonRepository.class);
     }
 

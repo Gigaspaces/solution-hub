@@ -14,6 +14,10 @@ import com.j_spaces.core.LeaseContext;
 import net.jini.core.transaction.Transaction;
 
 /**
+ * This is a replacement for GigaSpace/DefaultGigaSpace.
+ * We cannot use GigaSpace interface since it in openspaces which depends on Spring 3.2 which is not compatible
+ * with the latest Spring Data Commons (it depends on Spring 4)
+ *
  * @author Anna_Babich
  */
 public class SpaceClient {
