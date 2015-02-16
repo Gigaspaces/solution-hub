@@ -1,8 +1,6 @@
 package org.springframework.data.xap.integration.standalone;
 
-import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
 import com.j_spaces.core.client.FinderException;
-import com.j_spaces.core.client.SpaceFinder;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -17,7 +15,6 @@ import org.springframework.data.xap.utils.TestUtils;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Test for Repository standalone usage.

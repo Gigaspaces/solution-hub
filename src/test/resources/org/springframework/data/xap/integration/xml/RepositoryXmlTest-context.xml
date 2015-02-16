@@ -8,24 +8,12 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
+    <import resource="classpath:space-context.xml"/>
+
     <context:component-scan base-package="org.springframework.data.xap">
         <context:exclude-filter type="regex" expression="org.springframework.data.xap.integration.javaconfig.*"/>
     </context:component-scan>
 
-    <context:property-placeholder location="config.properties"/>
-
     <xap-data:repositories base-package="org.springframework.data.xap.repository"/>
-
-    <!--A bean representing a space -->
-    <bean id="space"
-          class="com.j_spaces.core.client.SpaceFinder"
-          factory-method="find">
-        <constructor-arg value="jini://*/*/space?groups=${space.groups}"/>
-    </bean>
-
-    <!-- Instead GigaSpace interface implementation -->
-    <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
-        <property name="space" ref="space"/>
-    </bean>
 
 </beans>

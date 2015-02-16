@@ -4,6 +4,7 @@ import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * @author Leonid_Poliakov
@@ -17,17 +18,19 @@ public class Team {
     private Integer membersCount;
     private Person sponsor;
     private TeamStatus status;
+    private Date creationDate;
 
     public Team() {
     }
 
-    public Team(String id, String name, Person leader, Integer membersCount, Person sponsor, TeamStatus status) {
+    public Team(String id, String name, Person leader, Integer membersCount, Person sponsor, TeamStatus status, Date creationDate) {
         this.id = id;
         this.name = name;
         this.leader = leader;
         this.membersCount = membersCount;
         this.sponsor = sponsor;
         this.status = status;
+        this.creationDate = creationDate;
     }
 
     @SpaceId(autoGenerate = false)
@@ -79,6 +82,14 @@ public class Team {
         this.status = status;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +97,7 @@ public class Team {
 
         Team team = (Team) o;
 
+        if (creationDate != null ? !creationDate.equals(team.creationDate) : team.creationDate != null) return false;
         if (id != null ? !id.equals(team.id) : team.id != null) return false;
         if (leader != null ? !leader.equals(team.leader) : team.leader != null) return false;
         if (membersCount != null ? !membersCount.equals(team.membersCount) : team.membersCount != null) return false;
@@ -104,6 +116,7 @@ public class Team {
         result = 31 * result + (membersCount != null ? membersCount.hashCode() : 0);
         result = 31 * result + (sponsor != null ? sponsor.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         return result;
     }
 
@@ -116,6 +129,7 @@ public class Team {
                 ", membersCount=" + membersCount +
                 ", sponsor=" + sponsor +
                 ", status=" + status +
+                ", creationDate=" + creationDate +
                 '}';
     }
 }

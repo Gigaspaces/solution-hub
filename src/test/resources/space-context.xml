@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+
+    <!-- Allows usage of current environment properties -->
+    <context:property-placeholder location="config.properties"/>
+
+    <!-- A bean representing a space -->
+    <bean id="space"
+          class="com.j_spaces.core.client.SpaceFinder"
+          factory-method="find">
+        <constructor-arg value="jini://*/*/space?groups=${space.groups}"/>
+    </bean>
+
+    <!-- Instead GigaSpace interface implementation -->
+    <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
+        <property name="space" ref="space"/>
+    </bean>
+
+</beans>

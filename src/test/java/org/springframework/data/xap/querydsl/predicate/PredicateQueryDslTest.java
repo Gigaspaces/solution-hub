@@ -1,7 +1,10 @@
 package org.springframework.data.xap.querydsl.predicate;
 
+import com.mysema.query.types.Ops;
 import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.ComparableExpression;
+import com.mysema.query.types.expr.ComparableOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +19,10 @@ import org.springframework.data.xap.model.TeamStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
@@ -36,12 +41,16 @@ public class PredicateQueryDslTest {
     private static final Person nick = new Person("1", "Nick", 25);
     private static final Person cris = new Person("2", "Cris", 40);
     private static final Person paul = new Person("3", "Paul", 33);
-    private static final Team itspecial = new Team("1", "itspecial", cris, 10, paul, TeamStatus.ACTIVE);
-    private static final Team avolition = new Team("2", "avolition", nick, 50, null, INACTIVE);
+    private static final Team itspecial = new Team("1", "itspecial", cris, 10, paul, TeamStatus.ACTIVE, currentDay(+1));
+    private static final Team avolition = new Team("2", "avolition", nick, 50, null, INACTIVE, currentDay(-1));
     private static final Set<Team> allTeams = newHashSet(itspecial, avolition);
 
     @Autowired
     private PredicateTeamRepository repository;
+
+    private static Date currentDay(int daysOffset) {
+        return new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(daysOffset));
+    }
 
     @Before
     public void setUp() {
@@ -232,6 +241,74 @@ public class PredicateQueryDslTest {
         assertEquals(0, thirdPage.getSize());
     }
 
+
+    // Negative tests for unsupported Query DSL operators
+
+    @Test
+    public void testFindWithSysdate() {
+        // before sysdate
+        assertEquals(
+                avolition,
+                one(team.creationDate.lt(sysdate()))
+        );
+
+        // after sysdate
+        assertEquals(
+                itspecial,
+                one(team.creationDate.gt(sysdate()))
+        );
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testContains() {
+        one(team.name.contains("avoli"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testContainsIgnoreCase() {
+        one(team.name.containsIgnoreCase("avoli"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testEndsWith() {
+        one(team.name.endsWith("tion"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testEndsWithIgnoreCase() {
+        one(team.name.endsWithIgnoreCase("tion"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testStartsWith() {
+        one(team.name.startsWith("avoli"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testStartsWithIgnoreCase() {
+        one(team.name.startsWithIgnoreCase("avoli"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testIsEmpty() {
+        one(team.name.isEmpty());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testIsNotEmpty() {
+        one(team.name.isNotEmpty());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testMatches() {
+        one(team.name.matches(".*tion"));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testNotBetween() {
+        one(team.membersCount.notBetween(5, 55));
+    }
+
     private Team one(Predicate predicate) {
         return repository.findOne(predicate);
     }
@@ -242,6 +319,10 @@ public class PredicateQueryDslTest {
 
     private Set<Team> unsorted(Predicate predicate) {
         return newHashSet(repository.findAll(predicate));
+    }
+
+    private ComparableExpression<Date> sysdate() {
+        return ComparableOperation.create(Date.class, Ops.DateTimeOps.SYSDATE);
     }
 
 }

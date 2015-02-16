@@ -17,7 +17,7 @@ import java.util.List;
  * @author Leonid_Poliakov
  */
 public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter<T>> implements Visitor<Void, Void> {
-    private static final Templates TEMPLATES = XapQueryDslTemplates.DEFAULT;
+    private static final XapQueryDslTemplates TEMPLATES = XapQueryDslTemplates.DEFAULT;
     private static final String LISTS_SEPARATOR = ", ";
     private static final String PAGING_ROW_NUM = " rownum <= ";
     private static final String ORDER_BY = " order by ";
@@ -43,6 +43,10 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
     @Nullable
     @Override
     public Void visit(Operation<?> operation, @Nullable Void context) {
+        Operator<?> operator = operation.getOperator();
+        if (!TEMPLATES.isAllowed(operator)) {
+            throw new UnsupportedOperationException("operator " + operator + " is not supported by XAP repositories");
+        }
         super.visit(operation, context);
         return null;
     }
