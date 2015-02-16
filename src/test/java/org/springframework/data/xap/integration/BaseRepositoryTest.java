@@ -284,12 +284,19 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByQueryWithProjection(){
+    public void testFindByQueryWithProjection() {
         List<Person> people = personRepository.findByAge(50, projections("name"));
         assertEquals(1, people.size());
         assertEquals("Chris", people.get(0).getName());
         assertNull(people.get(0).getAge());
 
+    }
+
+    @Test
+    public void testFindOneWithProjection() {
+        Person person = personRepository.findOne(chris.getId(), projections("name"));
+        assertEquals(chris.getName(), person.getName());
+        assertNull(person.getAge());
     }
 
     private void prepareDataForSortingTest() {

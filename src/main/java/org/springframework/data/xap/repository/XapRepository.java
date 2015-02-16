@@ -20,4 +20,14 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      */
     Iterable<T> findAll(Projection projection);
 
+    /**
+     * Retrieves an entity by its id.
+     *
+     * @param id must not be {@literal null}.
+     * @param projection projection
+     * @return the entity with the given id or {@literal null} if none found
+     * @throws IllegalArgumentException if {@code id} is {@literal null}
+     */
+    T findOne(ID id, Projection projection);
+
 }

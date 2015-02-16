@@ -50,8 +50,26 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public T findOne(ID id) {
+        return findOneInternal(id, null);
+    }
+
+    @Override
+    public T findOne(ID id, Projection projection) {
+        return findOneInternal(id, projection);
+    }
+
+    private T findOneInternal(ID id, Projection projection) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null");
+        }
         Class<T> aClass = entityInformation.getJavaType();
-        return space.readById(aClass, id);
+        IdQuery<T> idQuery = new IdQuery<T>(aClass, id);
+
+        if (projection != null) {
+            idQuery.setProjections(projection.getProperties());
+        }
+
+        return space.read(idQuery);
     }
 
     @Override
@@ -61,7 +79,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Iterable<T> findAll() {
-       return findAllInternal(null, null, null);
+        return findAllInternal(null, null, null);
     }
 
     @Override
@@ -85,16 +103,16 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         int pageSize = pageable.getPageSize();
         int offset = pageable.getOffset();
         List<T> allSortedInternal = findAllInternal(null, pageable.getSort(), offset + pageSize);
-        List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList() ;
+        List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList();
         return new PageImpl<T>(result);
     }
 
-    private List<T> findAllInternal(Projection projection, Sort sort, Integer count){
+    private List<T> findAllInternal(Projection projection, Sort sort, Integer count) {
         Class<T> aClass = entityInformation.getJavaType();
         StringBuilder stringBuilder = new StringBuilder("");
 
         // count
-        if (count != null){
+        if (count != null) {
             stringBuilder.append(" rownum <=").append(count);
         }
 
