@@ -20,9 +20,7 @@ import org.springframework.data.xap.repository.query.Projection;
 import java.util.*;
 
 import static junit.framework.Assert.*;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static org.springframework.data.xap.repository.query.Projection.projections;
 
 /**
@@ -212,8 +210,8 @@ public abstract class BaseRepositoryTest {
         Sort sorting = new Sort(orders);
         Pageable pageable = new PageRequest(1, 2, sorting);
         List<Person> persons = findPersons(pageable);
-        assertEquals("2", persons.get(0).getId());
-        assertEquals("1", persons.get(1).getId());
+        assertEquals(chris.getId(), persons.get(0).getId());
+        assertEquals(nick.getId(), persons.get(1).getId());
     }
 
     @Test
@@ -224,6 +222,19 @@ public abstract class BaseRepositoryTest {
         Pageable pageable = new PageRequest(100500, 2, sorting);
         List<Person> persons = findPersons(pageable);
         assertTrue(persons.isEmpty());
+    }
+
+    @Test
+    public void testFindAllWithPagingAndProjection() {
+        prepareDataForSortingTest();
+        List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
+        Sort sorting = new Sort(orders);
+        Pageable pageable = new PageRequest(1, 2, sorting);
+        List<Person> persons = Lists.newArrayList(personRepository.findAll(pageable, projections("name")));
+        assertEquals(chris.getName(), persons.get(0).getName());
+        assertEquals(nick.getName(), persons.get(1).getName());
+
+       assertAllNullExceptName(persons);
     }
 
     @Test
@@ -327,10 +338,7 @@ public abstract class BaseRepositoryTest {
 
         assertEquals(2, set.size());
 
-        for (Person person : set) {
-            assertNotNull(person.getName());
-            assertNull(person.getAge());
-        }
+        assertAllNullExceptName(set);
     }
 
     private void prepareDataForSortingTest() {
@@ -361,5 +369,14 @@ public abstract class BaseRepositoryTest {
             personList.add(person);
         }
         return personList;
+    }
+
+    private void assertAllNullExceptName(Collection<Person> list) {
+        for (Person person : list) {
+            assertNotNull(person.getName());
+            assertNull(person.getId());
+            assertNull(person.getSpouse());
+            assertNull(person.getAge());
+        }
     }
 }

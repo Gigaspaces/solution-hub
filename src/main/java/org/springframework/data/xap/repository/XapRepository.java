@@ -1,5 +1,7 @@
 package org.springframework.data.xap.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -48,5 +50,14 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      * @return all entities sorted by the given options
      */
     Iterable<T> findAll(Sort sort, Projection projection);
+
+    /**
+     * Returns a {@link org.springframework.data.domain.Page} of entities meeting the paging restriction provided in the {@code Pageable} object.
+     *
+     * @param pageable
+     * @param projection
+     * @return a page of entities
+     */
+    Page<T> findAll(Pageable pageable, Projection projection);
 
 }

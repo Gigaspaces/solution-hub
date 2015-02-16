@@ -91,11 +91,11 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         return findAllByIdsInternal(ids, projection);
     }
 
-    private Iterable<T> findAllByIdsInternal(Iterable<ID> ids, Projection projection){
+    private Iterable<T> findAllByIdsInternal(Iterable<ID> ids, Projection projection) {
         Class<T> aClass = entityInformation.getJavaType();
         IdsQuery<T> query = new IdsQuery<>(aClass, toArray(ids));
 
-        if (projection != null){
+        if (projection != null) {
             query.setProjections(projection.getProperties());
         }
 
@@ -119,9 +119,18 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Page<T> findAll(Pageable pageable) {
+        return findAllPageableInternal(pageable, null);
+    }
+
+    @Override
+    public Page<T> findAll(Pageable pageable, Projection projection) {
+        return findAllPageableInternal(pageable, projection);
+    }
+
+    private Page<T> findAllPageableInternal(Pageable pageable, Projection projection) {
         int pageSize = pageable.getPageSize();
         int offset = pageable.getOffset();
-        List<T> allSortedInternal = findAllSortedInternal(null, pageable.getSort(), offset + pageSize);
+        List<T> allSortedInternal = findAllSortedInternal(projection, pageable.getSort(), offset + pageSize);
         List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList();
         return new PageImpl<T>(result);
     }
