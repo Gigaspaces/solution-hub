@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.querydsl.XapQueryDslConverter;
+import org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor;
+import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
@@ -20,7 +22,7 @@ import java.util.List;
 /**
  * @author Leonid_Poliakov
  */
-public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXapRepository<T, ID> implements QueryDslPredicateExecutor<T> {
+public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXapRepository<T, ID> implements XapQueryDslPredicateExecutor<T> {
     private SpaceClient space;
     private EntityInformation<T, ID> entityInformation;
 
@@ -32,23 +34,48 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
 
     @Override
     public T findOne(Predicate predicate) {
-        ISpaceQuery<T> query = createQuery(predicate, null);
+        ISpaceQuery<T> query = createQuery(predicate, null, null);
+        return space.read(query);
+    }
+
+    @Override
+    public T findOne(Predicate predicate, Projection projection) {
+        ISpaceQuery<T> query = createQuery(predicate, null, projection);
         return space.read(query);
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate) {
-        return readMultiple(createQuery(predicate, null));
+        return readMultiple(createQuery(predicate, null, null));
+    }
+
+    @Override
+    public Iterable<T> findAll(Predicate predicate, Projection projection) {
+        return readMultiple(createQuery(predicate, null, projection));
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate, OrderSpecifier<?>... orders) {
-        return readMultiple(createQuery(predicate, null, orders));
+        return readMultiple(createQuery(predicate, null, null, orders));
+    }
+
+    @Override
+    public Iterable<T> findAll(Predicate predicate, Projection projection, OrderSpecifier<?>... orders) {
+        return readMultiple(createQuery(predicate, null, projection, orders));
     }
 
     @Override
     public Page<T> findAll(Predicate predicate, Pageable pageable) {
-        List<T> sortedResults = readMultiple(createQuery(predicate, pageable));
+        return findAllWithPagingInternal(predicate, pageable, null);
+    }
+
+    @Override
+    public Page<T> findAll(Predicate predicate, Pageable pageable, Projection projection) {
+        return findAllWithPagingInternal(predicate, pageable, projection);
+    }
+
+    private Page<T> findAllWithPagingInternal(Predicate predicate, Pageable pageable, Projection projection) {
+        List<T> sortedResults = readMultiple(createQuery(predicate, pageable, projection));
         List<T> pageResults;
         if (pageable.getOffset() < sortedResults.size()) {
             pageResults = sortedResults.subList(pageable.getOffset(), sortedResults.size());
@@ -60,7 +87,7 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
 
     @Override
     public long count(Predicate predicate) {
-        ISpaceQuery<T> query = createQuery(predicate, null);
+        ISpaceQuery<T> query = createQuery(predicate, null, null);
         return space.aggregate(query, new AggregationSet().count("")).getLong(0);
     }
 
@@ -68,8 +95,7 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         return Arrays.asList(space.readMultiple(query));
     }
 
-    private ISpaceQuery<T> createQuery(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
-        return new XapQueryDslConverter<>(entityInformation.getJavaType()).convert(predicate, pageable, orders);
+    private ISpaceQuery<T> createQuery(Predicate predicate, Pageable pageable, Projection projection, OrderSpecifier<?>... orders) {
+        return new XapQueryDslConverter<>(entityInformation.getJavaType()).convert(predicate, pageable, projection, orders);
     }
-
 }

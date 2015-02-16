@@ -7,6 +7,7 @@ import com.mysema.query.support.SerializerBase;
 import com.mysema.query.types.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.xap.repository.query.Projection;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -104,7 +105,7 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
         }
     }
 
-    public ISpaceQuery<T> convert(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+    public ISpaceQuery<T> convert(Predicate predicate, Pageable pageable, Projection projection, OrderSpecifier<?>... orders) {
         // append where clause
         if (predicate != null) {
             handle(predicate);
@@ -138,6 +139,11 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
 
         SQLQuery<T> query = new SQLQuery<>(type, toString());
         query.setParameters(parameters.toArray());
+
+        if (projection != null){
+            query.setProjections(projection.getProperties());
+        }
+
         return query;
     }
 }
