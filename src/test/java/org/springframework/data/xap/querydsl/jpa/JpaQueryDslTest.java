@@ -21,39 +21,32 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class JpaQueryDslTest extends BaseRepositoryTest {
-    private static final BooleanExpression crisPredicate = QPerson.person.name.eq(chris.getName());
+    private static final BooleanExpression chrisIdPredicate = QPerson.person.id.eq(chris.getId());
+    private static final BooleanExpression chrisPredicate = QPerson.person.name.eq(chris.getName());
     private static final BooleanExpression paulPredicate = QPerson.person.name.eq(paul.getName());
-    private static final BooleanExpression crisOrPaulPredicate = crisPredicate.or(paulPredicate);
+    private static final BooleanExpression chrisOrPaulPredicate = chrisPredicate.or(paulPredicate);
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Test
     public void testFindOneWithPredicate() {
-        //TODO clean test data up
-        personService.delete("4");
-        personService.delete("5");
-
         assertEquals(
                 chris,
                 new JPAQuery(entityManager)
                         .from(QPerson.person)
-                        .where(crisPredicate)
+                        .where(chrisIdPredicate)
                         .uniqueResult(QPerson.person)
         );
     }
 
     @Test
     public void testFindTwoWithPredicate() {
-        //TODO clean test data up
-        personService.delete("4");
-        personService.delete("5");
-        personService.delete("6");
         assertEquals(
-                newHashSet(chris, paul),
+                newHashSet(chris, chris2, chris3, paul, paul2),
                 newHashSet(new JPAQuery(entityManager)
                         .from(QPerson.person)
-                        .where(crisOrPaulPredicate)
+                        .where(chrisOrPaulPredicate)
                         .list(QPerson.person))
         );
     }
