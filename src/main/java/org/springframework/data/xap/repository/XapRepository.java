@@ -30,4 +30,13 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      */
     T findOne(ID id, Projection projection);
 
+    /**
+     * Returns all instances of the type with the given IDs.
+     *
+     * @param ids
+     * @param projection projection
+     * @return
+     */
+    Iterable<T> findAll(Iterable<ID> ids, Projection projection);
+
 }

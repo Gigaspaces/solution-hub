@@ -1,6 +1,7 @@
 package org.springframework.data.xap.integration;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.junit.After;
@@ -16,12 +17,12 @@ import org.springframework.data.xap.repository.PersonRepository;
 import org.springframework.data.xap.repository.query.Projection;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static junit.framework.Assert.*;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
 import static org.springframework.data.xap.repository.query.Projection.projections;
 
 /**
@@ -297,6 +298,24 @@ public abstract class BaseRepositoryTest {
         Person person = personRepository.findOne(chris.getId(), projections("name"));
         assertEquals(chris.getName(), person.getName());
         assertNull(person.getAge());
+    }
+
+    @Test
+    public void testFindByIdsWithProjection() {
+        List<String> idList = new ArrayList<>();
+        idList.add(chris.getId());
+        idList.add(paul.getId());
+
+        Iterable<Person> people = personRepository.findAll(idList, projections("name"));
+        Set<Person> set = Sets.newHashSet(people.iterator());
+
+        assertEquals(2, set.size());
+
+        for (Person person : set) {
+            assertNotNull(person.getName());
+            assertNull(person.getAge());
+        }
+
     }
 
     private void prepareDataForSortingTest() {

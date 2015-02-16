@@ -84,8 +84,23 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids) {
+        return findByIdsInternal(ids, null);
+    }
+
+    @Override
+    public Iterable<T> findAll(Iterable<ID> ids, Projection projection) {
+        return findByIdsInternal(ids, projection);
+    }
+
+    private Iterable<T> findByIdsInternal(Iterable<ID> ids, Projection projection){
         Class<T> aClass = entityInformation.getJavaType();
-        return space.readByIds(aClass, toArray(ids));
+        IdsQuery<T> query = new IdsQuery<>(aClass, toArray(ids));
+
+        if (projection != null){
+            query.setProjections(projection.getProperties());
+        }
+
+        return space.readByIds(query);
     }
 
     @Override

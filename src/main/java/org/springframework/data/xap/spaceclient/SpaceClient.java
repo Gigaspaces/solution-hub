@@ -15,8 +15,11 @@ import net.jini.core.transaction.Transaction;
 
 /**
  * This is a replacement for GigaSpace/DefaultGigaSpace.
+ * <p/>
  * We cannot use GigaSpace interface since it in openspaces which depends on Spring 3.2 which is not compatible
  * with the latest Spring Data Commons (it depends on Spring 4)
+ * <p/>
+ * Once XAP supports the latest Spring version, this class can be substituted with GigaSpaces interface.
  *
  * @author Anna_Babich
  */
@@ -120,6 +123,18 @@ public class SpaceClient {
         try {
             return new ReadByIdsResultImpl<T>((T[]) space.readByIds(
                     ObjectUtils.assertArgumentNotNull(clazz, "class").getName(), ids, null, getCurrentTransaction(), 1, QueryResultTypeInternal.NOT_SET, false, null));
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> ReadByIdsResult<T> readByIds(IdsQuery<T> query) throws org.springframework.dao.DataAccessException {
+        try {
+            if (query.getRouting() != null)
+                return new ReadByIdsResultImpl<T>((T[]) space.readByIds(query.getTypeName(), query.getIds(), query.getRouting(), getCurrentTransaction(), defaultReadModifiers.getCode(), toInternal(query.getQueryResultType()), false, query.getProjections()));
+            else
+                return new ReadByIdsResultImpl<T>((T[]) space.readByIds(query.getTypeName(), query.getIds(), query.getRoutings(), getCurrentTransaction(), defaultReadModifiers.getCode(), toInternal(query.getQueryResultType()), false, query.getProjections()));
         } catch (Exception e) {
             throw new DataAccessException(e);
         }
