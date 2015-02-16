@@ -1,6 +1,8 @@
 package org.springframework.data.xap.integration;
 
 import com.google.common.collect.Lists;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,20 +13,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.repository.PersonRepository;
+import org.springframework.data.xap.repository.query.Projection;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
+import static org.springframework.data.xap.repository.query.Projection.projections;
 
 /**
  * @author Anna_Babich
  */
 public abstract class BaseRepositoryTest {
-
 
 
     protected static final Person nick = new Person("1", "Nick", 20);
@@ -40,7 +43,7 @@ public abstract class BaseRepositoryTest {
     private List<Person> list;
 
     @Before
-    public void init(){
+    public void init() {
         list = new ArrayList<>();
         list.add(chris);
         list.add(paul);
@@ -56,7 +59,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgePagedCreatedQuery(){
+    public void testFindByAgePagedCreatedQuery() {
         Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
         Pageable pageable = new PageRequest(1, 2, sorting);
         List<Person> person = personRepository.findByAge(30, pageable);
@@ -71,7 +74,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeSortedCreatedQuery(){
+    public void testFindByAgeSortedCreatedQuery() {
         List<Person> person = personRepository.findByAge(30, new Sort(new Sort.Order(Sort.Direction.ASC, "id")));
         assertEquals(3, person.size());
         assertEquals(chris, person.get(0));
@@ -80,14 +83,14 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindBySpouseNameCreatedQuery(){
+    public void testFindBySpouseNameCreatedQuery() {
         List<Person> person = personRepository.findBySpouseName("Ann");
         assertEquals(1, person.size());
         assertTrue(person.contains(chris));
     }
 
     @Test
-    public void testFindByNameOrAgeCreatedQuery(){
+    public void testFindByNameOrAgeCreatedQuery() {
         List<Person> person = personRepository.findByNameOrAge("Paul", 50);
         assertEquals(3, person.size());
         assertTrue(person.contains(paul));
@@ -96,7 +99,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameAndAgeCreatedQuery(){
+    public void testFindByNameAndAgeCreatedQuery() {
         List<Person> person = personRepository.findByNameAndAge("Chris", 30);
         assertEquals(2, person.size());
         assertTrue(person.contains(chris));
@@ -104,7 +107,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeCreatedQuery(){
+    public void testFindByAgeCreatedQuery() {
         List<Person> person = personRepository.findByAge(30);
         assertEquals(3, person.size());
         assertTrue(person.contains(chris));
@@ -113,7 +116,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameDeclaredQuery(){
+    public void testFindByNameDeclaredQuery() {
         List<Person> persons = personRepository.findByName("Chris");
         assertEquals(3, persons.size());
         assertTrue(persons.contains(chris));
@@ -137,30 +140,30 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void exists(){
+    public void exists() {
         assertTrue(personRepository.exists(chris.getId()));
     }
 
     @Test
-    public void count(){
+    public void count() {
         assertEquals(personRepository.count(), list.size());
     }
 
     @Test
-    public void delete(){
+    public void delete() {
         personRepository.delete(paul.getId());
         assertFalse(personRepository.exists(paul.getId()));
     }
 
     @Test
-    public void getAll(){
-        List<Person> resultList = (List<Person>)personRepository.findAll();
+    public void getAll() {
+        List<Person> resultList = (List<Person>) personRepository.findAll();
         assertTrue(resultList.contains(paul));
         assertTrue(resultList.contains(chris));
     }
 
     @Test
-    public void getAllById(){
+    public void getAllById() {
         personRepository.save(nick);
         List<String> idList = new ArrayList<>();
         idList.add(chris.getId());
@@ -172,7 +175,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithSorting(){
+    public void testGetAllWithSorting() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
         Sort sorting = new Sort(orders);
@@ -186,7 +189,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithPaging(){
+    public void testGetAllWithPaging() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
         Sort sorting = new Sort(orders);
@@ -197,7 +200,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithPagingEmptyResult(){
+    public void testGetAllWithPagingEmptyResult() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
         Sort sorting = new Sort(orders);
@@ -207,7 +210,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeIs(){
+    public void testFindByAgeIs() {
         List<Person> personList = personRepository.findByAgeIs(30);
         assertTrue(personList.size() == 3);
         assertTrue(personList.contains(chris));
@@ -216,7 +219,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameEquals(){
+    public void testFindByNameEquals() {
         List<Person> personList = personRepository.findByNameEquals("Chris");
         assertTrue(personList.size() == 3);
         assertTrue(personList.contains(chris));
@@ -226,7 +229,7 @@ public abstract class BaseRepositoryTest {
 
 
     //@Test
-    public void testFindByAgeBetween(){
+    public void testFindByAgeBetween() {
         List<Person> personList = personRepository.findByAgeBetween(35, 52);
         assertTrue(personList.size() == 2);
         assertTrue(personList.contains(paul));
@@ -234,7 +237,7 @@ public abstract class BaseRepositoryTest {
     }
 
     //@Test
-    public void testFindByAgeLessThan(){
+    public void testFindByAgeLessThan() {
         List<Person> personList = personRepository.findByAgeLessThan(30);
         System.out.println("List: " + personList);
         assertTrue(personList.size() == 3);
@@ -253,18 +256,40 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeGreaterThan(){
+    public void testFindByAgeGreaterThan() {
         List<Person> personList = personRepository.findByAgeGreaterThan(40);
         assertTrue(personList.size() == 1);
         assertTrue(personList.contains(chris2));
     }
 
     @Test
-    public void testFindByAgeGreaterThanEqual(){
+    public void testFindByAgeGreaterThanEqual() {
         List<Person> personList = personRepository.findByAgeGreaterThanEqual(40);
         assertTrue(personList.size() == 2);
         assertTrue(personList.contains(chris2));
         assertTrue(personList.contains(paul));
+    }
+
+    @Test
+    public void testFindAllWithProjection() {
+        Iterable<Person> people = personRepository.findAll(projections("name", "id"));
+        ArrayList<Person> list = Lists.newArrayList(people);
+        assertEquals(5, list.size());
+
+        for (Person person : list) {
+            assertNotNull(person.getName());
+            assertNotNull(person.getId());
+            assertNull(person.getAge());
+        }
+    }
+
+    @Test
+    public void testFindByQueryWithProjection(){
+        List<Person> people = personRepository.findByAge(50, projections("name"));
+        assertEquals(1, people.size());
+        assertEquals("Chris", people.get(0).getName());
+        assertNull(people.get(0).getAge());
+
     }
 
     private void prepareDataForSortingTest() {
@@ -282,6 +307,7 @@ public abstract class BaseRepositoryTest {
         return Lists.newArrayList(all);
 
     }
+
     private List<Person> findPersons(Pageable pageable) {
         Page<Person> all = personRepository.findAll(pageable);
         return Lists.newArrayList(all);
@@ -290,7 +316,7 @@ public abstract class BaseRepositoryTest {
     private List<Person> findAll(List<String> ids) {
         Iterable<Person> persons = personRepository.findAll(ids);
         List<Person> personList = new ArrayList<>();
-        for(Person person:persons){
+        for (Person person : persons) {
             personList.add(person);
         }
         return personList;

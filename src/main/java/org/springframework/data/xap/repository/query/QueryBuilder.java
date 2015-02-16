@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 public class QueryBuilder {
 
-    private String query = new String();
+    private String query = "";
 
     public QueryBuilder(Part part){
         query = new AtomicPredicate(part).toString();

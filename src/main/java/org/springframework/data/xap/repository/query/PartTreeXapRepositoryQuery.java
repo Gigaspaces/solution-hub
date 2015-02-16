@@ -17,13 +17,13 @@ import java.util.List;
 /**
  * @author Anna_Babich.
  */
-public class PartTreeXapRepositoryQuery extends XapRepositoryQuery{
+public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
     private final XapQueryMethod method;
     private final PartTree tree;
     private final SpaceClient space;
 
-    public PartTreeXapRepositoryQuery(XapQueryMethod method, SpaceClient space){
+    public PartTreeXapRepositoryQuery(XapQueryMethod method, SpaceClient space) {
         super(method);
 
         Class<?> domainClass = method.getEntityInformation().getJavaType();
@@ -35,35 +35,63 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery{
 
     @Override
     public Object execute(Object[] parameters) {
+        // parse method and prepare SQLQuery
         ParametersParameterAccessor parameterAccessor = new ParametersParameterAccessor(method.getParameters(), parameters);
-
         String className = method.getPersistentEntity().getName();
-
         String query = new XapQueryCreator(tree, parameterAccessor).createQuery();
-
         SQLQuery sqlQuery = new SQLQuery(className, query);
 
-        Pageable pageable = extractPagingParameter(parameters);
-
-        int maxEntries = (pageable == null) ? Integer.MAX_VALUE : pageable.getOffset() + pageable.getPageSize();
-
+        // bind parameters
         sqlQuery.setParameters(prepareStringParameters(parameters));
 
+        // set projections
+        Projection projection = extractProjectionParameter(parameters);
+        if (projection != null){
+            sqlQuery.setProjections(projection.getProperties());
+        }
+
+        // extract paging param
+        Pageable pageable = extractPagingParameter(parameters);
+        int maxEntries = (pageable == null) ? Integer.MAX_VALUE : pageable.getOffset() + pageable.getPageSize();
+
+        // execute SQLQuery
         Object[] results = space.readMultiple(sqlQuery, maxEntries);
 
+        // client side pagination
         return applyPagination(results, parameters);
     }
 
+    /**
+     * @return null if not found
+     */
+    private Projection extractProjectionParameter(Object[] parameters) {
+        Projection result = null;
+        int count = 0;
+        for (Object parameter : parameters) {
+            if (parameter instanceof Projection) {
+                result = (Projection) parameter;
+                count++;
+            }
+        }
+        if (count > 1) {
+            throw new RuntimeException("Only one Projections parameter is allowed");
+        }
+        return result;
+    }
+
+    /**
+     * @return null if not found
+     */
     private Pageable extractPagingParameter(Object[] parameters) {
         Pageable result = null;
         int pageableCount = 0;
-        for (Object parameter : parameters){
-            if (parameter instanceof Pageable){
+        for (Object parameter : parameters) {
+            if (parameter instanceof Pageable) {
                 result = (Pageable) parameter;
                 pageableCount++;
             }
         }
-        if (pageableCount > 1){
+        if (pageableCount > 1) {
             throw new RuntimeException("Only one Pageable parameter is allowed");
         }
         return result;
@@ -71,8 +99,8 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery{
 
 
     private Object[] applyPagination(Object[] results, Object[] parameters) {
-        for (Object parameter : parameters){
-            if (parameter instanceof Pageable){
+        for (Object parameter : parameters) {
+            if (parameter instanceof Pageable) {
                 Pageable pageable = (Pageable) parameter;
                 int offset = pageable.getOffset();
                 int lastIndex = Ints.min(offset + pageable.getPageSize(), results.length);
@@ -90,8 +118,8 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery{
         for (Object parameter : parameters) {
             if (parameter == null || parameter instanceof Sort) {
                 stringParameters.add(parameter);
-            } else if (parameter instanceof Pageable){
-
+            } else if (parameter instanceof Pageable || parameter instanceof Projection) {
+                // skip
             } else {
                 switch (partsIterator.next().getType()) {
                     case CONTAINING:
