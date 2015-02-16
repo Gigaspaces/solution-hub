@@ -3,7 +3,6 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
-import com.google.common.collect.Lists;
 import com.j_spaces.core.client.SQLQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -79,20 +78,20 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Iterable<T> findAll() {
-        return findAllInternal(null, null, null);
+        return findAllSortedInternal(null, null, null);
     }
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids) {
-        return findByIdsInternal(ids, null);
+        return findAllByIdsInternal(ids, null);
     }
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids, Projection projection) {
-        return findByIdsInternal(ids, projection);
+        return findAllByIdsInternal(ids, projection);
     }
 
-    private Iterable<T> findByIdsInternal(Iterable<ID> ids, Projection projection){
+    private Iterable<T> findAllByIdsInternal(Iterable<ID> ids, Projection projection){
         Class<T> aClass = entityInformation.getJavaType();
         IdsQuery<T> query = new IdsQuery<>(aClass, toArray(ids));
 
@@ -105,24 +104,29 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Iterable<T> findAll(Projection projection) {
-        return findAllInternal(projection, null, null);
+        return findAllSortedInternal(projection, null, null);
     }
 
     @Override
     public Iterable<T> findAll(Sort sort) {
-        return findAllInternal(null, sort, null);
+        return findAllSortedInternal(null, sort, null);
+    }
+
+    @Override
+    public Iterable<T> findAll(Sort sort, Projection projection) {
+        return findAllSortedInternal(projection, sort, null);
     }
 
     @Override
     public Page<T> findAll(Pageable pageable) {
         int pageSize = pageable.getPageSize();
         int offset = pageable.getOffset();
-        List<T> allSortedInternal = findAllInternal(null, pageable.getSort(), offset + pageSize);
+        List<T> allSortedInternal = findAllSortedInternal(null, pageable.getSort(), offset + pageSize);
         List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList();
         return new PageImpl<T>(result);
     }
 
-    private List<T> findAllInternal(Projection projection, Sort sort, Integer count) {
+    private List<T> findAllSortedInternal(Projection projection, Sort sort, Integer count) {
         Class<T> aClass = entityInformation.getJavaType();
         StringBuilder stringBuilder = new StringBuilder("");
 

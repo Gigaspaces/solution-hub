@@ -157,14 +157,14 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void getAll() {
+    public void testFindAll() {
         List<Person> resultList = (List<Person>) personRepository.findAll();
         assertTrue(resultList.contains(paul));
         assertTrue(resultList.contains(chris));
     }
 
     @Test
-    public void getAllById() {
+    public void testFindAllById() {
         personRepository.save(nick);
         List<String> idList = new ArrayList<>();
         idList.add(chris.getId());
@@ -176,11 +176,27 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithSorting() {
+    public void testFindAllWithSorting() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
         Sort sorting = new Sort(orders);
         List<Person> persons = findPersons(sorting);
+        assertSortedByName(persons);
+    }
+
+    @Test
+    public void testFindAllWithSortingAndProjection() {
+        prepareDataForSortingTest();
+        List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
+        Sort sorting = new Sort(orders);
+        List<Person> persons = Lists.newArrayList(personRepository.findAll(sorting, projections("name", "id")));
+        assertSortedByName(persons);
+        for (Person person : persons) {
+            assertNull(person.getAge());
+        }
+    }
+
+    private void assertSortedByName(List<Person> persons) {
         assertEquals("5", persons.get(0).getId());
         assertEquals("4", persons.get(1).getId());
         assertEquals("2", persons.get(2).getId());
@@ -190,7 +206,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithPaging() {
+    public void testFindAllWithPaging() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
         Sort sorting = new Sort(orders);
@@ -201,7 +217,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testGetAllWithPagingEmptyResult() {
+    public void testFindAllWithPagingEmptyResult() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
         Sort sorting = new Sort(orders);
@@ -315,7 +331,6 @@ public abstract class BaseRepositoryTest {
             assertNotNull(person.getName());
             assertNull(person.getAge());
         }
-
     }
 
     private void prepareDataForSortingTest() {
