@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Oleksiy_Dyagilev
  */
-public interface PersonRepository extends XapRepository<Person, String>{
+public interface PersonRepository extends XapRepository<Person, String> {
 
     @Query("name=?")
     List<Person> findByName(String name);
@@ -25,4 +25,20 @@ public interface PersonRepository extends XapRepository<Person, String>{
     List<Person> findByAge(Integer age, Sort sort);
 
     List<Person> findByAge(Integer age, Pageable pageable);
+
+    List<Person> findByAgeIs(Integer age);
+
+    List<Person> findByNameEquals(String name);
+
+    List<Person> findByAgeBetween(Integer minAge, Integer maxAge);
+
+    List<Person> findByAgeLessThan(Integer age);
+
+    List<Person> findByAgeLessThanEqual(Integer age);
+
+    List<Person> findByAgeGreaterThan(Integer age);
+
+    List<Person> findByAgeGreaterThanEqual(Integer age);
+
+
 }

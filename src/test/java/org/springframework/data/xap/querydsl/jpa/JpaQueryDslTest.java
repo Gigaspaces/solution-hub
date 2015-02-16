@@ -50,5 +50,4 @@ public class JpaQueryDslTest extends BaseRepositoryTest {
                         .list(QPerson.person))
         );
     }
-
 }

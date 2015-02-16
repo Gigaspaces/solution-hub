@@ -8,8 +8,6 @@ import org.springframework.data.repository.core.support.RepositoryFactorySupport
 import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.repository.PersonRepository;
 import org.springframework.data.xap.repository.support.XapRepositoryFactory;
-import org.springframework.data.xap.service.PersonService;
-import org.springframework.data.xap.service.PersonServiceImpl;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 import org.springframework.data.xap.utils.TestUtils;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -42,8 +40,6 @@ public class RepositoryStandaloneTest extends BaseRepositoryTest {
     }
 
     private void injectDependencies(PersonRepository repository) {
-        PersonService service = new PersonServiceImpl();
-        ReflectionTestUtils.setField(service, "personRepository", repository);
-        ReflectionTestUtils.setField(this, "personService", service);
+        ReflectionTestUtils.setField(this, "personRepository", repository);
     }
 }
