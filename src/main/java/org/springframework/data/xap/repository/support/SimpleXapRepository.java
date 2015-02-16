@@ -36,14 +36,12 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     @Override
     public <S extends T> S save(S entity) {
         space.write(entity);
-        // TODO: think about auto-generated id
         return entity;
     }
 
     @Override
     public <S extends T> Iterable<S> save(Iterable<S> entities) {
         space.writeMultiple(toArray(entities));
-        // TODO: think about auto-generated id
         return entities;
     }
 
