@@ -3,6 +3,7 @@ package org.springframework.data.xap.querydsl.predicate;
 import com.mysema.query.types.Ops;
 import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpression;
 import com.mysema.query.types.expr.ComparableOperation;
 import org.junit.After;
@@ -239,6 +240,27 @@ public class PredicateQueryDslTest {
         assertEquals(asList(avolition), newArrayList(firstPage));
         assertEquals(asList(itspecial), newArrayList(secondPage));
         assertEquals(0, thirdPage.getSize());
+    }
+
+    @Test
+    public void testOperationPrecedence() {
+        // expected: select A1 and A2 or B1 and B2 = {A,B}
+        // query must result in "name = itspecial and id = 1 or name = avolition and id = 2"
+        BooleanExpression itspecialClauses = team.name.eq(itspecial.getName()).and(team.id.eq(itspecial.getId()));
+        BooleanExpression avolitionClauses = team.name.eq(avolition.getName()).and(team.id.eq(avolition.getId()));
+        assertEquals(
+                allTeams,
+                unsorted(itspecialClauses.or(avolitionClauses))
+        );
+
+        // expected: select (A1 or B1) and (A2 or B2) = {A,B}
+        // query must result in "(name = itspecial or name = avolition) and (id = 1 or id = 2)"
+        BooleanExpression nameClauses = team.name.eq(itspecial.getName()).or(team.name.eq(avolition.getName()));
+        BooleanExpression idClauses = team.id.eq(itspecial.getId()).or(team.id.eq(avolition.getId()));
+        assertEquals(
+                allTeams,
+                unsorted(nameClauses.and(idClauses))
+        );
     }
 
 
