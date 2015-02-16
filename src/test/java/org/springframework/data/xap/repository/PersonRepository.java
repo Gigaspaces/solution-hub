@@ -3,6 +3,7 @@ package org.springframework.data.xap.repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
+import org.springframework.data.xap.repository.query.Projection;
 
 import java.util.List;
 
@@ -39,6 +40,8 @@ public interface PersonRepository extends XapRepository<Person, String> {
     List<Person> findByAgeGreaterThan(Integer age);
 
     List<Person> findByAgeGreaterThanEqual(Integer age);
+
+    List<Person> findByAge(Integer age, Projection projection);
 
 
 }

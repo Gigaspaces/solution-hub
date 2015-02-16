@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.repository.XapRepository;
+import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.data.xap.repository.query.QueryBuilder;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 
@@ -60,16 +61,57 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Iterable<T> findAll() {
-        Class<T> aClass = entityInformation.getJavaType();
-        SQLQuery<T> query = new SQLQuery<>(aClass, "");
-        T[] found = space.readMultiple(query);
-        return new ArrayList<>(Arrays.asList(found));
+       return findAllInternal(null, null, null);
     }
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids) {
         Class<T> aClass = entityInformation.getJavaType();
         return space.readByIds(aClass, toArray(ids));
+    }
+
+    @Override
+    public Iterable<T> findAll(Projection projection) {
+        return findAllInternal(projection, null, null);
+    }
+
+    @Override
+    public Iterable<T> findAll(Sort sort) {
+        return findAllInternal(null, sort, null);
+    }
+
+    @Override
+    public Page<T> findAll(Pageable pageable) {
+        int pageSize = pageable.getPageSize();
+        int offset = pageable.getOffset();
+        List<T> allSortedInternal = findAllInternal(null, pageable.getSort(), offset + pageSize);
+        List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList() ;
+        return new PageImpl<T>(result);
+    }
+
+    private List<T> findAllInternal(Projection projection, Sort sort, Integer count){
+        Class<T> aClass = entityInformation.getJavaType();
+        StringBuilder stringBuilder = new StringBuilder("");
+
+        // count
+        if (count != null){
+            stringBuilder.append(" rownum <=").append(count);
+        }
+
+        // sort
+        if (sort != null) {
+            stringBuilder.append(new QueryBuilder(sort).buildQuery());
+        }
+
+        SQLQuery<T> query = new SQLQuery<>(aClass, stringBuilder.toString());
+
+        // projection
+        if (projection != null) {
+            query.setProjections(projection.getProperties());
+        }
+
+        T[] found = space.readMultiple(query);
+        return new ArrayList<>(Arrays.asList(found));
     }
 
     @Override
@@ -121,32 +163,5 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
             arrayList.add(elem);
         }
         return (E[]) arrayList.toArray();
-    }
-
-    @Override
-    public Iterable<T> findAll(Sort sort) {
-        return findAllSortedInternal(sort, 0);
-    }
-
-    @Override
-    public Page<T> findAll(Pageable pageable) {
-        int pageSize = pageable.getPageSize();
-        int offset = pageable.getOffset();
-        List<T> allSortedInternal = findAllSortedInternal(pageable.getSort(), offset + pageSize);
-        List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList() ;
-        return new PageImpl<T>(result);
-    }
-
-    private List<T> findAllSortedInternal(Sort sort, int count){
-        //TODO: null handling, ignore case
-        Class<T> aClass = entityInformation.getJavaType();
-        StringBuilder stringBuilder = new StringBuilder("");
-        if (count > 0 ){
-            stringBuilder.append(" rownum <=").append(count);
-        }
-        stringBuilder.append(new QueryBuilder(sort).buildQuery());
-        SQLQuery<T> query = new SQLQuery<>(aClass, stringBuilder.toString());
-        T[] entities = space.readMultiple(query);
-        return Lists.newArrayList(entities);
     }
 }
