@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xap-data="http://www.springframework.org/schema/data/xap"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/data/xap
+           http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd
+       ">
+
+    <!-- Enables initialization for XAP repositories:
+        all interfaces that extend the XapRepository will be initialized in the context
+        in this example only PersonRepository is initialized this way
+    -->
+    <xap-data:repositories base-package="org.springframework.data.xap.examples.repository"/>
+
+    <!-- Connects to a space
+        creates a space bean needed to connect to the space
+        here you can specify the path of wanted space
+    -->
+    <bean id="space" class="com.j_spaces.core.client.SpaceFinder" factory-method="find">
+        <constructor-arg value="jini://*/*/example-space"/>
+    </bean>
+
+    <!-- Configures client for repository to use
+        creates a SpaceClient used in initialized repositories to connect to the selected space
+    -->
+    <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
+        <property name="space" ref="space"/>
+    </bean>
+
+</beans>
