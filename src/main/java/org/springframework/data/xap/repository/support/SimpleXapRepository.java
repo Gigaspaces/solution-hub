@@ -34,6 +34,11 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
+    public SpaceClient nativeSpaceClient() {
+        return space;
+    }
+
+    @Override
     public <S extends T> S save(S entity) {
         space.write(entity);
         return entity;

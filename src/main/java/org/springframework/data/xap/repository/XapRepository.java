@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.xap.repository.query.Projection;
+import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 
@@ -14,6 +15,13 @@ import java.io.Serializable;
  */
 @NoRepositoryBean
 public interface XapRepository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID> {
+
+    /**
+     * Provides access to GigaSpaces XAP native API
+     *
+     * @return
+     */
+    SpaceClient nativeSpaceClient();
 
     /**
      * Retrieves an entity by its id.

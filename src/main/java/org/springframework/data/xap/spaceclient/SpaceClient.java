@@ -1,5 +1,6 @@
 package org.springframework.data.xap.spaceclient;
 
+import com.gigaspaces.async.AsyncFutureListener;
 import com.gigaspaces.client.*;
 import com.gigaspaces.internal.client.QueryResultTypeInternal;
 import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
@@ -13,10 +14,12 @@ import com.gigaspaces.query.aggregators.AggregationSet;
 import com.j_spaces.core.LeaseContext;
 import net.jini.core.transaction.Transaction;
 
+import java.util.concurrent.Future;
+
 /**
- * This is a replacement for GigaSpace/DefaultGigaSpace.
+ * This is a temporal replacement for GigaSpace/DefaultGigaSpace.
  * <p/>
- * We cannot use GigaSpace interface since it in openspaces which depends on Spring 3.2 which is not compatible
+ * We cannot use GigaSpace interface since it is in openspaces which depends on Spring 3.2 which is not compatible
  * with the latest Spring Data Commons (it depends on Spring 4)
  * <p/>
  * Once XAP supports the latest Spring version, this class can be substituted with GigaSpaces interface.
@@ -28,16 +31,13 @@ public class SpaceClient {
     private ISpaceProxy space;
 
     private long defaultReadTimeout = 0;
-
     private long defaultTakeTimeout = 0;
-
     private long defaultWriteLease = Long.MAX_VALUE;
 
     private WriteModifiers defaultWriteModifiers = WriteModifiers.NONE;
-
     private ReadModifiers defaultReadModifiers = ReadModifiers.NONE;
-
     private TakeModifiers defaultTakeModifiers = TakeModifiers.NONE;
+    private ChangeModifiers defaultChangeModifiers = ChangeModifiers.NONE;
 
     private static QueryResultTypeInternal toInternal(QueryResultType queryResultType) {
         if (queryResultType == null)
@@ -171,6 +171,223 @@ public class SpaceClient {
     public <T> T[] takeMultiple(ISpaceQuery<T> template, int maxEntries) {
         try {
             return (T[]) space.takeMultiple(template, getCurrentTransaction(), maxEntries, defaultTakeModifiers.getCode());
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> ChangeResult<T> change(ISpaceQuery<T> query, ChangeSet changeSet) {
+        try {
+            return space.change(query, changeSet, getCurrentTransaction(), 0, defaultChangeModifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> ChangeResult<T> change(ISpaceQuery<T> query, ChangeSet changeSet, ChangeModifiers modifiers) {
+        try {
+            return space.change(query, changeSet, getCurrentTransaction(), 0, modifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    ;
+
+    public <T> ChangeResult<T> change(ISpaceQuery<T> query, ChangeSet changeSet, long timeout) {
+        try {
+            return space.change(query, changeSet, getCurrentTransaction(), timeout, defaultChangeModifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> ChangeResult<T> change(ISpaceQuery<T> query, ChangeSet changeSet, ChangeModifiers modifiers, long timeout) {
+        try {
+            return space.change(query, changeSet, getCurrentTransaction(), timeout, modifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    ;
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), 0, defaultChangeModifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet,
+                                                   AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), 0, defaultChangeModifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet, long timeout) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), timeout, defaultChangeModifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet, long timeout,
+                                                   AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), timeout, defaultChangeModifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet, ChangeModifiers modifiers) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), 0, modifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet, ChangeModifiers modifiers,
+                                                   AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), 0, modifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet, ChangeModifiers modifiers,
+                                                   long timeout) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), timeout, modifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> Future<ChangeResult<T>> asyncChange(ISpaceQuery<T> query, ChangeSet changeSet, ChangeModifiers modifiers,
+                                                   long timeout, AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(query, changeSet, getCurrentTransaction(), timeout, modifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> ChangeResult<T> change(T template, ChangeSet changeSet) {
+        try {
+            return space.change(template, changeSet, getCurrentTransaction(), 0, defaultChangeModifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> ChangeResult<T> change(T template, ChangeSet changeSet, ChangeModifiers modifiers) {
+        try {
+            return space.change(template, changeSet, getCurrentTransaction(), 0, modifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    ;
+
+
+    public <T> ChangeResult<T> change(T template, ChangeSet changeSet, long timeout) {
+        try {
+            return space.change(template, changeSet, getCurrentTransaction(), timeout, defaultChangeModifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> ChangeResult<T> change(T template, ChangeSet changeSet, ChangeModifiers modifiers, long timeout) {
+        try {
+            return space.change(template, changeSet, getCurrentTransaction(), timeout, modifiers);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), 0, defaultChangeModifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet,
+                                                   AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), 0, defaultChangeModifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet, long timeout) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), timeout, defaultChangeModifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet, long timeout,
+                                                   AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), timeout, defaultChangeModifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet, ChangeModifiers modifiers) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), 0, modifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet, ChangeModifiers modifiers,
+                                                   AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), 0, modifiers, listener);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet, ChangeModifiers modifiers,
+                                                   long timeout) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), timeout, modifiers, null);
+        } catch (Exception e) {
+            throw new DataAccessException(e);
+        }
+    }
+
+    public <T> Future<ChangeResult<T>> asyncChange(T template, ChangeSet changeSet, ChangeModifiers modifiers,
+                                                   long timeout, AsyncFutureListener<ChangeResult<T>> listener) {
+        try {
+            return space.asyncChange(template, changeSet, getCurrentTransaction(), timeout, modifiers, listener);
         } catch (Exception e) {
             throw new DataAccessException(e);
         }
