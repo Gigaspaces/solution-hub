@@ -29,7 +29,7 @@ public class RepositoryJavaConfigTest extends BaseRepositoryTest {
     @Configuration
     @ComponentScan("org.springframework.data.xap")
     @PropertySource("classpath:config.properties")
-    @EnableXapRepositories("org.springframework.data.xap.repository")
+    @EnableXapRepositories(value = "org.springframework.data.xap.repository", namedQueriesLocation = "classpath:named-queries.properties")
     public static class ContextConfiguration {
 
         @Autowired

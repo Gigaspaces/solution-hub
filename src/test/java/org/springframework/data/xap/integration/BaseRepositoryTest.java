@@ -57,6 +57,7 @@ public abstract class BaseRepositoryTest {
         personRepository.deleteAll();
     }
 
+
     @Test
     public void testFindByAgePagedCreatedQuery() {
         Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
@@ -112,6 +113,14 @@ public abstract class BaseRepositoryTest {
         assertTrue(person.contains(chris));
         assertTrue(person.contains(chris3));
         assertTrue(person.contains(paul2));
+    }
+
+    @Test
+    public void testFindBySpouseAgeNamedQuery() {
+        List<Person> person = personRepository.findBySpouseAge(25);
+        assertEquals(2, person.size());
+        assertTrue(person.contains(paul));
+        assertTrue(person.contains(chris));
     }
 
     @Test

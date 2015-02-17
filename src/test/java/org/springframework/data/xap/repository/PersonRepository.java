@@ -43,5 +43,5 @@ public interface PersonRepository extends XapRepository<Person, String> {
 
     List<Person> findByAge(Integer age, Projection projection);
 
-
+    List<Person> findBySpouseAge(Integer age);
 }
