@@ -115,14 +115,16 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
             // append row num and order clause
             append(PAGING_ROW_NUM);
             append(String.valueOf(pageable.getOffset() + pageable.getPageSize()));
-            append(ORDER_BY);
-            String prefix = "";
-            for (Sort.Order order : pageable.getSort()) {
-                append(prefix);
-                prefix = LISTS_SEPARATOR;
+            if (pageable.getSort() != null) {
+                append(ORDER_BY);
+                String prefix = "";
+                for (Sort.Order order : pageable.getSort()) {
+                    append(prefix);
+                    prefix = LISTS_SEPARATOR;
 
-                append(order.getProperty());
-                append(order.getDirection() == Sort.Direction.ASC ? ORDER_ASC : ORDER_DESC);
+                    append(order.getProperty());
+                    append(order.getDirection() == Sort.Direction.ASC ? ORDER_ASC : ORDER_DESC);
+                }
             }
         } else if (orders != null && orders.length > 0) {
             // append order clause
@@ -140,7 +142,7 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
         SQLQuery<T> query = new SQLQuery<>(type, toString());
         query.setParameters(parameters.toArray());
 
-        if (projection != null){
+        if (projection != null) {
             query.setProjections(projection.getProperties());
         }
 

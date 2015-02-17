@@ -240,6 +240,9 @@ public class PredicateQueryDslTest {
         assertEquals(asList(avolition), newArrayList(firstPage));
         assertEquals(asList(itspecial), newArrayList(secondPage));
         assertEquals(0, thirdPage.getSize());
+
+        // paging without sort
+        assertEquals(allTeams, newHashSet(repository.findAll(null, new PageRequest(0, 2))));
     }
 
     @Test
