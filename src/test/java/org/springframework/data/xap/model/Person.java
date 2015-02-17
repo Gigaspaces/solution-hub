@@ -6,6 +6,7 @@ import com.gigaspaces.annotation.pojo.SpaceId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -22,6 +23,10 @@ public class Person implements Serializable {
 
     private Person spouse;
 
+    private Date birthday;
+
+    private Boolean active;
+
     public Person() {
     }
 
@@ -29,17 +34,27 @@ public class Person implements Serializable {
         this.name = name;
     }
 
-    public Person(String id, String name, Integer age) {
+    public Person(String id, String name, Integer age, Date birthday, Boolean active) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.birthday = birthday;
+        this.active = active;
     }
 
-    public Person(String id, String name, Integer age, Person spouse) {
+    public Person(String id, String name, Integer age, Person spouse, Date birthday, Boolean active) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.spouse = spouse;
+        this.birthday = birthday;
+        this.active = active;
+    }
+
+    public Person(String id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
     }
 
     public String getName() {
@@ -75,6 +90,22 @@ public class Person implements Serializable {
         this.spouse = spouse;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,7 +113,9 @@ public class Person implements Serializable {
 
         Person person = (Person) o;
 
+        if (active != null ? !active.equals(person.active) : person.active != null) return false;
         if (age != null ? !age.equals(person.age) : person.age != null) return false;
+        if (birthday != null ? !birthday.equals(person.birthday) : person.birthday != null) return false;
         if (id != null ? !id.equals(person.id) : person.id != null) return false;
         if (name != null ? !name.equals(person.name) : person.name != null) return false;
         if (spouse != null ? !spouse.equals(person.spouse) : person.spouse != null) return false;
@@ -96,6 +129,8 @@ public class Person implements Serializable {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (spouse != null ? spouse.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
         return result;
     }
 
@@ -106,6 +141,8 @@ public class Person implements Serializable {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", spouse=" + spouse +
+                ", birthday=" + birthday +
+                ", active=" + active +
                 '}';
     }
 }

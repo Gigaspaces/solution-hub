@@ -104,27 +104,33 @@ public class QueryBuilder {
             //TODO check all operators
             switch (type) {
                 case IN:
-                    return "IN SET";
+                    return "IN";
                 case NOT_IN:
                     return "NOT IN SET";
+                case AFTER:
                 case GREATER_THAN:
                     return ">";
                 case GREATER_THAN_EQUAL:
                     return ">=";
+                case BEFORE:
                 case LESS_THAN:
                     return "<";
                 case LESS_THAN_EQUAL:
                     return "<=";
                 case IS_NOT_NULL:
+                    return "is NOT";
                 case NEGATING_SIMPLE_PROPERTY:
                     return "!=";
                 case LIKE:
                 case STARTING_WITH:
                 case ENDING_WITH:
                 case CONTAINING:
-                    return "LIKE";
-                case FALSE:
+                    return "like";
+                case NOT_LIKE:
+                    return "NOT like";
                 case IS_NULL:
+                    return "is";
+                case FALSE:
                 case SIMPLE_PROPERTY:
                 case TRUE:
                     return "=";
