@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.model.Team;
 import org.springframework.data.xap.model.TeamStatus;
+import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -32,6 +33,7 @@ import static org.junit.Assert.*;
 import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
+import static org.springframework.data.xap.repository.query.Projection.projections;
 
 /**
  * @author Leonid_Poliakov
@@ -330,6 +332,49 @@ public class PredicateQueryDslTest {
     public void testNotBetween() {
         one(team.membersCount.notBetween(5, 55));
     }
+
+    @Test
+    public void testFindOneWithProjection() {
+        Team foundTeam = repository.findOne(team.name.eq(avolition.getName()), projections("name"));
+        assertEquals(avolition.getName(), foundTeam.getName());
+        assertNull(foundTeam.getId());
+    }
+
+    @Test
+    public void testFindAllWithProjection() {
+        Predicate allPredicate = null;
+        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate, projections("name")));
+        assertEquals(2, foundTeams.size());
+        for (Team team : foundTeams) {
+            assertNotNull(team.getName());
+            assertNull(team.getId());
+        }
+    }
+
+    @Test
+    public void testFindAllWithOrderAndProjection() {
+        Predicate allPredicate = null;
+        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, projections("name"), team.name.asc()));
+        assertEquals(2, foundTeams.size());
+        for (Team team : foundTeams) {
+            assertNotNull(team.getName());
+            assertNull(team.getId());
+        }
+        assertEquals(avolition.getName(), foundTeams.get(0).getName());
+        assertEquals(itspecial.getName(), foundTeams.get(1).getName());
+    }
+
+    @Test
+    public void testFindAllWithPagingAndProjection() {
+        Predicate allPredicate = null;
+        PageRequest page = new PageRequest(0, 1, new Sort(Sort.Direction.ASC, "name"));
+        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, page, projections("name")));
+        assertEquals(1, foundTeams.size());
+        assertNotNull(foundTeams.get(0).getName());
+        assertNull(foundTeams.get(0).getId());
+        assertEquals(avolition.getName(), foundTeams.get(0).getName());
+    }
+
 
     private Team one(Predicate predicate) {
         return repository.findOne(predicate);
