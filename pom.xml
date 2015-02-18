@@ -49,6 +49,32 @@
             </testResource>
         </testResources>
         <plugins>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+
+                    <execution>
+                        <id>compile</id>
+                        <phase>test-compile</phase>
+                        <configuration>
+                            <target>
+                                <property name="test_classpath" refid="maven.test.classpath"/>
+                                <java classname="org.springframework.data.xap.utils.SpaceStarter" fork="true" spawn="true">
+                                    <classpath>
+                                        <pathelement path="${test_classpath}"/>
+                                    </classpath>
+                                </java>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
