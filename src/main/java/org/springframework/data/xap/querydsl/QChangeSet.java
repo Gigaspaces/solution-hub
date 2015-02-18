@@ -19,96 +19,119 @@ public class QChangeSet {
 
     private ChangeSet delegate = new ChangeSet();
 
-    public ChangeSet custom(CustomChangeOperation changeOperation) {
-        return delegate.custom(changeOperation);
+    public static QChangeSet changeSet(){
+        return new QChangeSet();
     }
 
-    public ChangeSet set(Path<?> path, Serializable value) {
-        return delegate.set(convertPathToXapFieldString(path), value);
+    public QChangeSet custom(CustomChangeOperation changeOperation) {
+        delegate.custom(changeOperation);
+        return this;
     }
 
-    public ChangeSet unset(Path<?> path) {
-        return delegate.unset(convertPathToXapFieldString(path));
+    public QChangeSet set(Path<?> path, Serializable value) {
+        delegate.set(convertPathToXapFieldString(path), value);
+        return this;
     }
 
-    public ChangeSet increment(Path<Byte> path, byte delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet unset(Path<?> path) {
+        delegate.unset(convertPathToXapFieldString(path));
+        return this;
     }
 
-    public ChangeSet increment(Path<Short> path, short delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet increment(Path<Byte> path, byte delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet increment(Path<Integer> path, int delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet increment(Path<Short> path, short delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet increment(Path<Long> path, long delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet increment(Path<Integer> path, int delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet increment(Path<Float> path, float delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet increment(Path<Long> path, long delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet increment(Path<Double> path, double delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet increment(Path<Float> path, float delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet increment(Path<Number> path, Number delta) {
-        return delegate.increment(convertPathToXapFieldString(path), delta);
+    public QChangeSet increment(Path<Double> path, double delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet decrement(Path<Byte> path, byte delta) {
-        return delegate.increment(convertPathToXapFieldString(path), -delta);
+    public QChangeSet increment(Path<Number> path, Number delta) {
+        delegate.increment(convertPathToXapFieldString(path), delta);
+        return this;
     }
 
-    public ChangeSet decrement(Path<Short> path, short delta) {
-        return delegate.increment(convertPathToXapFieldString(path), -delta);
+    public QChangeSet decrement(Path<Byte> path, byte delta) {
+        delegate.increment(convertPathToXapFieldString(path), -delta);
+        return this;
     }
 
-    public ChangeSet decrement(Path<Integer> path, int delta) {
+    public QChangeSet decrement(Path<Short> path, short delta) {
+        delegate.increment(convertPathToXapFieldString(path), -delta);
+        return this;
+    }
+
+    public QChangeSet decrement(Path<Integer> path, int delta) {
         return this.increment(path, (int) (-delta));
     }
 
-    public ChangeSet decrement(Path<Long> path, long delta) {
+    public QChangeSet decrement(Path<Long> path, long delta) {
         return this.increment(path, -delta);
     }
 
-    public ChangeSet decrement(Path<Float> path, float delta) {
+    public QChangeSet decrement(Path<Float> path, float delta) {
         return this.increment(path, -delta);
     }
 
-    public ChangeSet decrement(Path<Double> path, double delta) {
+    public QChangeSet decrement(Path<Double> path, double delta) {
         return this.increment(path, -delta);
     }
 
-    public ChangeSet addToCollection(Path<? extends Collection> path, Serializable newItem) {
-        return delegate.addToCollection(convertPathToXapFieldString(path), newItem);
+    public QChangeSet addToCollection(Path<? extends Collection> path, Serializable newItem) {
+        delegate.addToCollection(convertPathToXapFieldString(path), newItem);
+        return this;
     }
 
-    public ChangeSet addAllToCollection(Path<? extends Collection> path, Serializable... newItems) {
-        return delegate.addAllToCollection(convertPathToXapFieldString(path), newItems);
+    public QChangeSet addAllToCollection(Path<? extends Collection> path, Serializable... newItems) {
+        delegate.addAllToCollection(convertPathToXapFieldString(path), newItems);
+        return this;
     }
 
-    public ChangeSet addAllToCollection(Path<? extends Collection> path, Collection<? extends Serializable> newItems) {
-        return delegate.addAllToCollection(convertPathToXapFieldString(path), newItems);
+    public QChangeSet addAllToCollection(Path<? extends Collection> path, Collection<? extends Serializable> newItems) {
+        delegate.addAllToCollection(convertPathToXapFieldString(path), newItems);
+        return this;
     }
 
-    public ChangeSet removeFromCollection(Path<? extends Collection> path, Serializable itemToRemove) {
-        return delegate.removeFromCollection(convertPathToXapFieldString(path), itemToRemove);
+    public QChangeSet removeFromCollection(Path<? extends Collection> path, Serializable itemToRemove) {
+        delegate.removeFromCollection(convertPathToXapFieldString(path), itemToRemove);
+        return this;
     }
 
-    public ChangeSet putInMap(Path<? extends Map> path, Serializable key, Serializable value) {
-        return delegate.putInMap(convertPathToXapFieldString(path), key, value);
+    public QChangeSet putInMap(Path<? extends Map> path, Serializable key, Serializable value) {
+        delegate.putInMap(convertPathToXapFieldString(path), key, value);
+        return this;
     }
 
-    public ChangeSet removeFromMap(Path<? extends Map> path, Serializable key) {
-        return delegate.removeFromMap(convertPathToXapFieldString(path), key);
+    public QChangeSet removeFromMap(Path<? extends Map> path, Serializable key) {
+        delegate.removeFromMap(convertPathToXapFieldString(path), key);
+        return this;
     }
 
-    public ChangeSet lease(long lease) {
-        return delegate.lease(lease);
+    public QChangeSet lease(long lease) {
+        delegate.lease(lease);
+        return this;
     }
 
     public ChangeSet getNativeChangeSet(){

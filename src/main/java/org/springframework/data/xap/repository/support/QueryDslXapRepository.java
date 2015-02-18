@@ -87,15 +87,6 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         return space.change(query, qChangeSet.getNativeChangeSet());
     }
 
-    @Override
-    public <F extends Number> ChangeResult<T> increment(Predicate predicate, Path<F> path, F delta) {
-        ISpaceQuery<T> query = createQuery(predicate, null, null);
-        String pathString = convertPathToXapFieldString(path);
-        ChangeSet changeSet = new ChangeSet();
-        changeSet.increment(pathString, delta);
-        return space.change(query, changeSet);
-    }
-
     private Page<T> findAllWithPagingInternal(Predicate predicate, Pageable pageable, Projection projection) {
         List<T> sortedResults = readMultiple(createQuery(predicate, pageable, projection));
         List<T> pageResults;

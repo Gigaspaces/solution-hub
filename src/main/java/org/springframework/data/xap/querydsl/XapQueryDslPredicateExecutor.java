@@ -70,17 +70,4 @@ public interface XapQueryDslPredicateExecutor<T> extends QueryDslPredicateExecut
      */
     ChangeResult<T> change(Predicate predicate, QChangeSet changeSet);
 
-
-    /**
-     * Increment a property by given delta for entities matching predicate.
-     * A shortcut for for more generic change() method.
-     *
-     * @param predicate predicate to match entities
-     * @param path      property path
-     * @param delta     increment delta
-     * @param <F>       type of property
-     * @return A <code>ChangeResult</code> containing the details of the change operation affect.
-     */
-    <F extends Number> ChangeResult<T> increment(Predicate predicate, Path<F> path, F delta);
-
 }

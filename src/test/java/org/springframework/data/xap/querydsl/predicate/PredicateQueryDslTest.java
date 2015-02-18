@@ -31,6 +31,7 @@ import static org.junit.Assert.*;
 import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
+import static org.springframework.data.xap.querydsl.QChangeSet.changeSet;
 import static org.springframework.data.xap.querydsl.QueryDslProjection.projection;
 import static org.springframework.data.xap.repository.query.Projection.projections;
 
@@ -300,7 +301,7 @@ public class PredicateQueryDslTest {
     @Test
     public void testFindAllWithProjection() {
         Predicate allPredicate = null;
-        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate,  projection(team.name)));
+        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate, projection(team.name)));
         assertEquals(2, foundTeams.size());
         for (Team team : foundTeams) {
             assertNotNull(team.getName());
@@ -348,20 +349,15 @@ public class PredicateQueryDslTest {
     }
 
     @Test
-    public void testIncrement() {
-        repository.increment(team.name.eq(avolition.getName()), team.leader.age, 5);
-        Team updated = repository.findOne(team.name.eq(avolition.getName()));
-        assertEquals(avolition.getLeader().getAge() + 5, updated.getLeader().getAge().intValue());
-    }
-
-    @Test
     public void testChange() {
-        QChangeSet qChangeSet = new QChangeSet();
-        qChangeSet.increment(team.leader.age, 5);
+        repository.change(
+                team.name.eq(avolition.getName()),
+                changeSet().increment(team.leader.age, 5).unset(team.status)
+        );
 
-        repository.change(team.name.eq(avolition.getName()), qChangeSet);
         Team updated = repository.findOne(team.name.eq(avolition.getName()));
         assertEquals(avolition.getLeader().getAge() + 5, updated.getLeader().getAge().intValue());
+        assertNull(updated.getStatus());
     }
 
 
