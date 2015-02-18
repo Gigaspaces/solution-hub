@@ -1,0 +1,11 @@
+<dependencies>
+
+    <!-- other dependency elements omitted -->
+
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-xap</artifactId>
+        <version>1.0.0.RELEASE</version>
+    </dependency>
+
+</dependencies>

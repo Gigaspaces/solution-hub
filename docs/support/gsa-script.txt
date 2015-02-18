@@ -1,0 +1,7 @@
+*Windows*
+gs-agent.bat
+gs.bat deploy-space -cluster total_members=1,1 space
+
+*Unix*
+./gs-agent.sh
+./gs.sh deploy-space -cluster total_members=1,1 space

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- A bean representing a space -->
+    <bean id="space" class="com.j_spaces.core.client.SpaceFinder" factory-method="find">
+        <constructor-arg value="jini://*/*/space"/>
+        (1)
+    </bean>
+
+    <!-- GigaSpace interface implementation -->
+    <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
+        <property name="space" ref="space"/>
+        (2)
+    </bean>
+
+</beans>
