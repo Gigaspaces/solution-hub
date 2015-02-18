@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.model.Team;
 import org.springframework.data.xap.model.TeamStatus;
+import org.springframework.data.xap.querydsl.QChangeSet;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -30,8 +31,8 @@ import static org.junit.Assert.*;
 import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
+import static org.springframework.data.xap.querydsl.QueryDslProjection.projection;
 import static org.springframework.data.xap.repository.query.Projection.projections;
-import static org.springframework.data.xap.repository.support.QueryDslProjection.projection;
 
 /**
  * @author Leonid_Poliakov
