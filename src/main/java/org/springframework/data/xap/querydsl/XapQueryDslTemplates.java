@@ -5,7 +5,9 @@ import com.mysema.query.types.Ops;
 import com.mysema.query.types.PathType;
 import com.mysema.query.types.Templates;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,6 +19,7 @@ public class XapQueryDslTemplates extends Templates {
     public static final XapQueryDslTemplates DEFAULT = new XapQueryDslTemplates();
 
     private Set<Operator> allowedOperators;
+    private Map<Operator, Operator> oppositesMapping;
 
     protected XapQueryDslTemplates() {
         this('\\');
@@ -25,6 +28,7 @@ public class XapQueryDslTemplates extends Templates {
     protected XapQueryDslTemplates(char escape) {
         super(escape);
         allowedOperators = new HashSet<>();
+        oppositesMapping = new HashMap<>();
         // operations below are described as supported by SQLQuery
         // some of these duplicate the code in parent to make sure those operations are properly supported
 
@@ -49,6 +53,11 @@ public class XapQueryDslTemplates extends Templates {
         // comparison
         template(Ops.BETWEEN, "{0} between {1} and {2}", 30);
 
+        // negative comparison (will replace not(operation) with these)
+        negativeTemplate(XapQueryDslOperations.NOT_EMPTY, Ops.STRING_IS_EMPTY, "{0} <> ''");
+        negativeTemplate(XapQueryDslOperations.NOT_BETWEEN, Ops.BETWEEN, "({0} < {1} or {0} > {2})", 30);
+        negativeTemplate(XapQueryDslOperations.NOT_LIKE, Ops.LIKE, "{0} not like {1}", 26);
+
         // variables
         template(Ops.DateTimeOps.SYSDATE, "sysdate");
 
@@ -69,7 +78,23 @@ public class XapQueryDslTemplates extends Templates {
         allowedOperators.add(operator);
     }
 
+    private void negativeTemplate(Operator<?> operator, Operator<?> opposite, String pattern) {
+        add(operator, pattern);
+        oppositesMapping.put(opposite, operator);
+        allowedOperators.add(operator);
+    }
+
+    private void negativeTemplate(Operator<?> operator, Operator<?> opposite, String pattern, int precedence) {
+        add(operator, pattern, precedence);
+        oppositesMapping.put(opposite, operator);
+        allowedOperators.add(operator);
+    }
+
     public boolean isAllowed(Operator<?> operator) {
         return allowedOperators.contains(operator);
+    }
+
+    public Operator getNegative(Operator<?> operator) {
+        return oppositesMapping.get(operator);
     }
 }

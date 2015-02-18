@@ -45,10 +45,29 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
     @Override
     public Void visit(Operation<?> operation, @Nullable Void context) {
         Operator<?> operator = operation.getOperator();
+        // try to redefine operation
+        if (operator == Ops.NOT) {
+            List<Expression<?>> arguments = operation.getArgs();
+            if (arguments != null && arguments.size() == 1) {
+                Expression<?> innerExpression = arguments.get(0);
+                if (innerExpression instanceof Operation) {
+                    Operation innerOperation = (Operation) innerExpression;
+                    Operator negative = TEMPLATES.getNegative(innerOperation.getOperator());
+                    if (negative != null) {
+                        operator = negative;
+                        operation = innerOperation;
+                    }
+                }
+            }
+        }
+
+        // check is operation is allowed
         if (!TEMPLATES.isAllowed(operator)) {
             throw new UnsupportedOperationException("operator " + operator + " is not supported by XAP repositories");
         }
-        super.visit(operation, context);
+
+        // apply operation
+        visitOperation(operation.getType(), operator, operation.getArgs());
         return null;
     }
 

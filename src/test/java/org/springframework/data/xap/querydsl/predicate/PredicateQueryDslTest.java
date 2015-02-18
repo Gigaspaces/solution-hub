@@ -152,6 +152,26 @@ public class PredicateQueryDslTest {
                 allTeams,
                 unsorted(team.membersCount.between(5, 55))
         );
+        // not between
+        assertEquals(
+                itspecial,
+                one(team.membersCount.notBetween(40, 60))
+        );
+        // matches regex
+        assertEquals(
+                avolition,
+                one(team.name.matches(".*tion"))
+        );
+        // is empty
+        assertEquals(
+                itspecial,
+                one(team.leader.name.isEmpty())
+        );
+        // is not empty
+        assertEquals(
+                avolition,
+                one(team.leader.name.isNotEmpty())
+        );
     }
 
     @Test
@@ -327,22 +347,6 @@ public class PredicateQueryDslTest {
         );
     }
 
-    @Test
-    public void testFindWithRegex() {
-        assertEquals(
-                avolition,
-                one(team.name.matches(".*tion"))
-        );
-    }
-
-    @Test
-    public void testFindWithIsEmpty() {
-        assertEquals(
-                itspecial,
-                one(team.leader.name.isEmpty())
-        );
-    }
-
 
     // Negative tests for unsupported Query DSL operators
 
@@ -374,20 +378,6 @@ public class PredicateQueryDslTest {
     @Test(expected = UnsupportedOperationException.class)
     public void testStartsWithIgnoreCase() {
         one(team.name.startsWithIgnoreCase("avoli"));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testIsNotEmpty() {
-        // QueryDSL breaks "not like" into "not(like)"
-        // XAP does not support "not" operation
-        one(team.name.isNotEmpty());
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testNotBetween() {
-        // QueryDSL breaks "not between" into "not(between)"
-        // XAP does not support "not" operation
-        one(team.membersCount.notBetween(5, 55));
     }
 
     private Team one(Predicate predicate) {
