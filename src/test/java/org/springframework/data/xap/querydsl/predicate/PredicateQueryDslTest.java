@@ -41,7 +41,7 @@ import static org.springframework.data.xap.repository.query.Projection.projectio
 @ContextConfiguration
 public class PredicateQueryDslTest {
     private static final Person nick = new Person("1", "Nick", 25);
-    private static final Person chris = new Person("2", "Chris", 40);
+    private static final Person chris = new Person("2", "", 40);
     private static final Person paul = new Person("3", "Paul", 33);
     private static final Team itspecial = new Team("1", "itspecial", chris, 10, paul, TeamStatus.ACTIVE, currentDay(+1));
     private static final Team avolition = new Team("2", "avolition", nick, 50, null, INACTIVE, currentDay(-1));
