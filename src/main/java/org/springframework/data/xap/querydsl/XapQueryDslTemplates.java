@@ -44,6 +44,7 @@ public class XapQueryDslTemplates extends Templates {
         template(Ops.IS_NOT_NULL, "{0} is not null", 26);
         template(Ops.IN, "{0} in ({1})", 27);
         template(Ops.NOT_IN, "{0} not in ({1})", 27);
+        template(Ops.STRING_IS_EMPTY, "{0} = ''");
 
         // comparison
         template(Ops.BETWEEN, "{0} between {1} and {2}", 30);
@@ -53,6 +54,9 @@ public class XapQueryDslTemplates extends Templates {
 
         // literals
         template(PathType.PROPERTY, "{1s}");
+
+        // regex like
+        template(Ops.MATCHES, "{0} rlike {1}");
     }
 
     private void template(Operator<?> operator, String pattern) {

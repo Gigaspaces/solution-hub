@@ -1,6 +1,8 @@
 package org.springframework.data.xap.querydsl.predicate;
 
-import com.mysema.query.types.*;
+import com.mysema.query.types.Ops;
+import com.mysema.query.types.OrderSpecifier;
+import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpression;
 import com.mysema.query.types.expr.ComparableOperation;
@@ -30,7 +32,6 @@ import static org.junit.Assert.*;
 import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
-import static org.springframework.data.xap.repository.query.Projection.projections;
 import static org.springframework.data.xap.repository.support.QueryDslProjection.projection;
 
 /**
@@ -40,7 +41,7 @@ import static org.springframework.data.xap.repository.support.QueryDslProjection
 @ContextConfiguration
 public class PredicateQueryDslTest {
     private static final Person nick = new Person("1", "Nick", 25);
-    private static final Person cris = new Person("2", "Cris", 40);
+    private static final Person cris = new Person("2", "", 40);
     private static final Person paul = new Person("3", "Paul", 33);
     private static final Team itspecial = new Team("1", "itspecial", cris, 10, paul, TeamStatus.ACTIVE, currentDay(+1));
     private static final Team avolition = new Team("2", "avolition", nick, 50, null, INACTIVE, currentDay(-1));
@@ -279,7 +280,7 @@ public class PredicateQueryDslTest {
     @Test
     public void testFindAllWithProjection() {
         Predicate allPredicate = null;
-        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate,  projection(team.name)));
+        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate, projection(team.name)));
         assertEquals(2, foundTeams.size());
         for (Team team : foundTeams) {
             assertNotNull(team.getName());
@@ -311,9 +312,6 @@ public class PredicateQueryDslTest {
         assertEquals(avolition.getName(), foundTeams.get(0).getName());
     }
 
-
-    // Negative tests for unsupported Query DSL operators
-
     @Test
     public void testFindWithSysdate() {
         // before sysdate
@@ -328,6 +326,25 @@ public class PredicateQueryDslTest {
                 one(team.creationDate.gt(sysdate()))
         );
     }
+
+    @Test
+    public void testFindWithRegex() {
+        assertEquals(
+                avolition,
+                one(team.name.matches(".*tion"))
+        );
+    }
+
+    @Test
+    public void testFindWithIsEmpty() {
+        assertEquals(
+                itspecial,
+                one(team.leader.name.isEmpty())
+        );
+    }
+
+
+    // Negative tests for unsupported Query DSL operators
 
     @Test(expected = UnsupportedOperationException.class)
     public void testContains() {
@@ -360,22 +377,16 @@ public class PredicateQueryDslTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testIsEmpty() {
-        one(team.name.isEmpty());
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
     public void testIsNotEmpty() {
+        // QueryDSL breaks "not like" into "not(like)"
+        // XAP does not support "not" operation
         one(team.name.isNotEmpty());
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testMatches() {
-        one(team.name.matches(".*tion"));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
     public void testNotBetween() {
+        // QueryDSL breaks "not between" into "not(between)"
+        // XAP does not support "not" operation
         one(team.membersCount.notBetween(5, 55));
     }
 
