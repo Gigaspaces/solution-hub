@@ -1,5 +1,7 @@
 package org.springframework.data.xap.repository.support;
 
+import com.gigaspaces.client.ChangeResult;
+import com.gigaspaces.client.ChangeSet;
 import com.gigaspaces.query.ISpaceQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
 import com.google.common.base.Joiner;
@@ -9,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.core.EntityInformation;
+import org.springframework.data.xap.querydsl.QChangeSet;
+import org.springframework.data.xap.querydsl.Utils;
 import org.springframework.data.xap.querydsl.XapQueryDslConverter;
 import org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor;
 import org.springframework.data.xap.repository.query.Projection;
@@ -19,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static org.springframework.data.xap.querydsl.Utils.convertPathToXapFieldString;
 
 /**
  * @author Leonid_Poliakov
@@ -75,6 +81,21 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         return findAllWithPagingInternal(predicate, pageable, convertQTupleToProjection(projection));
     }
 
+    @Override
+    public ChangeResult<T> change(Predicate predicate, QChangeSet qChangeSet) {
+        ISpaceQuery<T> query = createQuery(predicate, null, null);
+        return space.change(query, qChangeSet.getNativeChangeSet());
+    }
+
+    @Override
+    public <F extends Number> ChangeResult<T> increment(Predicate predicate, Path<F> path, F delta) {
+        ISpaceQuery<T> query = createQuery(predicate, null, null);
+        String pathString = convertPathToXapFieldString(path);
+        ChangeSet changeSet = new ChangeSet();
+        changeSet.increment(pathString, delta);
+        return space.change(query, changeSet);
+    }
+
     private Page<T> findAllWithPagingInternal(Predicate predicate, Pageable pageable, Projection projection) {
         List<T> sortedResults = readMultiple(createQuery(predicate, pageable, projection));
         List<T> pageResults;
@@ -108,23 +129,10 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
                 throw new RuntimeException("Unexpected expression type of projection");
             }
             Path<String> path = ((Path) expr);
-            fields.add(convertPathToXapProjection(path));
+            fields.add(convertPathToXapFieldString(path));
 
         }
         return new Projection(fields.toArray(new String[fields.size()]));
     }
 
-    private String convertPathToXapProjection(Path<String> path) {
-        return convertPathToXapProjection(path, new ArrayList<String>());
-    }
-
-    // recursively traverse and accumulate path into a list of fields
-    private String convertPathToXapProjection(Path<?> path, List<String> fieldsPath) {
-        if (path.getMetadata().isRoot()) {
-            return Joiner.on(".").join(Lists.reverse(fieldsPath));
-        } else {
-            fieldsPath.add(path.getMetadata().getName());
-            return convertPathToXapProjection(path.getMetadata().getParent(), fieldsPath);
-        }
-    }
 }

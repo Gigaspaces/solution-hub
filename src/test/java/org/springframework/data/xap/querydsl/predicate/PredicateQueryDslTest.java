@@ -1,8 +1,6 @@
 package org.springframework.data.xap.querydsl.predicate;
 
-import com.mysema.query.types.Ops;
-import com.mysema.query.types.OrderSpecifier;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.*;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpression;
 import com.mysema.query.types.expr.ComparableOperation;
@@ -32,6 +30,7 @@ import static org.junit.Assert.*;
 import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
+import static org.springframework.data.xap.repository.query.Projection.projections;
 import static org.springframework.data.xap.repository.support.QueryDslProjection.projection;
 
 /**
@@ -41,9 +40,9 @@ import static org.springframework.data.xap.repository.support.QueryDslProjection
 @ContextConfiguration
 public class PredicateQueryDslTest {
     private static final Person nick = new Person("1", "Nick", 25);
-    private static final Person cris = new Person("2", "", 40);
+    private static final Person chris = new Person("2", "Chris", 40);
     private static final Person paul = new Person("3", "Paul", 33);
-    private static final Team itspecial = new Team("1", "itspecial", cris, 10, paul, TeamStatus.ACTIVE, currentDay(+1));
+    private static final Team itspecial = new Team("1", "itspecial", chris, 10, paul, TeamStatus.ACTIVE, currentDay(+1));
     private static final Team avolition = new Team("2", "avolition", nick, 50, null, INACTIVE, currentDay(-1));
     private static final Set<Team> allTeams = newHashSet(itspecial, avolition);
 
@@ -300,7 +299,7 @@ public class PredicateQueryDslTest {
     @Test
     public void testFindAllWithProjection() {
         Predicate allPredicate = null;
-        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate, projection(team.name)));
+        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate,  projection(team.name)));
         assertEquals(2, foundTeams.size());
         for (Team team : foundTeams) {
             assertNotNull(team.getName());
@@ -345,6 +344,23 @@ public class PredicateQueryDslTest {
                 itspecial,
                 one(team.creationDate.gt(sysdate()))
         );
+    }
+
+    @Test
+    public void testIncrement() {
+        repository.increment(team.name.eq(avolition.getName()), team.leader.age, 5);
+        Team updated = repository.findOne(team.name.eq(avolition.getName()));
+        assertEquals(avolition.getLeader().getAge() + 5, updated.getLeader().getAge().intValue());
+    }
+
+    @Test
+    public void testChange() {
+        QChangeSet qChangeSet = new QChangeSet();
+        qChangeSet.increment(team.leader.age, 5);
+
+        repository.change(team.name.eq(avolition.getName()), qChangeSet);
+        Team updated = repository.findOne(team.name.eq(avolition.getName()));
+        assertEquals(avolition.getLeader().getAge() + 5, updated.getLeader().getAge().intValue());
     }
 
 

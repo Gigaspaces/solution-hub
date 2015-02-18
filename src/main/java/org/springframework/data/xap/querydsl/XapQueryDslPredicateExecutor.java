@@ -1,9 +1,8 @@
 package org.springframework.data.xap.querydsl;
 
-import com.mysema.query.types.OrderSpecifier;
-import com.mysema.query.types.Predicate;
-import com.mysema.query.types.QBean;
-import com.mysema.query.types.QTuple;
+import com.gigaspaces.client.ChangeResult;
+import com.gigaspaces.client.ChangeSet;
+import com.mysema.query.types.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -57,5 +56,31 @@ public interface XapQueryDslPredicateExecutor<T> extends QueryDslPredicateExecut
      * @return a {@link org.springframework.data.domain.Page} of entities matching the given {@link Predicate}.
      */
     Page<T> findAll(Predicate predicate, Pageable pageable, QTuple projection);
+
+    /**
+     * Changes existing objects in space, returning a change result which provides details of the operation affect.
+     * The change operation is designed for performance optimization, By allowing to change an existing object unlike
+     * with regular updating write operation which usually requires reading the object before applying to update to it.
+     * As part of the optimization, when the operation is replicated, on a best effort it will
+     * try to replicate only the required data which is needed to apply the changes on the entry in the replicated target.
+     *
+     * @param predicate predicate to match entities
+     * @param changeSet Changes to apply to the matched entry
+     * @return A <code>ChangeResult</code> containing the details of the change operation affect.
+     */
+    ChangeResult<T> change(Predicate predicate, QChangeSet changeSet);
+
+
+    /**
+     * Increment a property by given delta for entities matching predicate.
+     * A shortcut for for more generic change() method.
+     *
+     * @param predicate predicate to match entities
+     * @param path      property path
+     * @param delta     increment delta
+     * @param <F>       type of property
+     * @return A <code>ChangeResult</code> containing the details of the change operation affect.
+     */
+    <F extends Number> ChangeResult<T> increment(Predicate predicate, Path<F> path, F delta);
 
 }

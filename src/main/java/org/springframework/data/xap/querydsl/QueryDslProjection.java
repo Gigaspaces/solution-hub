@@ -1,4 +1,4 @@
-package org.springframework.data.xap.repository.support;
+package org.springframework.data.xap.querydsl;
 
 import com.mysema.query.types.Expression;
 import com.mysema.query.types.QTuple;
