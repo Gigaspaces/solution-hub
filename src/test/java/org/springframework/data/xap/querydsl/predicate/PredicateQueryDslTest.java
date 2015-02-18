@@ -1,8 +1,6 @@
 package org.springframework.data.xap.querydsl.predicate;
 
-import com.mysema.query.types.Ops;
-import com.mysema.query.types.OrderSpecifier;
-import com.mysema.query.types.Predicate;
+import com.mysema.query.types.*;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpression;
 import com.mysema.query.types.expr.ComparableOperation;
@@ -33,6 +31,7 @@ import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
 import static org.springframework.data.xap.repository.query.Projection.projections;
+import static org.springframework.data.xap.repository.support.QueryDslProjection.projection;
 
 /**
  * @author Leonid_Poliakov
@@ -269,15 +268,18 @@ public class PredicateQueryDslTest {
 
     @Test
     public void testFindOneWithProjection() {
-        Team foundTeam = repository.findOne(team.name.eq(avolition.getName()), projections("name"));
+        Team foundTeam = repository.findOne(team.name.eq(avolition.getName()), projection(team.name, team.leader.age));
         assertEquals(avolition.getName(), foundTeam.getName());
         assertNull(foundTeam.getId());
+        assertNotNull(foundTeam.getLeader());
+        assertNull(foundTeam.getLeader().getId());
+        assertNotNull(foundTeam.getLeader().getAge());
     }
 
     @Test
     public void testFindAllWithProjection() {
         Predicate allPredicate = null;
-        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate, projections("name")));
+        Set<Team> foundTeams = newHashSet(repository.findAll(allPredicate,  projection(team.name)));
         assertEquals(2, foundTeams.size());
         for (Team team : foundTeams) {
             assertNotNull(team.getName());
@@ -288,7 +290,7 @@ public class PredicateQueryDslTest {
     @Test
     public void testFindAllWithOrderAndProjection() {
         Predicate allPredicate = null;
-        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, projections("name"), team.name.asc()));
+        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, projection(team.name), team.name.asc()));
         assertEquals(2, foundTeams.size());
         for (Team team : foundTeams) {
             assertNotNull(team.getName());
@@ -302,7 +304,7 @@ public class PredicateQueryDslTest {
     public void testFindAllWithPagingAndProjection() {
         Predicate allPredicate = null;
         PageRequest page = new PageRequest(0, 1, new Sort(Sort.Direction.ASC, "name"));
-        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, page, projections("name")));
+        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, page, projection(team.name)));
         assertEquals(1, foundTeams.size());
         assertNotNull(foundTeams.get(0).getName());
         assertNull(foundTeams.get(0).getId());
