@@ -11,7 +11,7 @@ Spring Data XAP
 6. Implement the QueryDslPredicateExecutor to support advances query execution.
 7. Documentation similar to https://spring.io/guides/gs/accessing-data-gemfire/, https://spring.io/guides/gs/caching-gemfire/  should be provided.
 8. An example based on http://spring.io/guides/tutorials/data/ that is using XAP instead of GemFire should be provided.
-9. XAP projection and Delta Update should be supported. These obviously are extension to the Spring Data specification. These should be supported using the XAP spirit. Exact interface TBD.
+9. XAP projection and Change API should be supported. These obviously are extension to the Spring Data specification. These should be supported using the XAP spirit. Exact interface TBD.
 10. Spring Data JpaRepository should be tested using XAP JPA implementation. List of supported and limitations should be provided as a deliverable.
  
 ### References ###
