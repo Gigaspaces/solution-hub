@@ -65,6 +65,7 @@
                                     <classpath>
                                         <pathelement path="${test_classpath}"/>
                                     </classpath>
+                                    <arg line="test" />
                                 </java>
                             </target>
                         </configuration>
