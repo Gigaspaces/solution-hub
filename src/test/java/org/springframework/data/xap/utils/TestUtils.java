@@ -16,23 +16,25 @@ import java.util.Properties;
 public class TestUtils {
 
     public static SpaceClient initSpaceClient() {
-        Properties properties = new Properties();
-        try {
-            properties.load(TestUtils.class.getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to find config.properties");
-        }
-        String group = properties.getProperty("space.groups");
-
         ISpaceProxy space = null;
         try {
-            space = (ISpaceProxy) SpaceFinder.find("jini://*/*/space?groups=" + group);
+            space = (ISpaceProxy) SpaceFinder.find("jini://*/*/space?groups=" + getGroupName());
         } catch (FinderException e) {
             throw new RuntimeException("Unable to find space instance for testing", e);
         }
         SpaceClient spaceClient = new SpaceClient();
         spaceClient.setSpace(space);
         return spaceClient;
+    }
+
+    public static String getGroupName(){
+        Properties properties = new Properties();
+        try {
+            properties.load(TestUtils.class.getClassLoader().getResourceAsStream("config.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to find config.properties");
+        }
+        return properties.getProperty("space.groups");
     }
 
 }
