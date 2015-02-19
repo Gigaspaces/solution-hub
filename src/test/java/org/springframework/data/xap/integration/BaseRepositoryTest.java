@@ -520,7 +520,6 @@ public abstract class BaseRepositoryTest {
     public void testFindByNameNotIn(){
         personRepository.save(nick);
         List<Person> personList = personRepository.findByNameNotIn(Arrays.asList("Paul", "Nick"));
-        System.out.println(personList);
         assertEquals(3, personList.size());
         assertTrue(personList.contains(chris));
         assertTrue(personList.contains(chris2));

@@ -1,8 +1,7 @@
 package org.springframework.data.xap.examples;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.data.xap.examples.bean.Data;
-import org.springframework.data.xap.examples.repository.DataRepository;
+import org.springframework.data.xap.examples.repository.PersonRepository;
 
 import java.util.UUID;
 
@@ -14,33 +13,32 @@ import static org.springframework.data.xap.examples.util.Output.dateTime;
  * @author Leonid_Poliakov
  */
 public class XapWithXmlConfiguration {
-    private DataRepository repository;
+    private PersonRepository repository;
 
     public static void main(String args[]) {
         GenericXmlApplicationContext context = new GenericXmlApplicationContext();
         context.setValidating(false);
         context.load("context.xml");
         context.refresh();
-        new XapWithXmlConfiguration(context.getBean(DataRepository.class)).launch();
+        new XapWithXmlConfiguration(context.getBean(PersonRepository.class)).launch();
     }
 
-    public XapWithXmlConfiguration(DataRepository repository) {
+    public XapWithXmlConfiguration(PersonRepository repository) {
         this.repository = repository;
     }
 
     private void launch() {
-        Data data = new Data();
-        data.setId(UUID.randomUUID().toString());
-        data.setMessage("XML configuration " + dateTime());
-
-        System.out.println("writing data: " + data + "\n");
-        Data savedData = repository.save(data);
-        System.out.println("saved data: " + savedData + "\n");
-        System.out.println("current space: ");
-        for (Data foundData : repository.findAll()) {
-            System.out.println("\t" + foundData);
-        }
-        System.out.println();
+//        Data data = new Data();
+//        data.setId(UUID.randomUUID().toString());
+//        data.setMessage("XML configuration " + dateTime());
+//
+//        System.out.println("writing data: " + data + "\n");
+//        Data savedData = repository.save(data);
+//        System.out.println("saved data: " + savedData + "\n");
+//        System.out.println("current space: ");
+//        for (Data foundData : repository.findAll()) {
+//            System.out.println("\t" + foundData);
+//        }
+//        System.out.println();
     }
-
 }
