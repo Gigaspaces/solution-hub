@@ -6,15 +6,13 @@ package org.springframework.data.xap.examples.bean;
 public class Address {
     private String city;
     private String localAddress;
-    private int postCode;
 
     public Address() {
     }
 
-    public Address(String city, String localAddress, int postCode) {
+    public Address(String city, String localAddress) {
         this.city = city;
         this.localAddress = localAddress;
-        this.postCode = postCode;
     }
 
     public String getCity() {
@@ -33,13 +31,6 @@ public class Address {
         this.localAddress = localAddress;
     }
 
-    public int getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(int postCode) {
-        this.postCode = postCode;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -48,7 +39,6 @@ public class Address {
 
         Address address = (Address) o;
 
-        if (postCode != address.postCode) return false;
         if (city != null ? !city.equals(address.city) : address.city != null) return false;
         if (localAddress != null ? !localAddress.equals(address.localAddress) : address.localAddress != null)
             return false;
@@ -60,7 +50,6 @@ public class Address {
     public int hashCode() {
         int result = city != null ? city.hashCode() : 0;
         result = 31 * result + (localAddress != null ? localAddress.hashCode() : 0);
-        result = 31 * result + postCode;
         return result;
     }
 
@@ -69,7 +58,6 @@ public class Address {
         return "Address{" +
                 "city='" + city + '\'' +
                 ", localAddress='" + localAddress + '\'' +
-                ", postCode=" + postCode +
                 '}';
     }
 }

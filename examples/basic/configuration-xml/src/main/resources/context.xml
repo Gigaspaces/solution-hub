@@ -19,7 +19,7 @@
         here you can specify the path of wanted space
     -->
     <bean id="space" class="com.j_spaces.core.client.SpaceFinder" factory-method="find">
-        <constructor-arg value="jini://*/*/example-space"/>
+        <constructor-arg value="jini://*/*/example-space${space.groups}"/>
     </bean>
 
     <!-- Configures client for repository to use
