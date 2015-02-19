@@ -73,7 +73,7 @@ public interface PersonRepository extends XapRepository<Person, String> {
 
     List<Person> findByNameNot(String name);
 
-    List<Person> findByNameIn(Set<String> nameList);
+    List<Person> findByAgeIn(List<Integer> ageList);
 
     List<Person> findByActiveTrue();
 
@@ -82,4 +82,18 @@ public interface PersonRepository extends XapRepository<Person, String> {
     List<Person> findByNameIgnoreCase(String name);
 
     List<Person> findBySpouseAge(Integer age);
+
+    List<Person> findByAgeBetweenAndName(Integer min, Integer max, String name);
+
+    List<Person> findByAgeBetweenOrderByAgeAsc(Integer min, Integer max);
+
+    List<Person> findByNameIn(List<String> names);
+
+    List<Person> findByNameNotIn(List<String> names);
+
+    List<Person> findByAgeBetweenAndNameIn(Integer min, Integer max, List<String> names);
+
+    List<Person> findByNameRegex(String regex);
+
+    List<Person> findBySpouse_Age(Integer age);
 }

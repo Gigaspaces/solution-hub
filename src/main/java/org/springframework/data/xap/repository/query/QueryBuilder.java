@@ -88,6 +88,8 @@ public class QueryBuilder {
                 case IS_NULL:
                 case IS_NOT_NULL:
                     return String.format("%s NULL", getOperator(type));
+                case BETWEEN:
+                    return String.format("%s ? and ?", getOperator(type));
                 default:
                     //return String.format("%s $%s", getOperator(type), value.next());
                     return String.format("%s ?", getOperator(type));
@@ -101,12 +103,11 @@ public class QueryBuilder {
          * @return
          */
         private String getOperator(Part.Type type) {
-            //TODO check all operators
             switch (type) {
                 case IN:
-                    return "IN";
+                    return "in";
                 case NOT_IN:
-                    return "NOT IN SET";
+                    return "not in";
                 case AFTER:
                 case GREATER_THAN:
                     return ">";
@@ -118,7 +119,7 @@ public class QueryBuilder {
                 case LESS_THAN_EQUAL:
                     return "<=";
                 case IS_NOT_NULL:
-                    return "is NOT";
+                    return "is not";
                 case NEGATING_SIMPLE_PROPERTY:
                     return "!=";
                 case LIKE:
@@ -127,13 +128,17 @@ public class QueryBuilder {
                 case CONTAINING:
                     return "like";
                 case NOT_LIKE:
-                    return "NOT like";
+                    return "not like";
                 case IS_NULL:
                     return "is";
                 case FALSE:
                 case SIMPLE_PROPERTY:
                 case TRUE:
                     return "=";
+                case BETWEEN:
+                    return "between";
+                case REGEX:
+                    return "rlike";
                 default:
                     throw new IllegalArgumentException(String.format("Unsupported operator %s!", type));
             }
