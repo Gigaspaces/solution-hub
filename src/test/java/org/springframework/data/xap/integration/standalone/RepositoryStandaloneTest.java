@@ -33,9 +33,9 @@ public class RepositoryStandaloneTest extends BaseRepositoryTest {
     }
 
     private PersonRepository initRepository() throws FinderException, IOException {
-        GigaSpace spaceClient = TestUtils.initSpace();
+        GigaSpace space = TestUtils.initSpace();
 
-        RepositoryFactorySupport factory = new XapRepositoryFactory(spaceClient, null);
+        RepositoryFactorySupport factory = new XapRepositoryFactory(space, null);
         return factory.getRepository(PersonRepository.class);
     }
 

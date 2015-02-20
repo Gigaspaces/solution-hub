@@ -21,7 +21,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      *
      * @return
      */
-    GigaSpace nativeSpaceClient();
+    GigaSpace getSpace();
 
     /**
      * Retrieves an entity by its id.

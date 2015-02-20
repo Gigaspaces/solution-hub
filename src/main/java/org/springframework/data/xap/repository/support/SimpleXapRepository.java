@@ -34,7 +34,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public GigaSpace nativeSpaceClient() {
+    public GigaSpace getSpace() {
         return space;
     }
 

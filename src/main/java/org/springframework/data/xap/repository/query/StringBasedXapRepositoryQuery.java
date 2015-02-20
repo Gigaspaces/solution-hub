@@ -13,14 +13,14 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
     private boolean userDefinedQuery = false;
 
     private final XapQueryMethod method;
-    private final GigaSpace spaceClient;
+    private final GigaSpace space;
     private final String query;
 
     public StringBasedXapRepositoryQuery(String query, XapQueryMethod method, GigaSpace space){
         super(method);
         this.userDefinedQuery |= !StringUtils.hasText(query);
         this.method = method;
-        this.spaceClient = space;
+        this.space = space;
         this.query = query;
     }
 
@@ -37,7 +37,7 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
     public Object execute(Object[] parameters) {
         SQLQuery sqlQuery = new SQLQuery(method.getEntityInformation().getJavaType(), query);
         sqlQuery.setParameters(parameters);
-        return spaceClient.readMultiple(sqlQuery);
+        return space.readMultiple(sqlQuery);
     }
 
     //TODO check do we need this?
