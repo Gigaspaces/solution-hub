@@ -1,11 +1,15 @@
 package org.springframework.data.xap.examples.bean;
 
+import com.gigaspaces.annotation.pojo.SpaceClass;
+import com.gigaspaces.annotation.pojo.SpaceId;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Anna_Babich.
  */
+@SpaceClass
 public class Meeting {
 
     private Integer id;
@@ -25,6 +29,7 @@ public class Meeting {
         this.endTime = endTime;
     }
 
+    @SpaceId(autoGenerate = false)
     public Integer getId() {
         return id;
     }

@@ -10,13 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common</artifactId>
+    <properties>
+    <logback.version>1.1.2</logback.version>
+</properties>
 
     <dependencies>
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-runtime</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-xap</artifactId>

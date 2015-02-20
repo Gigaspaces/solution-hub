@@ -8,9 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.xap.repository.config.EnableXapRepositories;
 import org.springframework.data.xap.spaceclient.SpaceClient;
 
-import java.io.IOException;
-import java.util.Properties;
-
 /**
  * @author Leonid_Poliakov
  */
@@ -26,7 +23,7 @@ public class ContextConfiguration {
     @Bean
     public SpaceClient spaceClient() {
         try {
-            ISpaceProxy iSpace = (ISpaceProxy) SpaceFinder.find("jini://*/*/example-space" + Utils.getGroupName());
+            ISpaceProxy iSpace = (ISpaceProxy) SpaceFinder.find("jini://*/*/example-space" + GroupConfig.getGroupName());
             SpaceClient gigaSpace = new SpaceClient();
             gigaSpace.setSpace(iSpace);
             return gigaSpace;
@@ -34,6 +31,4 @@ public class ContextConfiguration {
             throw new RuntimeException(e);
         }
     }
-
-
 }

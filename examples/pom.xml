@@ -23,6 +23,8 @@
         <spring.data.xap.version>1.0-SNAPSHOT</spring.data.xap.version>
         <spring.version>4.0.7.RELEASE</spring.version>
         <gs.version>10.0.1-11800-RELEASE</gs.version>
+        <logback.version>1.1.2</logback.version>
+        <slf4j.version>1.7.2</slf4j.version>
     </properties>
 
     <build>
@@ -51,6 +53,19 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>

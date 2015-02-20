@@ -1,10 +1,14 @@
 package org.springframework.data.xap.examples.bean;
 
+import com.gigaspaces.annotation.pojo.SpaceClass;
+import com.gigaspaces.annotation.pojo.SpaceId;
+
 import java.util.Date;
 
 /**
  * @author Anna_Babich.
  */
+@SpaceClass
 public class Person {
     private Integer id;
     private String name;
@@ -23,6 +27,7 @@ public class Person {
         this.age = age;
     }
 
+    @SpaceId(autoGenerate = false)
     public Integer getId() {
         return id;
     }

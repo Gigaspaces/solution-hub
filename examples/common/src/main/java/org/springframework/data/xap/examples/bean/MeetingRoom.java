@@ -1,8 +1,12 @@
 package org.springframework.data.xap.examples.bean;
 
+import com.gigaspaces.annotation.pojo.SpaceClass;
+import com.gigaspaces.annotation.pojo.SpaceId;
+
 /**
  * @author Anna_Babich.
  */
+@SpaceClass
 public class MeetingRoom {
     private Address address;
     private String name;
@@ -23,6 +27,7 @@ public class MeetingRoom {
         this.address = address;
     }
 
+    @SpaceId(autoGenerate = false)
     public String getName() {
         return name;
     }

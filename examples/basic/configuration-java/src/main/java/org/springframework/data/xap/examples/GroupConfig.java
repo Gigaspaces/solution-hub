@@ -6,13 +6,12 @@ import java.util.Properties;
 /**
  * @author Anna_Babich.
  */
-public class Utils {
-
+public class GroupConfig {
 
     public static String getGroupName(){
         Properties properties = new Properties();
         try {
-            properties.load(Utils.class.getClassLoader().getResourceAsStream("config.properties"));
+            properties.load(GroupConfig.class.getClassLoader().getResourceAsStream("config.properties"));
         } catch (IOException e) {
             throw new RuntimeException("Unable to find config.properties");
         }
