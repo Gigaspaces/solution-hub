@@ -5,7 +5,6 @@ import org.openspaces.core.GigaSpace;
 import org.springframework.util.StringUtils;
 
 /**
- * TODO
  * @author Anna_Babich.
  */
 public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{

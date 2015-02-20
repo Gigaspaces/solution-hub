@@ -12,7 +12,7 @@ public class DefaultXapEntityInformation<T, ID extends Serializable> extends Per
 
 
     /**
-     * Creates a new {@link PersistableEntityInformation} for the given {@link org.springframework.data.mapping.PersistentEntity}.
+     * Creates a new <code>PersistableEntityInformation</code> for the given {@link org.springframework.data.mapping.PersistentEntity}.
      *
      * @param entity must not be {@literal null}.
      */

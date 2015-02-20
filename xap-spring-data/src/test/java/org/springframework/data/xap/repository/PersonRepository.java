@@ -17,7 +17,7 @@ import java.util.Set;
 public interface PersonRepository extends XapRepository<Person, String> {
 
     @Query("name=?")
-    List<Person> findByName(String name);
+    List<Person> findByNameCustomQuery(String name);
 
     List<Person> findByAge(Integer age);
 
