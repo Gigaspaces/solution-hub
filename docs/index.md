@@ -17,8 +17,10 @@ _[Reference Documentation](#reference)_
   
 3. [Basic Usage](#basic)
 
-  3.1 [Interaction With Space](#interaction)
+  3.1 [Query methods](#query)
   
+  3.2 [Custom methods](#custom)
+
 4. [Advanced Usage](#advanced)
 
   4.1 [Query DSL Support](#querydsl)
@@ -47,8 +49,12 @@ ${support/support.md}
 ${repositories/repositories.md}
 
 ### <a name="basic"/>3. Basic Usage
+${basic.md}
 
-#### <a name="interaction"/>3.1 Interaction With Space
+#### <a name="query"/>3.1 Query methods
+${query/query.md}
+
+#### <a name="custom"/>3.2 Custom methods
 
 ### <a name="advanced"/>4. Advanced Usage
 
@@ -61,4 +67,5 @@ ${repositories/repositories.md}
 ## <a name="resources"/>Other Resources
 
 ## <a name="appendix"/>Appendix
+## <a name="appendix-a"/>Appendix A: Supported Query Keywords
 ${appendix/appendix-a.md}

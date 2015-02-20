@@ -53,8 +53,6 @@ Or for the Embedded Space:
 ${JavaEmbeddedConfiguration.java}
 ```
 
-> Java-based configuration will be used in every following examples.
-
 ##### Using plain write and read operation
 
 `GigaSpace` configured above can be used directly to perform interaction with space. To do so, you can simply inject `GigaSpace` bean into your Repository classes. Let's see an example of such usage. First, here is an example of POJO class:
