@@ -1,8 +1,5 @@
 package org.springframework.data.xap.utils;
 
-import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
-import com.j_spaces.core.client.FinderException;
-import com.j_spaces.core.client.SpaceFinder;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.UrlSpaceConfigurer;

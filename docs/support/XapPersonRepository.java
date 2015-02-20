@@ -2,14 +2,14 @@
 public class XapPersonRepository implements PersonRepository {
 
     @Autowired
-    private SpaceClient spaceClient;
+    private GigaSpace space;
 
     public void create(Person person) {
-        spaceClient.write(person);
+        space.write(person);
     }
 
     public List<Person> findById(String personId) {
-        return spaceClient.read(new IdQuery<>(Person.class, personId));
+        return space.readById(Person.class, personId);
     }
 
     ...

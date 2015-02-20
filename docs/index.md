@@ -19,8 +19,6 @@ _[Reference Documentation](#reference)_
 
   3.1 [Interaction With Space](#interaction)
   
-  3.2 [Transactions Support](#transaction)
-  
 4. [Advanced Usage](#advanced)
 
   4.1 [Query DSL Support](#querydsl)
@@ -51,8 +49,6 @@ ${repositories/repositories.md}
 ### <a name="basic"/>3. Basic Usage
 
 #### <a name="interaction"/>3.1 Interaction With Space
-
-#### <a name="transaction"/>3.2 Transactions Support
 
 ### <a name="advanced"/>4. Advanced Usage
 
