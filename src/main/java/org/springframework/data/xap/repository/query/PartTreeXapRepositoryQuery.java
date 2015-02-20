@@ -120,29 +120,27 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
                 stringParameters.add(parameter);
             } else if (isPageableOrProjection(parameter)) {
                 // skip
-            } else {
-                if (isBetween(currPart)) {
+            } else if (isBetween(currPart)) {
                     stringParameters.add(parameter);
                     currPart = handleBetween(currPart, partsIterator);
-                } else {
-                    switch (currPart.getType()) {
-                        case IN:
-                        case NOT_IN:
-                            stringParameters.addAll((List<Object>) parameter);
-                        case CONTAINING:
-                            stringParameters.add(String.format("%%%s%%", parameter.toString()));
-                            break;
-                        case STARTING_WITH:
-                            stringParameters.add(String.format("%s%%", parameter.toString()));
-                            break;
-                        case ENDING_WITH:
-                            stringParameters.add(String.format("%%%s", parameter.toString()));
-                            break;
-                        default:
-                            stringParameters.add(parameter);
-                    }
-                    currPart = getNextPart(partsIterator);
+            } else {
+                switch (currPart.getType()) {
+                    case IN:
+                    case NOT_IN:
+                        stringParameters.addAll((List) parameter);
+                    case CONTAINING:
+                        stringParameters.add(String.format("%%%s%%", parameter.toString()));
+                        break;
+                    case STARTING_WITH:
+                        stringParameters.add(String.format("%s%%", parameter.toString()));
+                        break;
+                    case ENDING_WITH:
+                        stringParameters.add(String.format("%%%s", parameter.toString()));
+                        break;
+                    default:
+                        stringParameters.add(parameter);
                 }
+                currPart = getNextPart(partsIterator);
             }
         }
         return stringParameters.toArray();
@@ -156,11 +154,11 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
                 if (isInOrNotIn(currPart)) {
                     StringBuilder str = new StringBuilder("in (");
                     List<String> paramList = new ArrayList<>();
-                    for (int i = 0; i < ((List<Object>) parameter).size(); i++) {
+                    for (int i = 0; i < ((List) parameter).size(); i++) {
                         paramList.add("?");
                     }
                     Joiner joiner = Joiner.on(", ").skipNulls();
-                    str.append(joiner.join(paramList) + ")");
+                    str.append(joiner.join(paramList)).append(")");
                     query = query.replace("in ?", str);
                 }
                 if (isBetween(currPart)) {
@@ -183,10 +181,8 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
     private Part handleBetween(Part currPart, Iterator<Part> partsIterator){
         if (betweenCount % 2 == 1) {
             currPart = getNextPart(partsIterator);
-            betweenCount ++;
-        } else {
-            betweenCount ++;
         }
+        betweenCount ++;
         return currPart;
     }
 
