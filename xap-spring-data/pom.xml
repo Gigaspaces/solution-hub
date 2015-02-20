@@ -135,11 +135,13 @@
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-openspaces</artifactId>
             <version>${gs.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-runtime</artifactId>
             <version>${gs.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--Spring Data Commons-->
