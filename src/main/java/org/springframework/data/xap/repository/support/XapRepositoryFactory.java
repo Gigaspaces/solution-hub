@@ -1,5 +1,6 @@
 package org.springframework.data.xap.repository.support;
 
+import org.openspaces.core.GigaSpace;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.core.EntityInformation;
@@ -15,7 +16,6 @@ import org.springframework.data.xap.repository.query.DefaultXapEntityInformation
 import org.springframework.data.xap.repository.query.PartTreeXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.StringBasedXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.XapQueryMethod;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -24,11 +24,11 @@ import java.lang.reflect.Method;
  * @author Oleksiy_Dyagilev
  */
 public class XapRepositoryFactory extends RepositoryFactorySupport {
-    private SpaceClient space;
+    private GigaSpace space;
 
     private MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context;
 
-    public XapRepositoryFactory(SpaceClient space, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
+    public XapRepositoryFactory(GigaSpace space, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
         this.space = space;
         this.context = context == null ? new XapMappingContext() : context;
     }

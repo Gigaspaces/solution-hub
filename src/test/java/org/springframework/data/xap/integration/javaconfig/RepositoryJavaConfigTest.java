@@ -5,6 +5,7 @@ package org.springframework.data.xap.integration.javaconfig;
  */
 
 import org.junit.runner.RunWith;
+import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +14,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.repository.config.EnableXapRepositories;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 import org.springframework.data.xap.utils.TestUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,8 +36,8 @@ public class RepositoryJavaConfigTest extends BaseRepositoryTest {
         Environment env;
 
         @Bean
-        public SpaceClient gigaSpace() {
-            return TestUtils.initSpaceClient();
+        public GigaSpace gigaSpace() {
+            return TestUtils.initSpace();
         }
     }
 }

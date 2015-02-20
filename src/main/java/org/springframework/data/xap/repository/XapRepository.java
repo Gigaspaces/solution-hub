@@ -1,12 +1,12 @@
 package org.springframework.data.xap.repository;
 
+import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.xap.repository.query.Projection;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 
@@ -21,7 +21,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      *
      * @return
      */
-    SpaceClient nativeSpaceClient();
+    GigaSpace nativeSpaceClient();
 
     /**
      * Retrieves an entity by its id.

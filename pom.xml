@@ -14,9 +14,8 @@
 
     <properties>
         <jdk.version>1.7</jdk.version>
-        <gs.version>10.0.1-11800-RELEASE</gs.version>
+        <gs.version>10.1.0-12593-M11</gs.version>
         <spring.data.commons.version>1.9.1.RELEASE</spring.data.commons.version>
-        <spring.version>4.0.7.RELEASE</spring.version>
         <spring.dao.version>2.0.8</spring.dao.version>
         <spring.data.jpa.version>1.7.2.RELEASE</spring.data.jpa.version>
         <junit.version>4.11</junit.version>
@@ -49,32 +48,6 @@
             </testResource>
         </testResources>
         <plugins>
-
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-
-                    <execution>
-                        <id>compile</id>
-                        <phase>test-compile</phase>
-                        <configuration>
-                            <target>
-                                <property name="test_classpath" refid="maven.test.classpath"/>
-                                <java classname="org.springframework.data.xap.utils.SpaceStarter" fork="true" spawn="true">
-                                    <classpath>
-                                        <pathelement path="${test_classpath}"/>
-                                    </classpath>
-                                    <arg line="test" />
-                                </java>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -143,17 +116,17 @@
     </build>
 
     <!-- Align spring versions for all projects using openspaces -->
-    <!--<dependencyManagement>-->
-    <!--<dependencies>-->
-    <!--<dependency>-->
-    <!--<groupId>com.gigaspaces</groupId>-->
-    <!--<artifactId>gs-openspaces</artifactId>-->
-    <!--<version>${gs.version}</version>-->
-    <!--<type>pom</type>-->
-    <!--<scope>import</scope>-->
-    <!--</dependency>-->
-    <!--</dependencies>-->
-    <!--</dependencyManagement>-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.gigaspaces</groupId>
+                <artifactId>gs-openspaces</artifactId>
+                <version>${gs.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -162,13 +135,11 @@
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-openspaces</artifactId>
             <version>${gs.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-runtime</artifactId>
             <version>${gs.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <!--Spring Data Commons-->
@@ -178,73 +149,15 @@
             <version>${spring.data.commons.version}</version>
         </dependency>
 
-        <!-- TODO: TEMP???-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-context-support</artifactId>-->
-        <!--<version>${spring.version}</version>-->
-        <!--<scope>compile</scope>-->
-        <!--</dependency>-->
 
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-jms</artifactId>-->
-        <!--<version>${spring.version}</version>-->
-        <!--<scope>compile</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-oxm</artifactId>-->
-        <!--<version>${spring.version}</version>-->
-        <!--<scope>compile</scope>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-dao</artifactId>
-            <version>${spring.dao.version}</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

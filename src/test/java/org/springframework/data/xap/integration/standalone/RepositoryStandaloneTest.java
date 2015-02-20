@@ -4,11 +4,11 @@ import com.j_spaces.core.client.FinderException;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.openspaces.core.GigaSpace;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.repository.PersonRepository;
 import org.springframework.data.xap.repository.support.XapRepositoryFactory;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 import org.springframework.data.xap.utils.TestUtils;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -33,7 +33,7 @@ public class RepositoryStandaloneTest extends BaseRepositoryTest {
     }
 
     private PersonRepository initRepository() throws FinderException, IOException {
-        SpaceClient spaceClient = TestUtils.initSpaceClient();
+        GigaSpace spaceClient = TestUtils.initSpace();
 
         RepositoryFactorySupport factory = new XapRepositoryFactory(spaceClient, null);
         return factory.getRepository(PersonRepository.class);

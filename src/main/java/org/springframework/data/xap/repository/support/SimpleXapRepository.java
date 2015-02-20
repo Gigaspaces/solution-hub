@@ -4,6 +4,7 @@ import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
 import com.j_spaces.core.client.SQLQuery;
+import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,6 @@ import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.repository.XapRepository;
 import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.data.xap.repository.query.QueryBuilder;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,16 +25,16 @@ import java.util.List;
  */
 public class SimpleXapRepository<T, ID extends Serializable> implements XapRepository<T, ID> {
 
-    private SpaceClient space;
+    private GigaSpace space;
     private EntityInformation<T, ID> entityInformation;
 
-    public SimpleXapRepository(SpaceClient space, EntityInformation<T, ID> entityInformation) {
+    public SimpleXapRepository(GigaSpace space, EntityInformation<T, ID> entityInformation) {
         this.space = space;
         this.entityInformation = entityInformation;
     }
 
     @Override
-    public SpaceClient nativeSpaceClient() {
+    public GigaSpace nativeSpaceClient() {
         return space;
     }
 

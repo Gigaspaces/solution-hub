@@ -3,12 +3,12 @@ package org.springframework.data.xap.repository.query;
 import com.google.common.base.Joiner;
 import com.google.common.primitives.Ints;
 import com.j_spaces.core.client.SQLQuery;
+import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.ParametersParameterAccessor;
 import org.springframework.data.repository.query.parser.Part;
 import org.springframework.data.repository.query.parser.PartTree;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.util.*;
 
@@ -19,11 +19,11 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
     private final XapQueryMethod method;
     private final PartTree tree;
-    private final SpaceClient space;
+    private final GigaSpace space;
 
     private int betweenCount;
 
-    public PartTreeXapRepositoryQuery(XapQueryMethod method, SpaceClient space) {
+    public PartTreeXapRepositoryQuery(XapQueryMethod method, GigaSpace space) {
         super(method);
 
         Class<?> domainClass = method.getEntityInformation().getJavaType();

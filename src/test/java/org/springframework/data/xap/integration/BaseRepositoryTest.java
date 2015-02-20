@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.repository.PersonRepository;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,7 +44,7 @@ public abstract class BaseRepositoryTest {
     protected PersonRepository personRepository;
 
     @Autowired
-    protected SpaceClient client;
+    protected GigaSpace client;
 
     private List<Person> list;
 

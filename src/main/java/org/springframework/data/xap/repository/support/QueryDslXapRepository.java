@@ -7,6 +7,7 @@ import com.gigaspaces.query.aggregators.AggregationSet;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.mysema.query.types.*;
+import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,6 @@ import org.springframework.data.xap.querydsl.Utils;
 import org.springframework.data.xap.querydsl.XapQueryDslConverter;
 import org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor;
 import org.springframework.data.xap.repository.query.Projection;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,10 +30,10 @@ import static org.springframework.data.xap.querydsl.Utils.convertPathToXapFieldS
  * @author Leonid_Poliakov
  */
 public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXapRepository<T, ID> implements XapQueryDslPredicateExecutor<T> {
-    private SpaceClient space;
+    private GigaSpace space;
     private EntityInformation<T, ID> entityInformation;
 
-    public QueryDslXapRepository(SpaceClient space, EntityInformation<T, ID> entityInformation) {
+    public QueryDslXapRepository(GigaSpace space, EntityInformation<T, ID> entityInformation) {
         super(space, entityInformation);
         this.space = space;
         this.entityInformation = entityInformation;

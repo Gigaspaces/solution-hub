@@ -1,7 +1,7 @@
 package org.springframework.data.xap.repository.query;
 
 import com.j_spaces.core.client.SQLQuery;
-import org.springframework.data.xap.spaceclient.SpaceClient;
+import org.openspaces.core.GigaSpace;
 import org.springframework.util.StringUtils;
 
 /**
@@ -13,10 +13,10 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
     private boolean userDefinedQuery = false;
 
     private final XapQueryMethod method;
-    private final SpaceClient spaceClient;
+    private final GigaSpace spaceClient;
     private final String query;
 
-    public StringBasedXapRepositoryQuery(String query, XapQueryMethod method, SpaceClient space){
+    public StringBasedXapRepositoryQuery(String query, XapQueryMethod method, GigaSpace space){
         super(method);
         this.userDefinedQuery |= !StringUtils.hasText(query);
         this.method = method;
@@ -24,7 +24,7 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
         this.query = query;
     }
 
-    public StringBasedXapRepositoryQuery(XapQueryMethod method, SpaceClient space){
+    public StringBasedXapRepositoryQuery(XapQueryMethod method, GigaSpace space){
         this(method.getAnnotatedQuery(), method, space);
     }
 
