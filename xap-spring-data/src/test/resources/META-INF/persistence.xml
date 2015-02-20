@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             version="1.0">
+    <persistence-unit name="gigaspaces">
+        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+        <properties>
+            <property name="BrokerFactory" value="org.openspaces.jpa.BrokerFactory"/>
+            <property name="LockManager" value="none"/>
+        </properties>
+    </persistence-unit>
+</persistence>
