@@ -1,10 +1,7 @@
 package org.springframework.data.xap.integration;
 
-import com.gigaspaces.query.ISpaceQuery;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.j_spaces.core.client.SQLQuery;
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -148,7 +145,7 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void testFindByNameDeclaredQuery() {
-        List<Person> persons = personRepository.findByName("Chris");
+        List<Person> persons = personRepository.findByNameCustomQuery("Chris");
         assertEquals(3, persons.size());
         assertTrue(persons.contains(chris));
         assertTrue(persons.contains(chris2));

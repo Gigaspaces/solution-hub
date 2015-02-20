@@ -18,7 +18,8 @@ package org.springframework.data.xap.repository;
 import java.lang.annotation.*;
 
 /**
- * 
+ * Defines SQL-like XAP query
+ *
  * @author Anna_Babich
  */
 @Documented

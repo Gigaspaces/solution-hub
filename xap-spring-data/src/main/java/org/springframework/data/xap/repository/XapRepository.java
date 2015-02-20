@@ -11,6 +11,8 @@ import org.springframework.data.xap.repository.query.Projection;
 import java.io.Serializable;
 
 /**
+ * Extension of {@link PagingAndSortingRepository} to provide XAP specific features
+ *
  * @author Oleksiy_Dyagilev
  */
 @NoRepositoryBean

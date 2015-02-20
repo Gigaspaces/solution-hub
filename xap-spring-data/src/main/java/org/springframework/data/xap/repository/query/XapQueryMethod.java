@@ -13,23 +13,21 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.Method;
 
 /**
- * TODO
  * @author Anna_Babich.
  */
-public class XapQueryMethod extends QueryMethod{
+public class XapQueryMethod extends QueryMethod {
 
     private final Method method;
     private final XapPersistentEntity<?> persistentEntity;
 
-    public XapQueryMethod(Method method, RepositoryMetadata metadata,MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
+    public XapQueryMethod(Method method, RepositoryMetadata metadata, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
         super(method, metadata);
         Assert.notNull(context);
         this.method = method;
         this.persistentEntity = context.getPersistentEntity(getDomainClass());
-        //TODO
     }
 
-    public boolean hasAnnotatedQuery(){
+    public boolean hasAnnotatedQuery() {
         return StringUtils.hasText(getAnnotatedQuery());
     }
 
