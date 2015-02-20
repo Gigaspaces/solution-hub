@@ -67,7 +67,7 @@
                 </executions>
             </plugin>
 
-            <!-- Query DSL processor (generates Q... files for each @Entity) -->
+            <!-- Query DSL processor (generates Q... files for each @SpaceClass) -->
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>

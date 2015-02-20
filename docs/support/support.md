@@ -1,6 +1,6 @@
-Spring Data XAP provides full configuration and initialization of the connection to XAP data storage through Spring’s IoC container.
+The first task to handle while developing XAP application using Spring would be to configure a connection to the active space inside the Spring IoC container. This part of the document will show you how basic connection can be applied using XML and Java based Spring configurations.
 
-To get started, first you need to set up a Service Grid and deploy the Data Grid on it. Refer to [XAP Quick Start guide](http://docs.gigaspaces.com/xap100/your-first-data-grid-application.html) an explanation on how to startup a space storage. Once installed, deploying Data Grid is typically a matter of executing the next commands from the `GS_HOME/bin` folder:
+To get started, first you need to get the space running: set up a Service Grid and deploy the Data Grid on it. Refer to [XAP Quick Start guide](http://docs.gigaspaces.com/xap100/your-first-data-grid-application.html) for an explanation on how to startup a space storage. Once installed, deploying Data Grid is typically a matter of executing the next commands from the `GS_HOME/bin` folder:
 
 ```
 ${gsa-script.txt}
@@ -25,18 +25,26 @@ To use XAP Repository you need to provide a connection to space with an instance
 ```xml
 ${space-context.xml}
 ```
-**(1)** JINI search path for the active space with name `space`
 
-**(2)** IJSpace instance injection into `SpaceClient`
+##### Connecting to space using Java based metadata
 
-#### Connecting to space using Java based metadata
-
-The same configuration can be achieved with next Java-based bean metadata
+The same configuration can be achieved with next Java-based bean metadata:
 
 ```java
-${configuration-java.txt}
+${JavaConfiguration.java}
 ```
 
-##### Registering XAP Repository using XML-based metadata
+> Java-based configuration will be used in every following examples.
 
-While you can use Spring’s traditional `<beans/>` XML namespace to register an instance of your repository implementing `org.springframework.data.xap.repository.XapRepository` with the container, the XML can be quite verbose as it is general purpose. To simplify configuration, Spring Data XAP provides a dedicated XML namespace.
+##### Using plain write and read operation
+
+`SpaceClient` configured above can be used directly to perform interaction with space. To do so, you can simply inject `SpaceClient` bean into your Repository classes. Let's see an example of such usage. First, here is an example of POJO class:
+```java
+${Person.java}
+```
+> Note that class is marked with `@SpaceClass` annotation - it allows Spring XAP to look for entities in your data model and automatically handle their structure. Also, the `getId()` method is marked with `@SpaceId(autogenerate = true)` annotation - it will tell the space to handle ids automatically.
+
+Now `SpaceClient` can be injected and used directly in Repository layer:
+```java
+${XapPersonRepository.java}
+```

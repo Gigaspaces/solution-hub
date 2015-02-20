@@ -7,14 +7,14 @@
 
     <!-- A bean representing a space -->
     <bean id="space" class="com.j_spaces.core.client.SpaceFinder" factory-method="find">
+      <!-- JINI search path for the active space with name `space` -->
         <constructor-arg value="jini://*/*/space"/>
-        (1)
     </bean>
 
     <!-- GigaSpace interface implementation -->
     <bean id="gigaSpace" class="org.springframework.data.xap.spaceclient.SpaceClient">
+      <!-- IJSpace instance injection into `SpaceClient` -->
         <property name="space" ref="space"/>
-        (2)
     </bean>
 
 </beans>
