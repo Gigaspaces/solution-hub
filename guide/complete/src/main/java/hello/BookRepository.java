@@ -4,9 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-/**
- * @author Oleksiy_Dyagilev
- */
 public interface BookRepository extends CrudRepository<Book, String> {
 
     List<Book> findByAuthor(String author);
