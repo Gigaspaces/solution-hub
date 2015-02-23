@@ -558,15 +558,24 @@ public abstract class BaseRepositoryTest {
         assertTrue(personList.contains(paul2));
     }
 
-    //TODO support ignore case
-    //@Test
+    @Test(expected = UnsupportedOperationException.class)
     public void testIgnoreCase(){
-        List<Person> personList = personRepository.findByNameIgnoreCase("paul");
-        assertEquals(2, personList.size());
-        assertTrue(personList.contains(paul));
-        assertTrue(personList.contains(paul2));
+        personRepository.findByNameIgnoreCase("paul");
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void testIgnoreCaseInSorting(){
+        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id").ignoreCase());
+        Pageable pageable = new PageRequest(1, 2, sorting);
+        personRepository.findByNameEquals("paul", pageable);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testNullHandling(){
+        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id", Sort.NullHandling.NULLS_FIRST));
+        Pageable pageable = new PageRequest(1, 2, sorting);
+        personRepository.findByNameEquals("paul", pageable);
+    }
 
     private void prepareDataForSortingTest() {
         personRepository.save(nick);

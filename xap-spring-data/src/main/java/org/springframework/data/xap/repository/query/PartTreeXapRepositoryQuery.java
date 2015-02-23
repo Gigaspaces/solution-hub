@@ -36,6 +36,7 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
     @Override
     public Object execute(Object[] parameters) {
+        checkForUnsupportedParameters(parameters, tree);
         // parse method and prepare SQLQuery
         ParametersParameterAccessor parameterAccessor = new ParametersParameterAccessor(method.getParameters(), parameters);
         String className = method.getPersistentEntity().getName();
@@ -60,6 +61,36 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
         // client side pagination
         return applyPagination(results, parameters);
+    }
+
+    private void checkForUnsupportedParameters(Object[] parameters, PartTree tree) {
+        for (Object parameter : parameters){
+            if (parameter instanceof Sort){
+                checkSorting((Sort)parameter);
+            }
+            if (parameter instanceof Pageable){
+                checkSorting(((Pageable) parameter).getSort());
+            }
+        }
+        for (Part part : tree.getParts()){
+            if (Part.IgnoreCaseType.NEVER != part.shouldIgnoreCase()){
+                throw new UnsupportedOperationException("IgnoreCase is not supported for created queries");
+            }
+        }
+    }
+
+    private void checkSorting(Sort sort) {
+        if (sort != null){
+            for (Sort.Order order : sort){
+                if (order.isIgnoreCase() || nullHandlingIsNotNative(order)){
+                    throw new UnsupportedOperationException("Null handling and ignoreCase for sorting are not supported");
+                }
+            }
+        }
+    }
+
+    private boolean nullHandlingIsNotNative(Sort.Order order) {
+        return (order.getNullHandling() != null && order.getNullHandling() != Sort.NullHandling.NATIVE);
     }
 
     /**

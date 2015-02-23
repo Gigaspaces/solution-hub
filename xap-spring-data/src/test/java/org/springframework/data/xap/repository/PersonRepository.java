@@ -35,6 +35,8 @@ public interface PersonRepository extends XapRepository<Person, String> {
 
     List<Person> findByNameEquals(String name);
 
+    List<Person> findByNameEquals(String name, Pageable pageable);
+
     List<Person> findByAgeBetween(Integer minAge, Integer maxAge);
 
     List<Person> findByAgeLessThan(Integer age);
