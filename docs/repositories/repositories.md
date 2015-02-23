@@ -6,6 +6,8 @@ This part of the document explains how to configure and start using XAP Reposito
 
 To start with handy Spring Data XAP features you will need to create your repository interface extending `XapRepository` and tell Spring Container to look for such classes.
 
+> Spring Data XAP does not support `ignoreCase` and `nullHandling` in query expressions and `Sort`.
+
 An example of such user-defined repository with no additional functionality is given below:
 ```java
 ${PersonRepository.java}

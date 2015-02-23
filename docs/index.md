@@ -23,9 +23,9 @@ _[Reference Documentation](#reference)_
 
 4. [Advanced Usage](#advanced)
 
-  4.1 [Query DSL Support](#querydsl)
+  4.1 [XAP Projection API](#projection)
   
-  4.2 [XAP Projection API](#projection)
+  4.2 [Querydsl Support](#querydsl)
   
   4.3 [XAP Change API](#change)
 
@@ -33,13 +33,19 @@ _[Other Resources](#resources)_
 
 _[Appendix](#appendix)_
 
+  - _[Appendix A: Supported Query Keywords](#appendix-a)_
+
+  - _[Appendix B: Supported Querydsl Methods](#appendix-b)_
+
+  - _[Appendix C: Supported Change API methods](#appendix-c)_
+
 ${preface.md}
 ${requirements.md}
 
 ## <a name="reference"/>Reference Documentation
 ${structure.md}
 
-${configuration/configuration.md}
+${configuration.md}
 ${support/support.md}
 ${repositories/repositories.md}
 
@@ -47,15 +53,15 @@ ${basic.md}
 ${query/query.md}
 ${custom/custom.md}
 
-### <a name="advanced"/>4. Advanced Usage
-
-#### <a name="querydsl"/>4.1 Query DSL Support
-
-#### <a name="projection"/>4.2 XAP Projection API
-
-#### <a name="change"/>4.3 XAP Change API
+${advanced.md}
+${projection/projection.md}
+${querydsl/querydsl.md}
+${change/change.md}
 
 ## <a name="resources"/>Other Resources
+${resources.md}
 
 ## <a name="appendix"/>Appendix
 ${appendix/appendix-a.md}
+${appendix/appendix-b.md}
+${appendix/appendix-c.md}
