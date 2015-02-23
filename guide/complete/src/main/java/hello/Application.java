@@ -1,17 +1,17 @@
 package hello;
 
-import com.gigaspaces.internal.client.spaceproxy.ISpaceProxy;
-import com.j_spaces.core.client.FinderException;
-import com.j_spaces.core.client.SpaceFinder;
+import org.openspaces.core.GigaSpace;
+import org.openspaces.core.GigaSpaceConfigurer;
+import org.openspaces.core.space.UrlSpaceConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+
 import org.springframework.data.xap.repository.config.EnableXapRepositories;
 import org.springframework.data.xap.repository.support.XapRepositoryFactory;
-import org.springframework.data.xap.spaceclient.SpaceClient;
 
 import java.io.IOException;
 
@@ -23,16 +23,9 @@ public class Application implements CommandLineRunner {
     BookRepository bookRepository;
 
     @Bean
-    SpaceClient spaceClient(){
-        ISpaceProxy space = null;
-        try {
-            space = (ISpaceProxy) SpaceFinder.find("jini://*/*/mySpace");
-        } catch (FinderException e) {
-            throw new RuntimeException("Unable to find space instance for testing", e);
-        }
-        SpaceClient spaceClient = new SpaceClient();
-        spaceClient.setSpace(space);
-        return spaceClient;
+    GigaSpace spaceClient(){
+        UrlSpaceConfigurer urlConfigurer = new UrlSpaceConfigurer("/./testSpace");
+        return new GigaSpaceConfigurer(urlConfigurer).gigaSpace();
     }
 
     @Bean
