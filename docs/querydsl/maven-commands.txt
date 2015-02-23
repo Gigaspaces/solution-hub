@@ -1,2 +1,2 @@
-mvn clean process-test-sources
+mvn clean process-sources
 mvn clean install
