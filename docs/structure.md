@@ -9,6 +9,6 @@ This part of the reference documentation explains the core functionality offered
   * [Query methods](#query) - shows how to declare CRUD operations in XAP Repositories.
   * [Custom methods](#custom) - shows how to implement custom methods with XAP Repositories.
 * [Advanced Usage](#advanced) section contains explanation and examples for querying support and specific XAP features.
+  * [XAP Projection API](#projection) - describes how to use [Projection API](http://docs.gigaspaces.com/xap101/query-partial-results.html) integrated with Spring Repositories.
   * [Query DSL Support](#querydsl) - explains the configuration and usage of [Query DSL](http://www.querydsl.com/) with XAP data store.
-  * [XAP Projection API](#projection) - describes how to use [Projection API](http://docs.gigaspaces.com/xap100/query-partial-results.html) integrated with Spring Repositories.
-  * [XAP Change API](#change) - describes how to use [Change API](http://docs.gigaspaces.com/xap100/change-api-overview.html) integrated with Spring Repositories.
+  * [XAP Change API](#change) - describes how to use [Change API](http://docs.gigaspaces.com/xap101/change-api-overview.html) integrated with Spring Repositories.
