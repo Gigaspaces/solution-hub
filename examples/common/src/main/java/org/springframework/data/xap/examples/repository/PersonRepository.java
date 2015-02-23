@@ -1,11 +1,13 @@
 package org.springframework.data.xap.examples.repository;
 
-import org.springframework.data.xap.examples.bean.Person;
+import org.springframework.data.xap.examples.model.Person;
 import org.springframework.data.xap.repository.XapRepository;
-import org.springframework.data.xap.repository.query.XapRepositoryQuery;
+
+import java.util.List;
 
 /**
  * @author Anna_Babich.
  */
-public interface PersonRepository extends XapRepository<Person, String> {
+public interface PersonRepository extends XapRepository<Person, Integer> {
+    List<Person> findByPositionAndActiveTrue(String position);
 }

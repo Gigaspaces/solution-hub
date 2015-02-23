@@ -1,8 +1,10 @@
-package org.springframework.data.xap.examples.bean;
+package org.springframework.data.xap.examples.model;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
+import org.springframework.data.xap.examples.util.DateUtils;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,23 +12,21 @@ import java.util.List;
  * @author Anna_Babich.
  */
 @SpaceClass
-public class Meeting {
+public class Meeting implements Serializable{
 
     private Integer id;
     private MeetingRoom meetingRoom;
     private List<Person> personList;
     private Date startTime;
-    private Date endTime;
 
     public Meeting() {
     }
 
-    public Meeting(Integer id, MeetingRoom meetingRoom, List<Person> personList, Date startTime, Date endTime) {
+    public Meeting(Integer id, MeetingRoom meetingRoom, List<Person> personList, Date startTime) {
         this.id = id;
         this.meetingRoom = meetingRoom;
         this.personList = personList;
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     @SpaceId(autoGenerate = false)
@@ -62,14 +62,6 @@ public class Meeting {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,7 +69,6 @@ public class Meeting {
 
         Meeting meeting = (Meeting) o;
 
-        if (endTime != null ? !endTime.equals(meeting.endTime) : meeting.endTime != null) return false;
         if (id != null ? !id.equals(meeting.id) : meeting.id != null) return false;
         if (meetingRoom != null ? !meetingRoom.equals(meeting.meetingRoom) : meeting.meetingRoom != null) return false;
         if (personList != null ? !personList.equals(meeting.personList) : meeting.personList != null) return false;
@@ -92,7 +83,6 @@ public class Meeting {
         result = 31 * result + (meetingRoom != null ? meetingRoom.hashCode() : 0);
         result = 31 * result + (personList != null ? personList.hashCode() : 0);
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         return result;
     }
 
@@ -102,8 +92,7 @@ public class Meeting {
                 "id=" + id +
                 ", meetingRoom=" + meetingRoom +
                 ", personList=" + personList +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
+                ", startTime=" + DateUtils.getFormatDate(startTime) +
                 '}';
     }
 }

@@ -13,6 +13,7 @@
         <module>common</module>
         <module>basic/configuration-xml</module>
         <module>basic/configuration-java</module>
+        <module>repository</module>
     </modules>
     <name>Spring Data XAP Examples</name>
     <description>Spring Data XAP Examples</description>

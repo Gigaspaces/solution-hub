@@ -1,9 +1,11 @@
-package org.springframework.data.xap.examples.bean;
+package org.springframework.data.xap.examples.model;
+
+import java.io.Serializable;
 
 /**
  * @author Anna_Babich.
  */
-public class Address {
+public class Address implements Serializable{
     private String city;
     private String localAddress;
 

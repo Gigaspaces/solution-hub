@@ -1,29 +1,29 @@
-package org.springframework.data.xap.examples.bean;
+package org.springframework.data.xap.examples.model;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * @author Anna_Babich.
  */
 @SpaceClass
-public class Person {
+public class Person implements Serializable{
     private Integer id;
     private String name;
     private Boolean active;
-    private String skill;
+    private String position;
     private Integer age;
 
     public Person() {
     }
 
-    public Person(Integer id, String name, Boolean active, String skill, Integer age) {
+    public Person(Integer id, String name, Boolean active, String position, Integer age) {
         this.id = id;
         this.name = name;
         this.active = active;
-        this.skill = skill;
+        this.position = position;
         this.age = age;
     }
 
@@ -52,12 +52,12 @@ public class Person {
         this.active = active;
     }
 
-    public String getSkill() {
-        return skill;
+    public String getPosition() {
+        return position;
     }
 
-    public void setSkill(String skill) {
-        this.skill = skill;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public Integer getAge() {
@@ -79,7 +79,7 @@ public class Person {
         if (age != null ? !age.equals(person.age) : person.age != null) return false;
         if (id != null ? !id.equals(person.id) : person.id != null) return false;
         if (name != null ? !name.equals(person.name) : person.name != null) return false;
-        if (skill != null ? !skill.equals(person.skill) : person.skill != null) return false;
+        if (position != null ? !position.equals(person.position) : person.position != null) return false;
 
         return true;
     }
@@ -89,7 +89,7 @@ public class Person {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (active != null ? active.hashCode() : 0);
-        result = 31 * result + (skill != null ? skill.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
         return result;
     }
@@ -100,7 +100,7 @@ public class Person {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", active=" + active +
-                ", skill='" + skill + '\'' +
+                ", position='" + position + '\'' +
                 ", age=" + age +
                 '}';
     }

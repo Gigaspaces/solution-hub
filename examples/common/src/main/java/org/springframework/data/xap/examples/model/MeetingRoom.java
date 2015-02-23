@@ -1,13 +1,15 @@
-package org.springframework.data.xap.examples.bean;
+package org.springframework.data.xap.examples.model;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
+
+import java.io.Serializable;
 
 /**
  * @author Anna_Babich.
  */
 @SpaceClass
-public class MeetingRoom {
+public class MeetingRoom implements Serializable{
     private Address address;
     private String name;
 
