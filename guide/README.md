@@ -24,72 +24,72 @@ In a project directory of your choosing, create the following subdirectory struc
 
 ```xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
-    <project xmlns="http://maven.apache.org/POM/4.0.0"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-        <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-        <groupId>org.springframework</groupId>
-        <artifactId>gs-accessing-data-xap-complete</artifactId>
-        <version>1.0-SNAPSHOT</version>
+    <groupId>org.springframework</groupId>
+    <artifactId>gs-accessing-data-xap-complete</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-        <dependencies>
+    <dependencies>
 
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-xap</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-xap</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
-            <dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.2.1.RELEASE</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
-                <version>1.2.1.RELEASE</version>
-            </dependency>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-        </dependencies>
+    <repositories>
+        <repository>
+            <id>org.openspaces</id>
+            <url>http://maven-repository.openspaces.org</url>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
 
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
-                    <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>org.openspaces</id>
+            <url>http://maven-repository.openspaces.org</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+    </pluginRepositories>
 
-        <repositories>
-            <repository>
-                <id>org.openspaces</id>
-                <url>http://maven-repository.openspaces.org</url>
-            </repository>
-            <repository>
-                <id>spring-releases</id>
-                <url>https://repo.spring.io/libs-release</url>
-            </repository>
-        </repositories>
-
-        <pluginRepositories>
-            <pluginRepository>
-                <id>org.openspaces</id>
-                <url>http://maven-repository.openspaces.org</url>
-            </pluginRepository>
-            <pluginRepository>
-                <id>spring-releases</id>
-                <url>https://repo.spring.io/libs-release</url>
-            </pluginRepository>
-        </pluginRepositories>
-
-    </project>
+</project>
 ```
 
 
@@ -101,87 +101,87 @@ In this example, you store Book objects with a few annotations.
 
 ```java
 
-    package hello;
+package hello;
 
-    import com.gigaspaces.annotation.pojo.SpaceClass;
-    import com.gigaspaces.annotation.pojo.SpaceId;
+import com.gigaspaces.annotation.pojo.SpaceClass;
+import com.gigaspaces.annotation.pojo.SpaceId;
 
-    import java.io.Serializable;
+import java.io.Serializable;
 
-    @SpaceClass
-    public class Book implements Serializable {
+@SpaceClass
+public class Book implements Serializable {
 
-        String id;
+    String id;
 
-        String author;
+    String author;
 
-        Integer copies;
+    Integer copies;
 
-        public Book(){}
+    public Book(){}
 
-        public Book(String id, String author, Integer copies) {
-            this.id = id;
-            this.author = author;
-            this.copies = copies;
-        }
-
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public void setAuthor(String author) {
-            this.author = author;
-        }
-
-        @SpaceId(autoGenerate = false)
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-        
-        public Integer getCopies() {
-            return copies;
-        }
-
-        public void setCopies(Integer copies) {
-            this.copies = copies;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Book book = (Book) o;
-
-            if (copies != null ? !copies.equals(book.copies) : book.copies != null) return false;
-            if (id != null ? !id.equals(book.id) : book.id != null) return false;
-            if (author != null ? !author.equals(book.author) : book.author != null) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = id != null ? id.hashCode() : 0;
-            result = 31 * result + (author != null ? author.hashCode() : 0);
-            result = 31 * result + (copies != null ? copies.hashCode() : 0);
-            return result;
-        }
-
-        @Override
-        public String toString() {
-            return "Book{" +
-                    "id='" + id + '\'' +
-                    ", author='" + author + '\'' +
-                    ", copies=" + copies +
-                    '}';
-        }
+    public Book(String id, String author, Integer copies) {
+        this.id = id;
+        this.author = author;
+        this.copies = copies;
     }
+
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @SpaceId(autoGenerate = false)
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    public Integer getCopies() {
+        return copies;
+    }
+
+    public void setCopies(Integer copies) {
+        this.copies = copies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (copies != null ? !copies.equals(book.copies) : book.copies != null) return false;
+        if (id != null ? !id.equals(book.id) : book.id != null) return false;
+        if (author != null ? !author.equals(book.author) : book.author != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (copies != null ? copies.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", author='" + author + '\'' +
+                ", copies=" + copies +
+                '}';
+    }
+}
 ```
 
 Here you have a `Book` class with three attributes, the `id`, the `author` and the `copies`. You also have the constructor to populate the entities when creating a new instance and the default constructor.
@@ -200,21 +200,21 @@ To see how this works, create an interface that queries `Book` space objects.
  
 ```java
 
-    package hello;
+package hello;
 
-    import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository;
 
-    import java.util.List;
+import java.util.List;
 
-    public interface BookRepository extends CrudRepository<Book, String> {
+public interface BookRepository extends CrudRepository<Book, String> {
 
-        List<Book> findByAuthor(String author);
+    List<Book> findByAuthor(String author);
 
-        List<Book> findByCopiesLessThan(Integer copies);
+    List<Book> findByCopiesLessThan(Integer copies);
 
-        List<Book> findByAuthorOrCopiesGreaterThan(String author, Integer copies);
+    List<Book> findByAuthorOrCopiesGreaterThan(String author, Integer copies);
 
-    }
+}
 ```
    
 `BookRepository` extends the `CrudRepository` interface and plugs in the type of values and keys it works with: `Book` and `String`. Out-of-the-box, this interface comes with many operations, including standard CRUD (create-read-update-delete).
@@ -233,80 +233,80 @@ Here you create an Application class with all the components.
 
 ``` java
 
-    package hello;
+package hello;
 
-    import org.openspaces.core.GigaSpace;
-    import org.openspaces.core.GigaSpaceConfigurer;
-    import org.openspaces.core.space.UrlSpaceConfigurer;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.boot.CommandLineRunner;
-    import org.springframework.boot.SpringApplication;
-    import org.springframework.context.annotation.Bean;
-    import org.springframework.context.annotation.Configuration;
-    import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+import org.openspaces.core.GigaSpace;
+import org.openspaces.core.GigaSpaceConfigurer;
+import org.openspaces.core.space.UrlSpaceConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
-    import org.springframework.data.xap.repository.config.EnableXapRepositories;
-    import org.springframework.data.xap.repository.support.XapRepositoryFactory;
+import org.springframework.data.xap.repository.config.EnableXapRepositories;
+import org.springframework.data.xap.repository.support.XapRepositoryFactory;
 
-    import java.io.IOException;
+import java.io.IOException;
 
-    @Configuration
-    @EnableXapRepositories
-    public class Application implements CommandLineRunner {
+@Configuration
+@EnableXapRepositories
+public class Application implements CommandLineRunner {
 
-        @Autowired
-        BookRepository bookRepository;
+    @Autowired
+    BookRepository bookRepository;
 
-        @Bean
-        GigaSpace spaceClient(){
-            UrlSpaceConfigurer urlConfigurer = new UrlSpaceConfigurer("/./testSpace");
-            return new GigaSpaceConfigurer(urlConfigurer).gigaSpace();
-        }
-
-        @Bean
-        BookRepository bookRepository(){
-            RepositoryFactorySupport factory = new XapRepositoryFactory(spaceClient(), null);
-            return factory.getRepository(BookRepository.class);
-        }
-
-        @Override
-        public void run(String... strings) throws Exception {
-
-            Book thinkingInJava = new Book("1234", "Eccel", 10_000);
-            Book effectiveJava = new Book("2345", "Bloch", 20_000);
-            Book springInAction = new Book("3456", "Walls", 50_000);
-
-            System.out.println("Before writing objects to space...");
-            for (Book book : new Book[] { thinkingInJava, effectiveJava, springInAction }) {
-                System.out.println("\t" + book);
-            }
-
-            bookRepository.save(thinkingInJava);
-            bookRepository.save(effectiveJava);
-            bookRepository.save(springInAction);
-
-            System.out.println("Lookup books by author...");
-            for (String name : new String[] { thinkingInJava.author, effectiveJava.author, effectiveJava.author}) {
-                System.out.println("\t" + bookRepository.findByAuthor(name));
-            }
-
-            System.out.println("Lookup for less popular books...");
-            for (Book book : bookRepository.findByCopiesLessThan(15_000)) {
-                System.out.println("\t" + book);
-            }
-
-            System.out.println("Lookup for popular books or books of specific author...");
-            for (Book book : bookRepository.findByAuthorOrCopiesGreaterThan("Bloch", 30_000)) {
-                System.out.println("\t" + book);
-            }
-
-            System.exit(0);
-        }
-
-        public static void main(String[] args) throws IOException {
-            SpringApplication.run(Application.class, args);
-        }
+    @Bean
+    GigaSpace spaceClient(){
+        UrlSpaceConfigurer urlConfigurer = new UrlSpaceConfigurer("/./testSpace");
+        return new GigaSpaceConfigurer(urlConfigurer).gigaSpace();
     }
+
+    @Bean
+    BookRepository bookRepository(){
+        RepositoryFactorySupport factory = new XapRepositoryFactory(spaceClient(), null);
+        return factory.getRepository(BookRepository.class);
+    }
+
+    @Override
+    public void run(String... strings) throws Exception {
+
+        Book thinkingInJava = new Book("1234", "Eccel", 10_000);
+        Book effectiveJava = new Book("2345", "Bloch", 20_000);
+        Book springInAction = new Book("3456", "Walls", 50_000);
+
+        System.out.println("Before writing objects to space...");
+        for (Book book : new Book[] { thinkingInJava, effectiveJava, springInAction }) {
+            System.out.println("\t" + book);
+        }
+
+        bookRepository.save(thinkingInJava);
+        bookRepository.save(effectiveJava);
+        bookRepository.save(springInAction);
+
+        System.out.println("Lookup books by author...");
+        for (String name : new String[] { thinkingInJava.author, effectiveJava.author, effectiveJava.author}) {
+            System.out.println("\t" + bookRepository.findByAuthor(name));
+        }
+
+        System.out.println("Lookup for less popular books...");
+        for (Book book : bookRepository.findByCopiesLessThan(15_000)) {
+            System.out.println("\t" + book);
+        }
+
+        System.out.println("Lookup for popular books or books of specific author...");
+        for (Book book : bookRepository.findByAuthorOrCopiesGreaterThan("Bloch", 30_000)) {
+            System.out.println("\t" + book);
+        }
+
+        System.exit(0);
+    }
+
+    public static void main(String[] args) throws IOException {
+        SpringApplication.run(Application.class, args);
+    }
+}
 ```
 
 
