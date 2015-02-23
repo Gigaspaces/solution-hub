@@ -1,0 +1,5 @@
+<xap-data:repositories base-package="com.yourcompany.foo.bar"/>
+
+<bean id="personRepositoryImpl" class="...">
+<!-- further configuration -->
+</bean>

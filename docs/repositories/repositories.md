@@ -1,4 +1,8 @@
+#### <a name="repositories"/>2.2 XAP Repositories
+
 This part of the document explains how to configure and start using XAP Repositories with Spring Data. While one can try to directly operate with `GigaSpace` created from the [previous section](#support) to perform read and write operations, it is generally easier to use Spring Data Repositories for the same purposes. This approach significantly reduces the amount of boilerplate code from your data-access layer as well as gives you more flexibility and cleaner code which is easy to read and support. `GigaSpace` will be still available with `space()` method at `XapRepository` interface.
+
+> Spring Data XAP supports all Spring Data Commons configuration features like exclude filters, standalone configuration, manual wiring, etc. For more details on how to apply them, please, refer to [Creating Repository Instances](http://docs.spring.io/spring-data/commons/docs/current/reference/html/#repositories.create-instances).
 
 To start with handy Spring Data XAP features you will need to create your repository interface extending `XapRepository` and tell Spring Container to look for such classes.
 
@@ -28,7 +32,7 @@ ${JavaConfiguration.java}
 
 ##### Excluding custom interfaces from the search
 
-If you need to have an interface that won't be treated as a Repository by String Container, you can mark it with `@NoRepositoryBean` annotation:
+If you need to have an interface that won't be treated as a Repository by Spring Container, you can mark it with `@NoRepositoryBean` annotation:
 ```java
 ${BaseRepository.java}
 ```

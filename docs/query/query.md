@@ -1,3 +1,5 @@
+#### <a name="query"/>3.1 Query methods
+
 To start off, next declaration will allow application to search for objects by different field matches:
 
 ```java

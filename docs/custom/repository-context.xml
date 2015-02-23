@@ -1,0 +1,3 @@
+<xap-data:repositories
+        base-package="com.yourcompany.foo.bar"
+        repository-impl-postfix="FooBar"/>

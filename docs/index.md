@@ -33,28 +33,19 @@ _[Other Resources](#resources)_
 
 _[Appendix](#appendix)_
 
-## <a name="preface"/>Preface
 ${preface.md}
-## <a name="requirements"/>Requirements
 ${requirements.md}
+
 ## <a name="reference"/>Reference Documentation
-### <a name="structure"/>1. Document Structure
 ${structure.md}
-### <a name="configuration"/>2. Configuration
 
-#### <a name="support"/>2.1 XAP Support
+${configuration/configuration.md}
 ${support/support.md}
-
-#### <a name="repositories"/>2.2 XAP Repositories
 ${repositories/repositories.md}
 
-### <a name="basic"/>3. Basic Usage
 ${basic.md}
-
-#### <a name="query"/>3.1 Query methods
 ${query/query.md}
-
-#### <a name="custom"/>3.2 Custom methods
+${custom/custom.md}
 
 ### <a name="advanced"/>4. Advanced Usage
 
@@ -67,5 +58,4 @@ ${query/query.md}
 ## <a name="resources"/>Other Resources
 
 ## <a name="appendix"/>Appendix
-## <a name="appendix-a"/>Appendix A: Supported Query Keywords
 ${appendix/appendix-a.md}

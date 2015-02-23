@@ -1,3 +1,5 @@
+### <a name="structure"/>1. Document Structure
+
 This part of the reference documentation explains the core functionality offered by Spring Data XAP.
 
 * [Configuration](#configuration) section contains examples on how to configure space and repository in different ways.

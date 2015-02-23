@@ -6,7 +6,7 @@
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
          http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
 
-  <xap-data:repositories base-package="org.xap.repositories"
+  <xap-data:repositories base-package="com.yourcompany.foo.bar"
                          named-queries-location="classpath:named-queries.properties"/>
 
   <!-- other configuration omitted -->

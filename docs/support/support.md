@@ -1,3 +1,5 @@
+#### <a name="support"/>2.1 XAP Support
+
 The first task to handle while developing XAP application using Spring would be to configure a connection to the active space inside the Spring IoC container. This part of the document will show you how basic connection can be applied using XML or Java based Spring configurations.
 
 To get started, first you need to get the space running: either configure an Embedded Space or set up a Service Grid and deploy the Data Grid on it.
@@ -17,12 +19,6 @@ Then in your project (assuming you build it with [Maven](http://maven.apache.org
 ${data-dependency.xml}
 ```
 
-If possible, change the Spring Framework version to 4.0.x or above:
-
-```xml
-${spring-version.xml}
-```
-
 ##### Connecting to space using XML based metadata
 
 To use XAP Repository you need to provide a connection to space with an instance of `GigaSpace`. Basic access can be easily configured with next Spring XML configuration:
@@ -30,8 +26,6 @@ To use XAP Repository you need to provide a connection to space with an instance
 ```xml
 ${space-proxy-context.xml}
 ```
-
-> Note that special `os-core` namespace is used to simplify the configuration.
 
 If you want to use an Embedded Space, the next configuration will suite your needs:
 
@@ -53,7 +47,7 @@ Or for the Embedded Space:
 ${JavaEmbeddedConfiguration.java}
 ```
 
-##### Using plain write and read operation
+##### Using native write and read operation
 
 `GigaSpace` configured above can be used directly to perform interaction with space. To do so, you can simply inject `GigaSpace` bean into your Repository classes. Let's see an example of such usage. First, here is an example of POJO class:
 ```java
