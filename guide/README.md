@@ -1,4 +1,4 @@
-Accessing data with SpringDataXAP
+Accessing data with Spring Data XAP
 =====
 
 This guide walks you through the process of building an application with GigaSpaces XAP.
