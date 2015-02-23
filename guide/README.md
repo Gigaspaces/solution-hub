@@ -22,6 +22,8 @@ In a project directory of your choosing, create the following subdirectory struc
 
 `pom.xml`
 
+```xml
+
     <?xml version="1.0" encoding="UTF-8"?>
     <project xmlns="http://maven.apache.org/POM/4.0.0"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -88,7 +90,7 @@ In a project directory of your choosing, create the following subdirectory struc
         </pluginRepositories>
 
     </project>
-
+```
 
 
 ## Define a simple entity
@@ -97,7 +99,9 @@ For this guide you use an embedded space so you don't have to set up anything ex
 
 In this example, you store Book objects with a few annotations.
 
- package hello;
+```java
+
+    package hello;
 
     import com.gigaspaces.annotation.pojo.SpaceClass;
     import com.gigaspaces.annotation.pojo.SpaceId;
@@ -178,7 +182,7 @@ In this example, you store Book objects with a few annotations.
                     '}';
         }
     }
-
+```
 
 Here you have a `Book` class with three attributes, the `id`, the `author` and the `copies`. You also have the constructor to populate the entities when creating a new instance and the default constructor.
 
@@ -193,7 +197,9 @@ The convenient `toString()` method will print out the book's id, author and copi
 Spring Data XAP focuses on storing data in XAP. It also inherits powerful functionality from the Spring Data Commons project, such as the ability to derive queries. Essentially, you don't have to learn the query language of GigaSpaces XAP; you can simply write a handful of methods and the queries are written for you.
 
 To see how this works, create an interface that queries `Book` space objects.
-   
+ 
+```java
+
     package hello;
 
     import org.springframework.data.repository.CrudRepository;
@@ -209,6 +215,7 @@ To see how this works, create an interface that queries `Book` space objects.
         List<Book> findByAuthorOrCopiesGreaterThan(String author, Integer copies);
 
     }
+```
    
 `BookRepository` extends the `CrudRepository` interface and plugs in the type of values and keys it works with: `Book` and `String`. Out-of-the-box, this interface comes with many operations, including standard CRUD (create-read-update-delete).
 
@@ -223,6 +230,8 @@ Let's wire this up and see what it looks like!
 
 ## Create an application class
 Here you create an Application class with all the components.
+
+``` java
 
     package hello;
 
@@ -298,6 +307,7 @@ Here you create an Application class with all the components.
             SpringApplication.run(Application.class, args);
         }
     }
+```
 
 
 In the configuration, you need to add the `@EnableXapRepositories` annotation.
