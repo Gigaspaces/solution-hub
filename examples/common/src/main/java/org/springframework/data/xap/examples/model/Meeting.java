@@ -12,7 +12,7 @@ import java.util.List;
  * @author Anna_Babich.
  */
 @SpaceClass
-public class Meeting implements Serializable{
+public class Meeting implements Serializable {
 
     private Integer id;
     private MeetingRoom meetingRoom;

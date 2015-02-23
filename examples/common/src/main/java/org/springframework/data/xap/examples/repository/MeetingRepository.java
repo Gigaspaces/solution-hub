@@ -10,8 +10,10 @@ import java.util.List;
 /**
  * @author Anna_Babich.
  */
-public interface MeetingRepository extends XapRepository<Meeting, Integer>{
+public interface MeetingRepository extends XapRepository<Meeting, Integer> {
     List<Meeting> findByStartTimeAndMeetingRoom(Date startTime, MeetingRoom meetingRoom);
+
     List<Meeting> findByStartTimeAfter(Date date);
+
     List<Meeting> findByMeetingRoomAddressCity(String city);
 }

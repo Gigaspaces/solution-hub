@@ -19,7 +19,7 @@ public class WriteReadExample {
         log.info("Save new person " + nick + " ...");
         personRepository.save(nick);
         log.info("Get persons from space: ");
-        for(Person person: personRepository.findAll()){
+        for (Person person : personRepository.findAll()) {
             log.info(person.toString());
         }
         log.info("Delete persons from space...");

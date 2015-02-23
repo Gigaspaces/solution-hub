@@ -1,9 +1,9 @@
 package org.springframework.data.xap.examples;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.examples.model.Address;
 import org.springframework.data.xap.examples.model.Meeting;
 import org.springframework.data.xap.examples.model.MeetingRoom;
@@ -14,6 +14,7 @@ import org.springframework.data.xap.examples.service.PersonService;
 import org.springframework.data.xap.examples.util.DateUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,12 +43,18 @@ public class Sample {
     private MeetingRoomService meetingRoomService;
 
     public void run() {
+        log.info("DATA FILLING");
         createPersons();
         createRooms();
+        log.info("CREATE MEETINGS");
         createMeetings();
+        log.info("FIND QUERY EXAMPLES");
         find();
+        log.info("CHANGE API EXAMPLE");
+        change();
         deleteAll();
     }
+
 
     private void createPersons() {
         nick = new Person(1, "Nick", true, "accounting", 22);
@@ -64,7 +71,7 @@ public class Sample {
         }
     }
 
-    private void createRooms(){
+    private void createRooms() {
         green = new MeetingRoom(new Address("New York", "Main Street, 1"), "green");
         orange = new MeetingRoom(new Address("New York", "Main Street, 5"), "orange");
         blue = new MeetingRoom(new Address("Kyiv", "Main Street, 12"), "blue");
@@ -72,7 +79,7 @@ public class Sample {
         meetingRoomService.save(Arrays.asList(new MeetingRoom[]{green, orange, blue}));
 
         log.info("Rooms created: ");
-        for(MeetingRoom room: meetingRoomService.findAll()){
+        for (MeetingRoom room : meetingRoomService.findAll()) {
             log.info(room.toString());
         }
     }
@@ -106,8 +113,23 @@ public class Sample {
         log.info("Get info about meetings in New York rooms");
         meetings = meetingService.findByMeetingRoomAddressCity("New York");
         log.info(meetings.toString());
+
+        log.info("Get all rooms that located in Kyiv (using @Query annotation)");
+        List<MeetingRoom> rooms = meetingRoomService.findByCityCustomQuery("Kyiv");
+        log.info(rooms.toString());
+
+        log.info("Find persons older than 25, sort them by reducing id");
+        List<Person> persons = personService.findByAgeGreaterThan(25, new Sort(new Sort.Order(Sort.Direction.DESC, "id")));
+        log.info(persons.toString());
     }
 
+
+    private void change() {
+        log.info("Change person information (using XAP change API and query dsl mechanism)");
+        log.info("Before changes " + personService.findOne(1).toString());
+        personService.changePersonAgeAndStatus(nick, 5);
+        log.info("After changes " + personService.findOne(1).toString());
+    }
 
     private void deleteAll() {
         personService.deleteAll();

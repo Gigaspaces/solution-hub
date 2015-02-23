@@ -19,7 +19,7 @@ public class DateUtils {
         }
     }
 
-    public static String getFormatDate(Date date){
+    public static String getFormatDate(Date date) {
         return sdf.format(date);
     }
 }

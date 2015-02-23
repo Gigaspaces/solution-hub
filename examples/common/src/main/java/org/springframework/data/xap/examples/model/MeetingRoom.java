@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Anna_Babich.
  */
 @SpaceClass
-public class MeetingRoom implements Serializable{
+public class MeetingRoom implements Serializable {
     private Address address;
     private String name;
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author Anna_Babich.
  */
-public class Address implements Serializable{
+public class Address implements Serializable {
     private String city;
     private String localAddress;
 

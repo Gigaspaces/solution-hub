@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.xap.examples.model.Meeting;
-import org.springframework.data.xap.examples.model.MeetingRoom;
 import org.springframework.data.xap.examples.repository.MeetingRepository;
 import org.springframework.stereotype.Component;
 
@@ -41,15 +40,15 @@ public class MeetingService {
         return (meetings.size() == 0);
     }
 
-    public Meeting findOne(Integer id){
+    public Meeting findOne(Integer id) {
         return meetingRepository.findOne(id);
     }
 
-    public List<Meeting> findByStartTimeAfter(Date date){
+    public List<Meeting> findByStartTimeAfter(Date date) {
         return meetingRepository.findByStartTimeAfter(date);
     }
 
-    public List<Meeting> findByMeetingRoomAddressCity(String city){
+    public List<Meeting> findByMeetingRoomAddressCity(String city) {
         return meetingRepository.findByMeetingRoomAddressCity(city);
     }
 }

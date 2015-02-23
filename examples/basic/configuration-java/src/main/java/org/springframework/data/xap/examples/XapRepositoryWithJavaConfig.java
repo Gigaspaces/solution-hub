@@ -22,5 +22,6 @@ public class XapRepositoryWithJavaConfig {
         PersonRepository personRepository = context.getBean(PersonRepository.class);
         log.info("Get personRepository bean from context: " + personRepository);
         WriteReadExample.launch(personRepository);
+        System.exit(0);
     }
 }

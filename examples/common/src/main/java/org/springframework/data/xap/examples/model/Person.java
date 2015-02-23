@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Anna_Babich.
  */
 @SpaceClass
-public class Person implements Serializable{
+public class Person implements Serializable {
     private Integer id;
     private String name;
     private Boolean active;
