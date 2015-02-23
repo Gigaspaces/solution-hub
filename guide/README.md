@@ -290,6 +290,8 @@ Here you create an Application class with all the components.
             for (Book book : bookRepository.findByAuthorOrCopiesGreaterThan("Bloch", 30_000)) {
                 System.out.println("\t" + book);
             }
+
+            System.exit(0);
         }
 
         public static void main(String[] args) throws IOException {
