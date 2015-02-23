@@ -19,12 +19,12 @@ public class XapQueryDslAnnotationProcessor extends AbstractQuerydslProcessor {
     private static final Class<? extends Annotation> ENTITIES = null;
     private static final Class<? extends Annotation> ENTITY = SpaceClass.class;
     private static final Class<? extends Annotation> SUPER_TYPE = null;
-    private static final Class<? extends Annotation> EMBEDABLE = null;
+    private static final Class<? extends Annotation> EMBEDDABLE = null;
     private static final Class<? extends Annotation> EMBEDDED = null;
     private static final Class<? extends Annotation> SKIP = SpaceExclude.class;
 
     @Override
     protected Configuration createConfiguration(RoundEnvironment roundEnv) {
-        return new DefaultConfiguration(roundEnv, processingEnv.getOptions(), Collections.<String>emptySet(), ENTITIES, ENTITY, SUPER_TYPE, EMBEDABLE, EMBEDDED, SKIP);
+        return new DefaultConfiguration(roundEnv, processingEnv.getOptions(), Collections.<String>emptySet(), ENTITIES, ENTITY, SUPER_TYPE, EMBEDDABLE, EMBEDDED, SKIP);
     }
 }
