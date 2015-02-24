@@ -12,24 +12,24 @@ In this example, pay attention to the two configuration points that allow queryd
 To run the example, refer to `QueryDslMain` class. It will delegate configuration to `QueryDslExample` which will show several query operations available in `XapQueryDslPredicateExecutor` interface. Running the example should produce the next output:
 
 ```
-INFO  o.s.d.x.e.a.querydsl.QueryDslMain - QUERY DSL EXAMPLE
+QUERY DSL EXAMPLE
 ...
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Find person with name Nick
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=1, name='Nick', active=true, position='accounting', age=22}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Find persons older than 26, sort them by name
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=5, name='Jim', active=true, position='security', age=24}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=1, name='Nick', active=true, position='accounting', age=22}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Find persons by name list
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=1, name='Nick', active=true, position='accounting', age=22}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=2, name='Mary', active=false, position='teacher', age=29}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Find persons, whose names contain J
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=5, name='Jim', active=true, position='security', age=24}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=3, name='John', active=true, position='accounting', age=31}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Find persons, whose names contain 4 letters
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=1, name='Nick', active=true, position='accounting', age=22}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=2, name='Mary', active=false, position='teacher', age=29}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=3, name='John', active=true, position='accounting', age=31}
-INFO  o.s.d.x.e.a.querydsl.QueryDslExample - Person{id=4, name='Paul', active=false, position='accounting', age=43}
+Find person with name Nick
+Person{id=1, name='Nick', active=true, position='accounting', age=22}
+Find persons older than 26, sort them by name
+Person{id=5, name='Jim', active=true, position='security', age=24}
+Person{id=1, name='Nick', active=true, position='accounting', age=22}
+Find persons by name list
+Person{id=1, name='Nick', active=true, position='accounting', age=22}
+Person{id=2, name='Mary', active=false, position='teacher', age=29}
+Find persons, whose names contain J
+Person{id=5, name='Jim', active=true, position='security', age=24}
+Person{id=3, name='John', active=true, position='accounting', age=31}
+Find persons, whose names contain 4 letters
+Person{id=1, name='Nick', active=true, position='accounting', age=22}
+Person{id=2, name='Mary', active=false, position='teacher', age=29}
+Person{id=3, name='John', active=true, position='accounting', age=31}
+Person{id=4, name='Paul', active=false, position='accounting', age=43}
 ...
 ```
 
