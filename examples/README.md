@@ -8,7 +8,7 @@ This project provides a set of examples to get you started using Spring Data XAP
 These examples cover basic configuration ways of Spring Data XAP. This currently includes
 
 * [configuration-xml](/examples/configuration/configuration-xml) - Demonstrates configuring repository with XML Schema-based configuration
-* [configuration-java](/examples/configuration-java) - Demonstrates configuring repository with Java configuration
+* [configuration-java](/examples/configuration/configuration-java) - Demonstrates configuring repository with Java configuration
 
 # Basic
 

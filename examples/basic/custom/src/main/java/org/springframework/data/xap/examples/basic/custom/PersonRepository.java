@@ -6,5 +6,5 @@ import org.springframework.data.xap.repository.XapRepository;
 /**
  * @author Anna_Babich.
  */
-public interface PersonRepository extends XapRepository<Person, Integer>{
+public interface PersonRepository extends XapRepository<Person, Integer>, CustomMethods {
 }

@@ -13,7 +13,7 @@ public class CustomMain {
     public static void main(String[] args) {
         log.info("CUSTOM METHOD EXAMPLE");
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
-        PersonRepositoryExtended personRepository = context.getBean(PersonRepositoryExtended.class);
+        PersonRepository personRepository = context.getBean(PersonRepository.class);
         log.info("Set up message");
         personRepository.setMessage("Hello World");
         log.info("Call custom method");
