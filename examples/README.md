@@ -3,14 +3,21 @@ Spring Data XAP Examples
 
 This project provides a set of examples to get you started using Spring Data XAP. These examples are designed to work with [Spring Data XAP integration] (http://projects.spring.io/spring-data-xap) and are organized into the following levels:
 
-# Basic
+#Configuration
 
-These examples cover basic configuration and usage of Spring Data XAP without any specific features that XAP provides. This currently includes
+These examples cover basic configuration ways of Spring Data XAP. This currently includes
 
 * configuration-xml - Demonstrates configuring repository with XML Schema-based configuration
 * configuration-java - Demonstrates configuring repository with Java configuration
-* interaction-with-space - Covers all basic methods provided by XapRepository
-* transaction - Demonstrates the use of XAP transactions
+
+# Basic
+
+These examples cover basic usages of the Spring Data XAP. This currently includes
+
+* crud - Covers all basic methods provided by XapRepository
+* query - Demonstrates the use of query methods
+* xap-native - Shows access and use of native GigaSpaces API
+* custom - Demonstrate how to declare custom method for repository implementation
 
 # Advanced
 
@@ -22,19 +29,14 @@ These examples demonstrate the usage of additional XAP features in Spring Data X
 
 # Running The Examples
 
-Before executing any of the given examples, you have to download and run GigaSpaces XAP.
-Please, refer to [Installation Guide] (http://docs.gigaspaces.com/xap100/installation.html) to install the platform.
-To deploy the Data Grid on you local machine to host the Space for these examples, run next scripts from the products 'bin' folder
+Before executing any of the given examples, you have to download GigaSpaces XAP and install maven plugin.
+To install maven plugin run the next script:
 
         *Windows*
-        gs-agent.bat
-        gs.bat deploy-space -cluster total_members=1,1 example-space
+        /tools/maven/installmavenrep.bat
         
         *Unix*
-        ./gs-agent.sh
-        ./gs.sh deploy-space -cluster total_members=1,1 example-space
-
-Please, refer to [XAP in 5 minutes] (http://docs.gigaspaces.com/xap100/your-first-data-grid-application.html) for the details on Data Grid basic configuration.
+        /tools/maven/installmavenrep.sh
 
 This project is built with [Maven] (http://maven.apache.org/) and each example may be built and run with Maven (3.0 or higher) or within your Java IDE.
 Detailed instructions for each example may be found in its own README file.
