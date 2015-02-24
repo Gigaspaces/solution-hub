@@ -10,10 +10,16 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>configuration/configuration-xml</module>
+        <module>configuration/configuration-java</module>
+        <module>configuration/simple</module>
         <module>common</module>
-        <module>basic/configuration-xml</module>
-        <module>basic/configuration-java</module>
-        <module>repository</module>
+        <module>basic/query</module>
+        <module>basic/crud</module>
+        <module>basic/xap-native</module>
+        <module>advanced/querydsl</module>
+        <module>advanced/projection</module>
+        <module>advanced/changeapi</module>
     </modules>
     <name>Spring Data XAP Examples</name>
     <description>Spring Data XAP Examples</description>

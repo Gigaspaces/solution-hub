@@ -10,10 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common</artifactId>
-    <properties>
-        <logback.version>1.1.2</logback.version>
-    </properties>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <!-- Query DSL processor (generates Q... files for each @SpaceClass) -->
             <plugin>
