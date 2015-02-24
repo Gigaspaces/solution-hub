@@ -28,7 +28,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.data</groupId>
-            <artifactId>simple</artifactId>
+            <artifactId>configuration-common</artifactId>
             <version>${examples.version}</version>
         </dependency>
     </dependencies>

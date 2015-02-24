@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.examples.DataSet;
 import org.springframework.data.xap.examples.model.Meeting;
@@ -16,16 +15,13 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.data.xap.examples.model.QPerson.person;
-import static org.springframework.data.xap.querydsl.QChangeSet.changeSet;
-
 /**
  * @author Anna_Babich.
  */
 @Component
-public class QueryCreationExample {
+public class QueryMethodsExample {
 
-    private static Logger log = LoggerFactory.getLogger(QueryCreationExample.class);
+    private static Logger log = LoggerFactory.getLogger(QueryMethodsExample.class);
 
     @Autowired
     private PersonRepository personRepository;
