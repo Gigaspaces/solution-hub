@@ -24,7 +24,7 @@ public class QueryDslExample {
         DataSet.setup(personRepository.space());
 
         log.info("Find person with name Nick");
-        Person per = personRepository.findOne((person.name.eq("Nick")));
+        Person per = personRepository.findOne(person.name.eq("Nick"));
         log.info(per.toString());
 
         log.info("Find persons older than 26, sort them by name");
@@ -37,12 +37,12 @@ public class QueryDslExample {
             log.info(p.toString());
         }
 
-        log.info("Find persons, which names contains J");
+        log.info("Find persons, whose names contain J");
         for (Person p: personRepository.findAll(person.name.like("%J%"))){
             log.info(p.toString());
         }
 
-        log.info("Find persons, which names contains 4 letters");
+        log.info("Find persons, whose names contain 4 letters");
         for (Person p: personRepository.findAll(person.name.matches("\\w{4}"))){
             log.info(p.toString());
         }
