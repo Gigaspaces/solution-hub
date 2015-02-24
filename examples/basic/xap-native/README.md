@@ -1,4 +1,4 @@
-XAP-Native
+Xap Sprig Data Examples - Native API
 ==========
 This example demonstrates how to get access to the native XAP API.
 
