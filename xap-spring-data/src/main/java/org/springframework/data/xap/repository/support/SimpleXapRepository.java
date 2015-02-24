@@ -167,7 +167,6 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     public long count() {
         Class<T> aClass = entityInformation.getJavaType();
         SQLQuery<T> query = new SQLQuery<>(aClass, "");
-        // Changed from QueryExtension.count(space, query, "");
         return space.aggregate(query, new AggregationSet().count("")).getLong(0);
     }
 
