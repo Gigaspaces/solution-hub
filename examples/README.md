@@ -1,7 +1,7 @@
 Spring Data XAP Examples
-============================
+========================
 
-This project provides a set of examples to get you started using Spring Data XAP. These examples are designed to work with [Spring Data XAP integration] (http://projects.spring.io/spring-data-xap) and are organized into the following levels:
+This project provides a set of examples to get you started using Spring Data XAP. These examples are designed to work with [Spring Data XAP integration] (https://github.com/Gigaspaces/xap-spring-data) and are organized into the following levels:
 
 # Configuration
 
