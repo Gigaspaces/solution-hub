@@ -5,7 +5,6 @@ The first task to handle while developing XAP application using Spring would be 
 To get started, first you need to get the space running: either configure an Embedded Space or set up a Service Grid and deploy the Data Grid on it.
 
 To use the Embedded Space you don't need to start any additional processes on your environment.
-> This approach is recommended only for running tests or examples since the Embedded Space won't be persisted and can't be monitored with XAP platform tools.
 
 To start the Data Grid refer to [XAP Quick Start guide](http://docs.gigaspaces.com/xap100/your-first-data-grid-application.html) for an explanation on how to startup a space storage. Once installed, deploying Data Grid is typically a matter of executing the next commands from the `GS_HOME/bin` folder:
 
