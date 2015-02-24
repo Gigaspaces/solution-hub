@@ -6,7 +6,9 @@ The Querydsl framework let's you write type-safe queries in Java instead of usin
 The priceless feature of Querydsl is that if you change the POJO (remove or rename its fields), the project will not built properly until you change all the queries on those fields. This with help you avoid having application to run defective queries causing run-time exception and event worse - causing data corruption without any error.
 
 In this example, pay attention to the two configuration points that allow querydsl code to run:
+
 1. parent `pom.xml` contains configuration of `Maven APT` plugin to run `XapQueryDslAnnotationProcessor` - this creates a `Q...` class for each POJO annotated with `@SpaceClass`
+
 2. `PredicatePersonRepository` extends `XapQueryDslPredicateExecutor` defining `Person` as a domain class
 
 To run the example, refer to `QueryDslMain` class. It will delegate configuration to `QueryDslExample` which will show several query operations available in `XapQueryDslPredicateExecutor` interface. Running the example should produce the next output:
