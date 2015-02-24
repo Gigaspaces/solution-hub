@@ -16,4 +16,6 @@ public interface PersonRepository extends XapRepository<Person, Integer> {
     List<Person> findByAgeGreaterThan(Integer age, Sort sort);
 
     List<Person> findByActiveTrue(Pageable pageable);
+
+    List<Person> findByPositionOrdered(String name);
 }
