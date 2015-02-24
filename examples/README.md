@@ -3,29 +3,29 @@ Spring Data XAP Examples
 
 This project provides a set of examples to get you started using Spring Data XAP. These examples are designed to work with [Spring Data XAP integration] (http://projects.spring.io/spring-data-xap) and are organized into the following levels:
 
-# [Configuration](/configuration)
+# Configuration
 
 These examples cover basic configuration ways of Spring Data XAP. This currently includes
 
-* [configuration-xml](/configuration/configuration-xml) - Demonstrates configuring repository with XML Schema-based configuration
-* [configuration-java](/configuration-java) - Demonstrates configuring repository with Java configuration
+* [configuration-xml](/examples/configuration/configuration-xml) - Demonstrates configuring repository with XML Schema-based configuration
+* [configuration-java](/examples/configuration-java) - Demonstrates configuring repository with Java configuration
 
-# [Basic](/basic)
+# Basic
 
 These examples cover basic usages of the Spring Data XAP. This currently includes
 
-* crud - Covers all basic methods provided by XapRepository
-* query - Demonstrates the use of query methods
-* xap-native - Shows access and use of native GigaSpaces API
-* custom - Demonstrate how to declare custom method for repository implementation
+* [crud](/examples/basic/crud) - Covers all basic methods provided by XapRepository
+* [query](/examples/basic/query) - Demonstrates the use of query methods
+* [xap-native](/examples/basic/xap-native) - Shows access and use of native GigaSpaces API
+* [custom](/examples/basic/custom) - Demonstrate how to declare custom method for repository implementation
 
 # Advanced
 
 These examples demonstrate the usage of additional XAP features in Spring Data XAP. This currently includes
 
-* query-dsl - Shows how to use Query Dsl predicates
-* projection - Demonstrates the usage of Projections in XAP
-* change-api - Demonstrates the usage of Change API in XAP
+* [query-dsl](/examples/advanced/query-dsl) - Shows how to use Query Dsl predicates
+* [projection](/examples/advanced/projection) - Demonstrates the usage of Projections in XAP
+* [change-api](/examples/advanced/change-api) - Demonstrates the usage of Change API in XAP
 
 # Running The Examples
 
