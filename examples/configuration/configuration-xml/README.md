@@ -1,8 +1,8 @@
-XAP Spring Data - Configuration-xml
+XAP Spring Data - Xml Configuration
 =======
 Simple example how to use Xap Spring Data repository via java based configuration.
 
-For config in java based way you should use `<xap-data:repositories/>` tag and create GigaSpace bean.
+For config in xml way you should use `<xap-data:repositories/>` tag and create GigaSpace bean.
 
 To run the example, to the `XapRepositoryWithXmlConfig` class. Running the example should produce the next output:
 
