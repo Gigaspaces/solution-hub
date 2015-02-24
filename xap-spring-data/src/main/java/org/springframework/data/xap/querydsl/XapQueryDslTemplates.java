@@ -20,6 +20,7 @@ public class XapQueryDslTemplates extends Templates {
 
     private Set<Operator> allowedOperators;
     private Map<Operator, Operator> oppositesMapping;
+    private Set<Operator> regexOperators;
 
     protected XapQueryDslTemplates() {
         this('\\');
@@ -28,6 +29,7 @@ public class XapQueryDslTemplates extends Templates {
     protected XapQueryDslTemplates(char escape) {
         super(escape);
         allowedOperators = new HashSet<>();
+        regexOperators = new HashSet<>();
         oppositesMapping = new HashMap<>();
         // operations below are described as supported by SQLQuery
         // some of these duplicate the code in parent to make sure those operations are properly supported
@@ -66,6 +68,14 @@ public class XapQueryDslTemplates extends Templates {
 
         // regex like
         template(Ops.MATCHES, "{0} rlike {1}");
+
+        // string matchers
+        regexTemplate(Ops.STRING_CONTAINS);
+        regexTemplate(Ops.STRING_CONTAINS_IC);
+        regexTemplate(Ops.STARTS_WITH);
+        regexTemplate(Ops.STARTS_WITH_IC);
+        regexTemplate(Ops.ENDS_WITH);
+        regexTemplate(Ops.ENDS_WITH_IC);
     }
 
     private void template(Operator<?> operator, String pattern) {
@@ -76,6 +86,12 @@ public class XapQueryDslTemplates extends Templates {
     private void template(Operator<?> operator, String pattern, int precedence) {
         add(operator, pattern, precedence);
         allowedOperators.add(operator);
+    }
+
+    private void regexTemplate(Operator<?> operator) {
+        add(operator, "{0} rlike {1}");
+        allowedOperators.add(operator);
+        regexOperators.add(operator);
     }
 
     private void negativeTemplate(Operator<?> operator, Operator<?> opposite, String pattern) {
@@ -92,6 +108,10 @@ public class XapQueryDslTemplates extends Templates {
 
     public boolean isAllowed(Operator<?> operator) {
         return allowedOperators.contains(operator);
+    }
+
+    public boolean isRegex(Operator<?> operator) {
+        return regexOperators.contains(operator);
     }
 
     public Operator getNegative(Operator<?> operator) {

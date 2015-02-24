@@ -1,6 +1,8 @@
 package org.springframework.data.xap.querydsl.predicate;
 
-import com.mysema.query.types.*;
+import com.mysema.query.types.Ops;
+import com.mysema.query.types.OrderSpecifier;
+import com.mysema.query.types.Predicate;
 import com.mysema.query.types.expr.BooleanExpression;
 import com.mysema.query.types.expr.ComparableExpression;
 import com.mysema.query.types.expr.ComparableOperation;
@@ -15,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.model.Team;
 import org.springframework.data.xap.model.TeamStatus;
-import org.springframework.data.xap.querydsl.QChangeSet;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -33,7 +34,6 @@ import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
 import static org.springframework.data.xap.querydsl.QChangeSet.changeSet;
 import static org.springframework.data.xap.querydsl.QueryDslProjection.projection;
-import static org.springframework.data.xap.repository.query.Projection.projections;
 
 /**
  * @author Leonid_Poliakov
@@ -360,37 +360,40 @@ public class PredicateQueryDslTest {
         assertNull(updated.getStatus());
     }
 
+    @Test
+    public void testStringComparison() {
+        Team weirdo = new Team("3", "weir}DO", null, null, null, TeamStatus.UNKNOWN, null);
+        repository.save(weirdo);
 
-    // Negative tests for unsupported Query DSL operators
+        // contains
+        assertEquals(
+                weirdo,
+                one(team.name.contains("r}D"))
+        );
+        assertEquals(
+                weirdo,
+                one(team.name.containsIgnoreCase("IR}do"))
+        );
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testContains() {
-        one(team.name.contains("avoli"));
-    }
+        // starts with
+        assertEquals(
+                avolition,
+                one(team.name.startsWith("avo"))
+        );
+        assertEquals(
+                weirdo,
+                one(team.name.startsWithIgnoreCase("WeiR}d"))
+        );
 
-    @Test(expected = UnsupportedOperationException.class)
-    public void testContainsIgnoreCase() {
-        one(team.name.containsIgnoreCase("avoli"));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testEndsWith() {
-        one(team.name.endsWith("tion"));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testEndsWithIgnoreCase() {
-        one(team.name.endsWithIgnoreCase("tion"));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testStartsWith() {
-        one(team.name.startsWith("avoli"));
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testStartsWithIgnoreCase() {
-        one(team.name.startsWithIgnoreCase("avoli"));
+        // ends with
+        assertEquals(
+                avolition,
+                one(team.name.endsWith("tion"))
+        );
+        assertEquals(
+                weirdo,
+                one(team.name.endsWithIgnoreCase("R}do"))
+        );
     }
 
     private Team one(Predicate predicate) {

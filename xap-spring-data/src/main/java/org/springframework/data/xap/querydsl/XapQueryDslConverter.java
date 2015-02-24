@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author Leonid_Poliakov
@@ -45,9 +46,9 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
     @Override
     public Void visit(Operation<?> operation, @Nullable Void context) {
         Operator<?> operator = operation.getOperator();
+        List<Expression<?>> arguments = operation.getArgs();
         // try to redefine operation
         if (operator == Ops.NOT) {
-            List<Expression<?>> arguments = operation.getArgs();
             if (arguments != null && arguments.size() == 1) {
                 Expression<?> innerExpression = arguments.get(0);
                 if (innerExpression instanceof Operation) {
@@ -56,6 +57,7 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
                     if (negative != null) {
                         operator = negative;
                         operation = innerOperation;
+                        arguments = operation.getArgs();
                     }
                 }
             }
@@ -66,9 +68,40 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
             throw new UnsupportedOperationException("operator " + operator + " is not supported by XAP repositories");
         }
 
+        // check if operator is regex-based
+        if (TEMPLATES.isRegex(operator)) {
+            if (operator == Ops.STRING_CONTAINS || operator == Ops.STRING_CONTAINS_IC) {
+                arguments = replaceWithRegex(".*%s.*", operation, operator == Ops.STRING_CONTAINS_IC);
+            } else if (operator == Ops.STARTS_WITH || operator == Ops.STARTS_WITH_IC) {
+                arguments = replaceWithRegex("^%s.*", operation, operator == Ops.STARTS_WITH_IC);
+            } else if (operator == Ops.ENDS_WITH || operator == Ops.ENDS_WITH_IC) {
+                arguments = replaceWithRegex(".*%s$", operation, operator == Ops.ENDS_WITH_IC);
+            } else {
+                throw new UnsupportedOperationException("operator " + operator + " is not supported by XAP repositories");
+            }
+        }
+
         // apply operation
-        visitOperation(operation.getType(), operator, operation.getArgs());
+        visitOperation(operation.getType(), operator, arguments);
         return null;
+    }
+
+    private List<Expression<?>> replaceWithRegex(String regexFormat, Operation<?> operation, boolean ignoreCase) {
+        Expression<?> search = operation.getArg(1);
+        String searchString = search.toString();
+        String regex = String.format(regexFormat, Pattern.quote(searchString));
+        if (ignoreCase) {
+            regex = "(?i)" + regex;
+        }
+
+        List<Expression<?>> arguments = new LinkedList<>();
+        for (Expression<?> expression : operation.getArgs()) {
+            arguments.add(expression);
+        }
+
+        Expression<String> regexArgument = new ConstantImpl<>(regex);
+        arguments.set(1, regexArgument);
+        return arguments;
     }
 
     @Nullable
