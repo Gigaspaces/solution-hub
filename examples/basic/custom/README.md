@@ -20,4 +20,4 @@ Hello World
 ...
 ```
 
-To read more on this topic, please, refer to [Custom methods](/wiki/Reference-Documentation#custom).
+To read more on this topic, please, refer to [Custom methods](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation#custom).
