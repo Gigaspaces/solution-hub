@@ -23,9 +23,9 @@ These examples cover basic usages of the Spring Data XAP. This currently include
 
 These examples demonstrate the usage of additional XAP features in Spring Data XAP. This currently includes
 
-* [query-dsl](/examples/advanced/query-dsl) - Shows how to use Query Dsl predicates
+* [querydsl](/examples/advanced/querydsl) - Shows how to use Query Dsl predicates
 * [projection](/examples/advanced/projection) - Demonstrates the usage of Projections in XAP
-* [change-api](/examples/advanced/change-api) - Demonstrates the usage of Change API in XAP
+* [changeapi](/examples/advanced/changeapi) - Demonstrates the usage of Change API in XAP
 
 # Running The Examples
 
