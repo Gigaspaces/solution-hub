@@ -12,7 +12,7 @@
     <modules>
         <module>configuration/configuration-xml</module>
         <module>configuration/configuration-java</module>
-        <module>configuration/simple</module>
+        <module>configuration/configuration-common</module>
         <module>common</module>
         <module>basic/query</module>
         <module>basic/crud</module>
@@ -20,6 +20,7 @@
         <module>advanced/querydsl</module>
         <module>advanced/projection</module>
         <module>advanced/changeapi</module>
+        <module>basic/custom</module>
     </modules>
     <name>Spring Data XAP Examples</name>
     <description>Spring Data XAP Examples</description>
