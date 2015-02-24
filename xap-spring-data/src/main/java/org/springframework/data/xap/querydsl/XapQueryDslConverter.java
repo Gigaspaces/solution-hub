@@ -63,7 +63,7 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
             }
         }
 
-        // check is operation is allowed
+        // check if operation is allowed
         if (!TEMPLATES.isAllowed(operator)) {
             throw new UnsupportedOperationException("operator " + operator + " is not supported by XAP repositories");
         }
