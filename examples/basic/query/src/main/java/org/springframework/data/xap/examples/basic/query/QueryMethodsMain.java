@@ -8,14 +8,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * @author Anna_Babich.
  */
-public class QueryCreationMain {
-    private static Logger log = LoggerFactory.getLogger(QueryCreationMain.class);
+public class QueryMethodsMain {
+    private static Logger log = LoggerFactory.getLogger(QueryMethodsMain.class);
     public static void main(String[] args) {
 
         log.info("QUERY CREATION EXAMPLE");
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
-        QueryCreationExample queryCreationExample = context.getBean(QueryCreationExample.class);
-        queryCreationExample.run();
+        QueryMethodsExample queryMethodsExample = context.getBean(QueryMethodsExample.class);
+        queryMethodsExample.run();
         System.exit(0);
 
     }
