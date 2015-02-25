@@ -5,6 +5,7 @@ This example demonstrates how to use query creation mechanism.
 
 1. The first way is to create appropriate method in extension of `XapRepository`. Method should be named in camel style and use [supported keywords](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation#appendix-a). Method name and arguments will be parsed and converted to query.
 2. An alternative option would be to use `@Query` annotation to explicitly specify the query.
+3. Another alternative is to use named queries and specify them in properties file.
 
 To run the example, refer to `QueryMethodsMain` class. It will delegate configuration to `QueryMethodsExample` which will show several possible queries. Running the example should produce the next output:
 

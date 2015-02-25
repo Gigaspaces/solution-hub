@@ -12,7 +12,7 @@ public class WriteReadExample {
     private static Logger log = LoggerFactory.getLogger(WriteReadExample.class);
 
     public static void launch(PersonRepository personRepository) {
-        Person mike = new Person(1, "Mike", true, "accounting", 20);
+        Person mike = new Person(1, "Mike", true, "accountant", 20);
         Person nick = new Person(2, "Nick", false, "manager", 27);
         log.info("Save new person " + mike + " ...");
         personRepository.save(mike);

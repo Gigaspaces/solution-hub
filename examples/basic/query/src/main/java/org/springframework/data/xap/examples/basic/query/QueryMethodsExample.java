@@ -50,7 +50,7 @@ public class QueryMethodsExample {
         createMeeting(new Meeting(3, DataSet.green, Arrays.asList(DataSet.john, DataSet.mary), DateUtils.getDate("10 01-03-2015")));
 
         log.info("Create meeting for active persons from accounting department.. ");
-        List<Person> accountants = personRepository.findByPositionAndActiveTrue("accounting");
+        List<Person> accountants = personRepository.findByPositionAndActiveTrue("accountant");
         createMeeting(new Meeting(4, DataSet.blue, accountants, DateUtils.getDate("12 20-04-2015")));
         log.info("Created meeting " + meetingRepository.findOne(4));
     }
@@ -70,8 +70,12 @@ public class QueryMethodsExample {
         List<MeetingRoom> rooms = meetingRoomRepository.findByCityCustomQuery("Kyiv");
         log.info(rooms.toString());
 
-        log.info("Find persons older than 25, sort them by reducing id");
-        List<Person> persons = personRepository.findByAgeGreaterThan(25, new Sort(new Sort.Order(Sort.Direction.DESC, "id")));
+        log.info("Find acoountants, sort them by ascending age(using named query)");
+        List<Person> persons = personRepository.findByPositionOrdered("accountant");
+        log.info(persons.toString());
+
+        log.info("Find persons older than 25, sort them by descending id");
+        persons = personRepository.findByAgeGreaterThan(25, new Sort(new Sort.Order(Sort.Direction.DESC, "id")));
         log.info(persons.toString());
 
         log.info("Find active persons, page 1 (two items)");
@@ -80,6 +84,8 @@ public class QueryMethodsExample {
         log.info("page 2");
         persons = personRepository.findByActiveTrue(new PageRequest(1, 2, null));
         log.info(persons.toString());
+
+
     }
 
     public boolean createMeeting(Meeting meeting) {

@@ -15,10 +15,10 @@ import java.util.Arrays;
 public class DataSet {
     private static Logger log = LoggerFactory.getLogger(DataSet.class);
 
-    public static Person nick = new Person(1, "Nick", true, "accounting", 22);
+    public static Person nick = new Person(1, "Nick", true, "accountant", 22);
     public static Person mary = new Person(2, "Mary", false, "teacher", 29);
-    public static Person john = new Person(3, "John", true, "accounting", 31);
-    public static Person paul = new Person(4, "Paul", false, "accounting", 43);
+    public static Person john = new Person(3, "John", true, "accountant", 31);
+    public static Person paul = new Person(4, "Paul", false, "accountant", 43);
     public static Person jim = new Person(5, "Jim", true, "security", 24);
 
     public static MeetingRoom green = new MeetingRoom(new Address("New York", "Main Street, 1"), "green");
