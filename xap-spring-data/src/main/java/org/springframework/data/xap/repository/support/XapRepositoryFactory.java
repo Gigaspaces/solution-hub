@@ -1,5 +1,7 @@
 package org.springframework.data.xap.repository.support;
 
+import com.gigaspaces.metadata.SpaceTypeDescriptor;
+import com.gigaspaces.metadata.SpaceTypeDescriptorBuilder;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -12,6 +14,8 @@ import org.springframework.data.repository.query.RepositoryQuery;
 import org.springframework.data.xap.mapping.XapMappingContext;
 import org.springframework.data.xap.mapping.XapPersistentEntity;
 import org.springframework.data.xap.mapping.XapPersistentProperty;
+import org.springframework.data.xap.repository.SpaceDocumentRepository;
+import org.springframework.data.xap.repository.XapDocumentRepository;
 import org.springframework.data.xap.repository.query.DefaultXapEntityInformation;
 import org.springframework.data.xap.repository.query.PartTreeXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.StringBasedXapRepositoryQuery;
@@ -37,6 +41,10 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
         return QueryDslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
     }
 
+    private static boolean isSpaceDocumentRepository(Class<?> repositoryInterface) {
+        return XapDocumentRepository.class.isAssignableFrom(repositoryInterface);
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T, ID extends Serializable> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
@@ -50,13 +58,31 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
         EntityInformation<?, Serializable> entityInformation = getEntityInformation(metadata.getDomainType());
         if (isQueryDslRepository(repositoryInterface)) {
             return new QueryDslXapRepository<>(space, entityInformation);
+        } else  if (isSpaceDocumentRepository(repositoryInterface)){
+            SpaceTypeDescriptor typeDescriptor = createSpaceTypeDescriptor(metadata);
+            return new XapDocumentRepositoryImpl<>(space, entityInformation, typeDescriptor);
         } else {
             return new SimpleXapRepository<>(space, entityInformation);
         }
     }
 
+    private SpaceTypeDescriptor createSpaceTypeDescriptor(RepositoryMetadata metadata) {
+        SpaceDocumentRepository annotation = metadata.getRepositoryInterface().getAnnotation(SpaceDocumentRepository.class);
+        if (annotation == null){
+            //TODO check some configuration exceptions
+            throw new IllegalArgumentException("XapDocumentRepository has to be annotated with SpaceDocumentRepository annotation");
+        }
+        return new SpaceTypeDescriptorBuilder(annotation.typeName())
+                .idProperty(annotation.id())
+                .routingProperty(annotation.routing())
+                .create();
+    }
+
     @Override
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
+        if (isSpaceDocumentRepository(metadata.getRepositoryInterface())){
+            return XapDocumentRepositoryImpl.class;
+        }
         return isQueryDslRepository(metadata.getRepositoryInterface()) ? QueryDslXapRepository.class : SimpleXapRepository.class;
     }
 
