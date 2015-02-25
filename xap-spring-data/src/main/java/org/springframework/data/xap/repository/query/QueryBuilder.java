@@ -13,15 +13,15 @@ public class QueryBuilder {
 
     private String query = "";
 
-    public QueryBuilder(Part part){
+    public QueryBuilder(Part part) {
         query = new AtomicPredicate(part).toString();
     }
 
-    public QueryBuilder(Sort sort){
+    public QueryBuilder(Sort sort) {
         applySort(sort);
     }
 
-    public String buildQuery(){
+    public String buildQuery() {
         return query;
     }
 
@@ -35,16 +35,16 @@ public class QueryBuilder {
         return this;
     }
 
-    public QueryBuilder sort(Sort sort){
+    public QueryBuilder sort(Sort sort) {
         applySort(sort);
         return this;
     }
 
     private void applySort(Sort sort) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (sort != null){
+        if (sort != null) {
             Iterator<Sort.Order> iterator = sort.iterator();
-            if (iterator.hasNext()){
+            if (iterator.hasNext()) {
                 stringBuilder.append("ORDER BY ");
             }
             Iterable<String> orders = Iterables.transform(sort, new Function<Sort.Order, String>() {
@@ -140,7 +140,7 @@ public class QueryBuilder {
                 case REGEX:
                     return "rlike";
                 default:
-                    throw new IllegalArgumentException(String.format("Unsupported operator %s!", type));
+                    throw new UnsupportedOperationException(String.format("Unsupported operator %s!", type));
             }
         }
     }

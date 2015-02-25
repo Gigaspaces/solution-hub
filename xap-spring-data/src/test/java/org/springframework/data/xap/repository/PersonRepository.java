@@ -5,11 +5,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.repository.query.Projection;
 
-
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -98,4 +95,11 @@ public interface PersonRepository extends XapRepository<Person, String> {
     List<Person> findByNameRegex(String regex);
 
     List<Person> findBySpouse_Age(Integer age);
+
+    List<Person> findByNameExists(boolean exists);
+
+    List<Person> findByAgeIsNear(Integer nearAge);
+
+    List<Person> findByAgeIsWithin(Integer minAge, Integer maxAge);
+    
 }

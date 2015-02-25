@@ -28,15 +28,13 @@ import static org.springframework.data.xap.repository.query.Projection.projectio
  */
 public abstract class BaseRepositoryTest {
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
     protected static Person nick;
     protected static Person chris;
     protected static Person paul;
     protected static Person chris2;
     protected static Person chris3;
     protected static Person paul2;
-
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     @Autowired
     protected PersonRepository personRepository;
 
@@ -104,7 +102,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindBySpouseAge(){
+    public void testFindBySpouseAge() {
         List<Person> personList = personRepository.findBySpouse_Age(24);
         assertEquals(1, personList.size());
         assertTrue(personList.contains(paul));
@@ -263,7 +261,7 @@ public abstract class BaseRepositoryTest {
         assertEquals(chris.getName(), persons.get(0).getName());
         assertEquals(nick.getName(), persons.get(1).getName());
 
-       assertAllNullExceptName(persons);
+        assertAllNullExceptName(persons);
     }
 
     @Test
@@ -286,7 +284,7 @@ public abstract class BaseRepositoryTest {
 
 
     @Test
-    public void testFindByAgeBetween(){
+    public void testFindByAgeBetween() {
         List<Person> personList = personRepository.findByAgeBetween(35, 52);
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul));
@@ -294,14 +292,14 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testBetweenAndName(){
+    public void testBetweenAndName() {
         List<Person> personList = personRepository.findByAgeBetweenAndName(35, 52, "Paul");
         assertEquals(1, personList.size());
         assertEquals(paul, personList.get(0));
     }
 
     @Test
-    public void testBetweenOrderBy (){
+    public void testBetweenOrderBy() {
         List<Person> personList = personRepository.findByAgeBetweenOrderByAgeAsc(35, 52);
         assertEquals(2, personList.size());
         assertEquals(paul, personList.get(0));
@@ -309,7 +307,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeLessThan(){
+    public void testFindByAgeLessThan() {
         List<Person> personList = personRepository.findByAgeLessThan(40);
         assertEquals(3, personList.size());
         assertTrue(personList.contains(chris));
@@ -403,7 +401,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindBySpouseIsNull(){
+    public void testFindBySpouseIsNull() {
         List<Person> personList = personRepository.findBySpouseIsNull();
         assertEquals(3, personList.size());
         assertTrue(personList.contains(chris2));
@@ -412,7 +410,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindBySpouseIsNotNull(){
+    public void testFindBySpouseIsNotNull() {
         List<Person> personList = personRepository.findBySpouseIsNotNull();
         assertEquals(2, personList.size());
         assertTrue(personList.contains(chris));
@@ -420,7 +418,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameLike(){
+    public void testFindByNameLike() {
         List<Person> personList = personRepository.findByNameLike("%au%");
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul2));
@@ -428,7 +426,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameNotLike(){
+    public void testFindByNameNotLike() {
         List<Person> personList = personRepository.findByNameNotLike("%ri%");
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul2));
@@ -436,7 +434,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameStartingWith(){
+    public void testFindByNameStartingWith() {
         List<Person> personList = personRepository.findByNameStartingWith("P");
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul2));
@@ -444,7 +442,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameEndingWith(){
+    public void testFindByNameEndingWith() {
         List<Person> personList = personRepository.findByNameEndingWith("is");
         assertEquals(3, personList.size());
         assertTrue(personList.contains(chris));
@@ -453,7 +451,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameContaining(){
+    public void testFindByNameContaining() {
         List<Person> personList = personRepository.findByNameContaining("Ch");
         assertEquals(3, personList.size());
         assertTrue(personList.contains(chris));
@@ -462,7 +460,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameOrderByIdDesc(){
+    public void testFindByNameOrderByIdDesc() {
         List<Person> personList = personRepository.findByNameOrderByIdDesc("Chris");
         assertEquals(3, personList.size());
         assertEquals(chris3, personList.get(0));
@@ -471,7 +469,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameOrderByAgeAsc(){
+    public void testFindByNameOrderByAgeAsc() {
         List<Person> personList = personRepository.findByNameOrderByAgeAsc("Paul");
         assertEquals(2, personList.size());
         assertEquals(paul2, personList.get(0));
@@ -479,7 +477,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameOrderByAgeAndId(){
+    public void testFindByNameOrderByAgeAndId() {
         List<Person> personList = personRepository.findByNameOrderByAgeAscIdDesc("Chris");
         assertEquals(3, personList.size());
         assertEquals(chris3, personList.get(0));
@@ -488,7 +486,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameNot(){
+    public void testFindByNameNot() {
         List<Person> personList = personRepository.findByNameNot("Chris");
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul));
@@ -496,7 +494,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeIn(){
+    public void testFindByAgeIn() {
         List<Person> personList = personRepository.findByAgeIn(Arrays.asList(50, 40));
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul));
@@ -504,7 +502,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameIn(){
+    public void testFindByNameIn() {
         personRepository.save(nick);
         List<Person> personList = personRepository.findByNameIn(Arrays.asList("Paul", "Nick"));
         assertEquals(3, personList.size());
@@ -514,7 +512,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByNameNotIn(){
+    public void testFindByNameNotIn() {
         personRepository.save(nick);
         List<Person> personList = personRepository.findByNameNotIn(Arrays.asList("Paul", "Nick"));
         assertEquals(3, personList.size());
@@ -524,7 +522,7 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByActiveTrue(){
+    public void testFindByActiveTrue() {
         List<Person> personList = personRepository.findByActiveTrue();
         assertEquals(2, personList.size());
         assertTrue(personList.contains(chris2));
@@ -533,7 +531,7 @@ public abstract class BaseRepositoryTest {
 
 
     @Test
-    public void testFindByActiveFalse(){
+    public void testFindByActiveFalse() {
         List<Person> personList = personRepository.findByActiveFalse();
         assertEquals(3, personList.size());
         assertTrue(personList.contains(chris));
@@ -542,14 +540,14 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeBetweenAndNameIn(){
+    public void testFindByAgeBetweenAndNameIn() {
         List<Person> personList = personRepository.findByAgeBetweenAndNameIn(40, 50, Arrays.asList("Paul", "Nick"));
         assertEquals(1, personList.size());
         assertTrue(personList.contains(paul));
     }
 
     @Test
-    public void testFindByNameRegex(){
+    public void testFindByNameRegex() {
         personRepository.save(nick);
         List<Person> personList = personRepository.findByNameRegex("\\w{4}");
         assertEquals(3, personList.size());
@@ -559,22 +557,37 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testIgnoreCase(){
+    public void testIgnoreCase() {
         personRepository.findByNameIgnoreCase("paul");
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testIgnoreCaseInSorting(){
+    public void testIgnoreCaseInSorting() {
         Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id").ignoreCase());
         Pageable pageable = new PageRequest(1, 2, sorting);
         personRepository.findByNameEquals("paul", pageable);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testNullHandling(){
+    public void testNullHandling() {
         Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id", Sort.NullHandling.NULLS_FIRST));
         Pageable pageable = new PageRequest(1, 2, sorting);
         personRepository.findByNameEquals("paul", pageable);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testExists() {
+        personRepository.findByNameExists(true);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testIsNear() {
+        personRepository.findByAgeIsNear(10);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testIsWithin() {
+        personRepository.findByAgeIsWithin(10, 20);
     }
 
     private void prepareDataForSortingTest() {

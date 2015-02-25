@@ -39,6 +39,8 @@ _[Appendix](#appendix)_
 
   - _[Appendix C: Supported Change API methods](#appendix-c)_
 
+  - _[Appendix D: Unsupported operations](#appendix-d)_
+
 ${preface.md}
 ${requirements.md}
 
@@ -65,3 +67,4 @@ ${resources.md}
 ${appendix/appendix-a.md}
 ${appendix/appendix-b.md}
 ${appendix/appendix-c.md}
+${appendix/appendix-d.md}
