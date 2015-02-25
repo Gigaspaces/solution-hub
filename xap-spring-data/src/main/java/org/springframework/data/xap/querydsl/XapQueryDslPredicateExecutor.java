@@ -1,12 +1,12 @@
 package org.springframework.data.xap.querydsl;
 
 import com.gigaspaces.client.ChangeResult;
-import com.gigaspaces.client.ChangeSet;
-import com.mysema.query.types.*;
+import com.mysema.query.types.OrderSpecifier;
+import com.mysema.query.types.Predicate;
+import com.mysema.query.types.QTuple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-import org.springframework.data.xap.repository.query.Projection;
 
 /**
  * Extension with XAP specific features
@@ -69,5 +69,87 @@ public interface XapQueryDslPredicateExecutor<T> extends QueryDslPredicateExecut
      * @return A <code>ChangeResult</code> containing the details of the change operation affect.
      */
     ChangeResult<T> change(Predicate predicate, QChangeSet changeSet);
+
+    /**
+     * Returns a single entity matching the given {@link Predicate} or {@literal null} if none was found. Removes
+     * returned entity from the space.
+     *
+     * @param predicate
+     * @return a single entity matching the given {@link Predicate} or {@literal null} if none was found.
+     * @throws org.springframework.dao.IncorrectResultSizeDataAccessException if the predicate yields more than one result.
+     */
+    T takeOne(Predicate predicate);
+
+    /**
+     * Returns all entities matching the given {@link Predicate}. In case no match could be found an empty
+     * {@link Iterable} is returned. Removes returned entities from the space.
+     *
+     * @param predicate
+     * @return all entities matching the given {@link Predicate}.
+     */
+    Iterable<T> takeAll(Predicate predicate);
+
+    /**
+     * Returns all entities matching the given {@link Predicate} applying the given {@link OrderSpecifier}s. In case no
+     * match could be found an empty {@link Iterable} is returned. Removes returned entities from the space.
+     *
+     * @param predicate
+     * @param orders
+     * @return all entities matching the given {@link Predicate} applying the given {@link OrderSpecifier}s.
+     */
+    Iterable<T> takeAll(Predicate predicate, OrderSpecifier<?>... orders);
+
+    /**
+     * Returns a {@link Page} of entities matching the given {@link Predicate}. In case no match could be found, an empty
+     * {@link Page} is returned. Removes returned entities from the space.
+     *
+     * @param predicate
+     * @param pageable
+     * @return a {@link Page} of entities matching the given {@link Predicate}.
+     */
+    Page<T> takeAll(Predicate predicate, Pageable pageable);
+
+    /**
+     * Returns a single entity matching the given {@link com.mysema.query.types.Predicate} or {@literal null} if none was found.
+     * Removes returned entity from the space.
+     *
+     * @param predicate
+     * @param projection
+     * @return a single entity matching the given {@link com.mysema.query.types.Predicate} or {@literal null} if none was found.
+     * @throws org.springframework.dao.IncorrectResultSizeDataAccessException if the predicate yields more than one result.
+     */
+    T takeOne(Predicate predicate, QTuple projection);
+
+    /**
+     * Returns all entities matching the given {@link Predicate}. In case no match could be found an empty
+     * {@link Iterable} is returned. Removes returned entities from the space.
+     *
+     * @param predicate
+     * @param projection
+     * @return all entities matching the given {@link Predicate}.
+     */
+    Iterable<T> takeAll(Predicate predicate, QTuple projection);
+
+    /**
+     * Returns all entities matching the given {@link Predicate} applying the given {@link com.mysema.query.types.OrderSpecifier}s. In case no
+     * match could be found an empty {@link Iterable} is returned. Removes returned entities from the space.
+     *
+     * @param predicate
+     * @param orders
+     * @param projection
+     * @return all entities matching the given {@link Predicate} applying the given {@link com.mysema.query.types.OrderSpecifier}s.
+     */
+    Iterable<T> takeAll(Predicate predicate, QTuple projection, OrderSpecifier<?>... orders);
+
+    /**
+     * Returns a {@link org.springframework.data.domain.Page} of entities matching the given {@link Predicate}. In case no match could be found, an empty
+     * {@link org.springframework.data.domain.Page} is returned. Removes returned entities from the space.
+     *
+     * @param predicate
+     * @param pageable
+     * @param projection
+     * @return a {@link org.springframework.data.domain.Page} of entities matching the given {@link Predicate}.
+     */
+    Page<T> takeAll(Predicate predicate, Pageable pageable, QTuple projection);
 
 }

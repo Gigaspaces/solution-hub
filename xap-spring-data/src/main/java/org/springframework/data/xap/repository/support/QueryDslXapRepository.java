@@ -1,11 +1,8 @@
 package org.springframework.data.xap.repository.support;
 
 import com.gigaspaces.client.ChangeResult;
-import com.gigaspaces.client.ChangeSet;
 import com.gigaspaces.query.ISpaceQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.mysema.query.types.*;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
@@ -13,7 +10,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.querydsl.QChangeSet;
-import org.springframework.data.xap.querydsl.Utils;
 import org.springframework.data.xap.querydsl.XapQueryDslConverter;
 import org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor;
 import org.springframework.data.xap.repository.query.Projection;
@@ -41,44 +37,48 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
 
     @Override
     public T findOne(Predicate predicate) {
-        ISpaceQuery<T> query = createQuery(predicate, null, null);
-        return space.read(query);
+        return space.read(createQuery(predicate, null, null));
     }
 
     @Override
     public T findOne(Predicate predicate, QTuple projection) {
-        ISpaceQuery<T> query = createQuery(predicate, null, convertQTupleToProjection(projection));
-        return space.read(query);
+        return space.read(createQuery(predicate, null, projection));
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate) {
-        return readMultiple(createQuery(predicate, null, null));
+        return readMultiple(predicate, null, null);
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate, QTuple projection) {
-        return readMultiple(createQuery(predicate, null, convertQTupleToProjection(projection)));
+        return readMultiple(predicate, null, projection);
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate, OrderSpecifier<?>... orders) {
-        return readMultiple(createQuery(predicate, null, null, orders));
+        return readMultiple(predicate, null, null, orders);
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate, QTuple projection, OrderSpecifier<?>... orders) {
-        return readMultiple(createQuery(predicate, null, convertQTupleToProjection(projection), orders));
+        return readMultiple(predicate, null, projection, orders);
     }
 
     @Override
     public Page<T> findAll(Predicate predicate, Pageable pageable) {
-        return findAllWithPagingInternal(predicate, pageable, null);
+        return findWithPagingInternal(predicate, pageable, null);
     }
 
     @Override
     public Page<T> findAll(Predicate predicate, Pageable pageable, QTuple projection) {
-        return findAllWithPagingInternal(predicate, pageable, convertQTupleToProjection(projection));
+        return findWithPagingInternal(predicate, pageable, projection);
+    }
+
+    @Override
+    public long count(Predicate predicate) {
+        ISpaceQuery<T> query = createQuery(predicate, null, null);
+        return space.aggregate(query, new AggregationSet().count("")).getLong(0);
     }
 
     @Override
@@ -87,8 +87,55 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         return space.change(query, qChangeSet.getNativeChangeSet());
     }
 
-    private Page<T> findAllWithPagingInternal(Predicate predicate, Pageable pageable, Projection projection) {
-        List<T> sortedResults = readMultiple(createQuery(predicate, pageable, projection));
+    @Override
+    public T takeOne(Predicate predicate) {
+        return space.take(createQuery(predicate, null, null));
+    }
+
+    @Override
+    public T takeOne(Predicate predicate, QTuple projection) {
+        return space.take(createQuery(predicate, null, projection));
+    }
+
+    @Override
+    public Iterable<T> takeAll(Predicate predicate) {
+        return takeMultiple(predicate, null, null);
+    }
+
+    @Override
+    public Iterable<T> takeAll(Predicate predicate, QTuple projection) {
+        return takeMultiple(predicate, null, projection);
+    }
+
+    @Override
+    public Iterable<T> takeAll(Predicate predicate, OrderSpecifier<?>... orders) {
+        return takeMultiple(predicate, null, null, orders);
+    }
+
+    @Override
+    public Iterable<T> takeAll(Predicate predicate, QTuple projection, OrderSpecifier<?>... orders) {
+        return takeMultiple(predicate, null, projection, orders);
+    }
+
+    @Override
+    public Page<T> takeAll(Predicate predicate, Pageable pageable) {
+        return takeWithPagingInternal(predicate, pageable, null);
+    }
+
+    @Override
+    public Page<T> takeAll(Predicate predicate, Pageable pageable, QTuple projection) {
+        return takeWithPagingInternal(predicate, pageable, projection);
+    }
+
+    private Page<T> findWithPagingInternal(Predicate predicate, Pageable pageable, QTuple projection) {
+        return cutPageable(readMultiple(predicate, pageable, projection), pageable);
+    }
+
+    private Page<T> takeWithPagingInternal(Predicate predicate, Pageable pageable, QTuple projection) {
+        return cutPageable(takeMultiple(predicate, pageable, projection), pageable);
+    }
+
+    private Page<T> cutPageable(List<T> sortedResults, Pageable pageable) {
         List<T> pageResults;
         if (pageable.getOffset() < sortedResults.size()) {
             pageResults = sortedResults.subList(pageable.getOffset(), sortedResults.size());
@@ -98,22 +145,25 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         return new PageImpl<>(pageResults);
     }
 
-    @Override
-    public long count(Predicate predicate) {
-        ISpaceQuery<T> query = createQuery(predicate, null, null);
-        return space.aggregate(query, new AggregationSet().count("")).getLong(0);
-    }
-
-    private List<T> readMultiple(ISpaceQuery<T> query) {
+    private List<T> readMultiple(Predicate predicate, Pageable pageable, QTuple projection, OrderSpecifier<?>... orders) {
+        ISpaceQuery<T> query = createQuery(predicate, pageable, projection, orders);
         return Arrays.asList(space.readMultiple(query));
     }
 
-    private ISpaceQuery<T> createQuery(Predicate predicate, Pageable pageable, Projection projection, OrderSpecifier<?>... orders) {
-        return new XapQueryDslConverter<>(entityInformation.getJavaType()).convert(predicate, pageable, projection, orders);
+    private List<T> takeMultiple(Predicate predicate, Pageable pageable, QTuple projection, OrderSpecifier<?>... orders) {
+        ISpaceQuery<T> query = createQuery(predicate, pageable, projection, orders);
+        return Arrays.asList(space.takeMultiple(query));
+    }
+
+    private ISpaceQuery<T> createQuery(Predicate predicate, Pageable pageable, QTuple projection, OrderSpecifier<?>... orders) {
+        return new XapQueryDslConverter<>(entityInformation.getJavaType()).convert(predicate, pageable, convertQTupleToProjection(projection), orders);
     }
 
     @SuppressWarnings("unchecked")
     private Projection convertQTupleToProjection(QTuple qTuple) {
+        if (qTuple == null) {
+            return null;
+        }
         List<String> fields = new ArrayList<>();
         for (Expression<?> expr : qTuple.getArgs()) {
             if (!(expr instanceof Path)) {

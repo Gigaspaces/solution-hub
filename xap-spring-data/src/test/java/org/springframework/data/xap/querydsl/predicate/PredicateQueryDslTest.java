@@ -396,6 +396,57 @@ public class PredicateQueryDslTest {
         );
     }
 
+    @Test
+    public void testTakeOne() {
+        Predicate predicate = team.name.eq(avolition.getName());
+        assertEquals(
+                avolition,
+                repository.takeOne(predicate)
+        );
+        assertEquals(0, repository.count(predicate));
+    }
+
+    @Test
+    public void testTakeAll() {
+
+
+    }
+
+    @Test
+    public void testTakeAllOrdered() {
+
+
+    }
+
+    @Test
+    public void testTakeAllPageable() {
+
+
+    }
+
+    @Test
+    public void testTakeOneProjection() {
+
+    }
+
+    @Test
+    public void testTakeAllProjection() {
+
+
+    }
+
+    @Test
+    public void testTakeAllOrderedProjection() {
+
+
+    }
+
+    @Test
+    public void testTakeAllPageableProjection() {
+
+
+    }
+
     private Team one(Predicate predicate) {
         return repository.findOne(predicate);
     }
