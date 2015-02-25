@@ -18,7 +18,7 @@ Then in your project (assuming you build it with [Maven](http://maven.apache.org
 ${data-dependency.xml}
 ```
 
-##### Connecting to space using XML based metadata
+##### <a name="support-xml"/>Connecting to space using XML based metadata
 
 To use XAP Repository you need to provide a connection to space with an instance of `GigaSpace`. Basic access can be easily configured with next Spring XML configuration:
 
@@ -32,7 +32,7 @@ If you want to use an Embedded Space, the next configuration will suite your nee
 ${embedded-space-context.xml}
 ```
 
-##### Connecting to space using Java based metadata
+##### <a name="support-java"/>Connecting to space using Java based metadata
 
 The same configuration can be achieved with next Java-based bean metadata:
 
@@ -46,7 +46,7 @@ Or for the Embedded Space:
 ${JavaEmbeddedConfiguration.java}
 ```
 
-##### Other commonly used space configurations
+##### <a name="support-space"/>Other commonly used space configurations
 
 In some projects you might want to apply other configurations to your space. There are a lot of options available to you.
 
@@ -78,7 +78,7 @@ XAP Security provides comprehensive support for securing your data, services, or
 
 To find out more about security configuration, please, refer to [Security Guide](http://docs.gigaspaces.com/xap101sec/).
 
-##### Using native write and read operation
+##### <a name="support-usage"/>Using native write and read operation
 
 `GigaSpace` configured above can be used directly to perform interaction with space. To do so, you can simply inject `GigaSpace` bean into your Repository classes. Let's see an example of such usage. First, here is an example of POJO class:
 ```java
@@ -91,7 +91,7 @@ Now `GigaSpace` can be injected and used directly in Repository layer:
 ${XapPersonRepository.java}
 ```
 
-##### Modeling Your Data
+##### <a name="support-pojo"/>Modeling your data
 
 Spring Data XAP comes with the transparent support of XAP native features. Among them, some additional configuration can be applied to your POJOs to boost up the performance, reduce memory usage or just ease the model understanding. When building data model using Spring Data XAP you might want to pay attention to the next features:
 

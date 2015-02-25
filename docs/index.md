@@ -13,6 +13,16 @@ _[Reference Documentation](#reference)_
 
   2.1 [XAP Support](#support)
   
+  * [Connecting to space using XML based metadata](#support-xml)
+
+  * [Connecting to space using Java based metadata](#support-java)
+
+  * [Other commonly used space configurations](#support-space)
+
+  * [Using native write and read operation](#support-usage)
+
+  * [Modeling your data](#support-pojo)
+  
   2.2 [XAP Repositories](#repositories)
   
 3. [Basic Usage](#basic)
