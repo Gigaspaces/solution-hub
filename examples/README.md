@@ -27,6 +27,10 @@ These examples demonstrate the usage of additional XAP features in Spring Data X
 * [projection](/examples/advanced/projection) - Demonstrates the usage of Projections in XAP
 * [changeapi](/examples/advanced/changeapi) - Demonstrates the usage of Change API in XAP
 
+# Transactions
+
+This example is given in a separate module. It shows how XAP transactions can be used by configuring the Transaction Manager and applying `@Transactional` annotation to methods. You can proceed to it [here](/examples/transaction).
+
 # Running The Examples
 
 Before executing any of the given examples, you have to download GigaSpaces XAP and install maven plugin.

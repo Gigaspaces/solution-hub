@@ -38,6 +38,8 @@ _[Reference Documentation](#reference)_
   4.2 [Querydsl Support](#querydsl)
   
   4.3 [XAP Change API](#change)
+  
+  4.4 [XAP Transactions](#transaction)
 
 _[Other Resources](#resources)_
 
@@ -69,6 +71,7 @@ ${advanced.md}
 ${projection/projection.md}
 ${querydsl/querydsl.md}
 ${change/change.md}
+${transaction/transaction.md}
 
 ## <a name="resources"/>Other Resources
 ${resources.md}
