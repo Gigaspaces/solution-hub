@@ -90,3 +90,23 @@ Now `GigaSpace` can be injected and used directly in Repository layer:
 ```java
 ${XapPersonRepository.java}
 ```
+
+##### Modeling Your Data
+
+Spring Data XAP comes with the transparent support of XAP native features. Among them, some additional configuration can be applied to your POJOs to boost up the performance, reduce memory usage or just ease the model understanding. When building data model using Spring Data XAP you might want to pay attention to the next features:
+
+###### _Indexing_
+
+The most well-known data store function that allows to boost up common queries performance is index support. XAP provides several options here: basic, compound and unique indexes. All of these features can be applied by simply annotating POJO classes or their fields, e.g. with `@SpaceIndex` or `@CompoundSpaceIndex` annotations. Please, refer to [Indexing](http://docs.gigaspaces.com/xap101/indexing-overview.html) for more details and examples of POJO classes.
+
+###### _Storage Types_
+
+You can define the form in which objects will be stored in Space either with annotations on each POJO in your model or with defining default Storage Type for the whole Space. This is done to save up time on serialization/de-serialization, reduce memory usage or to define schema that will change in time. Three Storage Types are available for POJOs: `OBJECT`, `BINARY` and `COMPRESSED`. Again, whole configuration can be applied just by annotation your model classes. To read more on this feature, please, refer to [Storage Types](http://docs.gigaspaces.com/xap101/storage-types---controlling-serialization.html).
+
+###### _Exclusion_
+
+You can mark some POJO properties with `@SpaceExclude` to disable writing their values to the Space. It will also affect Querydsl `Q...` classes generation from POJOs - marked fields won't be available for querying in Querydsl style.
+
+###### _Other Annotation-based Features_
+
+There are lots of other useful annotation-based configuration possibilities available to you. For the full list of them, please, refer to [Annotation based Metadata](http://docs.gigaspaces.com/xap101/pojo-annotation-overview.html).
