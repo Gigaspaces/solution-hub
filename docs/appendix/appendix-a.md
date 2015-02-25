@@ -35,5 +35,3 @@ Logical keyword | Keyword expressions
 EXISTS | Exists
 NEAR | Near, IsNear
 WITHIN | Within, IsWithin
-n/a | IgnoreCase
-n/a | Sort.NullHandling

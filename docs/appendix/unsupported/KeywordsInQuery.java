@@ -1,6 +1,6 @@
 public interface PersonRepository extends XapRepository<Person, String> {
 
-    // all of these methods will throw an UnsupportedOperationException if called
+    // these methods throw an UnsupportedOperationException when called
 
     List<Person> findByNameIgnoreCase(String name);
 

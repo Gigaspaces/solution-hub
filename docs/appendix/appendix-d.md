@@ -1,7 +1,7 @@
 ## <a name="appendix-d"/>Appendix D: Unsupported operations
 
 Although we try to support each and every Spring Data feature, sometimes native implementation is not possible using Space as a data source. Instead of providing workarounds, which are often slow, we decided to mark some features as unsupported, among them are:
-#### Using `IgnoreCase`, `Exists`, `IsNear` and `IsWithin` keywords in query methods
+#### Using `IgnoreCase`, `Exists`, `IsNear` and `IsWithin` keywords
 ```java
 ${unsupported/KeywordsInQuery.java}
 ```
