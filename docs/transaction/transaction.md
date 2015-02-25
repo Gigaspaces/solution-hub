@@ -11,6 +11,4 @@ Now your service layer methods can be marked as `@Transactional`:
 ${ServiceWithTransaction.java}
 ```
 
-To get started with basic concepts of transactions, proceed to [Spring Transaction Management](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/transaction.html).
-
 To read more on configuring XAP transactions and transaction managers, please, refer to [Transactions Reference](http://docs.gigaspaces.com/xap101/transaction-overview.html).
