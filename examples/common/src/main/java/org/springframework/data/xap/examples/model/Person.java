@@ -2,19 +2,22 @@ package org.springframework.data.xap.examples.model;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
-
-import java.io.Serializable;
+import com.gigaspaces.annotation.pojo.SpaceIndex;
+import com.gigaspaces.annotation.pojo.SpaceStorageType;
+import com.gigaspaces.metadata.StorageType;
+import com.gigaspaces.metadata.index.SpaceIndexType;
 
 /**
  * @author Anna_Babich.
  */
 @SpaceClass
-public class Person implements Serializable {
+public class Person {
     private Integer id;
     private String name;
     private Boolean active;
     private String position;
     private Integer age;
+    private Byte[] photo;
 
     public Person() {
     }
@@ -35,7 +38,8 @@ public class Person implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
+    @SpaceIndex(type = SpaceIndexType.EXTENDED)
     public String getName() {
         return name;
     }
@@ -66,6 +70,15 @@ public class Person implements Serializable {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @SpaceStorageType(storageType = StorageType.BINARY)
+    public Byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Byte[] photo) {
+        this.photo = photo;
     }
 
     @Override

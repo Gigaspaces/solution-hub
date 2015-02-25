@@ -4,7 +4,6 @@ import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 import org.springframework.data.xap.examples.util.DateUtils;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * @author Anna_Babich.
  */
 @SpaceClass
-public class Meeting implements Serializable {
+public class Meeting {
 
     private Integer id;
     private MeetingRoom meetingRoom;
