@@ -6,6 +6,7 @@ import com.gigaspaces.document.SpaceDocument;
 import com.gigaspaces.metadata.SpaceTypeDescriptor;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
+import com.gigaspaces.query.aggregators.AggregationSet;
 import com.j_spaces.core.client.SQLQuery;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.data.xap.repository.query.Projection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.common.collect.Lists.*;
 
@@ -84,7 +86,8 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
 
     @Override
     public <S extends T> Iterable<S> save(Iterable<S> entities) {
-        return null;
+        space.writeMultiple(toArray(entities));
+        return entities;
     }
 
     @Override
@@ -94,7 +97,7 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
 
     @Override
     public boolean exists(ID id) {
-        return false;
+        return findOne(id) != null;
     }
 
     @Override
@@ -105,13 +108,13 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids) {
-        ReadByIdsResult<T> ts = space.readByIds(new IdsQuery<T>(typeName, toArray(ids)));
-        return newArrayList(ts);
+        return findAllByIdsInternal(ids, null);
     }
 
     @Override
     public long count() {
-        return 0;
+        SQLQuery<T> query = new SQLQuery<>(typeName, "");
+        return space.aggregate(query, new AggregationSet().count("")).getLong(0);
     }
 
     @Override
@@ -127,19 +130,39 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
 
     @Override
     public void delete(Iterable<? extends T> entities) {
-
+        List<ID> idList = new ArrayList<>();
+        for (T entity : entities) {
+            ID id = entityInformation.getId(entity);
+            idList.add(id);
+        }
+        Object[] idArray = idList.toArray();
+        Class<T> aClass = entityInformation.getJavaType();
+        IdsQuery<T> idsQuery = new IdsQuery<T>(aClass, idArray).setProjections("");
+        space.takeByIds(idsQuery);
     }
 
     @Override
     public void deleteAll() {
-
+        SQLQuery<Object> query = new SQLQuery<>(typeName, "").setProjections("");
+        space.takeMultiple(query);
     }
 
+    //TODO extract duplicated methods
     private <E> E[] toArray(Iterable<E> elems) {
         ArrayList<E> arrayList = new ArrayList<E>();
         for (E elem : elems) {
             arrayList.add(elem);
         }
         return (E[]) arrayList.toArray();
+    }
+
+    private Iterable<T> findAllByIdsInternal(Iterable<ID> ids, Projection projection) {
+        IdsQuery<T> query = new IdsQuery<>(typeName, toArray(ids));
+
+        if (projection != null) {
+            query.setProjections(projection.getProperties());
+        }
+
+        return space.readByIds(query);
     }
 }
