@@ -21,7 +21,7 @@
         <module>advanced/projection</module>
         <module>advanced/changeapi</module>
         <module>basic/custom</module>
-        <module>transaction</module>
+        <module>advanced/transaction</module>
     </modules>
     <name>Spring Data XAP Examples</name>
     <description>Spring Data XAP Examples</description>

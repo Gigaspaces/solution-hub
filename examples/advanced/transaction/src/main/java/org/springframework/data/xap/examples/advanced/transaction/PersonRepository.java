@@ -1,4 +1,4 @@
-package org.springframework.data.xap.examples.basic.transaction;
+package org.springframework.data.xap.examples.advanced.transaction;
 
 import org.springframework.data.xap.examples.model.Person;
 import org.springframework.data.xap.repository.XapRepository;

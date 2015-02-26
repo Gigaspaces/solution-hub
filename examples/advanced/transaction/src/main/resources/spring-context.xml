@@ -12,14 +12,14 @@
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="org.springframework.data.xap.examples.basic.transaction"/>
+    <context:component-scan base-package="org.springframework.data.xap.examples.advanced.transaction"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!-- Enables initialization for XAP repositories:
         all interfaces that extend the XapRepository will be initialized in the context
         in this example only PersonRepository is initialized this way
     -->
-    <xap-data:repositories base-package="org.springframework.data.xap.examples.basic.transaction"/>
+    <xap-data:repositories base-package="org.springframework.data.xap.examples.advanced.transaction"/>
 
     <os-core:embedded-space id="space" name="space"/>
 

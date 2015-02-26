@@ -26,10 +26,7 @@ These examples demonstrate the usage of additional XAP features in Spring Data X
 * [querydsl](/examples/advanced/querydsl) - Shows how to use Query Dsl predicates
 * [projection](/examples/advanced/projection) - Demonstrates the usage of Projections in XAP
 * [changeapi](/examples/advanced/changeapi) - Demonstrates the usage of Change API in XAP
-
-# Transactions
-
-This example is given in a separate module. It shows how XAP transactions can be used by configuring the Transaction Manager and applying `@Transactional` annotation to methods. You can proceed to it [here](/examples/transaction).
+* [transaction](/examples/advanced/transaction) - Shows how XAP transactions can be used  
 
 # Running The Examples
 

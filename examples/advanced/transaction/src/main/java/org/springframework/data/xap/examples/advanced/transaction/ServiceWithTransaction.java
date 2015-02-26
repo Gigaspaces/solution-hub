@@ -1,4 +1,4 @@
-package org.springframework.data.xap.examples.basic.transaction;
+package org.springframework.data.xap.examples.advanced.transaction;
 
 import net.jini.core.transaction.Transaction;
 import org.openspaces.core.GigaSpace;

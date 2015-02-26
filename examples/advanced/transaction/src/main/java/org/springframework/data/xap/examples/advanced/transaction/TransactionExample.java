@@ -1,4 +1,4 @@
-package org.springframework.data.xap.examples.basic.transaction;
+package org.springframework.data.xap.examples.advanced.transaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

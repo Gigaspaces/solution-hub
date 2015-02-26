@@ -44,10 +44,13 @@ public class CrudExample {
 
         log.info("Delete one by id.. ");
         repository.delete("blue");
-        log.info("Delete another one.. ");
-        repository.delete("orange");
+        log.info("Take room.. ");
+        log.info("Taken room: " + repository.take("orange"));
 
         log.info("Current number of room is: " + repository.count());
+        
+        log.info("Save with lease ..");
+        repository.save(new MeetingRoom(new Address("London", "Main Street 10"), "yellow"), 300);
 
         DataSet.cleanup(repository.space());
     }
