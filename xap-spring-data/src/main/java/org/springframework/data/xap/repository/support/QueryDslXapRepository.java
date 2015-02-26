@@ -107,32 +107,8 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         return takeMultiple(predicate, null, projection);
     }
 
-    @Override
-    public Iterable<T> takeAll(Predicate predicate, OrderSpecifier<?>... orders) {
-        return takeMultiple(predicate, null, null, orders);
-    }
-
-    @Override
-    public Iterable<T> takeAll(Predicate predicate, QTuple projection, OrderSpecifier<?>... orders) {
-        return takeMultiple(predicate, null, projection, orders);
-    }
-
-    @Override
-    public Page<T> takeAll(Predicate predicate, Pageable pageable) {
-        return takeWithPagingInternal(predicate, pageable, null);
-    }
-
-    @Override
-    public Page<T> takeAll(Predicate predicate, Pageable pageable, QTuple projection) {
-        return takeWithPagingInternal(predicate, pageable, projection);
-    }
-
     private Page<T> findWithPagingInternal(Predicate predicate, Pageable pageable, QTuple projection) {
         return cutPageable(readMultiple(predicate, pageable, projection), pageable);
-    }
-
-    private Page<T> takeWithPagingInternal(Predicate predicate, Pageable pageable, QTuple projection) {
-        return cutPageable(takeMultiple(predicate, pageable, projection), pageable);
     }
 
     private Page<T> cutPageable(List<T> sortedResults, Pageable pageable) {

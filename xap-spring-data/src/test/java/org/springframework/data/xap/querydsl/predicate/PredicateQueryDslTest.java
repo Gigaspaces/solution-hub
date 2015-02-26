@@ -404,47 +404,43 @@ public class PredicateQueryDslTest {
                 repository.takeOne(predicate)
         );
         assertEquals(0, repository.count(predicate));
+        assertEquals(1, repository.count());
     }
 
     @Test
     public void testTakeAll() {
-
-
-    }
-
-    @Test
-    public void testTakeAllOrdered() {
-
-
-    }
-
-    @Test
-    public void testTakeAllPageable() {
-
-
+        Predicate predicate = team.name.isNotEmpty();
+        assertEquals(
+                allTeams,
+                newHashSet(repository.takeAll(predicate))
+        );
+        assertEquals(0, repository.count(predicate));
+        assertEquals(0, repository.count());
     }
 
     @Test
     public void testTakeOneProjection() {
+        Predicate predicate = team.name.eq(avolition.getName());
+        Team result = repository.takeOne(predicate, projection(team.name));
+        assertEquals(avolition.getName(), result.getName());
+        assertNull(result.getId());
+        assertNull(result.getStatus());
 
+        assertEquals(0, repository.count(predicate));
+        assertEquals(1, repository.count());
     }
 
     @Test
     public void testTakeAllProjection() {
+        Predicate predicate = team.name.isNotNull();
+        for (Team result : repository.takeAll(predicate, projection(team.name))) {
+            assertNotNull(result.getName());
+            assertNull(result.getId());
+            assertNull(result.getStatus());
+        }
 
-
-    }
-
-    @Test
-    public void testTakeAllOrderedProjection() {
-
-
-    }
-
-    @Test
-    public void testTakeAllPageableProjection() {
-
-
+        assertEquals(0, repository.count(predicate));
+        assertEquals(0, repository.count());
     }
 
     private Team one(Predicate predicate) {
