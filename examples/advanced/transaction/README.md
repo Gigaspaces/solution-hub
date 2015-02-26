@@ -16,16 +16,26 @@ To run the example, refer to `TransactionMain` class. It will delegate the call 
 ```
 USE TRANSACTIONS
 ...
-Run service method with rollback..
-Current transaction: ServerTransaction [id=2, manager=TxnMgrProxy [proxyId=f1f97768-8f63-4e51-a3cc-71fae0a4877e, isDirect=true]]
-Saved person: Person{id=1, name='Nick', active=true, position='accountant', age=22}
-Set rollback status
-Try to get person, that has been saved in transaction: null
-Run service method without rollback..
-Current transaction: ServerTransaction [id=3, manager=TxnMgrProxy [proxyId=f1f97768-8f63-4e51-a3cc-71fae0a4877e, isDirect=true]]
-Saved person: Person{id=2, name='Mary', active=false, position='teacher', age=29}
-Try to get person, that has been saved in transaction: Person{id=2, name='Mary', active=false, position='teacher', age=29}
-...
+
+Created rooms: [MeetingRoom{address=Address{city='New York', localAddress='Main Street, 1'}, name='green'}, MeetingRoom{address=Address{city='New York', localAddress='Main Street, 5'}, name='orange'}, MeetingRoom{address=Address{city='Kyiv', localAddress='Main Street, 12'}, name='blue'}]
+Run service method with expected rollback.. 
+Current transaction: ServerTransaction [id=2, manager=TxnMgrProxy [proxyId=4c904d4e-821b-4600-b703-02b03ff516d9, isDirect=true]]
+Try to save yellow
+yellow room has been saved.
+Try to save green
+Unavailable name
+Run service method with correct data..
+Current transaction: ServerTransaction [id=3, manager=TxnMgrProxy [proxyId=4c904d4e-821b-4600-b703-02b03ff516d9, isDirect=true]]
+Try to save grey
+grey room has been saved.
+Try to save white
+white room has been saved.
+Result room list: 
+MeetingRoom{address=Address{city='New York', localAddress='Main Street, 5'}, name='orange'}
+MeetingRoom{address=Address{city='Kyiv', localAddress='Main Street, 12'}, name='blue'}
+MeetingRoom{address=Address{city='Minsk', localAddress='Main Street 44'}, name='grey'}
+MeetingRoom{address=Address{city='Amsterdam', localAddress='Main Street 28'}, name='white'}
+MeetingRoom{address=Address{city='New York', localAddress='Main Street, 1'}, name='green'}
 ```
 
 To read more on this topic, please, refer to [XAP Transactions](http://docs.gigaspaces.com/xap101/transaction-overview.html).
