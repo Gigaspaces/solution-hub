@@ -3,7 +3,9 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
+import com.google.common.collect.Lists;
 import com.j_spaces.core.client.SQLQuery;
+import net.jini.core.lease.Lease;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,14 +42,40 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public <S extends T> S save(S entity) {
-        space.write(entity);
+        save(entity, Lease.FOREVER);
+        return entity;
+    }
+
+    @Override
+    public <S extends T> S save(S entity, long lease) {
+        space.write(entity, lease);
         return entity;
     }
 
     @Override
     public <S extends T> Iterable<S> save(Iterable<S> entities) {
-        space.writeMultiple(toArray(entities));
+        save(entities, Lease.FOREVER);
         return entities;
+    }
+
+    @Override
+    public <S extends T> Iterable<S> save(Iterable<S> entities, long lease) {
+        space.writeMultiple(toArray(entities), lease);
+        return entities;
+    }
+
+    @Override
+    public T take(ID id) {
+        Class<T> aClass = entityInformation.getJavaType();
+        return space.takeById(aClass, id);
+    }
+
+    @Override
+    public Iterable<T> take(Iterable<ID> ids) {
+        Class<T> aClass = entityInformation.getJavaType();
+        List<ID> idList= Lists.newArrayList(ids);
+        Object[] idArray = idList.toArray(new Object[idList.size()]);
+        return space.takeByIds(aClass, idArray);
     }
 
     @Override

@@ -620,6 +620,48 @@ public abstract class BaseRepositoryTest {
         return personList;
     }
 
+    @Test
+    public void writeWithLeaseTest() throws InterruptedException {
+        personRepository.save(nick, 400);
+        assertEquals(nick, personRepository.findOne(nick.getId()));
+        Thread.sleep(600);
+        assertNull(personRepository.findOne(nick.getId()));
+
+        personRepository.save(nick);
+        Thread.sleep(700);
+        assertNotNull(personRepository.findOne(nick.getId()));
+    }
+
+    @Test
+    public void writeMultipleWithLeaseTest() throws InterruptedException {
+        personRepository.deleteAll();
+        personRepository.save(Arrays.asList(nick, paul), 400);
+        assertEquals(nick, personRepository.findOne(nick.getId()));
+        assertEquals(paul, personRepository.findOne(paul.getId()));
+        Thread.sleep(600);
+        assertNull(personRepository.findOne(nick.getId()));
+        assertNull(personRepository.findOne(paul.getId()));
+    }
+    
+    @Test
+    public  void takeTest(){
+        Person result = personRepository.take(paul.getId());
+        assertEquals(paul, result);
+        Person result2 = personRepository.findOne(paul.getId());
+        assertNull(result2);     
+    }
+
+    @Test
+    public void takeTestMultiple(){
+        List<Person> result = Lists.newArrayList(personRepository.take(Arrays.asList(paul.getId(), chris.getId())));
+        assertTrue(result.contains(paul));
+        assertTrue(result.contains(chris));
+        Person person1 = personRepository.findOne(paul.getId());
+        Person person2 = personRepository.findOne(chris.getId());
+        assertNull(person1);
+        assertNull(person2);
+    }
+
     private void assertAllNullExceptName(Collection<Person> list) {
         for (Person person : list) {
             assertNotNull(person.getName());
@@ -628,4 +670,6 @@ public abstract class BaseRepositoryTest {
             assertNull(person.getAge());
         }
     }
+    
+
 }

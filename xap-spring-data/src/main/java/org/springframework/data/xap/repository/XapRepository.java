@@ -28,7 +28,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
     /**
      * Retrieves an entity by its id.
      *
-     * @param id must not be {@literal null}.
+     * @param id         must not be {@literal null}.
      * @param projection projection
      * @return the entity with the given id or {@literal null} if none found
      * @throws IllegalArgumentException if {@code id} is {@literal null}
@@ -70,4 +70,38 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      */
     Page<T> findAll(Pageable pageable, Projection projection);
 
+    /**
+     * Saves entities with a limited life span.
+     *
+     * @param entity
+     * @param lease
+     * @param <S>
+     * @return the saved entity
+     */
+    <S extends T> S save(S entity, long lease);
+
+    /**
+     * Saves all given entities.
+     *
+     * @param entities
+     * @return the saved entities
+     * @throws IllegalArgumentException in case the given entity is (@literal null}.
+     */
+    <S extends T> Iterable<S> save(Iterable<S> entities, long lease);
+
+    /**
+     * Gets entity by id and deletes it.
+     *
+     * @param id
+     * @return
+     */
+    T take(ID id);
+
+    /**
+     * Gets multiple entities by id and deletes them.
+     *
+     * @param ids
+     * @return
+     */
+    Iterable<T> take(Iterable<ID> ids);
 }
