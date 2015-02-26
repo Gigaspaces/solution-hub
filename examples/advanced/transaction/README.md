@@ -7,9 +7,9 @@ In this example basic transaction manager configuration is provided along the us
 
 1. Context configuration (`spring-context.xml`) contains transaction manager declaration and wiring into `GigaSpace` bean
 
-2. Service class `ServiceWithTransaction` got a method annotated with `@Transactional`
+2. Service class `TransactionalService` got a method annotated with `@Transactional`
 
-3. Current transaction can be got using `space().getCurrentTransaction()` method, as shown in `ServiceWithTransaction`
+3. Current transaction can be got using `space().getCurrentTransaction()` method, as shown in `TransactionalService`
 
 To run the example, refer to `TransactionMain` class. It will delegate the call to `TransactionExample` which will show transactional save with rollback and without. Running the example should produce the next output:
 
