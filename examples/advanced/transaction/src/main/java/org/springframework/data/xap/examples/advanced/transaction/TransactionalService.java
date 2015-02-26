@@ -5,32 +5,39 @@ import org.openspaces.core.GigaSpace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.xap.examples.model.MeetingRoom;
 import org.springframework.data.xap.examples.model.Person;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.util.List;
 
 /**
  * @author Anna_Babich.
  */
 @Component
-public class ServiceWithTransaction {
+public class TransactionalService {
     private static Logger log = LoggerFactory.getLogger(TransactionExample.class);
 
     @Autowired
-    private PersonRepository personRepository;
+    private MeetingRoomRepository meetingRoomRepository;
 
 
-    @Transactional
-    public void serviceMethod(boolean doRollback, Person person) {
-        GigaSpace space = personRepository.space();
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveRooms(List<MeetingRoom> rooms) {
+        GigaSpace space = meetingRoomRepository.space();
         Transaction transaction = space.getCurrentTransaction();
         log.info("Current transaction: " + transaction);
-        personRepository.save(person);
-        log.info("Saved person: " + personRepository.findOne(person.getId()));
-        if (doRollback) {
-            log.info("Set rollback status");
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        }
+       
+       for (MeetingRoom room: rooms){
+           log.info("Try to save " + room.getName());
+           if (meetingRoomRepository.exists(room.getName())){
+               throw new RoomNameIsUnavailableException("Unavailable name");
+           }
+           meetingRoomRepository.save(room);
+           log.info(room.getName() + " room has been saved.");
+       }
     }
 }
