@@ -39,7 +39,11 @@ _[Reference Documentation](#reference)_
   
   4.3 [XAP Change API](#change)
   
-  4.4 [XAP Transactions](#transaction)
+  4.4 [XAP Take Operations](#take)
+  
+  4.5 [XAP Lease Time](#lease)
+  
+  4.6 [XAP Transactions](#transaction)
 
 _[Other Resources](#resources)_
 
@@ -71,6 +75,8 @@ ${advanced.md}
 ${projection/projection.md}
 ${querydsl/querydsl.md}
 ${change/change.md}
+${take/take.md}
+${lease/lease.md}
 ${transaction/transaction.md}
 
 ## <a name="resources"/>Other Resources

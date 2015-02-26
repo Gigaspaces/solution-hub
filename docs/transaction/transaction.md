@@ -1,4 +1,4 @@
-#### <a name="transaction"/>4.4 XAP Transactions
+#### <a name="transaction"/>4.6 XAP Transactions
 
 Spring Data XAP comes with a support of declarative Spring transactions based on `OpenSpaces` transaction managers. In order to apply transactional behaviour, the transaction manager must be provided as a reference when constructing the `GigaSpace` bean. For example (using the distributed transaction manager):
 ```xml

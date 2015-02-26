@@ -85,7 +85,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      *
      * @param entities
      * @return the saved entities
-     * @throws IllegalArgumentException in case the given entity is (@literal null}.
+     * @throws IllegalArgumentException in case the given entity is {@literal null}.
      */
     <S extends T> Iterable<S> save(Iterable<S> entities, long lease);
 
