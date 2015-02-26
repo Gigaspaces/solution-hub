@@ -1,7 +1,11 @@
 package org.springframework.data.xap.repository.support;
 
 
+import com.gigaspaces.client.ReadByIdsResult;
 import com.gigaspaces.metadata.SpaceTypeDescriptor;
+import com.gigaspaces.query.IdQuery;
+import com.gigaspaces.query.IdsQuery;
+import com.j_spaces.core.client.SQLQuery;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +15,9 @@ import org.springframework.data.xap.repository.XapDocumentRepository;
 import org.springframework.data.xap.repository.query.Projection;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import static com.google.common.collect.Lists.*;
 
 
 public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements XapDocumentRepository<T, ID>{
@@ -18,10 +25,12 @@ public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements Xa
 
     private GigaSpace space;
     private EntityInformation<T, ID> entityInformation;
+    private String typeName;
 
     public XapDocumentRepositoryImpl(GigaSpace space, EntityInformation<T, ID> entityInformation, SpaceTypeDescriptor typeDescriptor) {
         this.space = space;
         this.entityInformation = entityInformation;
+        this.typeName = typeDescriptor.getTypeName();
         space.getTypeManager().registerTypeDescriptor(typeDescriptor);
     }
 
@@ -79,7 +88,7 @@ public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements Xa
 
     @Override
     public T findOne(ID id) {
-        return null;
+        return space.readById(new IdQuery<T>(typeName, id));
     }
 
     @Override
@@ -89,12 +98,14 @@ public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements Xa
 
     @Override
     public Iterable<T> findAll() {
-        return null;
+        T[] ts = space.readMultiple(new SQLQuery<T>(typeName, ""));
+        return newArrayList(ts);
     }
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids) {
-        return null;
+        ReadByIdsResult<T> ts = space.readByIds(new IdsQuery<T>(typeName, toArray(ids)));
+        return newArrayList(ts);
     }
 
     @Override
@@ -104,12 +115,13 @@ public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements Xa
 
     @Override
     public void delete(ID id) {
-
+        IdQuery<T> idQuery = new IdQuery<T>(typeName, id).setProjections("");
+        space.takeById(idQuery);
     }
 
     @Override
     public void delete(T entity) {
-
+        space.take(entity);
     }
 
     @Override
@@ -120,5 +132,13 @@ public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements Xa
     @Override
     public void deleteAll() {
 
+    }
+
+    private <E> E[] toArray(Iterable<E> elems) {
+        ArrayList<E> arrayList = new ArrayList<E>();
+        for (E elem : elems) {
+            arrayList.add(elem);
+        }
+        return (E[]) arrayList.toArray();
     }
 }
