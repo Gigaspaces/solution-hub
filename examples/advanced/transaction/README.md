@@ -14,9 +14,9 @@ In this example basic transaction manager configuration is provided along the us
 To run the example, refer to `TransactionMain` class. It will delegate the call to `TransactionExample` which will show transactional save with rollback and without. Running the example should produce the next output:
 
 ```
+...
 USE TRANSACTIONS
 ...
-
 Created rooms: [MeetingRoom{address=Address{city='New York', localAddress='Main Street, 1'}, name='green'}, MeetingRoom{address=Address{city='New York', localAddress='Main Street, 5'}, name='orange'}, MeetingRoom{address=Address{city='Kyiv', localAddress='Main Street, 12'}, name='blue'}]
 Run service method with expected rollback.. 
 Current transaction: ServerTransaction [id=2, manager=TxnMgrProxy [proxyId=4c904d4e-821b-4600-b703-02b03ff516d9, isDirect=true]]
