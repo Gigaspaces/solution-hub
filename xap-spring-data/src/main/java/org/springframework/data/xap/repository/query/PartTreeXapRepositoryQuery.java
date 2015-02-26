@@ -184,10 +184,7 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
             if (!isSortPageableProjectionOrNull(parameter)) {
                 if (isInOrNotIn(currPart)) {
                     StringBuilder str = new StringBuilder("in (");
-                    List<String> paramList = new ArrayList<>();
-                    for (int i = 0; i < ((List) parameter).size(); i++) {
-                        paramList.add("?");
-                    }
+                    List<String> paramList = new ArrayList<>((Collections.nCopies(((List) parameter).size(), "?")));
                     Joiner joiner = Joiner.on(", ").skipNulls();
                     str.append(joiner.join(paramList)).append(")");
                     query = query.replace("in ?", str);
