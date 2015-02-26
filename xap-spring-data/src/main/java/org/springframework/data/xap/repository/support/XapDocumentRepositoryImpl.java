@@ -2,6 +2,7 @@ package org.springframework.data.xap.repository.support;
 
 
 import com.gigaspaces.client.ReadByIdsResult;
+import com.gigaspaces.document.SpaceDocument;
 import com.gigaspaces.metadata.SpaceTypeDescriptor;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import static com.google.common.collect.Lists.*;
 
 
-public class XapDocumentRepositoryImpl<T, ID extends Serializable> implements XapDocumentRepository<T, ID>{
+public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Serializable> implements XapDocumentRepository<T, ID>{
 
 
     private GigaSpace space;

@@ -1,5 +1,6 @@
 package org.springframework.data.xap.repository.support;
 
+import com.gigaspaces.document.SpaceDocument;
 import com.gigaspaces.metadata.SpaceTypeDescriptor;
 import com.gigaspaces.metadata.SpaceTypeDescriptorBuilder;
 import org.openspaces.core.GigaSpace;
@@ -60,7 +61,7 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
             return new QueryDslXapRepository<>(space, entityInformation);
         } else  if (isSpaceDocumentRepository(repositoryInterface)){
             SpaceTypeDescriptor typeDescriptor = createSpaceTypeDescriptor(metadata);
-            return new XapDocumentRepositoryImpl<>(space, entityInformation, typeDescriptor);
+            return new XapDocumentRepositoryImpl<>(space, (EntityInformation<? extends SpaceDocument, Serializable>)entityInformation, typeDescriptor);
         } else {
             return new SimpleXapRepository<>(space, entityInformation);
         }
