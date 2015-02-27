@@ -19,10 +19,12 @@ public class XapQueryMethod extends QueryMethod {
 
     private final Method method;
     private final XapPersistentEntity<?> persistentEntity;
+    private final RepositoryMetadata metadata;
 
     public XapQueryMethod(Method method, RepositoryMetadata metadata, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
         super(method, metadata);
         Assert.notNull(context);
+        this.metadata = metadata;
         this.method = method;
         this.persistentEntity = context.getPersistentEntity(getDomainClass());
     }
@@ -41,4 +43,7 @@ public class XapQueryMethod extends QueryMethod {
         return StringUtils.hasText(queryString) ? queryString : null;
     }
 
+    public RepositoryMetadata getMetadata() {
+        return metadata;
+    }
 }

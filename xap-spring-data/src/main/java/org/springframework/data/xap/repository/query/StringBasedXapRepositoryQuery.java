@@ -1,8 +1,9 @@
 package org.springframework.data.xap.repository.query;
 
+import com.gigaspaces.document.SpaceDocument;
 import com.j_spaces.core.client.SQLQuery;
 import org.openspaces.core.GigaSpace;
-import org.springframework.util.StringUtils;
+import org.springframework.data.xap.repository.SpaceDocumentRepository;
 
 /**
  * @author Anna_Babich.
@@ -26,9 +27,22 @@ public class StringBasedXapRepositoryQuery extends XapRepositoryQuery{
 
     @Override
     public Object execute(Object[] parameters) {
-        SQLQuery sqlQuery = new SQLQuery(method.getEntityInformation().getJavaType().getCanonicalName(), query);
+        SQLQuery sqlQuery = new SQLQuery(getTypeName(method), query);
         sqlQuery.setParameters(parameters);
         return space.readMultiple(sqlQuery);
+    }
+
+    private String getTypeName(XapQueryMethod method){
+        if (isSpaceDocumentQuery(method)){
+            SpaceDocumentRepository annotation = method.getMetadata().getRepositoryInterface().getAnnotation(SpaceDocumentRepository.class);
+            return annotation.typeName();
+        }   else {
+            return method.getEntityInformation().getJavaType().getCanonicalName();
+        }
+    }
+
+    private boolean isSpaceDocumentQuery(XapQueryMethod method){
+        return SpaceDocument.class.isAssignableFrom(method.getMetadata().getDomainType());
     }
 
 }

@@ -10,6 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.repository.PersonDocumentRepository;
 
@@ -23,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-public abstract class BaseSpaceDocumentRepositoryTest extends BaseRepositoryTest{
+public abstract class BaseSpaceDocumentRepositoryTest{
 
     @Autowired
     protected PersonDocumentRepository personDocumentRepository;
@@ -179,7 +182,7 @@ public abstract class BaseSpaceDocumentRepositoryTest extends BaseRepositoryTest
     @Test
     public void delete() {
         personDocumentRepository.delete(getId(paul));
-        assertFalse(personRepository.exists(getId(paul)));
+        assertFalse(personDocumentRepository.exists(getId(paul)));
     }
 
     @Test
@@ -190,6 +193,25 @@ public abstract class BaseSpaceDocumentRepositoryTest extends BaseRepositoryTest
         TestCase.assertTrue(persons.contains(chris2));
         TestCase.assertTrue(persons.contains(chris3));
     }
+
+//    @Test(expected = UnsupportedOperationException.class)
+//    public void testIgnoreCase(){
+//        personDocumentRepository.findByNameIgnoreCase("paul");
+//    }
+//
+//    @Test(expected = UnsupportedOperationException.class)
+//    public void testIgnoreCaseInSorting(){
+//        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id").ignoreCase());
+//        Pageable pageable = new PageRequest(1, 2, sorting);
+//        personDocumentRepository.findByNameEquals("paul", pageable);
+//    }
+//
+//    @Test(expected = UnsupportedOperationException.class)
+//    public void testNullHandling(){
+//        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id", Sort.NullHandling.NULLS_FIRST));
+//        Pageable pageable = new PageRequest(1, 2, sorting);
+//        personDocumentRepository.findByNameEquals("paul", pageable);
+//    }
 
     private List<SpaceDocument> findAll(List<String> ids) {
         Iterable<SpaceDocument> persons = personDocumentRepository.findAll(ids);
@@ -435,18 +457,5 @@ public abstract class BaseSpaceDocumentRepositoryTest extends BaseRepositoryTest
 //        super.testFindByAgePagedCreatedQuery();
 //    }
 //
-//    @Override
-//    public void testNullHandling() {
-//        super.testNullHandling();
-//    }
-//
-//    @Override
-//    public void testIgnoreCaseInSorting() {
-//        super.testIgnoreCaseInSorting();
-//    }
-//
-//    @Override
-//    public void testIgnoreCase() {
-//        super.testIgnoreCase();
-//    }
+
 }
