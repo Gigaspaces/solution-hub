@@ -10,9 +10,9 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface SpaceDocumentRepository {
 
-    public String typeName() default "";
+    public String typeName();
 
-    public String id() default "";
+    public String id();
 
     public String routing() default "";
 
