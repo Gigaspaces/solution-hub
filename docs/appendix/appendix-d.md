@@ -13,7 +13,7 @@ ${unsupported/IgnoreCaseInSorting.java}
 ```java
 ${unsupported/NullHandling.java}
 ```
-#### Using query derivation from method name in `XapDocumentRepository`
+#### Using query derivation in `XapDocumentRepository`
 ```java
 ${unsupported/DocumentQueries.java}
 ```
