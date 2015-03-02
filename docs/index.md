@@ -27,9 +27,9 @@ _[Reference Documentation](#reference)_
   
 3. [Basic Usage](#basic)
 
-  3.1 [Query methods](#query)
+  3.1 [Query Methods](#query)
   
-  3.2 [Custom methods](#custom)
+  3.2 [Custom Methods](#custom)
 
 4. [Advanced Usage](#advanced)
 
@@ -44,6 +44,8 @@ _[Reference Documentation](#reference)_
   4.5 [XAP Lease Time](#lease)
   
   4.6 [XAP Transactions](#transaction)
+
+  4.7 [XAP Document Storage Support](#document)
 
 _[Other Resources](#resources)_
 
@@ -78,6 +80,7 @@ ${change/change.md}
 ${take/take.md}
 ${lease/lease.md}
 ${transaction/transaction.md}
+${document/document.md}
 
 ## <a name="resources"/>Other Resources
 ${resources.md}

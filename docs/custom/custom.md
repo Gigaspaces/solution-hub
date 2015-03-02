@@ -1,4 +1,4 @@
-#### <a name="custom"/>3.2 Custom methods
+#### <a name="custom"/>3.2 Custom Methods
 
 It is often needed to add custom methods with your implementation to repository interfaces. Spring Data allows you to provide custom repository code and still utilize basic CRUD features and query method functionality. To extend your repository, you first define a separate interface with custom methods declarations:
 ```java
