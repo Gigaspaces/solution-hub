@@ -2,7 +2,7 @@
 
 The [XAP Document API](http://docs.gigaspaces.com/xap101/document-api.html) exposes the space as Document Store. A document, which is represented by the class `SpaceDocument`, is a collection of key-value pairs, where the keys are strings and the values are primitives, `String`, `Date`, other documents, or collections thereof. Most importantly, the Space is aware of the internal structure of a document, and thus can index document properties at any nesting level and expose rich query semantics for retrieving documents.
 
-While using Spring Data XAP you can declare one or more of your repositories to be a Document Repository. To do so, you have to extend `XapDocumentRepository` interface (instead of usual `XapRepository`) and annotate it with `@SpaceDocumentRepository` to define document name, id and optionally index properties or mark them as routing key:
+While using Spring Data XAP you can declare one or more of your repositories to be a Document Repository. To do so, you have to extend `XapDocumentRepository` interface (instead of usual `XapRepository`) and annotate it with `@SpaceDocumentRepository` to define document name and id, and also optionally declare indexes and routing key:
 ```java
 ${PersonDocumentRepository.java}
 ```
