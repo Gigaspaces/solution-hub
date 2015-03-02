@@ -204,7 +204,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
             ID id = entityInformation.getId(entity);
             idList.add(id);
         }
-        IdsQuery<T> idsQuery = idsQuery((ID[]) idList.toArray()).setProjections("");
+        IdsQuery<T> idsQuery = idsQuery(idList.toArray()).setProjections("");
         space.takeByIds(idsQuery);
     }
 
@@ -217,18 +217,18 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @SuppressWarnings("unchecked")
     protected <E> E[] toArray(Iterable<E> elements) {
-        List<E> list = new LinkedList<>();
+        List<E> arrayList = new LinkedList<>();
         for (E element : elements) {
-            list.add(element);
+            arrayList.add(element);
         }
-        return (E[]) list.toArray(new Serializable[list.size()]);
+        return (E[]) arrayList.toArray();
     }
 
     protected IdQuery<T> idQuery(ID id) {
         return new IdQuery<>(entityInformation.getJavaType(), id);
     }
 
-    protected IdsQuery<T> idsQuery(ID[] ids) {
+    protected IdsQuery<T> idsQuery(Object[] ids) {
         return new IdsQuery<>(entityInformation.getJavaType(), ids);
     }
 

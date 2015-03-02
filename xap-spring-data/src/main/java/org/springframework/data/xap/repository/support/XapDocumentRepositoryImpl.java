@@ -26,7 +26,7 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
     }
 
     @Override
-    protected IdsQuery<T> idsQuery(ID[] ids) {
+    protected IdsQuery<T> idsQuery(Object[] ids) {
         return new IdsQuery<>(typeName, ids);
     }
 

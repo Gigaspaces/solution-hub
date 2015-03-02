@@ -1,7 +1,5 @@
 package org.springframework.data.xap.repository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.PersonDocument;
 import org.springframework.data.xap.repository.query.Projection;
 
@@ -32,11 +30,8 @@ public interface PersonDocumentRepository extends XapDocumentRepository<PersonDo
     @Query("customField = ?")
     List<PersonDocument> findByCustomField(String value);
 
-    @Query("age = ?")
-    List<PersonDocument> findByAge(Integer age, Sort sort);
-
-    @Query("age = ?")
-    List<PersonDocument> findByAge(Integer age, Pageable pageable);
+    @Query("age = ? order by id asc")
+    List<PersonDocument> findByAgeSortedById(Integer age);
 
     @Query("age = ?")
     List<PersonDocument> findByAge(Integer age, Projection projection);

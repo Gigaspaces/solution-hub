@@ -243,23 +243,8 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByAgePagedDeclaredQuery() {
-        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
-        Pageable pageable = new PageRequest(1, 2, sorting);
-        List<PersonDocument> person = personRepository.findByAge(30, pageable);
-        assertEquals(1, person.size());
-        assertEquals(paul2, person.get(0));
-
-        Pageable pageable2 = new PageRequest(0, 2, sorting);
-        List<PersonDocument> persons2 = personRepository.findByAge(30, pageable2);
-        assertEquals(2, persons2.size());
-        assertEquals(chris, persons2.get(0));
-        assertEquals(chris3, persons2.get(1));
-    }
-
-    @Test
     public void testFindByAgeSortedDeclaredQuery() {
-        List<PersonDocument> person = personRepository.findByAge(30, new Sort(new Sort.Order(Sort.Direction.ASC, "id")));
+        List<PersonDocument> person = personRepository.findByAgeSortedById(30);
         assertEquals(3, person.size());
         assertEquals(chris, person.get(0));
         assertEquals(chris3, person.get(1));

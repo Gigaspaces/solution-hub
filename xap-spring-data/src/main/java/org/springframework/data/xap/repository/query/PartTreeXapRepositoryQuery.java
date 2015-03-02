@@ -99,24 +99,6 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
     /**
      * @return null if not found
      */
-    private Projection extractProjectionParameter(Object[] parameters) {
-        Projection result = null;
-        int count = 0;
-        for (Object parameter : parameters) {
-            if (parameter instanceof Projection) {
-                result = (Projection) parameter;
-                count++;
-            }
-        }
-        if (count > 1) {
-            throw new RuntimeException("Only one Projections parameter is allowed");
-        }
-        return result;
-    }
-
-    /**
-     * @return null if not found
-     */
     private Pageable extractPagingParameter(Object[] parameters) {
         Pageable result = null;
         int pageableCount = 0;
@@ -219,10 +201,6 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
     private boolean isSortOrNull(Object parameter) {
         return (parameter == null) || (parameter instanceof Sort);
-    }
-
-    private boolean isPageableOrProjection(Object parameter) {
-        return (parameter instanceof Pageable) || (parameter instanceof Projection);
     }
 
     private boolean isSortPageableProjectionOrNull(Object parameter) {
