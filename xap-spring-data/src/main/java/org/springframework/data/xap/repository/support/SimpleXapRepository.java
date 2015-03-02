@@ -16,7 +16,10 @@ import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.data.xap.repository.query.QueryBuilder;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -139,32 +142,21 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        return findAllPageableInternal(pageable, null);
+        return new PageImpl<>(findAllSortedInternal(null, null, pageable));
     }
 
     @Override
     public Page<T> findAll(Pageable pageable, Projection projection) {
-        return findAllPageableInternal(pageable, projection);
+        return new PageImpl<>(findAllSortedInternal(projection, null, pageable));
     }
 
-    private Page<T> findAllPageableInternal(Pageable pageable, Projection projection) {
-        int pageSize = pageable.getPageSize();
-        int offset = pageable.getOffset();
-        List<T> allSortedInternal = findAllSortedInternal(projection, pageable.getSort(), offset + pageSize);
-        List<T> result = (offset < allSortedInternal.size()) ? allSortedInternal.subList(offset, allSortedInternal.size()) : Collections.<T>emptyList();
-        return new PageImpl<T>(result);
-    }
-
-    private List<T> findAllSortedInternal(Projection projection, Sort sort, Integer count) {
+    private List<T> findAllSortedInternal(Projection projection, Sort sort, Pageable pageable) {
         StringBuilder stringBuilder = new StringBuilder("");
 
-        // count
-        if (count != null) {
-            stringBuilder.append(" rownum <= ").append(count);
-        }
-
-        // sort
-        if (sort != null) {
+        // paging or sorting
+        if (pageable != null) {
+            stringBuilder.append(new QueryBuilder(pageable).buildQuery());
+        } else if (sort != null) {
             stringBuilder.append(new QueryBuilder(sort).buildQuery());
         }
 

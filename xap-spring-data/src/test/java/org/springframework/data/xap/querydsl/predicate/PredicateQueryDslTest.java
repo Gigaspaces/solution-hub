@@ -324,9 +324,8 @@ public class PredicateQueryDslTest {
 
     @Test
     public void testFindAllWithPagingAndProjection() {
-        Predicate allPredicate = null;
         PageRequest page = new PageRequest(0, 1, new Sort(Sort.Direction.ASC, "name"));
-        List<Team> foundTeams = newArrayList(repository.findAll(allPredicate, page, projection(team.name)));
+        List<Team> foundTeams = newArrayList(repository.findAll(team.name.isNotNull(), page, projection(team.name)));
         assertEquals(1, foundTeams.size());
         assertNotNull(foundTeams.get(0).getName());
         assertNull(foundTeams.get(0).getId());

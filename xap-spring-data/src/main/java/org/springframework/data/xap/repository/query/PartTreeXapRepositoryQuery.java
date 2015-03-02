@@ -55,15 +55,8 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
             sqlQuery.setProjections(projection.getProperties());
         }
 
-        // extract paging param
-        Pageable pageable = extractPagingParameter(parameters);
-        int maxEntries = (pageable == null) ? Integer.MAX_VALUE : pageable.getOffset() + pageable.getPageSize();
-
         // execute SQLQuery
-        Object[] results = space.readMultiple(sqlQuery, maxEntries);
-
-        // client side pagination
-        return applyPagination(results, parameters);
+        return space.readMultiple(sqlQuery);
     }
 
     private void checkForUnsupportedParameters(Object[] parameters, PartTree tree) {
@@ -109,22 +102,18 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
             }
         }
         if (pageableCount > 1) {
-            throw new RuntimeException("Only one Pageable parameter is allowed");
+            throw new IllegalArgumentException("Only one Pageable parameter is allowed");
         }
         return result;
     }
 
-
-    private Object[] applyPagination(Object[] results, Object[] parameters) {
-        for (Object parameter : parameters) {
-            if (parameter instanceof Pageable) {
-                Pageable pageable = (Pageable) parameter;
-                int offset = pageable.getOffset();
-                int lastIndex = Ints.min(offset + pageable.getPageSize(), results.length);
-                return Arrays.copyOfRange(results, offset, lastIndex);
-            }
+    private Object[] applyPagination(Object[] results, Pageable pageable) {
+        if (pageable == null) {
+            return results;
         }
-        return results;
+        int offset = pageable.getOffset();
+        int lastIndex = Ints.min(offset + pageable.getPageSize(), results.length);
+        return Arrays.copyOfRange(results, offset, lastIndex);
     }
 
     private Object[] prepareStringParameters(Object[] parameters) {

@@ -3,6 +3,7 @@ package org.springframework.data.xap.repository.query;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.parser.Part;
 import org.springframework.util.Assert;
@@ -19,6 +20,11 @@ public class QueryBuilder {
 
     public QueryBuilder(Sort sort) {
         applySort(sort);
+    }
+
+    public QueryBuilder(Pageable pageable) {
+        applyPaging(pageable);
+        applySort(pageable.getSort());
     }
 
     public String buildQuery() {
@@ -45,7 +51,7 @@ public class QueryBuilder {
         if (sort != null) {
             Iterator<Sort.Order> iterator = sort.iterator();
             if (iterator.hasNext()) {
-                stringBuilder.append("ORDER BY ");
+                stringBuilder.append(" ORDER BY ");
             }
             Iterable<String> orders = Iterables.transform(sort, new Function<Sort.Order, String>() {
                 @Override
@@ -56,6 +62,19 @@ public class QueryBuilder {
             stringBuilder.append(Joiner.on(", ").join(orders));
         }
         query = query + stringBuilder;
+    }
+
+    public QueryBuilder page(Pageable pageable) {
+        applyPaging(pageable);
+        return this;
+    }
+
+    private void applyPaging(Pageable pageable) {
+        if (pageable == null) {
+            return;
+        }
+        String rowNum = query.isEmpty() ? "ROWNUM(%s, %s)" : " AND ROWNUM(%s, %s)";
+        query = query + String.format(rowNum, pageable.getOffset() + 1, pageable.getOffset() + pageable.getPageSize());
     }
 
     public static class AtomicPredicate {

@@ -1,5 +1,6 @@
 package org.springframework.data.xap.repository.query;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.ParameterAccessor;
 import org.springframework.data.repository.query.parser.AbstractQueryCreator;
@@ -11,10 +12,12 @@ import java.util.Iterator;
 /**
  * @author Anna_Babich.
  */
-public class XapQueryCreator extends AbstractQueryCreator<String, QueryBuilder>{
+public class XapQueryCreator extends AbstractQueryCreator<String, QueryBuilder> {
+    private Pageable pageable;
 
     public XapQueryCreator(PartTree tree, ParameterAccessor parameters) {
         super(tree, parameters);
+        pageable = parameters.getPageable();
     }
 
     public XapQueryCreator(PartTree tree) {
@@ -38,7 +41,7 @@ public class XapQueryCreator extends AbstractQueryCreator<String, QueryBuilder>{
 
     @Override
     protected String complete(QueryBuilder criteria, Sort sort) {
-        return criteria.sort(sort).buildQuery();
+        return criteria.page(pageable).sort(sort).buildQuery();
     }
 
 }

@@ -17,7 +17,6 @@ import org.springframework.data.xap.repository.query.Projection;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.data.xap.querydsl.Utils.convertPathToXapFieldString;
@@ -112,13 +111,14 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
     }
 
     private Page<T> cutPageable(List<T> sortedResults, Pageable pageable) {
-        List<T> pageResults;
-        if (pageable.getOffset() < sortedResults.size()) {
-            pageResults = sortedResults.subList(pageable.getOffset(), sortedResults.size());
-        } else {
-            pageResults = Collections.emptyList();
-        }
-        return new PageImpl<>(pageResults);
+//        List<T> pageResults;
+//        if (pageable.getOffset() < sortedResults.size()) {
+//            pageResults = sortedResults.subList(pageable.getOffset(), sortedResults.size());
+//        } else {
+//            pageResults = Collections.emptyList();
+//        }
+//        return new PageImpl<>(pageResults);
+        return new PageImpl<>(sortedResults);
     }
 
     private List<T> readMultiple(Predicate predicate, Pageable pageable, QTuple projection, OrderSpecifier<?>... orders) {

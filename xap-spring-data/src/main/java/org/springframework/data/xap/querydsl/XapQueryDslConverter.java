@@ -21,7 +21,8 @@ import java.util.regex.Pattern;
 public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter<T>> implements Visitor<Void, Void> {
     private static final XapQueryDslTemplates TEMPLATES = XapQueryDslTemplates.DEFAULT;
     private static final String LISTS_SEPARATOR = ", ";
-    private static final String PAGING_ROW_NUM = " rownum <= ";
+    private static final String PAGING_ROW_NUM = "rownum(%s, %s)";
+    private static final String AND_STATEMENT = " and ";
     private static final String ORDER_BY = " order by ";
     private static final String ORDER_ASC = " asc";
     private static final String ORDER_DESC = " desc";
@@ -165,8 +166,10 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
 
         if (pageable != null) {
             // append row num and order clause
-            append(PAGING_ROW_NUM);
-            append(String.valueOf(pageable.getOffset() + pageable.getPageSize()));
+            if (getLength() > 0) {
+                append(AND_STATEMENT);
+            }
+            append(String.format(PAGING_ROW_NUM, pageable.getOffset() + 1, pageable.getOffset() + pageable.getPageSize()));
             if (pageable.getSort() != null) {
                 append(ORDER_BY);
                 String prefix = "";
@@ -197,6 +200,8 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
         if (projection != null) {
             query.setProjections(projection.getProperties());
         }
+
+        System.out.println(toString());
 
         return query;
     }
