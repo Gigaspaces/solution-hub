@@ -39,7 +39,9 @@ To install maven plugin run the next script:
 
 *Unix*
 /tools/maven/installmavenrep.sh
-```
+```   
+
+Also you have to download spring-data-xap project and build it with maven using `mvn clean install`.   
 
 This project is built with [Maven] (http://maven.apache.org/) and each example may be built and run with Maven (3.0 or higher) or within your Java IDE.
 Detailed instructions for each example may be found in its own README file.

@@ -9,7 +9,20 @@ You will use the powerful Spring Data XAP library to store and retrieve POJOs.
 
 ## What you'll need
 
-First you set up a basic build script. You can use any build system you like when building apps with Spring, but the code you need to work with [Maven](https://maven.apache.org/) is included here. If you’re not familiar with Maven, refer to [Building Java Projects with Maven](https://spring.io/guides/gs/maven/).
+Before using this guide, you have to download GigaSpaces XAP and install maven plugin.   
+To install maven plugin run the next script:   
+
+```
+*Windows*
+/tools/maven/installmavenrep.bat
+
+*Unix*
+/tools/maven/installmavenrep.sh
+```   
+
+Also you have to download spring-data-xap project and build it with maven using `mvn clean install`.   
+
+If you’re not familiar with Maven, refer to [Building Java Projects with Maven] (https://spring.io/guides/gs/maven/).
 
 ### Create the directory structure
 
