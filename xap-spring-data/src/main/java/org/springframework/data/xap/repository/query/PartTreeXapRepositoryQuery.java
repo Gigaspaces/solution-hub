@@ -2,7 +2,6 @@ package org.springframework.data.xap.repository.query;
 
 import com.gigaspaces.document.SpaceDocument;
 import com.google.common.base.Joiner;
-import com.google.common.primitives.Ints;
 import com.j_spaces.core.client.SQLQuery;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +10,10 @@ import org.springframework.data.repository.query.ParametersParameterAccessor;
 import org.springframework.data.repository.query.parser.Part;
 import org.springframework.data.repository.query.parser.PartTree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Anna_Babich.
@@ -87,33 +89,6 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
     private boolean nullHandlingIsNotNative(Sort.Order order) {
         return (order.getNullHandling() != null && order.getNullHandling() != Sort.NullHandling.NATIVE);
-    }
-
-    /**
-     * @return null if not found
-     */
-    private Pageable extractPagingParameter(Object[] parameters) {
-        Pageable result = null;
-        int pageableCount = 0;
-        for (Object parameter : parameters) {
-            if (parameter instanceof Pageable) {
-                result = (Pageable) parameter;
-                pageableCount++;
-            }
-        }
-        if (pageableCount > 1) {
-            throw new IllegalArgumentException("Only one Pageable parameter is allowed");
-        }
-        return result;
-    }
-
-    private Object[] applyPagination(Object[] results, Pageable pageable) {
-        if (pageable == null) {
-            return results;
-        }
-        int offset = pageable.getOffset();
-        int lastIndex = Ints.min(offset + pageable.getPageSize(), results.length);
-        return Arrays.copyOfRange(results, offset, lastIndex);
     }
 
     private Object[] prepareStringParameters(Object[] parameters) {

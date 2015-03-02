@@ -107,18 +107,7 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
     }
 
     private Page<T> findWithPagingInternal(Predicate predicate, Pageable pageable, QTuple projection) {
-        return cutPageable(readMultiple(predicate, pageable, projection), pageable);
-    }
-
-    private Page<T> cutPageable(List<T> sortedResults, Pageable pageable) {
-//        List<T> pageResults;
-//        if (pageable.getOffset() < sortedResults.size()) {
-//            pageResults = sortedResults.subList(pageable.getOffset(), sortedResults.size());
-//        } else {
-//            pageResults = Collections.emptyList();
-//        }
-//        return new PageImpl<>(pageResults);
-        return new PageImpl<>(sortedResults);
+        return new PageImpl<>(readMultiple(predicate, pageable, projection));
     }
 
     private List<T> readMultiple(Predicate predicate, Pageable pageable, QTuple projection, OrderSpecifier<?>... orders) {
