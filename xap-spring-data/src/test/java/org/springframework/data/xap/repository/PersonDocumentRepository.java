@@ -1,22 +1,56 @@
 package org.springframework.data.xap.repository;
 
-import com.gigaspaces.document.SpaceDocument;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.xap.model.Person;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.xap.model.PersonDocument;
+import org.springframework.data.xap.repository.query.Projection;
 
 import java.util.List;
 
 @SpaceDocumentRepository(
-        typeName = "Person",
-        id = "id",
-        routing = "age"
+        typeName = PersonDocument.TYPE_NAME,
+        id = PersonDocument.PROPERTY_ID,
+        routing = PersonDocument.PROPERTY_AGE
 )
-public interface PersonDocumentRepository extends XapDocumentRepository<SpaceDocument, String> {
+public interface PersonDocumentRepository extends XapDocumentRepository<PersonDocument, String> {
 
-        @Query("name=?")
-        List<SpaceDocument> findByNameDeclaredQuery(String Name);
+    @Query("name = ?")
+    List<PersonDocument> findByName(String name);
 
-//        List<Person> findByNameIgnoreCase(String name);
-//
-//        List<Person> findByNameEquals(String name, Pageable pageable);
+    @Query("age = ?")
+    List<PersonDocument> findByAge(Integer age);
+
+    @Query("name = ? and age = ?")
+    List<PersonDocument> findByNameAndAge(String name, Integer age);
+
+    @Query("name = ? or age = ?")
+    List<PersonDocument> findByNameOrAge(String name, Integer age);
+
+    @Query("spouse.name = ?")
+    List<PersonDocument> findBySpouseName(String name);
+
+    @Query("customField = ?")
+    List<PersonDocument> findByCustomField(String value);
+
+    @Query("age = ?")
+    List<PersonDocument> findByAge(Integer age, Sort sort);
+
+    @Query("age = ?")
+    List<PersonDocument> findByAge(Integer age, Pageable pageable);
+
+    @Query("age = ?")
+    List<PersonDocument> findByAge(Integer age, Projection projection);
+
+    @Query("age between ? and ?")
+    List<PersonDocument> findByAgeBetween(Integer minAge, Integer maxAge);
+
+    @Query("active = 'true'")
+    List<PersonDocument> findByActiveTrue();
+
+    @Query("name in (?)")
+    List<PersonDocument> findByNameIn(List<String> names);
+
+    @Query("name rlike ?")
+    List<PersonDocument> findByNameRegex(String regex);
+
 }

@@ -12,5 +12,4 @@ public class XapPersistentEntity<T> extends BasicPersistentEntity<T, XapPersiste
         super(information);
     }
 
-
 }

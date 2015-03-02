@@ -16,7 +16,6 @@ import java.lang.reflect.Method;
  * @author Anna_Babich.
  */
 public class XapQueryMethod extends QueryMethod {
-
     private final Method method;
     private final XapPersistentEntity<?> persistentEntity;
     private final RepositoryMetadata metadata;

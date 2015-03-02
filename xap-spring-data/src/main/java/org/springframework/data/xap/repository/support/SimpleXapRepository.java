@@ -3,7 +3,6 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
-import com.google.common.collect.Lists;
 import com.j_spaces.core.client.SQLQuery;
 import net.jini.core.lease.Lease;
 import org.openspaces.core.GigaSpace;
@@ -17,18 +16,14 @@ import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.data.xap.repository.query.QueryBuilder;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Oleksiy_Dyagilev
  */
 public class SimpleXapRepository<T, ID extends Serializable> implements XapRepository<T, ID> {
-
-    private GigaSpace space;
-    private EntityInformation<T, ID> entityInformation;
+    protected GigaSpace space;
+    protected EntityInformation<T, ID> entityInformation;
 
     public SimpleXapRepository(GigaSpace space, EntityInformation<T, ID> entityInformation) {
         this.space = space;
@@ -73,9 +68,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     @Override
     public Iterable<T> take(Iterable<ID> ids) {
         Class<T> aClass = entityInformation.getJavaType();
-        List<ID> idList= Lists.newArrayList(ids);
-        Object[] idArray = idList.toArray(new Object[idList.size()]);
-        return space.takeByIds(aClass, idArray);
+        return space.takeByIds(aClass, toArray(ids));
     }
 
     @Override
@@ -92,8 +85,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         if (id == null) {
             throw new IllegalArgumentException("Id is null");
         }
-        Class<T> aClass = entityInformation.getJavaType();
-        IdQuery<T> idQuery = new IdQuery<T>(aClass, id);
+        IdQuery<T> idQuery = idQuery(id);
 
         if (projection != null) {
             idQuery.setProjections(projection.getProperties());
@@ -123,13 +115,10 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     private Iterable<T> findAllByIdsInternal(Iterable<ID> ids, Projection projection) {
-        Class<T> aClass = entityInformation.getJavaType();
-        IdsQuery<T> query = new IdsQuery<>(aClass, toArray(ids));
-
+        IdsQuery<T> query = idsQuery(toArray(ids));
         if (projection != null) {
             query.setProjections(projection.getProperties());
         }
-
         return space.readByIds(query);
     }
 
@@ -167,12 +156,11 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     private List<T> findAllSortedInternal(Projection projection, Sort sort, Integer count) {
-        Class<T> aClass = entityInformation.getJavaType();
         StringBuilder stringBuilder = new StringBuilder("");
 
         // count
         if (count != null) {
-            stringBuilder.append(" rownum <=").append(count);
+            stringBuilder.append(" rownum <= ").append(count);
         }
 
         // sort
@@ -180,7 +168,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
             stringBuilder.append(new QueryBuilder(sort).buildQuery());
         }
 
-        SQLQuery<T> query = new SQLQuery<>(aClass, stringBuilder.toString());
+        SQLQuery<T> query = sqlQuery(stringBuilder.toString());
 
         // projection
         if (projection != null) {
@@ -193,15 +181,13 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public long count() {
-        Class<T> aClass = entityInformation.getJavaType();
-        SQLQuery<T> query = new SQLQuery<>(aClass, "");
+        SQLQuery<T> query = sqlQuery("");
         return space.aggregate(query, new AggregationSet().count("")).getLong(0);
     }
 
     @Override
     public void delete(ID id) {
-        Class<T> aClass = entityInformation.getJavaType();
-        IdQuery<T> idQuery = new IdQuery<T>(aClass, id).setProjections("");
+        IdQuery<T> idQuery = idQuery(id).setProjections("");
         space.takeById(idQuery);
     }
 
@@ -218,26 +204,35 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
             ID id = entityInformation.getId(entity);
             idList.add(id);
         }
-        Object[] idArray = idList.toArray();
-        Class<T> aClass = entityInformation.getJavaType();
-        IdsQuery<T> idsQuery = new IdsQuery<T>(aClass, idArray).setProjections("");
+        IdsQuery<T> idsQuery = idsQuery((ID[]) idList.toArray()).setProjections("");
         space.takeByIds(idsQuery);
     }
 
     @Override
     public void deleteAll() {
         // TODO: consider replacing with distributed task to not return deleted entities back on client
-        Class<T> aClass = entityInformation.getJavaType();
-        SQLQuery<T> query = new SQLQuery<>(aClass, "").setProjections("");
+        SQLQuery<T> query = sqlQuery("").setProjections("");
         space.takeMultiple(query);
     }
 
     @SuppressWarnings("unchecked")
-    private <E> E[] toArray(Iterable<E> elems) {
-        ArrayList<E> arrayList = new ArrayList<E>();
-        for (E elem : elems) {
-            arrayList.add(elem);
+    protected <E> E[] toArray(Iterable<E> elements) {
+        List<E> list = new LinkedList<>();
+        for (E element : elements) {
+            list.add(element);
         }
-        return (E[]) arrayList.toArray();
+        return (E[]) list.toArray(new Serializable[list.size()]);
+    }
+
+    protected IdQuery<T> idQuery(ID id) {
+        return new IdQuery<>(entityInformation.getJavaType(), id);
+    }
+
+    protected IdsQuery<T> idsQuery(ID[] ids) {
+        return new IdsQuery<>(entityInformation.getJavaType(), ids);
+    }
+
+    protected SQLQuery<T> sqlQuery(String query) {
+        return new SQLQuery<>(entityInformation.getJavaType(), query);
     }
 }

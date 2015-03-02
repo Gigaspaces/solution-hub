@@ -59,21 +59,27 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
         EntityInformation<?, Serializable> entityInformation = getEntityInformation(metadata.getDomainType());
         if (isQueryDslRepository(repositoryInterface)) {
             return new QueryDslXapRepository<>(space, entityInformation);
-        } else  if (isSpaceDocumentRepository(repositoryInterface)){
-            SpaceTypeDescriptor typeDescriptor = createSpaceTypeDescriptor(metadata);
-            return new XapDocumentRepositoryImpl<>(space, (EntityInformation<? extends SpaceDocument, Serializable>)entityInformation, typeDescriptor);
+        } else if (isSpaceDocumentRepository(repositoryInterface)) {
+            SpaceTypeDescriptor typeDescriptor = createSpaceTypeDescriptor(metadata, entityInformation);
+            return new XapDocumentRepositoryImpl<>(space, (EntityInformation<? extends SpaceDocument, Serializable>) entityInformation, typeDescriptor);
         } else {
             return new SimpleXapRepository<>(space, entityInformation);
         }
     }
 
-    private SpaceTypeDescriptor createSpaceTypeDescriptor(RepositoryMetadata metadata) {
+    @SuppressWarnings("unchecked")
+    private SpaceTypeDescriptor createSpaceTypeDescriptor(RepositoryMetadata metadata, EntityInformation<?, Serializable> entityInformation) {
         SpaceDocumentRepository annotation = metadata.getRepositoryInterface().getAnnotation(SpaceDocumentRepository.class);
-        if (annotation == null){
+        if (annotation == null) {
             //TODO check some configuration exceptions
             throw new IllegalArgumentException("XapDocumentRepository has to be annotated with SpaceDocumentRepository annotation");
         }
-        return new SpaceTypeDescriptorBuilder(annotation.typeName())
+        Class<?> javaType = entityInformation.getJavaType();
+        SpaceTypeDescriptorBuilder builder = new SpaceTypeDescriptorBuilder(annotation.typeName());
+        if (SpaceDocument.class.isAssignableFrom(javaType) && javaType != SpaceDocument.class) {
+            builder.documentWrapperClass((Class<? extends SpaceDocument>) javaType);
+        }
+        return builder
                 .idProperty(annotation.id())
                 .routingProperty(annotation.routing())
                 .create();
@@ -81,18 +87,15 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
 
     @Override
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-        if (isSpaceDocumentRepository(metadata.getRepositoryInterface())){
+        if (isSpaceDocumentRepository(metadata.getRepositoryInterface())) {
             return XapDocumentRepositoryImpl.class;
         }
-        return isQueryDslRepository(metadata.getRepositoryInterface()) ? QueryDslXapRepository.class : SimpleXapRepository.class;
+        if (isQueryDslRepository(metadata.getRepositoryInterface())) {
+            return QueryDslXapRepository.class;
+        }
+        return SimpleXapRepository.class;
     }
 
-    /*
- * (non-Javadoc)
- *
- * @see springframework.data.repository.core.support.RepositoryFactorySupport
- * 	#getQueryLookupStrategy(org.springframework.data.repository.query.QueryLookupStrategy.Key)
- */
     @Override
     protected QueryLookupStrategy getQueryLookupStrategy(QueryLookupStrategy.Key key) {
         return new QueryLookupStrategy() {
@@ -107,12 +110,15 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
                 String namedQueryName = queryMethod.getNamedQueryName();
 
                 if (namedQueries.hasQuery(namedQueryName)) {
-                    return new StringBasedXapRepositoryQuery(namedQueries.getQuery(namedQueryName), queryMethod,
-                            space);
+                    return new StringBasedXapRepositoryQuery(namedQueries.getQuery(namedQueryName), queryMethod, space);
                 }
 
+                if (isSpaceDocumentRepository(metadata.getRepositoryInterface())) {
+                    throw new UnsupportedOperationException("Query methods are not supported in document repositories, use @Query annotation to define SQLQuery manually");
+                }
                 return new PartTreeXapRepositoryQuery(queryMethod, space);
             }
         };
     }
+
 }

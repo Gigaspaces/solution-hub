@@ -1,5 +1,6 @@
 package org.springframework.data.xap.repository.query;
 
+import com.gigaspaces.document.SpaceDocument;
 import com.google.common.base.Joiner;
 import com.google.common.primitives.Ints;
 import com.j_spaces.core.client.SQLQuery;
@@ -28,6 +29,9 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
 
         Class<?> domainClass = method.getEntityInformation().getJavaType();
 
+        if (SpaceDocument.class.isAssignableFrom(domainClass)) {
+            domainClass = SpaceDocument.class;
+        }
         this.tree = new PartTree(method.getName(), domainClass);
         this.method = method;
         this.space = space;
@@ -39,10 +43,9 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
         checkForUnsupportedParameters(parameters, tree);
         // parse method and prepare SQLQuery
         ParametersParameterAccessor parameterAccessor = new ParametersParameterAccessor(method.getParameters(), parameters);
-        String className = method.getPersistentEntity().getName();
         String query = new XapQueryCreator(tree, parameterAccessor).createQuery();
         query = prepareForInOperator(query, parameters);
-        SQLQuery sqlQuery = new SQLQuery(className, query);
+        SQLQuery sqlQuery = new SQLQuery(getTypeName(method), query);
         // bind parameters
         sqlQuery.setParameters(prepareStringParameters(parameters));
 
@@ -64,25 +67,25 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
     }
 
     private void checkForUnsupportedParameters(Object[] parameters, PartTree tree) {
-        for (Object parameter : parameters){
-            if (parameter instanceof Sort){
-                checkSorting((Sort)parameter);
+        for (Object parameter : parameters) {
+            if (parameter instanceof Sort) {
+                checkSorting((Sort) parameter);
             }
-            if (parameter instanceof Pageable){
+            if (parameter instanceof Pageable) {
                 checkSorting(((Pageable) parameter).getSort());
             }
         }
-        for (Part part : tree.getParts()){
-            if (Part.IgnoreCaseType.NEVER != part.shouldIgnoreCase()){
+        for (Part part : tree.getParts()) {
+            if (Part.IgnoreCaseType.NEVER != part.shouldIgnoreCase()) {
                 throw new UnsupportedOperationException("IgnoreCase is not supported for created queries");
             }
         }
     }
 
     private void checkSorting(Sort sort) {
-        if (sort != null){
-            for (Sort.Order order : sort){
-                if (order.isIgnoreCase() || nullHandlingIsNotNative(order)){
+        if (sort != null) {
+            for (Sort.Order order : sort) {
+                if (order.isIgnoreCase() || nullHandlingIsNotNative(order)) {
                     throw new UnsupportedOperationException("Null handling and ignoreCase for sorting are not supported");
                 }
             }
@@ -152,8 +155,8 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
             } else if (isPageableOrProjection(parameter)) {
                 // skip
             } else if (isBetween(currPart)) {
-                    stringParameters.add(parameter);
-                    currPart = handleBetween(currPart, partsIterator);
+                stringParameters.add(parameter);
+                currPart = handleBetween(currPart, partsIterator);
             } else {
                 switch (currPart.getType()) {
                     case IN:
@@ -206,31 +209,31 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
         return null;
     }
 
-    private Part handleBetween(Part currPart, Iterator<Part> partsIterator){
+    private Part handleBetween(Part currPart, Iterator<Part> partsIterator) {
         if (betweenCount % 2 == 1) {
             currPart = getNextPart(partsIterator);
         }
-        betweenCount ++;
+        betweenCount++;
         return currPart;
     }
 
-    private boolean isSortOrNull(Object parameter){
+    private boolean isSortOrNull(Object parameter) {
         return (parameter == null) || (parameter instanceof Sort);
     }
 
-    private boolean isPageableOrProjection(Object parameter){
+    private boolean isPageableOrProjection(Object parameter) {
         return (parameter instanceof Pageable) || (parameter instanceof Projection);
     }
 
-    private boolean isSortPageableProjectionOrNull(Object parameter){
+    private boolean isSortPageableProjectionOrNull(Object parameter) {
         return isPageableOrProjection(parameter) || isSortOrNull(parameter);
     }
 
-    private boolean isInOrNotIn(Part currPart){
+    private boolean isInOrNotIn(Part currPart) {
         return currPart.getType().equals(Part.Type.IN) || currPart.getType().equals(Part.Type.NOT_IN);
     }
 
-    private boolean isBetween(Part currPart){
+    private boolean isBetween(Part currPart) {
         return currPart.getType().equals(Part.Type.BETWEEN);
     }
 
