@@ -201,8 +201,6 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
             query.setProjections(projection.getProperties());
         }
 
-        System.out.println(toString());
-
         return query;
     }
 }
