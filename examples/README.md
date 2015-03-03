@@ -26,7 +26,8 @@ These examples demonstrate the usage of additional XAP features in Spring Data X
 * [querydsl](/examples/advanced/querydsl) - Shows how to use Query Dsl predicates
 * [projection](/examples/advanced/projection) - Demonstrates the usage of Projections in XAP
 * [changeapi](/examples/advanced/changeapi) - Demonstrates the usage of Change API in XAP
-* [transaction](/examples/advanced/transaction) - Shows how XAP transactions can be used  
+* [transaction](/examples/advanced/transaction) - Shows how XAP transactions can be used
+* [document](/examples/advanced/document) - Covers using Space as a Document Store
 
 # Running The Examples
 
