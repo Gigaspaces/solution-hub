@@ -24,7 +24,12 @@
   <xap-data:repositories base-package="org.springframework.data.xap.examples.advanced.changeapi"/>
 
   <os-core:embedded-space id="space" name="space">
-    <!-- schema definition for PersonDocument -->
+    <!-- schema definition for Meeting (SpaceDocument) -->
+    <os-core:space-type type-name="Meeting">
+      <os-core:id property="id"/>
+    </os-core:space-type>
+
+    <!-- schema definition for PersonDocument (wrapper over SpaceDocument) -->
     <os-core:space-type type-name="Person">
       <os-core:id property="id"/>
       <os-core:routing property="age"/>
