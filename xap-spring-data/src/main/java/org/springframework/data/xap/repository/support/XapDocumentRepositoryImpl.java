@@ -14,10 +14,20 @@ import java.io.Serializable;
 public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Serializable> extends SimpleXapRepository<T, ID> implements XapDocumentRepository<T, ID> {
     private String typeName;
 
-    public XapDocumentRepositoryImpl(GigaSpace space, EntityInformation<T, ID> entityInformation, SpaceTypeDescriptor typeDescriptor) {
+    public XapDocumentRepositoryImpl(GigaSpace space, EntityInformation<T, ID> entityInformation, String typeName) {
         super(space, entityInformation);
-        this.typeName = typeDescriptor.getTypeName();
-        space.getTypeManager().registerTypeDescriptor(typeDescriptor);
+        this.typeName = typeName;
+        SpaceTypeDescriptor typeDescriptor = space.getTypeManager().getTypeDescriptor(typeName);
+        if (typeDescriptor == null) {
+            throw new IllegalStateException("Type descriptor is not registered for SpaceDocuments with type: " + typeName);
+        }
+        Class<T> domainClass = entityInformation.getJavaType();
+        if (SpaceDocument.class.isAssignableFrom(domainClass) && domainClass != SpaceDocument.class) {
+            Class<? extends SpaceDocument> wrapperClass = typeDescriptor.getDocumentWrapperClass();
+            if (wrapperClass != domainClass) {
+                throw new IllegalStateException("Domain class must be the same as wrapper class in SpaceDocument type descriptor; expected: " + domainClass + ", found: " + wrapperClass + ", type name: " + typeName);
+            }
+        }
     }
 
     @Override

@@ -1,8 +1,6 @@
 package org.springframework.data.xap.repository.support;
 
 import com.gigaspaces.document.SpaceDocument;
-import com.gigaspaces.metadata.SpaceTypeDescriptor;
-import com.gigaspaces.metadata.SpaceTypeDescriptorBuilder;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -15,12 +13,13 @@ import org.springframework.data.repository.query.RepositoryQuery;
 import org.springframework.data.xap.mapping.XapMappingContext;
 import org.springframework.data.xap.mapping.XapPersistentEntity;
 import org.springframework.data.xap.mapping.XapPersistentProperty;
-import org.springframework.data.xap.repository.SpaceDocumentRepository;
+import org.springframework.data.xap.repository.SpaceDocumentName;
 import org.springframework.data.xap.repository.XapDocumentRepository;
 import org.springframework.data.xap.repository.query.DefaultXapEntityInformation;
 import org.springframework.data.xap.repository.query.PartTreeXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.StringBasedXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.XapQueryMethod;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -53,6 +52,7 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
         return new DefaultXapEntityInformation<>(entity);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Object getTargetRepository(RepositoryMetadata metadata) {
         Class<?> repositoryInterface = metadata.getRepositoryInterface();
@@ -60,29 +60,23 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
         if (isQueryDslRepository(repositoryInterface)) {
             return new QueryDslXapRepository<>(space, entityInformation);
         } else if (isSpaceDocumentRepository(repositoryInterface)) {
-            SpaceTypeDescriptor typeDescriptor = createSpaceTypeDescriptor(metadata, entityInformation);
-            return new XapDocumentRepositoryImpl<>(space, (EntityInformation<? extends SpaceDocument, Serializable>) entityInformation, typeDescriptor);
+            String typeName = getSpaceDocumentType(metadata);
+            return new XapDocumentRepositoryImpl<>(space, (EntityInformation<? extends SpaceDocument, ? extends Serializable>) entityInformation, typeName);
         } else {
             return new SimpleXapRepository<>(space, entityInformation);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private SpaceTypeDescriptor createSpaceTypeDescriptor(RepositoryMetadata metadata, EntityInformation<?, Serializable> entityInformation) {
-        SpaceDocumentRepository annotation = metadata.getRepositoryInterface().getAnnotation(SpaceDocumentRepository.class);
+    private String getSpaceDocumentType(RepositoryMetadata metadata) {
+        SpaceDocumentName annotation = metadata.getRepositoryInterface().getAnnotation(SpaceDocumentName.class);
         if (annotation == null) {
             //TODO check some configuration exceptions
-            throw new IllegalArgumentException("XapDocumentRepository has to be annotated with SpaceDocumentRepository annotation");
+            throw new IllegalArgumentException("XapDocumentRepository has to be annotated with " + SpaceDocumentName.class.getSimpleName() + " annotation");
         }
-        Class<?> javaType = entityInformation.getJavaType();
-        SpaceTypeDescriptorBuilder builder = new SpaceTypeDescriptorBuilder(annotation.typeName());
-        if (SpaceDocument.class.isAssignableFrom(javaType) && javaType != SpaceDocument.class) {
-            builder.documentWrapperClass((Class<? extends SpaceDocument>) javaType);
+        if (StringUtils.isEmpty(annotation.value())) {
+            throw new IllegalArgumentException("Type name defined in " + SpaceDocumentName.class.getSimpleName() + " annotation must not be empty");
         }
-        return builder
-                .idProperty(annotation.id())
-                .routingProperty(annotation.routing())
-                .create();
+        return annotation.value();
     }
 
     @Override

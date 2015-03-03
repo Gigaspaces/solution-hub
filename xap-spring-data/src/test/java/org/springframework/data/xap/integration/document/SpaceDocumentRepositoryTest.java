@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.model.PersonDocument;
-import org.springframework.data.xap.repository.PersonDocumentRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static junit.framework.Assert.*;
+import static junit.framework.TestCase.assertTrue;
 import static org.springframework.data.xap.repository.query.Projection.projections;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -100,6 +100,29 @@ public class SpaceDocumentRepositoryTest {
         SpaceDocument result3 = personRepository.findOne(paul.getId());
         assertEquals(chris, result2);
         assertEquals(paul, result3);
+    }
+
+    @Test
+    public void testWriteWithLease() throws InterruptedException {
+        personRepository.save(nick, 400);
+        assertEquals(nick, personRepository.findOne(nick.getId()));
+        Thread.sleep(600);
+        assertNull(personRepository.findOne(nick.getId()));
+
+        personRepository.save(nick);
+        Thread.sleep(700);
+        assertNotNull(personRepository.findOne(nick.getId()));
+    }
+
+    @Test
+    public void testWriteMultipleWithLease() throws InterruptedException {
+        personRepository.deleteAll();
+        personRepository.save(Arrays.asList(nick, paul), 400);
+        assertEquals(nick, personRepository.findOne(nick.getId()));
+        assertEquals(paul, personRepository.findOne(paul.getId()));
+        Thread.sleep(600);
+        assertNull(personRepository.findOne(nick.getId()));
+        assertNull(personRepository.findOne(paul.getId()));
     }
 
     @Test
@@ -344,6 +367,13 @@ public class SpaceDocumentRepositoryTest {
         assertTrue(personList.contains(paul2));
     }
 
+    @Test
+    public void testFindBySpouseAgeNamedQuery() {
+        List<PersonDocument> person = personRepository.findBySpouseAge(25);
+        assertEquals(1, person.size());
+        assertTrue(person.contains(chris));
+    }
+
     private void prepareDataForSortingTest() {
         personRepository.save(nick);
         personRepository.delete("4");
@@ -371,29 +401,6 @@ public class SpaceDocumentRepositoryTest {
             personList.add(person);
         }
         return personList;
-    }
-
-    @Test
-    public void testWriteWithLease() throws InterruptedException {
-        personRepository.save(nick, 400);
-        assertEquals(nick, personRepository.findOne(nick.getId()));
-        Thread.sleep(600);
-        assertNull(personRepository.findOne(nick.getId()));
-
-        personRepository.save(nick);
-        Thread.sleep(700);
-        assertNotNull(personRepository.findOne(nick.getId()));
-    }
-
-    @Test
-    public void testWriteMultipleWithLease() throws InterruptedException {
-        personRepository.deleteAll();
-        personRepository.save(Arrays.asList(nick, paul), 400);
-        assertEquals(nick, personRepository.findOne(nick.getId()));
-        assertEquals(paul, personRepository.findOne(paul.getId()));
-        Thread.sleep(600);
-        assertNull(personRepository.findOne(nick.getId()));
-        assertNull(personRepository.findOne(paul.getId()));
     }
 
     private void assertSortedByName(List<PersonDocument> persons) {

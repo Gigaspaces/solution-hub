@@ -1,15 +1,14 @@
-package org.springframework.data.xap.repository;
+package org.springframework.data.xap.integration.document;
 
 import org.springframework.data.xap.model.PersonDocument;
+import org.springframework.data.xap.repository.Query;
+import org.springframework.data.xap.repository.SpaceDocumentName;
+import org.springframework.data.xap.repository.XapDocumentRepository;
 import org.springframework.data.xap.repository.query.Projection;
 
 import java.util.List;
 
-@SpaceDocumentRepository(
-        typeName = PersonDocument.TYPE_NAME,
-        id = PersonDocument.PROPERTY_ID,
-        routing = PersonDocument.PROPERTY_AGE
-)
+@SpaceDocumentName(PersonDocument.TYPE_NAME)
 public interface PersonDocumentRepository extends XapDocumentRepository<PersonDocument, String> {
 
     @Query("name = ?")
@@ -47,5 +46,7 @@ public interface PersonDocumentRepository extends XapDocumentRepository<PersonDo
 
     @Query("name rlike ?")
     List<PersonDocument> findByNameRegex(String regex);
+
+    List<PersonDocument> findBySpouseAge(Integer age);
 
 }

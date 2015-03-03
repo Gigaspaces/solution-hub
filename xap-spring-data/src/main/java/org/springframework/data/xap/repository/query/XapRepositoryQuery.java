@@ -4,7 +4,7 @@ import com.gigaspaces.document.SpaceDocument;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.QueryMethod;
 import org.springframework.data.repository.query.RepositoryQuery;
-import org.springframework.data.xap.repository.SpaceDocumentRepository;
+import org.springframework.data.xap.repository.SpaceDocumentName;
 
 /**
  * @author Anna_Babich.
@@ -23,8 +23,8 @@ public abstract class XapRepositoryQuery implements RepositoryQuery {
 
     protected String getTypeName(XapQueryMethod method) {
         if (isSpaceDocumentQuery(method)) {
-            SpaceDocumentRepository annotation = method.getMetadata().getRepositoryInterface().getAnnotation(SpaceDocumentRepository.class);
-            return annotation.typeName();
+            SpaceDocumentName annotation = method.getMetadata().getRepositoryInterface().getAnnotation(SpaceDocumentName.class);
+            return annotation.value();
         } else {
             return method.getEntityInformation().getJavaType().getCanonicalName();
         }
