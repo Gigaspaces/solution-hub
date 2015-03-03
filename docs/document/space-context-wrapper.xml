@@ -1,0 +1,13 @@
+<os-core:embedded-space id="space" name="space">
+
+  <os-core:space-type type-name="Person">
+    <os-core:id property="id"/>
+    <os-core:routing property="age"/>
+    <os-core:basic-index path="name"/>
+    <os-core:extended-index path="birthday"/>
+    <os-core:document-class>com.yourcompany.foo.bar.PersonDocument</os-core:document-class>
+  </os-core:space-type>
+
+  <!-- other document types declarations -->
+
+</os-core:embedded-space>

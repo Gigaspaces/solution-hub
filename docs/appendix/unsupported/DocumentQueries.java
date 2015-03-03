@@ -1,4 +1,4 @@
-@SpaceDocumentRepository(typeName = "Person", id = "id", routing = "age")
+@SpaceDocumentName("Person")
 public interface DocumentQueries
         extends XapDocumentRepository<SpaceDocument, String> {
 

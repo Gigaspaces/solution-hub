@@ -1,3 +1,3 @@
-@SpaceDocumentRepository(typeName = "Person", id = "id", routing = "age")
+@SpaceDocumentName("Person")
 public interface PersonDocumentRepository extends XapDocumentRepository<SpaceDocument, String> {
 }

@@ -1,6 +1,3 @@
-@SpaceDocumentRepository(
-        typeName = PersonDocument.TYPE_NAME,
-        id = PersonDocument.PROPERTY_ID,
-        routing = PersonDocument.PROPERTY_AGE)
+@SpaceDocumentName(PersonDocument.TYPE_NAME)
 public interface PersonDocumentRepository extends XapDocumentRepository<PersonDocument, String> {
 }
