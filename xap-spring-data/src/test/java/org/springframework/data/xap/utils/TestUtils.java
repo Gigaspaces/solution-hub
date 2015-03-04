@@ -14,19 +14,8 @@ import java.util.Properties;
  */
 public class TestUtils {
 
-    public static GigaSpace initSpace() {
-        UrlSpaceConfigurer urlSpaceConfigurer = new UrlSpaceConfigurer("/./space").lookupGroups(getGroupName());
+    public static GigaSpace initSpace(String spaceName) {
+        UrlSpaceConfigurer urlSpaceConfigurer = new UrlSpaceConfigurer("/./" + spaceName);
         return new GigaSpaceConfigurer(urlSpaceConfigurer).gigaSpace();
     }
-
-    public static String getGroupName() {
-        Properties properties = new Properties();
-        try {
-            properties.load(TestUtils.class.getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to find config.properties");
-        }
-        return properties.getProperty("space.groups");
-    }
-
 }

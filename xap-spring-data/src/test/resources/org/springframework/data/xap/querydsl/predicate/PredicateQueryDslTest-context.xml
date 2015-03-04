@@ -9,6 +9,6 @@
 
     <import resource="classpath:space-context.xml"/>
 
-    <xap-data:repositories base-package="org.springframework.data.xap.querydsl.predicate"/>
+    <xap-data:repositories base-package="org.springframework.data.xap.querydsl.predicate" gigaspace="gigaSpace"/>
 
 </beans>

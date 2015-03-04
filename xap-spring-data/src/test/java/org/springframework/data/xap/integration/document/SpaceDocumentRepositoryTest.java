@@ -40,7 +40,7 @@ public class SpaceDocumentRepositoryTest {
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     @Autowired
     protected PersonDocumentRepository personRepository;
-    @Autowired
+
     protected GigaSpace client;
 
     private List<PersonDocument> list;
@@ -74,6 +74,7 @@ public class SpaceDocumentRepositoryTest {
 
     @Before
     public void init() {
+        client = personRepository.space();
         list = new ArrayList<>();
         list.add(chris);
         list.add(paul);
