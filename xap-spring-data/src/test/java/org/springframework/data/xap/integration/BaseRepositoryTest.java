@@ -38,7 +38,6 @@ public abstract class BaseRepositoryTest {
     @Autowired
     protected PersonRepository personRepository;
 
-    @Autowired
     protected GigaSpace client;
 
     private List<Person> list;
@@ -55,6 +54,7 @@ public abstract class BaseRepositoryTest {
 
     @Before
     public void init() {
+        client = personRepository.space();
         list = new ArrayList<>();
         list.add(chris);
         list.add(paul);

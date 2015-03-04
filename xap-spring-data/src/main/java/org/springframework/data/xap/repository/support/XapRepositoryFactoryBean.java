@@ -20,16 +20,26 @@ public class XapRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends
         RepositoryFactoryBeanSupport<T, S, ID> implements ApplicationContextAware {
 
     private MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context;
-    private GigaSpace space;
+    private GigaSpace gigaSpace;
+
+    public GigaSpace getGigaSpace() {
+        return gigaSpace;
+    }
+
+    public void setGigaSpace(GigaSpace gigaSpace) {
+        this.gigaSpace = gigaSpace;
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.space = applicationContext.getBean(GigaSpace.class);
+            if (gigaSpace == null) {
+                this.gigaSpace = applicationContext.getBean(GigaSpace.class);
+            }
     }
 
     @Override
     protected RepositoryFactorySupport createRepositoryFactory() {
-        return new XapRepositoryFactory(space, context);
+        return new XapRepositoryFactory(gigaSpace, context);
     }
 
     public void setXapMappingContext(MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
