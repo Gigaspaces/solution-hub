@@ -16,6 +16,10 @@ import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.*;
 
 /**
+ * Your IDE will for sure recompile classes when trying to run this test.
+ * Run mvn openjpa:test-enhance to make it work.
+ * Person.class in /target must have weird pc... fields
+ *
  * @author Leonid_Poliakov
  */
 @RunWith(SpringJUnit4ClassRunner.class)
