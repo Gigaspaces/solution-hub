@@ -67,15 +67,27 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public T take(ID id) {
+    public T takeOne(ID id) {
         Class<T> aClass = entityInformation.getJavaType();
         return space.takeById(aClass, id);
     }
 
     @Override
-    public Iterable<T> take(Iterable<ID> ids) {
+    public Iterable<T> takeAll(Iterable<ID> ids) {
         Class<T> aClass = entityInformation.getJavaType();
         return space.takeByIds(aClass, toArray(ids));
+    }
+    
+    @Override
+    public Iterable<T> takeAll() {
+        Class<T> aClass = entityInformation.getJavaType();
+        T t;
+        try {
+            t = aClass.newInstance();
+            return Arrays.asList(space.takeMultiple(t));
+        } catch (InstantiationException|IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

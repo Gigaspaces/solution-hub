@@ -29,12 +29,24 @@
         <xsd:complexType>
             <xsd:complexContent>
                 <xsd:extension base="repository:repositories">
+                    <xsd:attribute name="gigaspace" type="spaceRefType" use="optional"/>
                     <xsd:attributeGroup ref="repository:repository-attributes" />
                     <!-- TODO: ? -->
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
     </xsd:element>
+
+    <xsd:simpleType name="spaceRefType">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <tool:annotation kind="ref">
+                    <tool:expected-type type="org.openspaces.core.GigaSpace"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:union memberTypes="xsd:string"/>
+    </xsd:simpleType>
 
 
 </xsd:schema>

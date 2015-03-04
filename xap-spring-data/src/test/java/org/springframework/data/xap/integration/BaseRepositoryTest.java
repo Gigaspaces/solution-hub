@@ -40,7 +40,6 @@ public abstract class BaseRepositoryTest {
     @Autowired
     protected PersonRepository personRepository;
 
-    @Autowired
     protected GigaSpace client;
 
     private List<Person> list;
@@ -57,6 +56,7 @@ public abstract class BaseRepositoryTest {
 
     @Before
     public void init() {
+        client = personRepository.space();
         list = new ArrayList<>();
         list.add(chris);
         list.add(paul);
@@ -646,16 +646,28 @@ public abstract class BaseRepositoryTest {
     }
 
     @Test
-    public void takeTest() {
-        Person result = personRepository.take(paul.getId());
+    public void takeTest(){
+        Person result = personRepository.takeOne(paul.getId());
         assertEquals(paul, result);
         Person result2 = personRepository.findOne(paul.getId());
         assertNull(result2);
     }
 
     @Test
-    public void takeTestMultiple() {
-        List<Person> result = Lists.newArrayList(personRepository.take(Arrays.asList(paul.getId(), chris.getId())));
+    public void takeTestMultiple(){
+        List<Person> result = Lists.newArrayList(personRepository.takeAll(Arrays.asList(paul.getId(), chris.getId())));
+        assertTrue(result.contains(paul));
+        assertTrue(result.contains(chris));
+        Person person1 = personRepository.findOne(paul.getId());
+        Person person2 = personRepository.findOne(chris.getId());
+        assertNull(person1);
+        assertNull(person2);
+    }
+
+    @Test
+    public void takeAllTest(){
+        List<Person> result = Lists.newArrayList(personRepository.takeAll());
+        assertEquals(5, result.size());
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
         Person person1 = personRepository.findOne(paul.getId());

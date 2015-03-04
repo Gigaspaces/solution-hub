@@ -12,18 +12,18 @@
          http://www.springframework.org/schema/context/spring-context.xsd
          ">
 
-  <!-- Allows usage of current environment properties -->
-  <context:property-placeholder location="config.properties"/>
+    <!-- Allows usage of current environment properties -->
+    <context:property-placeholder location="config.properties"/>
 
-  <os-core:embedded-space id="space" name="space" lookup-groups="${space.groups}">
-    <os-core:space-type type-name="Person">
-      <os-core:id property="id"/>
-      <os-core:routing property="age"/>
-      <os-core:basic-index path="name"/>
-      <os-core:document-class>org.springframework.data.xap.model.PersonDocument</os-core:document-class>
-    </os-core:space-type>
-  </os-core:embedded-space>
+    <os-core:embedded-space id="space" name="space" lookup-groups="${space.groups}">
+        <os-core:space-type type-name="Person">
+            <os-core:id property="id"/>
+            <os-core:routing property="age"/>
+            <os-core:basic-index path="name"/>
+            <os-core:document-class>org.springframework.data.xap.model.PersonDocument</os-core:document-class>
+        </os-core:space-type>
+    </os-core:embedded-space>
 
-  <os-core:giga-space id="gigaSpace" space="space"/>
+    <os-core:giga-space id="gigaSpace" space="space"/>
 
 </beans>
