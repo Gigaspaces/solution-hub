@@ -12,6 +12,8 @@ import org.springframework.data.xap.mapping.XapPersistentEntity;
 import org.springframework.data.xap.mapping.XapPersistentProperty;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -33,7 +35,11 @@ public class XapRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
             if (gigaSpace == null) {
-                this.gigaSpace = applicationContext.getBean(GigaSpace.class);
+                Map<String, GigaSpace> beans = applicationContext.getBeansOfType(GigaSpace.class);
+                if(beans.size() != 1){
+                    throw new RuntimeException("GigaSpace bean should be only one in context or defined explicitly for repository (using attribute gigaspace)");
+                }
+                gigaSpace = applicationContext.getBean(GigaSpace.class);
             }
     }
 
