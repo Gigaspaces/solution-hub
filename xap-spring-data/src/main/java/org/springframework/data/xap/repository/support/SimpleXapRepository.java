@@ -40,8 +40,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public <S extends T> S save(S entity) {
-        save(entity, Lease.FOREVER);
-        return entity;
+        return save(entity, Lease.FOREVER);
     }
 
     @Override
@@ -52,8 +51,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public <S extends T> Iterable<S> save(Iterable<S> entities) {
-        save(entities, Lease.FOREVER);
-        return entities;
+        return save(entities, Lease.FOREVER);
     }
 
     @Override
