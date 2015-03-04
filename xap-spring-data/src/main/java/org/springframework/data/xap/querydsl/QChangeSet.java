@@ -8,18 +8,23 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.springframework.data.xap.querydsl.Utils.convertPathToXapFieldString;
+import static org.springframework.data.xap.querydsl.QueryDslUtils.convertPathToXapFieldString;
 
 /**
- * Wrapper around native ChangeSet that supports type safe path.
+ * <p>Wrapper around native ChangeSet that supports type safe path.</p>
+ * <p>Use this class to perform change operations in Querydsl style.</p>
+ * <p>Example:</p>
+ * <blockquote><pre>
+ * repository.change(...query..., changeSet().increment(person.age, 5)) will change age field of found Persons
+ * </pre></blockquote>
  *
  * @author Oleksiy_Dyagilev
+ * @see org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor
  */
 public class QChangeSet {
-
     private ChangeSet delegate = new ChangeSet();
 
-    public static QChangeSet changeSet(){
+    public static QChangeSet changeSet() {
         return new QChangeSet();
     }
 
@@ -134,9 +139,8 @@ public class QChangeSet {
         return this;
     }
 
-    public ChangeSet getNativeChangeSet(){
+    public ChangeSet getNativeChangeSet() {
         return delegate;
     }
-
 
 }

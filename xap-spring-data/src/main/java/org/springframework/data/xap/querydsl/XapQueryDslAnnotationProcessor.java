@@ -12,7 +12,12 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 
 /**
+ * <p>Looks for classes annotated with {@code SpaceClass} and generates {@code Q...} classes for you to use Querydsl syntax.</p>
+ * <p>Use this in conjunction with Maven APT plugin to enable Querydsl for XAP Repositories.</p>
+ *
  * @author Leonid_Poliakov
+ * @see com.gigaspaces.annotation.pojo.SpaceClass
+ * @see org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor
  */
 @SupportedAnnotationTypes({"com.gigaspaces.annotation.pojo.SpaceClass"})
 public class XapQueryDslAnnotationProcessor extends AbstractQuerydslProcessor {

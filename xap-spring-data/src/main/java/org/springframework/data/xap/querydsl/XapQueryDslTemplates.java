@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Define how different operations will be written to final SQL query.
+ * Defines how different operations will be written to final SQL query.
  *
  * @author Leonid_Poliakov
  */

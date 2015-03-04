@@ -7,6 +7,16 @@ import org.springframework.data.xap.repository.support.XapRepositoryFactoryBean;
 import java.lang.annotation.*;
 
 /**
+ * <p>Annotation to activate XAP repositories within Java context configuration.</p>
+ * <p>Example:</p>
+ * <blockquote><pre>
+ * &#64;Configuration
+ * &#64;EnableXapRepositories("com.yourcompany.foo.bar")
+ * public class ContextConfiguration {
+ *   // bean definitions
+ * }
+ * </pre></blockquote>
+ *
  * @author Oleksiy_Dyagilev
  */
 @Target(ElementType.TYPE)
@@ -49,23 +59,17 @@ public @interface EnableXapRepositories {
     /**
      * Returns the {@link org.springframework.beans.factory.FactoryBean} class to be used for each repository instance. Defaults to
      * {@link XapRepositoryFactoryBean}.
-     *
-     * @return
      */
     Class<?> repositoryFactoryBeanClass() default XapRepositoryFactoryBean.class;
 
     /**
-     * Configures the location of where to find the Spring Data named queries properties file.
-     *
-     * @return
+     * Configures the location of properties file with the Spring Data named queries.
      */
     String namedQueriesLocation() default "";
 
 
     /**
-     * Configures gigaSpaces bean.
-     *
-     * @return
+     * Wires GigaSpaces bean by it's id. Use this when multiple GigaSpace objects are declared in the context.
      */
     String gigaspace() default "";
 
@@ -73,10 +77,7 @@ public @interface EnableXapRepositories {
      * Returns the postfix to be used when looking up custom repository implementations. Defaults to {@literal Impl}. So
      * for a repository named {@code PersonRepository} the corresponding implementation class will be looked up scanning
      * for {@code PersonRepositoryImpl}.
-     *
-     * @return
      */
     String repositoryImplementationPostfix() default "Impl";
-
 
 }

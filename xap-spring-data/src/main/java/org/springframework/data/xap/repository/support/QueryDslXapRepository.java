@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.data.xap.querydsl.Utils.convertPathToXapFieldString;
+import static org.springframework.data.xap.querydsl.QueryDslUtils.convertPathToXapFieldString;
 
 /**
  * @author Leonid_Poliakov

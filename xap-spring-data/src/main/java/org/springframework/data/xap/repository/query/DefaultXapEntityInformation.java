@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 public class DefaultXapEntityInformation<T, ID extends Serializable> extends PersistentEntityInformation<T, ID> implements XapEntityInformation<T, ID> {
 
-
     /**
      * Creates a new <code>PersistableEntityInformation</code> for the given {@link org.springframework.data.mapping.PersistentEntity}.
      *
@@ -19,4 +18,5 @@ public class DefaultXapEntityInformation<T, ID extends Serializable> extends Per
     public DefaultXapEntityInformation(PersistentEntity<T, ?> entity) {
         super(entity);
     }
+
 }
