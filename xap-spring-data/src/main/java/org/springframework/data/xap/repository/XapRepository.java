@@ -1,5 +1,6 @@
 package org.springframework.data.xap.repository;
 
+import com.j_spaces.core.LeaseContext;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,7 +81,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      * @param <S>
      * @return the saved entity
      */
-    <S extends T> S save(S entity, long lease, TimeUnit unit);
+    <S extends T> LeaseContext<S> save(S entity, long lease, TimeUnit unit);
 
     /**
      * Saves all given entities.
@@ -91,7 +92,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      * @return the saved entities
      * @throws IllegalArgumentException in case the given entity is {@literal null}.
      */
-    <S extends T> Iterable<S> save(Iterable<S> entities, long lease, TimeUnit unit);
+    <S extends T> Iterable<LeaseContext<S>> save(Iterable<S> entities, long lease, TimeUnit unit);
 
     /**
      * Gets entity by id and deletes it.

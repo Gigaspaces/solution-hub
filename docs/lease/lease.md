@@ -1,6 +1,6 @@
 #### <a name="lease"/>4.5 XAP Lease Time
 
-Spring XAP Data comes with a support of defining lease time for new objects in the repository. The basic idea behind it is limiting the time an object is reachable in space. To use this feature, you can specify lease time (in millis) when saving with `save(...)` methods.
+Spring XAP Data comes with a support of defining lease time for new objects in the repository. The basic idea behind it is limiting the time an object is reachable in space. To use this feature, you can specify lease time (in any time units) when saving with `save(...)` methods. These overloaded methods will return a special `LeaseContext` object that allows you to track, renew and cancel the lease.
 
 The essential idea behind a lease is fairly simple.
 * When creating a resource, the requestor creates the resource with a limited life span.

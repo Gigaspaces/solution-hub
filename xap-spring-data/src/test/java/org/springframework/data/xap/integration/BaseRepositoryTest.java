@@ -2,6 +2,7 @@ package org.springframework.data.xap.integration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.j_spaces.core.LeaseContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -623,23 +624,23 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void writeWithLeaseTest() throws InterruptedException {
-        personRepository.save(nick, 400, TimeUnit.MILLISECONDS);
+        personRepository.save(nick, 100, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
-        Thread.sleep(600);
+        Thread.sleep(200);
         assertNull(personRepository.findOne(nick.getId()));
 
         personRepository.save(nick);
-        Thread.sleep(700);
+        Thread.sleep(200);
         assertNotNull(personRepository.findOne(nick.getId()));
     }
 
     @Test
     public void writeMultipleWithLeaseTest() throws InterruptedException {
         personRepository.deleteAll();
-        personRepository.save(Arrays.asList(nick, paul), 400, TimeUnit.MILLISECONDS);
+        personRepository.save(Arrays.asList(nick, paul), 100, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
         assertEquals(paul, personRepository.findOne(paul.getId()));
-        Thread.sleep(600);
+        Thread.sleep(200);
         assertNull(personRepository.findOne(nick.getId()));
         assertNull(personRepository.findOne(paul.getId()));
     }
@@ -665,8 +666,10 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void testLongLease() {
-        personRepository.save(nick, 10, TimeUnit.DAYS);
+        LeaseContext<Person> lease = personRepository.save(nick, 10, TimeUnit.DAYS);
         assertEquals(Arrays.asList(nick), personRepository.findByNameEquals(nick.getName()));
+        long expectedExpiration = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(10);
+        assertTrue(expectedExpiration - 1000 < lease.getExpiration() && expectedExpiration + 1000 > lease.getExpiration());
     }
 
     private void assertAllNullExceptName(Collection<Person> list) {

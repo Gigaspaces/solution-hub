@@ -1,5 +1,6 @@
 package org.springframework.data.xap.examples.basic.crud;
 
+import com.j_spaces.core.LeaseContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,8 @@ public class CrudExample {
         log.info("Current number of room is: " + repository.count());
 
         log.info("Save with lease ..");
-        repository.save(new MeetingRoom(new Address("London", "Main Street 10"), "yellow"), 1, TimeUnit.SECONDS);
+        LeaseContext<MeetingRoom> lease = repository.save(new MeetingRoom(new Address("London", "Main Street 10"), "yellow"), 1, TimeUnit.SECONDS);
+        log.info("Lease will expire in " + (lease.getExpiration() - System.currentTimeMillis()) + " ms");
 
         DataSet.cleanup(repository.space());
     }

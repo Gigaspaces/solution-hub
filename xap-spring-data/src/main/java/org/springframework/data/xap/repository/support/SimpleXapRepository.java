@@ -3,6 +3,7 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.query.IdQuery;
 import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
+import com.j_spaces.core.LeaseContext;
 import com.j_spaces.core.client.SQLQuery;
 import net.jini.core.lease.Lease;
 import org.openspaces.core.GigaSpace;
@@ -47,10 +48,9 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public <S extends T> S save(S entity, long lease, TimeUnit unit) {
+    public <S extends T> LeaseContext<S> save(S entity, long lease, TimeUnit unit) {
         Assert.notNull(unit, "unit must not be null");
-        space.write(entity, unit.toMillis(lease));
-        return entity;
+        return space.write(entity, unit.toMillis(lease));
     }
 
     @Override
@@ -60,10 +60,10 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public <S extends T> Iterable<S> save(Iterable<S> entities, long lease, TimeUnit unit) {
+    public <S extends T> Iterable<LeaseContext<S>> save(Iterable<S> entities, long lease, TimeUnit unit) {
         Assert.notNull(unit, "unit must not be null");
-        space.writeMultiple(toArray(entities), unit.toMillis(lease));
-        return entities;
+        LeaseContext<S>[] leaseContexts = space.writeMultiple(toArray(entities), unit.toMillis(lease));
+        return Arrays.asList(leaseContexts);
     }
 
     @Override
