@@ -23,6 +23,7 @@
         <module>advanced/document</module>
         <module>basic/custom</module>
         <module>advanced/transaction</module>
+        <module>advanced/several-spaces</module>
     </modules>
     <name>Spring Data XAP Examples</name>
     <description>Spring Data XAP Examples</description>

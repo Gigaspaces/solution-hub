@@ -46,7 +46,7 @@ public class CrudExample {
         log.info("Delete one by id.. ");
         repository.delete("blue");
         log.info("Take room.. ");
-        log.info("Taken room: " + repository.take("orange"));
+        log.info("Taken room: " + repository.takeOne("orange"));
 
         log.info("Current number of room is: " + repository.count());
 

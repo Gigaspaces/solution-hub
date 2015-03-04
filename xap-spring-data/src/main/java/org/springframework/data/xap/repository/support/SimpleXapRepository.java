@@ -43,7 +43,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public <S extends T> S save(S entity) {
-        save(entity, Lease.FOREVER, TimeUnit.MILLISECONDS);
+        space.write(entity);
         return entity;
     }
 
@@ -55,7 +55,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public <S extends T> Iterable<S> save(Iterable<S> entities) {
-        save(entities, Lease.FOREVER, TimeUnit.MILLISECONDS);
+        space.write(entities);
         return entities;
     }
 
