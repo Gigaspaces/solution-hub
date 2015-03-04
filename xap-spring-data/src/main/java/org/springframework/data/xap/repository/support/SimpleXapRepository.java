@@ -69,7 +69,7 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public Iterable<T> take(Iterable<ID> ids) {
+    public Iterable<T> takeAll(Iterable<ID> ids) {
         Class<T> aClass = entityInformation.getJavaType();
         return space.takeByIds(aClass, toArray(ids));
     }

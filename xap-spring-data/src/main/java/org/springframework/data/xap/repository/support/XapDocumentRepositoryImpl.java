@@ -53,7 +53,7 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
     }
 
     @Override
-    public Iterable<T> take(Iterable<ID> ids) {
+    public Iterable<T> takeAll(Iterable<ID> ids) {
         return space.takeByIds(idsQuery(toArray(ids)));
     }
 

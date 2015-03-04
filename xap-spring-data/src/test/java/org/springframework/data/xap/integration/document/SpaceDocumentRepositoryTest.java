@@ -256,7 +256,7 @@ public class SpaceDocumentRepositoryTest {
 
     @Test
     public void testTakeMultipleById() {
-        List<PersonDocument> result = Lists.newArrayList(personRepository.take(Arrays.asList(paul.getId(), chris.getId())));
+        List<PersonDocument> result = Lists.newArrayList(personRepository.takeAll(Arrays.asList(paul.getId(), chris.getId())));
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
         SpaceDocument person1 = personRepository.findOne(paul.getId());
