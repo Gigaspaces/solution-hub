@@ -9,8 +9,8 @@ import org.springframework.data.xap.examples.model.MeetingRoom;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Anna_Babich.
@@ -22,7 +22,7 @@ public class CrudExample {
     @Autowired
     MeetingRoomRepository repository;
 
-    public void run(){
+    public void run() {
         DataSet.setup(repository.space());
 
         log.info("Find one (by id = green).. ");
@@ -31,7 +31,7 @@ public class CrudExample {
 
         log.info("Find all.. ");
         List<MeetingRoom> rooms = new ArrayList<>();
-        for (MeetingRoom meetingRoom: repository.findAll()){
+        for (MeetingRoom meetingRoom : repository.findAll()) {
             rooms.add(meetingRoom);
         }
         log.info(rooms.toString());
@@ -48,9 +48,9 @@ public class CrudExample {
         log.info("Taken room: " + repository.take("orange"));
 
         log.info("Current number of room is: " + repository.count());
-        
+
         log.info("Save with lease ..");
-        repository.save(new MeetingRoom(new Address("London", "Main Street 10"), "yellow"), 300);
+        repository.save(new MeetingRoom(new Address("London", "Main Street 10"), "yellow"), 1, TimeUnit.SECONDS);
 
         DataSet.cleanup(repository.space());
     }

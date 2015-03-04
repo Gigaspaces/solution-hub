@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.Assert.*;
 import static junit.framework.TestCase.assertTrue;
@@ -104,7 +105,7 @@ public class SpaceDocumentRepositoryTest {
 
     @Test
     public void testWriteWithLease() throws InterruptedException {
-        personRepository.save(nick, 400);
+        personRepository.save(nick, 400, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
         Thread.sleep(600);
         assertNull(personRepository.findOne(nick.getId()));
@@ -117,7 +118,7 @@ public class SpaceDocumentRepositoryTest {
     @Test
     public void testWriteMultipleWithLease() throws InterruptedException {
         personRepository.deleteAll();
-        personRepository.save(Arrays.asList(nick, paul), 400);
+        personRepository.save(Arrays.asList(nick, paul), 400, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
         assertEquals(paul, personRepository.findOne(paul.getId()));
         Thread.sleep(600);

@@ -18,6 +18,7 @@ import org.springframework.data.xap.repository.PersonRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.*;
@@ -622,7 +623,7 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void writeWithLeaseTest() throws InterruptedException {
-        personRepository.save(nick, 400);
+        personRepository.save(nick, 400, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
         Thread.sleep(600);
         assertNull(personRepository.findOne(nick.getId()));
@@ -635,24 +636,24 @@ public abstract class BaseRepositoryTest {
     @Test
     public void writeMultipleWithLeaseTest() throws InterruptedException {
         personRepository.deleteAll();
-        personRepository.save(Arrays.asList(nick, paul), 400);
+        personRepository.save(Arrays.asList(nick, paul), 400, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
         assertEquals(paul, personRepository.findOne(paul.getId()));
         Thread.sleep(600);
         assertNull(personRepository.findOne(nick.getId()));
         assertNull(personRepository.findOne(paul.getId()));
     }
-    
+
     @Test
-    public  void takeTest(){
+    public void takeTest() {
         Person result = personRepository.take(paul.getId());
         assertEquals(paul, result);
         Person result2 = personRepository.findOne(paul.getId());
-        assertNull(result2);     
+        assertNull(result2);
     }
 
     @Test
-    public void takeTestMultiple(){
+    public void takeTestMultiple() {
         List<Person> result = Lists.newArrayList(personRepository.take(Arrays.asList(paul.getId(), chris.getId())));
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
@@ -660,6 +661,12 @@ public abstract class BaseRepositoryTest {
         Person person2 = personRepository.findOne(chris.getId());
         assertNull(person1);
         assertNull(person2);
+    }
+
+    @Test
+    public void testLongLease() {
+        personRepository.save(nick, 10, TimeUnit.DAYS);
+        assertEquals(Arrays.asList(nick), personRepository.findByNameEquals(nick.getName()));
     }
 
     private void assertAllNullExceptName(Collection<Person> list) {
@@ -670,6 +677,5 @@ public abstract class BaseRepositoryTest {
             assertNull(person.getAge());
         }
     }
-    
 
 }

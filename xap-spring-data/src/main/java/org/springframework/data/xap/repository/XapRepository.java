@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.xap.repository.query.Projection;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Extension of {@link PagingAndSortingRepository} to provide XAP specific features
@@ -74,20 +75,23 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      * Saves entities with a limited life span.
      *
      * @param entity
-     * @param lease
+     * @param lease  the lease value
+     * @param unit   the unit of lease time
      * @param <S>
      * @return the saved entity
      */
-    <S extends T> S save(S entity, long lease);
+    <S extends T> S save(S entity, long lease, TimeUnit unit);
 
     /**
      * Saves all given entities.
      *
      * @param entities
+     * @param lease    the lease value
+     * @param unit     the unit of lease time
      * @return the saved entities
      * @throws IllegalArgumentException in case the given entity is {@literal null}.
      */
-    <S extends T> Iterable<S> save(Iterable<S> entities, long lease);
+    <S extends T> Iterable<S> save(Iterable<S> entities, long lease, TimeUnit unit);
 
     /**
      * Gets entity by id and deletes it.

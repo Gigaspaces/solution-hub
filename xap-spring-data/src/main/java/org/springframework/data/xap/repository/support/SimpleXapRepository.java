@@ -14,12 +14,14 @@ import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.repository.XapRepository;
 import org.springframework.data.xap.repository.query.Projection;
 import org.springframework.data.xap.repository.query.QueryBuilder;
+import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -40,25 +42,27 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
 
     @Override
     public <S extends T> S save(S entity) {
-        save(entity, Lease.FOREVER);
+        save(entity, Lease.FOREVER, TimeUnit.MILLISECONDS);
         return entity;
     }
 
     @Override
-    public <S extends T> S save(S entity, long lease) {
-        space.write(entity, lease);
+    public <S extends T> S save(S entity, long lease, TimeUnit unit) {
+        Assert.notNull(unit, "unit must not be null");
+        space.write(entity, unit.toMillis(lease));
         return entity;
     }
 
     @Override
     public <S extends T> Iterable<S> save(Iterable<S> entities) {
-        save(entities, Lease.FOREVER);
+        save(entities, Lease.FOREVER, TimeUnit.MILLISECONDS);
         return entities;
     }
 
     @Override
-    public <S extends T> Iterable<S> save(Iterable<S> entities, long lease) {
-        space.writeMultiple(toArray(entities), lease);
+    public <S extends T> Iterable<S> save(Iterable<S> entities, long lease, TimeUnit unit) {
+        Assert.notNull(unit, "unit must not be null");
+        space.writeMultiple(toArray(entities), unit.toMillis(lease));
         return entities;
     }
 
