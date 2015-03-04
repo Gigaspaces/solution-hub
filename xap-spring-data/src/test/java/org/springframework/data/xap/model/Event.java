@@ -16,6 +16,14 @@ public class Event {
 
     private String name;
 
+    public Event(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Event() {
+    }
+
     @SpaceId(autoGenerate = true)
     public String getId() {
         return id;

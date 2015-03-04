@@ -28,8 +28,7 @@ public class RepositoryJavaConfigTest extends BaseRepositoryTest {
 
     @Configuration
     @ComponentScan("org.springframework.data.xap")
-    @PropertySource("classpath:config.properties")
-    @EnableXapRepositories(value = "org.springframework.data.xap.repository", namedQueriesLocation = "classpath:named-queries.properties")
+    @EnableXapRepositories(value = "org.springframework.data.xap.repository", namedQueriesLocation = "classpath:named-queries.properties", gigaspace = "gigaSpace1")
     public static class ContextConfiguration {
 
         @Autowired
@@ -37,7 +36,12 @@ public class RepositoryJavaConfigTest extends BaseRepositoryTest {
 
         @Bean
         public GigaSpace gigaSpace() {
-            return TestUtils.initSpace();
+            return TestUtils.initSpace("space");
+        }
+
+        @Bean
+        public GigaSpace gigaSpace1() {
+            return TestUtils.initSpace("space1");
         }
     }
 }

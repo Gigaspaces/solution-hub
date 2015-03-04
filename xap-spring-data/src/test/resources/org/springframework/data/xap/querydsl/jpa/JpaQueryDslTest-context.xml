@@ -14,7 +14,7 @@
         <context:exclude-filter type="regex" expression="org.springframework.data.xap.integration.javaconfig.*"/>
     </context:component-scan>
 
-    <xap-data:repositories base-package="org.springframework.data.xap.repository"/>
+    <xap-data:repositories base-package="org.springframework.data.xap.repository" gigaspace="gigaSpace"/>
 
     <!-- Entity manager factory definition -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

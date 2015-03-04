@@ -1,6 +1,7 @@
 package org.springframework.data.xap.repository.config;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.data.repository.config.AnnotationRepositoryConfigurationSource;
 import org.springframework.data.repository.config.RepositoryConfigurationExtensionSupport;
 import org.springframework.data.repository.config.XmlRepositoryConfigurationSource;
 import org.springframework.data.xap.repository.support.XapRepositoryFactoryBean;
@@ -26,6 +27,13 @@ public class XapRepositoryConfigurationExtension extends RepositoryConfiguration
     public void postProcess(BeanDefinitionBuilder builder, XmlRepositoryConfigurationSource config) {
         Element element = config.getElement();
         String gigaspace = element.getAttribute("gigaspace");
+        if (StringUtils.hasText(gigaspace)) {
+            builder.addPropertyReference("gigaSpace", gigaspace);
+        }
+    }
+
+    public void postProcess(BeanDefinitionBuilder builder, AnnotationRepositoryConfigurationSource config) {
+        String gigaspace = config.getAttribute("gigaspace");
         if (StringUtils.hasText(gigaspace)) {
             builder.addPropertyReference("gigaSpace", gigaspace);
         }

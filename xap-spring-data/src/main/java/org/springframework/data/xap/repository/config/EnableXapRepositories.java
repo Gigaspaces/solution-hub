@@ -61,6 +61,14 @@ public @interface EnableXapRepositories {
      */
     String namedQueriesLocation() default "";
 
+
+    /**
+     * Configures gigaSpaces bean.
+     *
+     * @return
+     */
+    String gigaspace() default "";
+
     /**
      * Returns the postfix to be used when looking up custom repository implementations. Defaults to {@literal Impl}. So
      * for a repository named {@code PersonRepository} the corresponding implementation class will be looked up scanning
