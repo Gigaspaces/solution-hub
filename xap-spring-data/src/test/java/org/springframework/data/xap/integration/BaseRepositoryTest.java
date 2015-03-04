@@ -2,6 +2,7 @@ package org.springframework.data.xap.integration;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -645,7 +646,7 @@ public abstract class BaseRepositoryTest {
     
     @Test
     public  void takeTest(){
-        Person result = personRepository.take(paul.getId());
+        Person result = personRepository.takeOne(paul.getId());
         assertEquals(paul, result);
         Person result2 = personRepository.findOne(paul.getId());
         assertNull(result2);     
@@ -654,6 +655,18 @@ public abstract class BaseRepositoryTest {
     @Test
     public void takeTestMultiple(){
         List<Person> result = Lists.newArrayList(personRepository.take(Arrays.asList(paul.getId(), chris.getId())));
+        assertTrue(result.contains(paul));
+        assertTrue(result.contains(chris));
+        Person person1 = personRepository.findOne(paul.getId());
+        Person person2 = personRepository.findOne(chris.getId());
+        assertNull(person1);
+        assertNull(person2);
+    }
+
+    @Test
+    public void takeAllTest(){
+        List<Person> result = Lists.newArrayList(personRepository.takeAll());
+        assertEquals(5, result.size());
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
         Person person1 = personRepository.findOne(paul.getId());

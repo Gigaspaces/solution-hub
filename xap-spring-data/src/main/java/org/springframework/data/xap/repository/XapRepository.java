@@ -95,7 +95,7 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      * @param id
      * @return
      */
-    T take(ID id);
+    T takeOne(ID id);
 
     /**
      * Gets multiple entities by id and deletes them.
@@ -104,4 +104,11 @@ public interface XapRepository<T, ID extends Serializable> extends PagingAndSort
      * @return
      */
     Iterable<T> take(Iterable<ID> ids);
+
+    /**
+     * Gets all entities and deletes them.
+     *
+     * @return
+     */
+    Iterable<T> takeAll();
 }

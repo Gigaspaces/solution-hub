@@ -248,7 +248,7 @@ public class SpaceDocumentRepositoryTest {
 
     @Test
     public void testTakeById() {
-        SpaceDocument result = personRepository.take(paul.getId());
+        SpaceDocument result = personRepository.takeOne(paul.getId());
         assertEquals(paul, result);
         SpaceDocument result2 = personRepository.findOne(paul.getId());
         assertNull(result2);
@@ -257,6 +257,18 @@ public class SpaceDocumentRepositoryTest {
     @Test
     public void testTakeMultipleById() {
         List<PersonDocument> result = Lists.newArrayList(personRepository.take(Arrays.asList(paul.getId(), chris.getId())));
+        assertTrue(result.contains(paul));
+        assertTrue(result.contains(chris));
+        SpaceDocument person1 = personRepository.findOne(paul.getId());
+        SpaceDocument person2 = personRepository.findOne(chris.getId());
+        assertNull(person1);
+        assertNull(person2);
+    }
+    
+    @Test
+    public void testTakeAll() {
+        List<PersonDocument> result = Lists.newArrayList(personRepository.takeAll());
+        assertEquals(result.size(), 5);
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
         SpaceDocument person1 = personRepository.findOne(paul.getId());

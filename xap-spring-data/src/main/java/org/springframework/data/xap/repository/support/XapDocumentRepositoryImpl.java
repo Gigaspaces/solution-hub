@@ -10,6 +10,8 @@ import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.repository.XapDocumentRepository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Serializable> extends SimpleXapRepository<T, ID> implements XapDocumentRepository<T, ID> {
     private String typeName;
@@ -46,12 +48,17 @@ public class XapDocumentRepositoryImpl<T extends SpaceDocument, ID extends Seria
     }
 
     @Override
-    public T take(ID id) {
+    public T takeOne(ID id) {
         return space.takeById(idQuery(id));
     }
 
     @Override
     public Iterable<T> take(Iterable<ID> ids) {
         return space.takeByIds(idsQuery(toArray(ids)));
+    }
+
+    @Override
+    public Iterable<T> takeAll() {
+        return new ArrayList<T>(Arrays.asList(space.takeMultiple((sqlQuery("")))));
     }
 }
