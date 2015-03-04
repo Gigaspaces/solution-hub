@@ -24,13 +24,15 @@ ${repository-context.xml}
 ```
 > Note that Spring Container will search for interfaces extending `XapRepository` in package and it's subpackages defined under `base-package` attribute.
 
+> If you have several space declarations, repositories will not be able to wire the space automatically. To define the space to be used by XAP Repositories, just add a `gigaspace` attribute with a proper bean id.
+
 ##### Registering XAP Repository using Java-based metadata
 
 To achieve the same configuration with Java-based bean metadata, simply add `@EnableXapRepositories` annotation to configuration class:
 ```java
 ${JavaConfiguration.java}
 ```
-> Note that `base-package` can be defined as a value of `@EnableXapRepositories` annotation.
+> Note that `base-package` can be defined as a value of `@EnableXapRepositories` annotation. Also, GigaSpace bean can be explicitly wired with `gigaspace` attribute.
 
 ##### Excluding custom interfaces from the search
 
