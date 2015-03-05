@@ -14,7 +14,7 @@
 
     <properties>
         <jdk.version>1.7</jdk.version>
-        <gs.version>10.1.0-12593-M11</gs.version>
+        <gsVersion>10.1.0-12593-M11</gsVersion>
         <spring.data.commons.version>1.9.1.RELEASE</spring.data.commons.version>
         <spring.dao.version>2.0.8</spring.dao.version>
         <spring.data.jpa.version>1.7.2.RELEASE</spring.data.jpa.version>
@@ -108,7 +108,7 @@
             <dependency>
                 <groupId>com.gigaspaces</groupId>
                 <artifactId>gs-openspaces</artifactId>
-                <version>${gs.version}</version>
+                <version>${gsVersion}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -121,13 +121,13 @@
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-openspaces</artifactId>
-            <version>${gs.version}</version>
+            <version>${gsVersion}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gigaspaces</groupId>
             <artifactId>gs-runtime</artifactId>
-            <version>${gs.version}</version>
+            <version>${gsVersion}</version>
             <scope>compile</scope>
         </dependency>
 
