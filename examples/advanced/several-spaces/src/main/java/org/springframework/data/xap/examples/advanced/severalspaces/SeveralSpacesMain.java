@@ -12,7 +12,7 @@ public class SeveralSpacesMain {
     private static Logger log = LoggerFactory.getLogger(SeveralSpacesMain.class);
 
     public static void main(String[] args) {
-        log.info("SEVERAL SPACES USING EXAMPLE");
+        log.info("SEVERAL SPACES USAGE EXAMPLE");
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
         SeveralSpacesExample severalSpacesExample = context.getBean(SeveralSpacesExample.class);
         severalSpacesExample.run();

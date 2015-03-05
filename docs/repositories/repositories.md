@@ -43,7 +43,7 @@ ${BaseRepository.java}
 
 ##### <a name="repositories-multi"/>Multi-space configuration
 
-Sometimes it is required to have different groups of repositories to store and exchange data in different spaces. Configuration for such case will have several space declarations and several repository groups. For each group the space to use will be assigned using `gigaspace` attribute referring to space id. Usually, groups of repositories will be placed in subpackages - it makes system structure clearer and eases configuration as well.
+Sometimes it is required to have different groups of repositories to store and exchange data in different spaces. Configuration for such case will have several space declarations and several repository groups. For each group the space to use will be assigned using `gigaspace` attribute referring to `GigaSpace` bean id. Usually, groups of repositories will be placed in subpackages - it makes system structure clearer and eases configuration as well.
 
 Here is an example of multi-space configuration in XML-based metadata:
 ```xml
