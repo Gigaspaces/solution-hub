@@ -28,7 +28,7 @@ These examples demonstrate the usage of additional XAP features in Spring Data X
 * [changeapi](/examples/advanced/changeapi) - Demonstrates the usage of Change API in XAP
 * [transaction](/examples/advanced/transaction) - Shows how XAP transactions can be used
 * [document](/examples/advanced/document) - Covers using Space as a Document Store
-* [several-spaces](/examples/advanced/several-spaces) - Demonstrate how to define space explicitly for repository.
+* [several-spaces](/examples/advanced/several-spaces) - Demonstrates how to explicitly define space for the repository
 
 # Running The Examples
 
