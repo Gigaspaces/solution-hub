@@ -24,7 +24,15 @@ _[Reference Documentation](#reference)_
   * [Modeling your data](#support-pojo)
   
   2.2 [XAP Repositories](#repositories)
-  
+
+  * [Registering XAP repositories using XML-based metadata](#repositories-xml)
+
+  * [Registering XAP repositories using Java-based metadata](#repositories-java)
+
+  * [Excluding custom interfaces from the search](#repositories-exclude)
+
+  * [Multi-space configuration](#repositories-multi)
+
 3. [Basic Usage](#basic)
 
   3.1 [Query Methods](#query)
@@ -59,32 +67,51 @@ _[Appendix](#appendix)_
 
   - _[Appendix D: Unsupported operations](#appendix-d)_
 
+-------------
 ${preface.md}
+-------------
 ${requirements.md}
+-------------
 
 ## <a name="reference"/>Reference Documentation
 ${structure.md}
 
+-------------------
 ${configuration.md}
+-------------------
 ${support/support.md}
+---------------------
 ${repositories/repositories.md}
 
+-----------
 ${basic.md}
+-----------------
 ${query/query.md}
+-------------------
 ${custom/custom.md}
 
+--------------
 ${advanced.md}
+---------------------------
 ${projection/projection.md}
+-----------------------
 ${querydsl/querydsl.md}
+-------------------
 ${change/change.md}
+---------------
 ${take/take.md}
+-----------------
 ${lease/lease.md}
+-----------------------------
 ${transaction/transaction.md}
+-----------------------
 ${document/document.md}
 
+---------------------------------------
 ## <a name="resources"/>Other Resources
 ${resources.md}
 
+-------------------------------
 ## <a name="appendix"/>Appendix
 ${appendix/appendix-a.md}
 ${appendix/appendix-b.md}
