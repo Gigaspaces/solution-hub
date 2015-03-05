@@ -13,7 +13,7 @@
     <description>Spring Data XAP</description>
 
     <properties>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.6</jdk.version>
         <gsVersion>10.1.0-SNAPSHOT</gsVersion>
         <spring.data.commons.version>1.9.1.RELEASE</spring.data.commons.version>
         <spring.dao.version>2.0.8</spring.dao.version>
