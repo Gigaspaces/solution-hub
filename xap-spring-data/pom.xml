@@ -8,13 +8,13 @@
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-xap</artifactId>
     <packaging>jar</packaging>
-    <version>10.1.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Spring Data XAP</name>
     <description>Spring Data XAP</description>
 
     <properties>
-        <jdk.version>1.6</jdk.version>
-        <gsVersion>10.1.0-SNAPSHOT</gsVersion>
+        <jdk.version>1.7</jdk.version>
+        <gsVersion>10.1.0-12593-M11</gsVersion>
         <spring.data.commons.version>1.9.1.RELEASE</spring.data.commons.version>
         <spring.dao.version>2.0.8</spring.dao.version>
         <spring.data.jpa.version>1.7.2.RELEASE</spring.data.jpa.version>
