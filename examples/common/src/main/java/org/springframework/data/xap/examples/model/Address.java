@@ -33,28 +33,6 @@ public class Address implements Serializable {
         this.localAddress = localAddress;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Address address = (Address) o;
-
-        if (city != null ? !city.equals(address.city) : address.city != null) return false;
-        if (localAddress != null ? !localAddress.equals(address.localAddress) : address.localAddress != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = city != null ? city.hashCode() : 0;
-        result = 31 * result + (localAddress != null ? localAddress.hashCode() : 0);
-        return result;
-    }
-
     @Override
     public String toString() {
         return "Address{" +
