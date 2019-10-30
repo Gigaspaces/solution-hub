@@ -1,9 +1,6 @@
 package org.springframework.data.xap.querydsl;
 
-import com.mysema.query.types.Operator;
-import com.mysema.query.types.Ops;
-import com.mysema.query.types.PathType;
-import com.mysema.query.types.Templates;
+import com.querydsl.core.types.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -78,43 +75,43 @@ public class XapQueryDslTemplates extends Templates {
         regexTemplate(Ops.ENDS_WITH_IC);
     }
 
-    private void template(Operator<?> operator, String pattern) {
+    private void template(Operator operator, String pattern) {
         add(operator, pattern);
         allowedOperators.add(operator);
     }
 
-    private void template(Operator<?> operator, String pattern, int precedence) {
+    private void template(Operator operator, String pattern, int precedence) {
         add(operator, pattern, precedence);
         allowedOperators.add(operator);
     }
 
-    private void regexTemplate(Operator<?> operator) {
+    private void regexTemplate(Operator operator) {
         add(operator, "{0} rlike {1}");
         allowedOperators.add(operator);
         regexOperators.add(operator);
     }
 
-    private void negativeTemplate(Operator<?> operator, Operator<?> opposite, String pattern) {
+    private void negativeTemplate(Operator operator, Operator opposite, String pattern) {
         add(operator, pattern);
         oppositesMapping.put(opposite, operator);
         allowedOperators.add(operator);
     }
 
-    private void negativeTemplate(Operator<?> operator, Operator<?> opposite, String pattern, int precedence) {
+    private void negativeTemplate(Operator operator, Operator opposite, String pattern, int precedence) {
         add(operator, pattern, precedence);
         oppositesMapping.put(opposite, operator);
         allowedOperators.add(operator);
     }
 
-    public boolean isAllowed(Operator<?> operator) {
+    public boolean isAllowed(Operator operator) {
         return allowedOperators.contains(operator);
     }
 
-    public boolean isRegex(Operator<?> operator) {
+    public boolean isRegex(Operator operator) {
         return regexOperators.contains(operator);
     }
 
-    public Operator getNegative(Operator<?> operator) {
+    public Operator getNegative(Operator operator) {
         return oppositesMapping.get(operator);
     }
 }

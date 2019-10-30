@@ -1,10 +1,11 @@
 package org.springframework.data.xap.integration.xml;
 
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.junit.jupiter.api.MethodOrderer.Alphanumeric;
 
 /**
  * Test for repository XML configuration.
@@ -15,7 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  * @author Anna_Babich
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
+@TestMethodOrder(Alphanumeric.class)
 @ContextConfiguration
 public class RepositoryXmlTest extends BaseRepositoryTest {
 

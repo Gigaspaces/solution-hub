@@ -3,6 +3,7 @@ package org.springframework.data.xap.repository.query;
 import com.gigaspaces.document.SpaceDocument;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.data.mapping.context.MappingContext;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.query.QueryMethod;
 import org.springframework.data.xap.mapping.XapPersistentEntity;
@@ -22,9 +23,10 @@ public class XapQueryMethod extends QueryMethod {
     private final RepositoryMetadata metadata;
     private final String typeName;
 
-    public XapQueryMethod(Method method, RepositoryMetadata metadata, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
-        super(method, metadata);
-        Assert.notNull(context);
+
+    public XapQueryMethod(Method method, RepositoryMetadata metadata,ProjectionFactory factory, MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context) {
+        super(method, metadata,factory);
+        Assert.notNull(context,"context cannot be null");
         this.metadata = metadata;
         this.method = method;
         if (SpaceDocument.class.isAssignableFrom(metadata.getDomainType())) {

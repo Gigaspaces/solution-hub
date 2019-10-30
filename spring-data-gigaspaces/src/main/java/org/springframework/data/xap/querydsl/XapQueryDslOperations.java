@@ -1,17 +1,22 @@
 package org.springframework.data.xap.querydsl;
 
-import com.mysema.query.types.Operator;
-import com.mysema.query.types.OperatorImpl;
+import com.querydsl.core.types.Operator;
 
 /**
  * @author Leonid_Poliakov
  */
-public class XapQueryDslOperations {
-    private static final String NS = XapQueryDslOperations.class.getName();
-
+public enum XapQueryDslOperations implements Operator {
     // negative comparisons
-    public static final Operator<Boolean> NOT_LIKE = new OperatorImpl<Boolean>(NS, "NOT_LIKE");
-    public static final Operator<Boolean> NOT_BETWEEN = new OperatorImpl<Boolean>(NS, "NOT_BETWEEN");
-    public static final Operator<Boolean> NOT_EMPTY = new OperatorImpl<Boolean>(NS, "NOT_EMPTY");
+    NOT_LIKE(Boolean.class),NOT_BETWEEN(Boolean.class),NOT_EMPTY(Boolean.class);
+    private Class<?> type;
+    XapQueryDslOperations(Class<?> type){
+        this.type=type;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return type;
+    }
+
 
 }

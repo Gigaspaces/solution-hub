@@ -1,7 +1,9 @@
 package org.springframework.data.xap.querydsl;
 
-import com.mysema.query.types.Expression;
-import com.mysema.query.types.QTuple;
+
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.QTuple;
 
 /**
  * <p>Helper class to marry Spring Data and Querydsl Projections and make API look better.</p>
@@ -14,10 +16,8 @@ import com.mysema.query.types.QTuple;
  * @author Oleksiy_Dyagilev
  * @see org.springframework.data.xap.repository.XapRepository
  */
-public class QueryDslProjection {
+public interface QueryDslProjection {
 
-    private QueryDslProjection() {
-    }
 
     /**
      * Converts Querydsl expressions into QTuple used by XAP Projection API.
@@ -26,8 +26,8 @@ public class QueryDslProjection {
      * @param expressions
      * @return
      */
-    public static QTuple projection(Expression<?>... expressions) {
-        return new QTuple(expressions);
+    static QTuple projection(Expression<?>... expressions) {
+        return Projections.tuple(expressions);
     }
 
 }

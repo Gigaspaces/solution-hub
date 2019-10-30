@@ -3,10 +3,7 @@ package org.springframework.data.xap.integration;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.j_spaces.core.LeaseContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,13 +18,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.MethodOrderer.Alphanumeric;
 import static org.springframework.data.xap.repository.query.Projection.projections;
 
 /**
  * @author Anna_Babich
  */
+@TestMethodOrder(Alphanumeric.class)
 public abstract class BaseRepositoryTest {
 
     protected static Person nick;
@@ -44,7 +42,7 @@ public abstract class BaseRepositoryTest {
 
     private List<Person> list;
 
-    @BeforeClass
+    @BeforeAll
     public static void initPersons() throws ParseException {
         nick = new Person("1", "Nick", 20, sdf.parse("01/01/1994"), true);
         chris = new Person("2", "Chris", 30, new Person("10", "Ann", 25), sdf.parse("05/06/1984"), false);
@@ -54,7 +52,7 @@ public abstract class BaseRepositoryTest {
         paul2 = new Person("6", "Paul", 30, sdf.parse("02/03/1984"), false);
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         client = personRepository.space();
         list = new ArrayList<>();
@@ -63,10 +61,10 @@ public abstract class BaseRepositoryTest {
         list.add(chris2);
         list.add(chris3);
         list.add(paul2);
-        personRepository.save(list);
+        personRepository.saveAll(list);
     }
 
-    @After
+    @AfterEach
     public void clear() {
         personRepository.deleteAll();
     }
@@ -74,13 +72,13 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void testFindByAgePagedCreatedQuery() {
-        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id"));
-        Pageable pageable = new PageRequest(1, 2, sorting);
+        Sort sorting = Sort.by(Sort.Order.asc("id"));
+        Pageable pageable = PageRequest.of(1, 2, sorting);
         List<Person> person = personRepository.findByAge(30, pageable);
         assertEquals(1, person.size());
         assertEquals(paul2, person.get(0));
 
-        Pageable pageable2 = new PageRequest(0, 2, sorting);
+        Pageable pageable2 = PageRequest.of(0, 2, sorting);
         List<Person> persons2 = personRepository.findByAge(30, pageable2);
         assertEquals(2, persons2.size());
         assertEquals(chris, persons2.get(0));
@@ -89,7 +87,7 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void testFindByAgeSortedCreatedQuery() {
-        List<Person> person = personRepository.findByAge(30, new Sort(new Sort.Order(Sort.Direction.ASC, "id")));
+        List<Person> person = personRepository.findByAge(30, Sort.by(Sort.Order.asc("id")));
         assertEquals(3, person.size());
         assertEquals(chris, person.get(0));
         assertEquals(chris3, person.get(1));
@@ -155,21 +153,21 @@ public abstract class BaseRepositoryTest {
     @Test
     public void save() {
         personRepository.save(nick);
-        Person result = personRepository.findOne(nick.getId());
-        assertEquals(nick, result);
+        Optional<Person> result = personRepository.findById(nick.getId());
+        assertEquals(nick, result.orElse(null));
     }
 
     @Test
     public void saveMultiple() {
-        Person result2 = personRepository.findOne(chris.getId());
-        Person result3 = personRepository.findOne(paul.getId());
-        assertEquals(chris, result2);
-        assertEquals(paul, result3);
+        Optional<Person> result2 = personRepository.findById(chris.getId());
+        Optional<Person> result3 = personRepository.findById(paul.getId());
+        assertEquals(chris, result2.orElse(null));
+        assertEquals(paul, result3.orElse(null));
     }
 
     @Test
     public void exists() {
-        assertTrue(personRepository.exists(chris.getId()));
+        assertTrue(personRepository.existsById(chris.getId()));
     }
 
     @Test
@@ -179,8 +177,8 @@ public abstract class BaseRepositoryTest {
 
     @Test
     public void delete() {
-        personRepository.delete(paul.getId());
-        assertFalse(personRepository.exists(paul.getId()));
+        personRepository.deleteById(paul.getId());
+        assertFalse(personRepository.existsById(paul.getId()));
     }
 
     @Test
@@ -206,7 +204,7 @@ public abstract class BaseRepositoryTest {
     public void testFindAllWithSorting() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
+        Sort sorting = Sort.by(orders);
         List<Person> persons = findPersons(sorting);
         assertSortedByName(persons);
     }
@@ -215,7 +213,7 @@ public abstract class BaseRepositoryTest {
     public void testFindAllWithSortingAndProjection() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
+        Sort sorting = Sort.by(orders);
         List<Person> persons = Lists.newArrayList(personRepository.findAll(sorting, projections("name", "id")));
         assertSortedByName(persons);
         for (Person person : persons) {
@@ -236,8 +234,8 @@ public abstract class BaseRepositoryTest {
     public void testFindAllWithPaging() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
-        Pageable pageable = new PageRequest(1, 2, sorting);
+        Sort sorting = Sort.by(orders);
+        Pageable pageable = PageRequest.of(1, 2, sorting);
         List<Person> persons = findPersons(pageable);
         assertEquals(chris.getId(), persons.get(0).getId());
         assertEquals(nick.getId(), persons.get(1).getId());
@@ -247,8 +245,8 @@ public abstract class BaseRepositoryTest {
     public void testFindAllWithPagingEmptyResult() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
-        Pageable pageable = new PageRequest(100500, 2, sorting);
+        Sort sorting = Sort.by(orders);
+        Pageable pageable = PageRequest.of(100500, 2, sorting);
         List<Person> persons = findPersons(pageable);
         assertTrue(persons.isEmpty());
     }
@@ -257,8 +255,8 @@ public abstract class BaseRepositoryTest {
     public void testFindAllWithPagingAndProjection() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
-        Pageable pageable = new PageRequest(1, 2, sorting);
+        Sort sorting = Sort.by(orders);
+        Pageable pageable = PageRequest.of(1, 2, sorting);
         List<Person> persons = Lists.newArrayList(personRepository.findAll(pageable, projections("name")));
         assertEquals(chris.getName(), persons.get(0).getName());
         assertEquals(nick.getName(), persons.get(1).getName());
@@ -558,45 +556,49 @@ public abstract class BaseRepositoryTest {
         assertTrue(personList.contains(paul2));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testIgnoreCase() {
-        personRepository.findByNameIgnoreCase("paul");
+        assertThrows(UnsupportedOperationException.class,()-> personRepository.findByNameIgnoreCase("paul"));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testIgnoreCaseInSorting() {
-        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id").ignoreCase());
-        Pageable pageable = new PageRequest(1, 2, sorting);
-        personRepository.findByNameEquals("paul", pageable);
+        Sort sorting = Sort.by(Sort.Order.asc("id").ignoreCase());
+        Pageable pageable = PageRequest.of(1, 2, sorting);
+        assertThrows(UnsupportedOperationException.class,()->
+                personRepository.findByNameEquals("paul", pageable));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testNullHandling() {
-        Sort sorting = new Sort(new Sort.Order(Sort.Direction.ASC, "id", Sort.NullHandling.NULLS_FIRST));
-        Pageable pageable = new PageRequest(1, 2, sorting);
-        personRepository.findByNameEquals("paul", pageable);
+        Sort sorting = Sort.by(Sort.Order.asc("id").with(Sort.NullHandling.NULLS_FIRST));
+        Pageable pageable = PageRequest.of(1, 2, sorting);
+        assertThrows(UnsupportedOperationException.class,()->
+                personRepository.findByNameEquals("paul", pageable));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testExists() {
-        personRepository.findByNameExists(true);
+
+        assertThrows(UnsupportedOperationException.class,()->
+                personRepository.findByNameExists(true));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testIsNear() {
-        personRepository.findByAgeIsNear(10);
+        assertThrows(UnsupportedOperationException.class,()-> personRepository.findByAgeIsNear(10));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testIsWithin() {
-        personRepository.findByAgeIsWithin(10, 20);
+        assertThrows(UnsupportedOperationException.class,()-> personRepository.findByAgeIsWithin(10, 20));
     }
 
     private void prepareDataForSortingTest() {
         personRepository.save(nick);
-        personRepository.delete("4");
-        personRepository.delete("5");
-        personRepository.delete("6");
+        personRepository.deleteById("4");
+        personRepository.deleteById("5");
+        personRepository.deleteById("6");
         personRepository.save(new Person("4", "Chris", 50));
         personRepository.save(new Person("5", "Chris", 35));
         personRepository.save(new Person("6", "Paul", 45));
@@ -614,7 +616,7 @@ public abstract class BaseRepositoryTest {
     }
 
     private List<Person> findAll(List<String> ids) {
-        Iterable<Person> persons = personRepository.findAll(ids);
+        Iterable<Person> persons = personRepository.findAllById(ids);
         List<Person> personList = new ArrayList<>();
         for (Person person : persons) {
             personList.add(person);
@@ -625,32 +627,32 @@ public abstract class BaseRepositoryTest {
     @Test
     public void writeWithLeaseTest() throws InterruptedException {
         personRepository.save(nick, 100, TimeUnit.MILLISECONDS);
-        assertEquals(nick, personRepository.findOne(nick.getId()));
+        assertEquals(nick, personRepository.findById(nick.getId()).orElse(null));
         Thread.sleep(200);
-        assertNull(personRepository.findOne(nick.getId()));
+        assertNull(personRepository.findById(nick.getId()).orElse(null));
 
         personRepository.save(nick);
         Thread.sleep(200);
-        assertNotNull(personRepository.findOne(nick.getId()));
+        assertNotNull(personRepository.findById(nick.getId()).orElse(null));
     }
 
     @Test
     public void writeMultipleWithLeaseTest() throws InterruptedException {
         personRepository.deleteAll();
         personRepository.save(Arrays.asList(nick, paul), 100, TimeUnit.MILLISECONDS);
-        assertEquals(nick, personRepository.findOne(nick.getId()));
-        assertEquals(paul, personRepository.findOne(paul.getId()));
+        assertEquals(nick, personRepository.findById(nick.getId()).orElse(null));
+        assertEquals(paul, personRepository.findById(paul.getId()).orElse(null));
         Thread.sleep(200);
-        assertNull(personRepository.findOne(nick.getId()));
-        assertNull(personRepository.findOne(paul.getId()));
+        assertNull(personRepository.findById(nick.getId()).orElse(null));
+        assertNull(personRepository.findById(paul.getId()).orElse(null));
     }
 
     @Test
     public void takeTest(){
         Person result = personRepository.takeOne(paul.getId());
         assertEquals(paul, result);
-        Person result2 = personRepository.findOne(paul.getId());
-        assertNull(result2);
+        Optional<Person> result2 = personRepository.findById(paul.getId());
+        assertNull(result2.orElse(null));
     }
 
     @Test
@@ -658,10 +660,10 @@ public abstract class BaseRepositoryTest {
         List<Person> result = Lists.newArrayList(personRepository.takeAll(Arrays.asList(paul.getId(), chris.getId())));
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
-        Person person1 = personRepository.findOne(paul.getId());
-        Person person2 = personRepository.findOne(chris.getId());
-        assertNull(person1);
-        assertNull(person2);
+        Optional<Person> person1 = personRepository.findById(paul.getId());
+        Optional<Person> person2 = personRepository.findById(chris.getId());
+        assertNull(person1.orElse(null));
+        assertNull(person2.orElse(null));
     }
 
     @Test
@@ -670,10 +672,10 @@ public abstract class BaseRepositoryTest {
         assertEquals(5, result.size());
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
-        Person person1 = personRepository.findOne(paul.getId());
-        Person person2 = personRepository.findOne(chris.getId());
-        assertNull(person1);
-        assertNull(person2);
+        Optional<Person> person1 = personRepository.findById(paul.getId());
+        Optional<Person> person2 = personRepository.findById(chris.getId());
+        assertNull(person1.orElse(null));
+        assertNull(person2.orElse(null));
     }
 
     @Test

@@ -1,15 +1,15 @@
 package org.springframework.data.xap.querydsl;
 
 import com.gigaspaces.client.ChangeResult;
-import com.mysema.query.types.OrderSpecifier;
-import com.mysema.query.types.Predicate;
-import com.mysema.query.types.QTuple;
+import com.querydsl.core.types.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+
+import java.util.Optional;
 
 /**
- * <p>Extension of {@link org.springframework.data.querydsl.QueryDslPredicateExecutor} with available XAP specific features: Projection and Change API</p>
+ * <p>Extension of {@link org.springframework.data.querydsl.QuerydslPredicateExecutor} with available XAP specific features: Projection and Change API</p>
  * <p>Use this interface as a base for your Querydsl repositories.</p>
  * <p>Example:</p>
  * <blockquote><pre>
@@ -18,18 +18,18 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
  *
  * @author Oleksiy_Dyagilev
  */
-public interface XapQueryDslPredicateExecutor<T> extends QueryDslPredicateExecutor<T> {
+public interface XapQueryDslPredicateExecutor<T> extends QuerydslPredicateExecutor<T> {
 
     /**
-     * Returns a single entity matching the given {@link com.mysema.query.types.Predicate} or {@literal null} if none
+     * Returns a single entity matching the given {@link com.querydsl.core.types.Predicate} or {@literal null} if none
      * was found. Applies projection to returned entity.
      *
      * @param predicate  Querydsl style predicate used as a query
      * @param projection Querydsl style projection, create it with {@link org.springframework.data.xap.querydsl.QueryDslProjection}
-     * @return a single entity matching the given {@link com.mysema.query.types.Predicate} or {@literal null} if none was found.
+     * @return a single entity matching the given {@link com.querydsl.core.types.Predicate} or {@literal null} if none was found.
      * @see org.springframework.data.xap.querydsl.QueryDslProjection
      */
-    T findOne(Predicate predicate, QTuple projection);
+    Optional<T> findOne(Predicate predicate, QTuple projection);
 
     /**
      * Returns all entities matching the given {@link Predicate}. In case no match could be found an empty
@@ -44,13 +44,13 @@ public interface XapQueryDslPredicateExecutor<T> extends QueryDslPredicateExecut
 
     /**
      * Returns all entities matching the given {@link Predicate} applying the given
-     * {@link com.mysema.query.types.OrderSpecifier}s. In case no match could be found an empty {@link Iterable} is
+     * {@link com.querydsl.core.types.OrderSpecifier}s. In case no match could be found an empty {@link Iterable} is
      * returned. Applies projection to returned entities.
      *
      * @param predicate  Querydsl style predicate used as a query
-     * @param orders     any number of {@link com.mysema.query.types.OrderSpecifier} to perform sorting
+     * @param orders     any number of {@link com.querydsl.core.types.OrderSpecifier} to perform sorting
      * @param projection Querydsl style projection, create it with {@link org.springframework.data.xap.querydsl.QueryDslProjection}
-     * @return all entities matching the given {@link Predicate} applying the given {@link com.mysema.query.types.OrderSpecifier}s.
+     * @return all entities matching the given {@link Predicate} applying the given {@link com.querydsl.core.types.OrderSpecifier}s.
      * @see org.springframework.data.xap.querydsl.QueryDslProjection
      */
     Iterable<T> findAll(Predicate predicate, QTuple projection, OrderSpecifier<?>... orders);
@@ -100,12 +100,12 @@ public interface XapQueryDslPredicateExecutor<T> extends QueryDslPredicateExecut
     Iterable<T> takeAll(Predicate predicate);
 
     /**
-     * Returns a single entity matching the given {@link com.mysema.query.types.Predicate} or {@literal null} if none was found.
+     * Returns a single entity matching the given {@link com.querydsl.core.types.Predicate} or {@literal null} if none was found.
      * Removes returned entity from the space. Applies projection to returned entity.
      *
      * @param predicate  Querydsl style predicate used as a query
      * @param projection Querydsl style projection, create it with {@link org.springframework.data.xap.querydsl.QueryDslProjection}
-     * @return a single entity matching the given {@link com.mysema.query.types.Predicate} or {@literal null} if none was found.
+     * @return a single entity matching the given {@link com.querydsl.core.types.Predicate} or {@literal null} if none was found.
      * @see org.springframework.data.xap.querydsl.QueryDslProjection
      */
     T takeOne(Predicate predicate, QTuple projection);

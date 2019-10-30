@@ -8,6 +8,8 @@ import org.springframework.data.xap.repository.support.XapRepositoryFactoryBean;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
+import java.util.Optional;
+
 /**
  * @author Oleksiy_Dyagilev
  */
@@ -19,11 +21,6 @@ public class XapRepositoryConfigurationExtension extends RepositoryConfiguration
     }
 
     @Override
-    public String getRepositoryFactoryClassName() {
-        return XapRepositoryFactoryBean.class.getName();
-    }
-
-    @Override
     public void postProcess(BeanDefinitionBuilder builder, XmlRepositoryConfigurationSource config) {
         Element element = config.getElement();
         String gigaspace = element.getAttribute("gigaspace");
@@ -32,10 +29,15 @@ public class XapRepositoryConfigurationExtension extends RepositoryConfiguration
         }
     }
 
+    @Override
+    public String getRepositoryFactoryBeanClassName() {
+        return XapRepositoryFactoryBean.class.getName();
+    }
+
     public void postProcess(BeanDefinitionBuilder builder, AnnotationRepositoryConfigurationSource config) {
-        String gigaspace = config.getAttribute("gigaspace");
-        if (StringUtils.hasText(gigaspace)) {
-            builder.addPropertyReference("gigaSpace", gigaspace);
-        }
+        Optional<String> gigaspace = config.getAttribute("gigaspace");
+        gigaspace.ifPresent(s->{if (StringUtils.hasText(s)) {
+            builder.addPropertyReference("gigaSpace", s);
+        }});
     }
 }

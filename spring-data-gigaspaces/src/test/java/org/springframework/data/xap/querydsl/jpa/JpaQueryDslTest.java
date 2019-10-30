@@ -1,20 +1,19 @@
 package org.springframework.data.xap.querydsl.jpa;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.expr.BooleanExpression;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.data.xap.integration.BaseRepositoryTest;
 import org.springframework.data.xap.model.QPerson;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Your IDE will for sure recompile classes when trying to run this test.
  * Run mvn openjpa:test-enhance to make it work.
@@ -22,7 +21,7 @@ import static org.junit.Assert.*;
  *
  * @author Leonid_Poliakov
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration
 public class JpaQueryDslTest extends BaseRepositoryTest {
     private static final BooleanExpression chrisIdPredicate = QPerson.person.id.eq(chris.getId());
@@ -37,21 +36,20 @@ public class JpaQueryDslTest extends BaseRepositoryTest {
     public void testFindOneWithPredicate() {
         assertEquals(
                 chris,
-                new JPAQuery(entityManager)
+                new JPAQueryFactory(entityManager)
                         .from(QPerson.person)
                         .where(chrisIdPredicate)
-                        .uniqueResult(QPerson.person)
-        );
+                        .fetchOne());
     }
 
     @Test
     public void testFindTwoWithPredicate() {
         assertEquals(
                 newHashSet(chris, chris2, chris3, paul, paul2),
-                newHashSet(new JPAQuery(entityManager)
+                newHashSet(new JPAQueryFactory(entityManager)
                         .from(QPerson.person)
                         .where(chrisOrPaulPredicate)
-                        .list(QPerson.person))
+                        .fetch())
         );
     }
 }

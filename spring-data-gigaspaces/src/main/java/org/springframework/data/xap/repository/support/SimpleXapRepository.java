@@ -5,7 +5,6 @@ import com.gigaspaces.query.IdsQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
 import com.j_spaces.core.LeaseContext;
 import com.j_spaces.core.client.SQLQuery;
-import net.jini.core.lease.Lease;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,12 +17,9 @@ import org.springframework.data.xap.repository.query.QueryBuilder;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
-
+import static org.springframework.data.xap.querydsl.XapQueryDslUtils.*;
 /**
  * @author Oleksiy_Dyagilev
  */
@@ -53,10 +49,27 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         return space.write(entity, unit.toMillis(lease));
     }
 
+    /**
+     * Saves all given entities.
+     *
+     * @param entities must not be {@literal null}.
+     * @return the saved entities; will never be {@literal null}.
+     * @throws IllegalArgumentException in case the given entity is {@literal null}.
+     */
     @Override
-    public <S extends T> Iterable<S> save(Iterable<S> entities) {
+    public <S extends T> Iterable<S> saveAll(Iterable<S> entities) {
         space.writeMultiple(toArray(entities));
         return entities;
+    }
+
+    @Override
+    public Optional<T> findById(ID id) {
+        return Optional.ofNullable(findOneInternal(id, null));
+    }
+
+    @Override
+    public boolean existsById(ID id) {
+        return findById(id).isPresent();//Todo : better solution or projection
     }
 
     @Override
@@ -90,14 +103,15 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         }
     }
 
-    @Override
-    public T findOne(ID id) {
-        return findOneInternal(id, null);
-    }
 
     @Override
     public T findOne(ID id, Projection projection) {
         return findOneInternal(id, projection);
+    }
+
+    @Override
+    public T findOne(ID id) {
+        return findOneInternal(id, null);
     }
 
     private T findOneInternal(ID id, Projection projection) {
@@ -114,23 +128,23 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public boolean exists(ID id) {
-        return findOne(id) != null;
-    }
-
-    @Override
     public Iterable<T> findAll() {
         return findAllSortedInternal(null, null, null);
     }
 
     @Override
-    public Iterable<T> findAll(Iterable<ID> ids) {
+    public Iterable<T> findAllById(Iterable<ID> ids) {
         return findAllByIdsInternal(ids, null);
     }
 
     @Override
     public Iterable<T> findAll(Iterable<ID> ids, Projection projection) {
         return findAllByIdsInternal(ids, projection);
+    }
+
+    @Override
+    public Iterable<T> findAll(Iterable<ID> ids) {
+        return findAllByIdsInternal(ids, null);
     }
 
     private Iterable<T> findAllByIdsInternal(Iterable<ID> ids, Projection projection) {
@@ -170,9 +184,9 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
         StringBuilder stringBuilder = new StringBuilder("");
 
         // paging or sorting
-        if (pageable != null) {
+        if (isPaged(pageable)) {
             stringBuilder.append(new QueryBuilder(pageable).buildQuery());
-        } else if (sort != null) {
+        } else if (isSorted(sort)) {
             stringBuilder.append(new QueryBuilder(sort).buildQuery());
         }
 
@@ -194,18 +208,18 @@ public class SimpleXapRepository<T, ID extends Serializable> implements XapRepos
     }
 
     @Override
-    public void delete(ID id) {
+    public void deleteById(ID id) {
         IdQuery<T> idQuery = idQuery(id).setProjections("");
         space.takeById(idQuery);
     }
 
     @Override
     public void delete(T entity) {
-        delete(entityInformation.getId(entity));
+        deleteById(entityInformation.getId(entity));
     }
 
     @Override
-    public void delete(Iterable<? extends T> entities) {
+    public void deleteAll(Iterable<? extends T> entities) {
         // TODO: consider replacing with distributed task to not return deleted entities back on client
         List<ID> idList = new ArrayList<>();
         for (T entity : entities) {

@@ -1,15 +1,16 @@
 package org.springframework.data.xap.querydsl.predicate;
 
-import com.mysema.query.types.Ops;
-import com.mysema.query.types.OrderSpecifier;
-import com.mysema.query.types.Predicate;
-import com.mysema.query.types.expr.BooleanExpression;
-import com.mysema.query.types.expr.ComparableExpression;
-import com.mysema.query.types.expr.ComparableOperation;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.querydsl.core.types.Ops;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.ComparableExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,17 +19,19 @@ import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.model.Team;
 import org.springframework.data.xap.model.TeamStatus;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import static org.springframework.data.xap.model.QTeam.team;
 import static org.springframework.data.xap.model.TeamStatus.INACTIVE;
 import static org.springframework.data.xap.model.TeamStatus.UNKNOWN;
@@ -38,7 +41,7 @@ import static org.springframework.data.xap.querydsl.QueryDslProjection.projectio
 /**
  * @author Leonid_Poliakov
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration
 public class PredicateQueryDslTest {
     private static final Person nick = new Person("1", "Nick", 25);
@@ -55,16 +58,17 @@ public class PredicateQueryDslTest {
         return new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(daysOffset));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        repository.save(asList(itspecial, avolition));
+        repository.saveAll(asList(itspecial, avolition));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         repository.deleteAll();
     }
 
+    @DisplayName("Test for fin all unsorted")
     @Test
     public void testFindAll() {
         assertEquals(
@@ -74,21 +78,31 @@ public class PredicateQueryDslTest {
     }
 
     @Test
-    public void testFindByFields() {
+    public void testFindBySingleField() {
         // single field
         assertEquals(
                 avolition,
-                one(team.name.eq(avolition.getName()))
+                one(team.name.eq(avolition.getName())).orElse(null)
         );
+    }
+    @Test
+    public void testFindByTwoFieldofOneTeam() {
         // two fields of one team
         assertEquals(
                 avolition,
-                one(team.id.eq(avolition.getId()).and(team.name.eq(avolition.getName())))
+                one(team.id.eq(avolition.getId()).and(team.name.eq(avolition.getName()))).orElse(null)
         );
+    }
+
+    @Test
+    public void testFindByTwoFieldOfDifferentTeamsAndOperator() {
         // two fields of different teams, and operator
         assertNull(
-                one(team.id.eq(itspecial.getId()).and(team.name.eq(avolition.getName())))
+                one(team.id.eq(itspecial.getId()).and(team.name.eq(avolition.getName()))).orElse(null)
         );
+    }
+    @Test
+    public void testFindByTwoFieldOfDifferentTeamsOrOperator() {
         // two fields of different teams, or operator
         assertEquals(
                 allTeams,
@@ -96,12 +110,13 @@ public class PredicateQueryDslTest {
         );
     }
 
+
     @Test
     public void testFindByBooleanOperations() {
         // not equals
         assertEquals(
                 itspecial,
-                one(team.id.ne(avolition.getId()))
+                one(team.id.ne(avolition.getId())).orElse(null)
         );
         // less than
         assertEquals(
@@ -111,42 +126,42 @@ public class PredicateQueryDslTest {
         // greater than
         assertEquals(
                 avolition,
-                one(team.membersCount.gt(40))
+                one(team.membersCount.gt(40)).orElse(null)
         );
         // less than or equals
         assertEquals(
                 itspecial,
-                one(team.membersCount.loe(itspecial.getMembersCount()))
+                one(team.membersCount.loe(itspecial.getMembersCount())).orElse(null)
         );
         // greater than or equals
         assertEquals(
                 avolition,
-                one(team.membersCount.goe(avolition.getMembersCount()))
+                one(team.membersCount.goe(avolition.getMembersCount())).orElse(null)
         );
         // like
         assertEquals(
                 avolition,
-                one(team.name.like("%tion%"))
+                one(team.name.like("%tion%")).orElse(null)
         );
         // is null
         assertEquals(
                 avolition,
-                one(team.sponsor.isNull())
+                one(team.sponsor.isNull()).orElse(null)
         );
         // is not null
         assertEquals(
                 itspecial,
-                one(team.sponsor.isNotNull())
+                one(team.sponsor.isNotNull()).orElse(null)
         );
         // in
         assertEquals(
                 itspecial,
-                one(team.membersCount.in(5, 10, 15))
+                one(team.membersCount.in(5, 10, 15)).orElse(null)
         );
         // not in
         assertEquals(
                 avolition,
-                one(team.membersCount.notIn(5, 10, 15))
+                one(team.membersCount.notIn(5, 10, 15)).orElse(null)
         );
         // between
         assertEquals(
@@ -156,22 +171,22 @@ public class PredicateQueryDslTest {
         // not between
         assertEquals(
                 itspecial,
-                one(team.membersCount.notBetween(40, 60))
+                one(team.membersCount.notBetween(40, 60)).orElse(null)
         );
         // matches regex
         assertEquals(
                 avolition,
-                one(team.name.matches(".*tion"))
+                one(team.name.matches(".*tion")).orElse(null)
         );
         // is empty
         assertEquals(
                 itspecial,
-                one(team.leader.name.isEmpty())
+                one(team.leader.name.isEmpty()).orElse(null)
         );
         // is not empty
         assertEquals(
                 avolition,
-                one(team.leader.name.isNotEmpty())
+                one(team.leader.name.isNotEmpty()).orElse(null)
         );
     }
 
@@ -180,16 +195,16 @@ public class PredicateQueryDslTest {
         // leader name equals
         assertEquals(
                 avolition,
-                one(team.leader.name.eq(avolition.getLeader().getName()))
+                one(team.leader.name.eq(avolition.getLeader().getName())).orElse(null)
         );
         // sponsor name not equals (test if team with sponsor will be found)
         assertEquals(
                 itspecial,
-                one(team.sponsor.name.ne("whoami"))
+                one(team.sponsor.name.ne("whoami")).orElse(null)
         );
         // sponsor name not equals (test if team with null sponsor is ignored)
         assertNull(
-                one(team.sponsor.name.ne(itspecial.getSponsor().getName()))
+                one(team.sponsor.name.ne(itspecial.getSponsor().getName())).orElse(null)
         );
     }
 
@@ -198,12 +213,12 @@ public class PredicateQueryDslTest {
         // enum equals
         assertEquals(
                 avolition,
-                one(team.status.eq(INACTIVE))
+                one(team.status.eq(INACTIVE)).orElse(null)
         );
         // enum in
         assertEquals(
                 avolition,
-                one(team.status.in(INACTIVE, UNKNOWN))
+                one(team.status.in(INACTIVE, UNKNOWN)).orElse(null)
         );
         // enum not equals
         assertEquals(
@@ -253,18 +268,18 @@ public class PredicateQueryDslTest {
     @Test
     public void testPagination() {
         // sort by name
-        Sort sort = new Sort(Sort.Direction.ASC, "name");
+        Sort sort =  Sort.by("name").ascending();
         // select pages of size 1 with sort
-        Page<Team> firstPage = repository.findAll(null, new PageRequest(0, 1, sort));
-        Page<Team> secondPage = repository.findAll(null, new PageRequest(1, 1, sort));
-        Page<Team> thirdPage = repository.findAll(null, new PageRequest(2, 1, sort));
+        Page<Team> firstPage = repository.findAll(null, PageRequest.of(0, 1, sort));
+        Page<Team> secondPage = repository.findAll(null, PageRequest.of(1, 1, sort));
+        Page<Team> thirdPage = repository.findAll(null, PageRequest.of(2, 1, sort));
         // check pages
         assertEquals(asList(avolition), newArrayList(firstPage));
         assertEquals(asList(itspecial), newArrayList(secondPage));
         assertEquals(0, thirdPage.getSize());
 
         // paging without sort
-        assertEquals(allTeams, newHashSet(repository.findAll(null, new PageRequest(0, 2))));
+        assertEquals(allTeams, newHashSet(repository.findAll(null, PageRequest.of(0, 2))));
     }
 
     @Test
@@ -290,7 +305,7 @@ public class PredicateQueryDslTest {
 
     @Test
     public void testFindOneWithProjection() {
-        Team foundTeam = repository.findOne(team.name.eq(avolition.getName()), projection(team.name, team.leader.age));
+        Team foundTeam = repository.findOne(team.name.eq(avolition.getName()), projection(team.name, team.leader.age)).orElse(null);
         assertEquals(avolition.getName(), foundTeam.getName());
         assertNull(foundTeam.getId());
         assertNotNull(foundTeam.getLeader());
@@ -324,7 +339,7 @@ public class PredicateQueryDslTest {
 
     @Test
     public void testFindAllWithPagingAndProjection() {
-        PageRequest page = new PageRequest(0, 1, new Sort(Sort.Direction.ASC, "name"));
+        PageRequest page =  PageRequest.of(0, 1, Sort.by( "name").ascending());
         List<Team> foundTeams = newArrayList(repository.findAll(team.name.isNotNull(), page, projection(team.name)));
         assertEquals(1, foundTeams.size());
         assertNotNull(foundTeams.get(0).getName());
@@ -337,13 +352,13 @@ public class PredicateQueryDslTest {
         // before sysdate
         assertEquals(
                 avolition,
-                one(team.creationDate.lt(sysdate()))
+                one(team.creationDate.lt(sysdate())).orElse(null)
         );
 
         // after sysdate
         assertEquals(
                 itspecial,
-                one(team.creationDate.gt(sysdate()))
+                one(team.creationDate.gt(sysdate())).orElse(null)
         );
     }
 
@@ -354,7 +369,7 @@ public class PredicateQueryDslTest {
                 changeSet().increment(team.leader.age, 5).unset(team.status)
         );
 
-        Team updated = repository.findOne(team.name.eq(avolition.getName()));
+        Team updated = repository.findOne(team.name.eq(avolition.getName())).orElse(null);
         assertEquals(avolition.getLeader().getAge() + 5, updated.getLeader().getAge().intValue());
         assertNull(updated.getStatus());
     }
@@ -367,31 +382,31 @@ public class PredicateQueryDslTest {
         // contains
         assertEquals(
                 weirdo,
-                one(team.name.contains("r}D"))
+                one(team.name.contains("r}D")).orElse(null)
         );
         assertEquals(
                 weirdo,
-                one(team.name.containsIgnoreCase("IR}do"))
+                one(team.name.containsIgnoreCase("IR}do")).orElse(null)
         );
 
         // starts with
         assertEquals(
                 avolition,
-                one(team.name.startsWith("avo"))
+                one(team.name.startsWith("avo")).orElse(null)
         );
         assertEquals(
                 weirdo,
-                one(team.name.startsWithIgnoreCase("WeiR}d"))
+                one(team.name.startsWithIgnoreCase("WeiR}d")).orElse(null)
         );
 
         // ends with
         assertEquals(
                 avolition,
-                one(team.name.endsWith("tion"))
+                one(team.name.endsWith("tion")).orElse(null)
         );
         assertEquals(
                 weirdo,
-                one(team.name.endsWithIgnoreCase("R}do"))
+                one(team.name.endsWithIgnoreCase("R}do")).orElse(null)
         );
     }
 
@@ -442,7 +457,7 @@ public class PredicateQueryDslTest {
         assertEquals(0, repository.count());
     }
 
-    private Team one(Predicate predicate) {
+    private Optional<Team> one(Predicate predicate) {
         return repository.findOne(predicate);
     }
 
@@ -455,7 +470,7 @@ public class PredicateQueryDslTest {
     }
 
     private ComparableExpression<Date> sysdate() {
-        return ComparableOperation.create(Date.class, Ops.DateTimeOps.SYSDATE);
+        return Expressions.dateTimeOperation(Date.class,Ops.DateTimeOps.SYSDATE);
     }
 
 }

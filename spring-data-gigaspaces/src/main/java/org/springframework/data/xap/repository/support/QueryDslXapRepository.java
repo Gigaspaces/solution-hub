@@ -3,11 +3,13 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.client.ChangeResult;
 import com.gigaspaces.query.ISpaceQuery;
 import com.gigaspaces.query.aggregators.AggregationSet;
-import com.mysema.query.types.*;
+import com.querydsl.core.types.*;
+import com.querydsl.core.types.dsl.PathBuilder;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.xap.querydsl.QChangeSet;
 import org.springframework.data.xap.querydsl.XapQueryDslConverter;
@@ -18,8 +20,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static org.springframework.data.xap.querydsl.QueryDslUtils.convertPathToXapFieldString;
+import static org.springframework.data.xap.querydsl.XapQueryDslUtils.convertPathToXapFieldString;
 
 /**
  * @author Leonid_Poliakov
@@ -35,18 +38,33 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
     }
 
     @Override
-    public T findOne(Predicate predicate) {
-        return space.read(createQuery(predicate, null, null));
+    public Optional<T> findOne(Predicate predicate) {
+        return Optional.ofNullable(space.read(createQuery(predicate, null, null)));
     }
 
     @Override
-    public T findOne(Predicate predicate, QTuple projection) {
-        return space.read(createQuery(predicate, null, projection));
+    public Optional<T> findOne(Predicate predicate, QTuple projection) {
+        return Optional.ofNullable(space.read(createQuery(predicate, null, projection)));
     }
 
     @Override
     public Iterable<T> findAll(Predicate predicate) {
         return readMultiple(predicate, null, null);
+    }
+
+    private OrderSpecifier<?>[] toOrderSpecifier(Sort sort){
+        Class clazz=entityInformation.getJavaType();
+        PathBuilder orderByExpression = new PathBuilder(clazz, "object");
+        return sort.stream().map(o->
+            new OrderSpecifier(o.isAscending() ? Order.ASC
+                    : Order.DESC, orderByExpression.get(o.getProperty())))
+                .toArray(OrderSpecifier[]::new);
+
+    }
+
+    @Override
+    public Iterable<T> findAll(Predicate predicate, Sort sort) {
+        return readMultiple(predicate, null, null,toOrderSpecifier(sort));
     }
 
     @Override
@@ -57,6 +75,11 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
     @Override
     public Iterable<T> findAll(Predicate predicate, OrderSpecifier<?>... orders) {
         return readMultiple(predicate, null, null, orders);
+    }
+
+    @Override
+    public Iterable<T> findAll(OrderSpecifier<?>... orders) {
+        return findAll(null, orders);
     }
 
     @Override
@@ -78,6 +101,11 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
     public long count(Predicate predicate) {
         ISpaceQuery<T> query = createQuery(predicate, null, null);
         return space.aggregate(query, new AggregationSet().count("")).getLong(0);
+    }
+
+    @Override
+    public boolean exists(Predicate predicate) {
+        return count(predicate)!=0;
     }
 
     @Override
@@ -140,5 +168,4 @@ public class QueryDslXapRepository<T, ID extends Serializable> extends SimpleXap
         }
         return new Projection(fields.toArray(new String[fields.size()]));
     }
-
 }

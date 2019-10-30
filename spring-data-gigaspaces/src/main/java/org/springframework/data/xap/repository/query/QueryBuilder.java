@@ -3,6 +3,8 @@ package org.springframework.data.xap.repository.query;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.parser.Part;
@@ -10,8 +12,10 @@ import org.springframework.util.Assert;
 
 import java.util.Iterator;
 
+import static org.springframework.data.xap.querydsl.XapQueryDslUtils.*;
 public class QueryBuilder {
 
+    Logger logger = LoggerFactory.getLogger(QueryBuilder.class);
     private String query = "";
 
     public QueryBuilder(Part part) {
@@ -48,7 +52,7 @@ public class QueryBuilder {
 
     private void applySort(Sort sort) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (sort != null) {
+        if (isSorted(sort)) {
             Iterator<Sort.Order> iterator = sort.iterator();
             if (iterator.hasNext()) {
                 stringBuilder.append(" ORDER BY ");
@@ -70,11 +74,12 @@ public class QueryBuilder {
     }
 
     private void applyPaging(Pageable pageable) {
-        if (pageable == null) {
+        if(!isPaged(pageable)){
             return;
         }
         String rowNum = query.isEmpty() ? "ROWNUM(%s, %s)" : " AND ROWNUM(%s, %s)";
         query = query + String.format(rowNum, pageable.getOffset() + 1, pageable.getOffset() + pageable.getPageSize());
+        logger.info("applyPaging({})",query);
     }
 
     public static class AtomicPredicate {

@@ -3,11 +3,8 @@ package org.springframework.data.xap.integration.document;
 import com.gigaspaces.document.SpaceDocument;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openspaces.core.GigaSpace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,18 +14,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.model.Person;
 import org.springframework.data.xap.model.PersonDocument;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static junit.framework.Assert.*;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.MethodOrderer.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.xap.repository.query.Projection.projections;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@TestMethodOrder(Alphanumeric.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration
 public class SpaceDocumentRepositoryTest {
     protected static PersonDocument nick;
@@ -45,7 +43,7 @@ public class SpaceDocumentRepositoryTest {
 
     private List<PersonDocument> list;
 
-    @BeforeClass
+    @BeforeAll
     public static void initPersons() throws ParseException {
         nick = personDocument("1", "Nick", 20, null, sdf.parse("01/01/1994"), true, null);
         chris = personDocument("2", "Chris", 30, new Person("10", "Ann", 25), sdf.parse("05/06/1984"), false, "custom1");
@@ -72,7 +70,7 @@ public class SpaceDocumentRepositoryTest {
         return personDocument;
     }
 
-    @Before
+    @BeforeEach
     public void init() {
         client = personRepository.space();
         list = new ArrayList<>();
@@ -81,31 +79,35 @@ public class SpaceDocumentRepositoryTest {
         list.add(chris2);
         list.add(chris3);
         list.add(paul2);
-        personRepository.save(list);
+        personRepository.saveAll(list);
     }
 
-    @After
+    @AfterEach
     public void clear() {
         personRepository.deleteAll();
     }
 
+
+    @DisplayName("01 - Test find one just after save one")
     @Test
-    public void testSave() {
+    public void test01Save() {
         personRepository.save(nick);
         PersonDocument result = personRepository.findOne(nick.getId());
         assertEquals(nick, result);
     }
 
+    @DisplayName("02 - test find object after save multiple")
     @Test
-    public void testSaveMultiple() {
+    public void test02SaveMultiple() {
         SpaceDocument result2 = personRepository.findOne(chris.getId());
         SpaceDocument result3 = personRepository.findOne(paul.getId());
         assertEquals(chris, result2);
         assertEquals(paul, result3);
     }
 
+    @DisplayName("03 - test finding after write with lease")
     @Test
-    public void testWriteWithLease() throws InterruptedException {
+    public void test03WriteWithLease() throws InterruptedException {
         personRepository.save(nick, 400, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
         Thread.sleep(600);
@@ -116,8 +118,9 @@ public class SpaceDocumentRepositoryTest {
         assertNotNull(personRepository.findOne(nick.getId()));
     }
 
+    @DisplayName("04 - test finding after writemultiple with lease")
     @Test
-    public void testWriteMultipleWithLease() throws InterruptedException {
+    public void test04WriteMultipleWithLease() throws InterruptedException {
         personRepository.deleteAll();
         personRepository.save(Arrays.asList(nick, paul), 400, TimeUnit.MILLISECONDS);
         assertEquals(nick, personRepository.findOne(nick.getId()));
@@ -127,36 +130,42 @@ public class SpaceDocumentRepositoryTest {
         assertNull(personRepository.findOne(paul.getId()));
     }
 
+    @DisplayName("05 - test findAll")
     @Test
-    public void testFindAll() {
+    public void test05FindAll() {
         List<PersonDocument> resultList = (List<PersonDocument>) personRepository.findAll();
         assertTrue(resultList.contains(paul));
         assertTrue(resultList.contains(chris));
+        assertEquals(list.size(),resultList.size());
     }
 
+    @DisplayName("06 - test findByIds")
     @Test
-    public void testFindAllById() {
+    public void test06FindByIds() {
         personRepository.save(nick);
         List<PersonDocument> resultList = findByIds(Arrays.asList(chris.getId(), paul.getId()));
         assertTrue(resultList.contains(chris));
         assertTrue(resultList.contains(paul));
         assertFalse(resultList.contains(nick));
+        assertEquals(2,resultList.size());
     }
 
+    @DisplayName("07 - test findAll with sorting")
     @Test
-    public void testFindAllWithSorting() {
+    public void test07FindAllWithSorting() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
+        Sort sorting =  Sort.by(orders);
         List<PersonDocument> persons = findWithSort(sorting);
         assertSortedByName(persons);
     }
 
+    @DisplayName("08 - test findAll with sorting and projection")
     @Test
-    public void testFindAllWithSortingAndProjection() {
+    public void test08FindAllWithSortingAndProjection() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
+        Sort sorting =  Sort.by(orders);
         List<PersonDocument> persons = Lists.newArrayList(personRepository.findAll(sorting, projections("name", "id")));
         assertSortedByName(persons);
         for (PersonDocument person : persons) {
@@ -164,33 +173,36 @@ public class SpaceDocumentRepositoryTest {
         }
     }
 
+    @DisplayName("09 - test findAll with paging")
     @Test
-    public void testFindAllWithPaging() {
+    public void test09FindAllWithPaging() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
-        Pageable pageable = new PageRequest(1, 2, sorting);
+        Sort sorting =  Sort.by(orders);
+        Pageable pageable =  PageRequest.of(1, 2, sorting);
         List<PersonDocument> persons = findWithPageable(pageable);
         assertEquals(chris.getId(), persons.get(0).getId());
         assertEquals(nick.getId(), persons.get(1).getId());
     }
 
+    @DisplayName("10 - test findAll with paging (empty result)")
     @Test
-    public void testFindAllWithPagingEmptyResult() {
+    public void test10FindAllWithPagingEmptyResult() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
-        Pageable pageable = new PageRequest(100500, 2, sorting);
+        Sort sorting =  Sort.by(orders);
+        Pageable pageable =  PageRequest.of(100500, 2, sorting);
         List<PersonDocument> persons = findWithPageable(pageable);
         assertTrue(persons.isEmpty());
     }
 
+    @DisplayName("11 - Test findAll with paging and projection")
     @Test
-    public void testFindAllWithPagingAndProjection() {
+    public void test11FindAllWithPagingAndProjection() {
         prepareDataForSortingTest();
         List<Sort.Order> orders = Lists.newArrayList(new Sort.Order(Sort.Direction.ASC, "name"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sorting = new Sort(orders);
-        Pageable pageable = new PageRequest(1, 2, sorting);
+        Sort sorting =  Sort.by(orders);
+        Pageable pageable =  PageRequest.of(1, 2, sorting);
         List<PersonDocument> persons = Lists.newArrayList(personRepository.findAll(pageable, projections("name")));
         assertEquals(chris.getName(), persons.get(0).getName());
         assertEquals(nick.getName(), persons.get(1).getName());
@@ -199,7 +211,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindAllWithProjection() {
+    public void test12FindAllWithProjection() {
         Iterable<PersonDocument> people = personRepository.findAll(projections("name", "id"));
         ArrayList<PersonDocument> list = Lists.newArrayList(people);
         assertEquals(5, list.size());
@@ -212,14 +224,14 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindOneWithProjection() {
+    public void test13FindOneWithProjection() {
         PersonDocument person = personRepository.findOne(chris.getId(), projections("name"));
         assertEquals(chris.getName(), person.getName());
         assertNull(person.getAge());
     }
 
     @Test
-    public void testFindByIdsWithProjection() {
+    public void test14FindByIdsWithProjection() {
         List<String> idList = new ArrayList<>();
         idList.add(chris.getId());
         idList.add(paul.getId());
@@ -233,23 +245,23 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testExists() {
-        assertTrue(personRepository.exists(chris.getId()));
+    public void test15Exists() {
+        assertTrue(personRepository.existsById(chris.getId()));
     }
 
     @Test
-    public void testCount() {
+    public void test16Count() {
         assertEquals(list.size(), personRepository.count());
     }
 
     @Test
-    public void testDelete() {
-        personRepository.delete(paul.getId());
-        assertFalse(personRepository.exists(paul.getId()));
+    public void test17Delete() {
+        personRepository.deleteById(paul.getId());
+        assertFalse(personRepository.existsById(paul.getId()));
     }
 
     @Test
-    public void testTakeById() {
+    public void test18TakeById() {
         SpaceDocument result = personRepository.takeOne(paul.getId());
         assertEquals(paul, result);
         SpaceDocument result2 = personRepository.findOne(paul.getId());
@@ -257,7 +269,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testTakeMultipleById() {
+    public void test19TakeMultipleById() {
         List<PersonDocument> result = Lists.newArrayList(personRepository.takeAll(Arrays.asList(paul.getId(), chris.getId())));
         assertTrue(result.contains(paul));
         assertTrue(result.contains(chris));
@@ -268,7 +280,7 @@ public class SpaceDocumentRepositoryTest {
     }
     
     @Test
-    public void testTakeAll() {
+    public void test20TakeAll() {
         List<PersonDocument> result = Lists.newArrayList(personRepository.takeAll());
         assertEquals(result.size(), 5);
         assertTrue(result.contains(paul));
@@ -280,7 +292,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeSortedDeclaredQuery() {
+    public void test21FindByAgeSortedDeclaredQuery() {
         List<PersonDocument> person = personRepository.findByAgeSortedById(30);
         assertEquals(3, person.size());
         assertEquals(chris, person.get(0));
@@ -289,21 +301,21 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindBySpouseNameDeclaredQuery() {
+    public void test22FindBySpouseNameDeclaredQuery() {
         List<PersonDocument> person = personRepository.findBySpouseName("Ann");
         assertEquals(1, person.size());
         assertTrue(person.contains(chris));
     }
 
     @Test
-    public void testFindByCustomFieldDeclaredQuery() {
+    public void test23FindByCustomFieldDeclaredQuery() {
         List<PersonDocument> person = personRepository.findByCustomField("custom1");
         assertEquals(1, person.size());
         assertTrue(person.contains(chris));
     }
 
     @Test
-    public void testFindByNameOrAgeDeclaredQuery() {
+    public void test24FindByNameOrAgeDeclaredQuery() {
         List<PersonDocument> person = personRepository.findByNameOrAge("Paul", 50);
         assertEquals(3, person.size());
         assertTrue(person.contains(paul));
@@ -312,7 +324,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeDeclaredQuery() {
+    public void test25FindByAgeDeclaredQuery() {
         List<PersonDocument> person = personRepository.findByAge(30);
         assertEquals(3, person.size());
         assertTrue(person.contains(chris));
@@ -321,7 +333,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByNameAndAgeDeclaredQuery() {
+    public void test26FindByNameAndAgeDeclaredQuery() {
         List<PersonDocument> person = personRepository.findByNameAndAge("Chris", 30);
         assertEquals(2, person.size());
         assertTrue(person.contains(chris));
@@ -329,7 +341,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByNameDeclaredQuery() {
+    public void test27FindByNameDeclaredQuery() {
         List<PersonDocument> persons = personRepository.findByName("Chris");
         assertEquals(3, persons.size());
         assertTrue(persons.contains(chris));
@@ -338,7 +350,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByAgeBetweenDeclaredQuery() {
+    public void test28FindByAgeBetweenDeclaredQuery() {
         List<PersonDocument> personList = personRepository.findByAgeBetween(35, 52);
         assertEquals(2, personList.size());
         assertTrue(personList.contains(paul));
@@ -346,7 +358,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByDeclaredQueryWithProjection() {
+    public void test29FindByDeclaredQueryWithProjection() {
         List<PersonDocument> people = personRepository.findByAge(50, projections("name"));
         assertEquals(1, people.size());
         assertEquals("Chris", people.get(0).getName());
@@ -354,7 +366,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByNameInDeclaredQuery() {
+    public void test30FindByNameInDeclaredQuery() {
         personRepository.save(nick);
         List<PersonDocument> personList = personRepository.findByNameIn(Arrays.asList("Paul", "Nick"));
         assertEquals(3, personList.size());
@@ -364,7 +376,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByActiveTrueDeclaredQuery() {
+    public void test31FindByActiveTrueDeclaredQuery() {
         List<PersonDocument> personList = personRepository.findByActiveTrue();
         assertEquals(2, personList.size());
         assertTrue(personList.contains(chris2));
@@ -372,7 +384,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindByNameRegexDeclaredQuery() {
+    public void test32FindByNameRegexDeclaredQuery() {
         personRepository.save(nick);
         List<PersonDocument> personList = personRepository.findByNameRegex("\\w{4}");
         assertEquals(3, personList.size());
@@ -382,7 +394,7 @@ public class SpaceDocumentRepositoryTest {
     }
 
     @Test
-    public void testFindBySpouseAgeNamedQuery() {
+    public void test33FindBySpouseAgeNamedQuery() {
         List<PersonDocument> person = personRepository.findBySpouseAge(25);
         assertEquals(1, person.size());
         assertTrue(person.contains(chris));
@@ -390,9 +402,9 @@ public class SpaceDocumentRepositoryTest {
 
     private void prepareDataForSortingTest() {
         personRepository.save(nick);
-        personRepository.delete("4");
-        personRepository.delete("5");
-        personRepository.delete("6");
+        personRepository.deleteById("4");
+        personRepository.deleteById("5");
+        personRepository.deleteById("6");
         personRepository.save(new PersonDocument("4", "Chris", 50));
         personRepository.save(new PersonDocument("5", "Chris", 35));
         personRepository.save(new PersonDocument("6", "Paul", 45));

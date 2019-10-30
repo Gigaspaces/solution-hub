@@ -1,11 +1,9 @@
 package org.springframework.data.xap.mapping;
 
 import org.springframework.data.mapping.context.AbstractMappingContext;
+import org.springframework.data.mapping.model.Property;
 import org.springframework.data.mapping.model.SimpleTypeHolder;
 import org.springframework.data.util.TypeInformation;
-
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -18,7 +16,8 @@ public class XapMappingContext extends AbstractMappingContext<XapPersistentEntit
     }
 
     @Override
-    protected XapPersistentProperty createPersistentProperty(Field field, PropertyDescriptor descriptor, XapPersistentEntity<?> owner, SimpleTypeHolder simpleTypeHolder) {
-        return new XapPersistentProperty(field, descriptor, owner, simpleTypeHolder);
+    protected XapPersistentProperty createPersistentProperty(Property property, XapPersistentEntity<?> owner, SimpleTypeHolder simpleTypeHolder) {
+        return new XapPersistentProperty(property, owner, simpleTypeHolder);
     }
+
 }

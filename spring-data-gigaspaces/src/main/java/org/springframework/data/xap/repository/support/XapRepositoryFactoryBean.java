@@ -14,7 +14,6 @@ import org.springframework.data.xap.mapping.XapPersistentEntity;
 import org.springframework.data.xap.mapping.XapPersistentProperty;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +24,15 @@ public class XapRepositoryFactoryBean<T extends Repository<S, ID>, S, ID extends
 
     private MappingContext<? extends XapPersistentEntity<?>, XapPersistentProperty> context;
     private GigaSpace gigaSpace;
+
+    /**
+     * Creates a new {@link RepositoryFactoryBeanSupport} for the given repository interface.
+     *
+     * @param repositoryInterface must not be {@literal null}.
+     */
+    protected XapRepositoryFactoryBean(Class<? extends T> repositoryInterface) {
+        super(repositoryInterface);
+    }
 
     public GigaSpace getGigaSpace() {
         return gigaSpace;

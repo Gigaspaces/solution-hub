@@ -3,12 +3,15 @@ package org.springframework.data.xap.repository.support;
 import com.gigaspaces.document.SpaceDocument;
 import org.openspaces.core.GigaSpace;
 import org.springframework.data.mapping.context.MappingContext;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.NamedQueries;
+import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.data.repository.query.QueryLookupStrategy;
+import org.springframework.data.repository.query.QueryMethodEvaluationContextProvider;
 import org.springframework.data.repository.query.RepositoryQuery;
 import org.springframework.data.xap.mapping.XapMappingContext;
 import org.springframework.data.xap.mapping.XapPersistentEntity;
@@ -19,10 +22,12 @@ import org.springframework.data.xap.repository.query.DefaultXapEntityInformation
 import org.springframework.data.xap.repository.query.PartTreeXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.StringBasedXapRepositoryQuery;
 import org.springframework.data.xap.repository.query.XapQueryMethod;
+import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * @author Oleksiy_Dyagilev
@@ -38,7 +43,7 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
     }
 
     private static boolean isQueryDslRepository(Class<?> repositoryInterface) {
-        return QueryDslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
+        return QuerydslPredicateExecutor.class.isAssignableFrom(repositoryInterface);
     }
 
     private static boolean isSpaceDocumentRepository(Class<?> repositoryInterface) {
@@ -46,15 +51,14 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T, ID extends Serializable> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
+    public <T, ID> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
         XapPersistentEntity<T> entity = (XapPersistentEntity<T>) context.getPersistentEntity(domainClass);
-        return new DefaultXapEntityInformation<>(entity);
+        return new DefaultXapEntityInformation(entity);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected Object getTargetRepository(RepositoryMetadata metadata) {
+    protected Object getTargetRepository(RepositoryInformation metadata) {
         Class<?> repositoryInterface = metadata.getRepositoryInterface();
         EntityInformation<?, Serializable> entityInformation = getEntityInformation(metadata.getDomainType());
         if (isQueryDslRepository(repositoryInterface)) {
@@ -91,28 +95,26 @@ public class XapRepositoryFactory extends RepositoryFactorySupport {
     }
 
     @Override
-    protected QueryLookupStrategy getQueryLookupStrategy(QueryLookupStrategy.Key key) {
-        return new QueryLookupStrategy() {
-            @Override
-            public RepositoryQuery resolveQuery(Method method, RepositoryMetadata metadata, NamedQueries namedQueries) {
-                XapQueryMethod queryMethod = new XapQueryMethod(method, metadata, context);
+    protected Optional<QueryLookupStrategy> getQueryLookupStrategy(@Nullable QueryLookupStrategy.Key key,
+                                                                   QueryMethodEvaluationContextProvider evaluationContextProvider){
+        return Optional.of((method, metadata, factory, namedQueries) -> {
+            XapQueryMethod queryMethod = new XapQueryMethod(method, metadata,factory, context);
 
-                if (queryMethod.hasAnnotatedQuery()) {
-                    return new StringBasedXapRepositoryQuery(queryMethod, space);
-                }
-
-                String namedQueryName = queryMethod.getNamedQueryName();
-
-                if (namedQueries.hasQuery(namedQueryName)) {
-                    return new StringBasedXapRepositoryQuery(namedQueries.getQuery(namedQueryName), queryMethod, space);
-                }
-
-                if (isSpaceDocumentRepository(metadata.getRepositoryInterface())) {
-                    throw new UnsupportedOperationException("Query methods are not supported in document repositories, use @Query annotation to define SQLQuery manually");
-                }
-                return new PartTreeXapRepositoryQuery(queryMethod, space);
+            if (queryMethod.hasAnnotatedQuery()) {
+                return new StringBasedXapRepositoryQuery(queryMethod, space);
             }
-        };
+
+            String namedQueryName = queryMethod.getNamedQueryName();
+
+            if (namedQueries.hasQuery(namedQueryName)) {
+                return new StringBasedXapRepositoryQuery(namedQueries.getQuery(namedQueryName), queryMethod, space);
+            }
+
+            if (isSpaceDocumentRepository(metadata.getRepositoryInterface())) {
+                throw new UnsupportedOperationException("Query methods are not supported in document repositories, use @Query annotation to define SQLQuery manually");
+            }
+            return new PartTreeXapRepositoryQuery(queryMethod, space);
+        });
     }
 
 }

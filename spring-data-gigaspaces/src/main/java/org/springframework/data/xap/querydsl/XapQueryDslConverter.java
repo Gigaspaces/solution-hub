@@ -3,8 +3,8 @@ package org.springframework.data.xap.querydsl;
 import com.gigaspaces.query.ISpaceQuery;
 import com.google.common.collect.ImmutableList;
 import com.j_spaces.core.client.SQLQuery;
-import com.mysema.query.support.SerializerBase;
-import com.mysema.query.types.*;
+import com.querydsl.core.support.SerializerBase;
+import com.querydsl.core.types.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.xap.repository.query.Projection;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
-
+import static org.springframework.data.xap.querydsl.XapQueryDslUtils.*;
 /**
  * @author Leonid_Poliakov
  */
@@ -46,7 +46,7 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
     @Nullable
     @Override
     public Void visit(Operation<?> operation, @Nullable Void context) {
-        Operator<?> operator = operation.getOperator();
+        Operator operator = operation.getOperator();
         List<Expression<?>> arguments = operation.getArgs();
         // try to redefine operation
         if (operator == Ops.NOT) {
@@ -100,7 +100,7 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
             arguments.add(expression);
         }
 
-        Expression<String> regexArgument = new ConstantImpl<>(regex);
+        Expression<String> regexArgument = ConstantImpl.create(regex);
         arguments.set(1, regexArgument);
         return arguments;
     }
@@ -164,13 +164,13 @@ public class XapQueryDslConverter<T> extends SerializerBase<XapQueryDslConverter
             handle(predicate);
         }
 
-        if (pageable != null) {
+        if (isPaged(pageable)) {
             // append row num and order clause
             if (getLength() > 0) {
                 append(AND_STATEMENT);
             }
             append(String.format(PAGING_ROW_NUM, pageable.getOffset() + 1, pageable.getOffset() + pageable.getPageSize()));
-            if (pageable.getSort() != null) {
+            if (isSorted(pageable.getSort())) {
                 append(ORDER_BY);
                 String prefix = "";
                 for (Sort.Order order : pageable.getSort()) {

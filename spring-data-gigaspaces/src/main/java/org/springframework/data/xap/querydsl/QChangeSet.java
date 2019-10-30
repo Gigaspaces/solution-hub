@@ -2,13 +2,13 @@ package org.springframework.data.xap.querydsl;
 
 import com.gigaspaces.client.ChangeSet;
 import com.gigaspaces.client.CustomChangeOperation;
-import com.mysema.query.types.Path;
+import com.querydsl.core.types.Path;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.springframework.data.xap.querydsl.QueryDslUtils.convertPathToXapFieldString;
+import static org.springframework.data.xap.querydsl.XapQueryDslUtils.convertPathToXapFieldString;
 
 /**
  * <p>Wrapper around native ChangeSet that supports type safe path.</p>

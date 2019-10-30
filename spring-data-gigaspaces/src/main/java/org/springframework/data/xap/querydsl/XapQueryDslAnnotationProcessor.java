@@ -2,9 +2,9 @@ package org.springframework.data.xap.querydsl;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceExclude;
-import com.mysema.query.apt.AbstractQuerydslProcessor;
-import com.mysema.query.apt.Configuration;
-import com.mysema.query.apt.DefaultConfiguration;
+import com.querydsl.apt.Configuration;
+import com.querydsl.apt.DefaultConfiguration;
+import com.querydsl.apt.QuerydslAnnotationProcessor;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -20,7 +20,7 @@ import java.util.Collections;
  * @see org.springframework.data.xap.querydsl.XapQueryDslPredicateExecutor
  */
 @SupportedAnnotationTypes({"com.gigaspaces.annotation.pojo.SpaceClass"})
-public class XapQueryDslAnnotationProcessor extends AbstractQuerydslProcessor {
+public class XapQueryDslAnnotationProcessor extends QuerydslAnnotationProcessor {
     private static final Class<? extends Annotation> ENTITIES = null;
     private static final Class<? extends Annotation> ENTITY = SpaceClass.class;
     private static final Class<? extends Annotation> SUPER_TYPE = null;

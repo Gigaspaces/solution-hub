@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
+import static org.springframework.data.xap.querydsl.XapQueryDslUtils.*;
 /**
  * @author Anna_Babich.
  */
@@ -78,7 +78,7 @@ public class PartTreeXapRepositoryQuery extends XapRepositoryQuery {
     }
 
     private void checkSorting(Sort sort) {
-        if (sort != null) {
+        if (isSorted(sort)) {
             for (Sort.Order order : sort) {
                 if (order.isIgnoreCase() || nullHandlingIsNotNative(order)) {
                     throw new UnsupportedOperationException("Null handling and ignoreCase for sorting are not supported");
