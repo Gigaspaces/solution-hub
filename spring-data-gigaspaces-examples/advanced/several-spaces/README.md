@@ -1,4 +1,4 @@
-Spring Data XAP - Using several spaces
+Spring Data Gigaspaces - Using several spaces
 ======================================
 
 Sometimes it is required to have different groups of repositories to store and exchange data in different spaces. Configuration for such case will have several space declarations and several repository groups. For each group the space to use will be assigned using `gigaspace` attribute referring to `GigaSpace` bean id. Usually, groups of repositories will be placed in subpackages - it makes system structure clearer and eases configuration as well.
@@ -6,8 +6,8 @@ Sometimes it is required to have different groups of repositories to store and e
 This example shows how one can configure and use two repositories working with different spaces. Please, pay attention on XML configuration in this example:
 ```xml
 ...
-<xap-data:repositories base-package="org.springframework.data.xap.examples.advanced.severalspaces.person" gigaspace="gigaSpace1"/>
-<xap-data:repositories base-package="org.springframework.data.xap.examples.advanced.severalspaces.room" gigaspace="gigaSpace2"/>
+<gigaspaces-data:repositories base-package="org.springframework.data.gigaspaces.examples.advanced.severalspaces.person" gigaspace="gigaSpace1"/>
+<gigaspaces-data:repositories base-package="org.springframework.data.gigaspaces.examples.advanced.severalspaces.room" gigaspace="gigaSpace2"/>
 ...
 ```
 
@@ -16,12 +16,12 @@ The same configuration may be achieved in Java-based style:
 ```java
 @Configuration
 @Import({Space1Repositories.class, Space2Repositories.class})
-@ComponentScan("org.springframework.data.xap.examples.advanced.severalspaces")
+@ComponentScan("org.springframework.data.gigaspaces.examples.advanced.severalspaces")
 public class ContextConfiguration {
 }
 
 @Configuration
-@EnableXapRepositories(value = "org.springframework.data.xap.examples.advanced.severalspaces.person", gigaspace = "gigaSpace1")
+@EnableGigaspacesRepositories(value = "org.springframework.data.gigaspaces.examples.advanced.severalspaces.person", gigaspace = "gigaSpace1")
 class Space1Repositories {
     @Bean
     public GigaSpace gigaSpace1() {
@@ -31,7 +31,7 @@ class Space1Repositories {
 }
 
 @Configuration
-@EnableXapRepositories(value = "org.springframework.data.xap.examples.advanced.severalspaces.room", gigaspace = "gigaSpace2")
+@EnableGigaspacesRepositories(value = "org.springframework.data.gigaspaces.examples.advanced.severalspaces.room", gigaspace = "gigaSpace2")
 class Space2Repositories {
     @Bean
     public GigaSpace gigaSpace2() {

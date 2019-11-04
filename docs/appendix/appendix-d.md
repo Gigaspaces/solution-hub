@@ -13,7 +13,7 @@ ${unsupported/IgnoreCaseInSorting.java}
 ```java
 ${unsupported/NullHandling.java}
 ```
-#### Using query derivation in `XapDocumentRepository`
+#### Using query derivation in `GigaspacesDocumentRepository`
 ```java
 ${unsupported/DocumentQueries.java}
 ```

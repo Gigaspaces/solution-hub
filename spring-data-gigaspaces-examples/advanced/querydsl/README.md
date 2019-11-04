@@ -1,4 +1,4 @@
-Spring Data XAP - Querydsl support
+Spring Data Gigaspaces - Querydsl support
 ==================================
 
 > This example runs using Querydsl code, to compile it you will require `Q...` classes for POJOs. To generate them, simply execute next maven command in project root: `mvn clean install`
@@ -9,11 +9,11 @@ The priceless feature of Querydsl is that if you change the POJO (remove or rena
 
 In this example, pay attention to the two configuration points that allow querydsl code to run:
 
-1. Parent `pom.xml` contains configuration of `Maven APT` plugin to run `XapQueryDslAnnotationProcessor` - this creates a `Q...` class for each POJO annotated with `@SpaceClass`
+1. Parent `pom.xml` contains configuration of `Maven APT` plugin to run `GigaspacesQueryDslAnnotationProcessor` - this creates a `Q...` class for each POJO annotated with `@SpaceClass`
 
-2. `PredicatePersonRepository` extends `XapQueryDslPredicateExecutor` defining `Person` as a domain class
+2. `PredicatePersonRepository` extends `GigaspacesQueryDslPredicateExecutor` defining `Person` as a domain class
 
-To run the example, refer to `QueryDslMain` class. It will delegate configuration to `QueryDslExample` which will show several query operations available in `XapQueryDslPredicateExecutor` interface. Running the example should produce the next output:
+To run the example, refer to `QueryDslMain` class. It will delegate configuration to `QueryDslExample` which will show several query operations available in `GigaspacesQueryDslPredicateExecutor` interface. Running the example should produce the next output:
 
 ```
 QUERY DSL EXAMPLE
@@ -39,4 +39,4 @@ Person{id=4, name='Paul', active=false, position='accounting', age=43}
 
 > Note that `QPerson.person` is imported statically - this allows to make queries more readable
 
-To read more on this topic, please, refer to [Querydsl Support](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation#querydsl).
+To read more on this topic, please, refer to [Querydsl Support](https://github.com/meirfarajGig/spring-data-gigaspaces/wiki/Reference-Documentation#querydsl).

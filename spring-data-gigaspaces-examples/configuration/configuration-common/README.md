@@ -1,4 +1,4 @@
-XAP Spring Data - Configuration-common
+Spring Data Gigaspaces - Configuration-common
 =======
 Simple operations with spring data repository. Used in 
 

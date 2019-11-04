@@ -1,4 +1,4 @@
-public interface PersonRepository extends XapRepository<Person, String> {
+public interface PersonRepository extends GigaspacesRepository<Person, String> {
 
     // you can query objects with exact field match
     List<Person> findByName(String name);

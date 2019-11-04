@@ -1,4 +1,4 @@
-public interface PersonRepository extends XapRepository<Person, String>, PersonRepositoryCustom {
+public interface PersonRepository extends GigaspacesRepository<Person, String>, PersonRepositoryCustom {
 
     // query methods declarations are ommited
 

@@ -1,9 +1,9 @@
-Spring Data XAP - Query creation
+Spring Data Gigaspaces - Query creation
 ================================
 
 This example demonstrates how to use query creation mechanism.
 
-1. The first way is to create appropriate method in extension of `XapRepository`. Method should be named in camel style and use [supported keywords](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation#appendix-a). Method name and arguments will be parsed and converted to query.
+1. The first way is to create appropriate method in extension of `GigaspacesRepository`. Method should be named in camel style and use [supported keywords](https://github.com/meirfarajGig/spring-data-gigaspaces/wiki/Reference-Documentation#appendix-a). Method name and arguments will be parsed and converted to query.
 2. An alternative option would be to use `@Query` annotation to explicitly specify the query.
 3. Another alternative is to use named queries and specify them in properties file.
 

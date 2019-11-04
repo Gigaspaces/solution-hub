@@ -10,10 +10,11 @@
     <packaging>pom</packaging>
     <version>14.5-SNAPSHOT</version>
     <name>Spring Data GigaSpaces Reactor</name>
-    <description>Spring Data implementation for GigaSpaces XAP</description>
+    <description>Spring Data implementation for GigaSpaces XAP/Insightedge</description>
     <modules>
         <module>spring-data-gigaspaces-parent</module>
         <module>spring-data-gigaspaces</module>
 		<module>spring-data-gigaspaces-examples</module>
+        <module>spring-data-gigaspaces-guide</module>
     </modules>
 </project>

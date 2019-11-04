@@ -1,7 +1,7 @@
-Spring Data XAP - Transactions support
+Spring Data Gigaspaces - Transactions support
 ======================================
 
-Spring Data XAP comes with a support of declarative Spring transactions based on `OpenSpaces` transaction managers. In order to apply transactional behaviour, the transaction manager must be provided as a reference when constructing the `GigaSpace` bean.
+Spring Data Gigaspaces comes with a support of declarative Spring transactions based on `OpenSpaces` transaction managers. In order to apply transactional behaviour, the transaction manager must be provided as a reference when constructing the `GigaSpace` bean.
 
 In this example basic transaction manager configuration is provided along the use of `@Transactional` method and rollbacks. Pay attention to next points of transactional behaviour usage:
 
@@ -38,4 +38,4 @@ MeetingRoom{address=Address{city='Amsterdam', localAddress='Main Street 28'}, na
 MeetingRoom{address=Address{city='New York', localAddress='Main Street, 1'}, name='green'}
 ```
 
-To read more on this topic, please, refer to [XAP Transactions](http://docs.gigaspaces.com/xap101/transaction-overview.html).
+To read more on this topic, please, refer to [Gigaspaces Transactions](http://docs.gigaspaces.com/latest/dev-java/transaction-overview.html).

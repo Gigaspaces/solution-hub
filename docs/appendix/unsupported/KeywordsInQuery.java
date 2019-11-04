@@ -1,4 +1,4 @@
-public interface PersonRepository extends XapRepository<Person, String> {
+public interface PersonRepository extends GigaspacesRepository<Person, String> {
 
     // these methods throw an UnsupportedOperationException when called
 

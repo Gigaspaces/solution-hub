@@ -1,1 +1,1 @@
-http\://www.springframework.org/schema/data/xap=org.springframework.data.xap.config.XapDataNamespaceHandler
+http\://www.springframework.org/schema/data/gigaspaces=org.springframework.data.gigaspaces.config.GigaspacesDataNamespaceHandler

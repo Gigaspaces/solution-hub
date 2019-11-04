@@ -1,7 +1,7 @@
-Spring Data XAP - Crud Repository
+Spring Data Gigaspaces - Crud Repository
 =================================
 
-Crud repository allows you to use crud operations with minimal efforts. To start with it you have to simply extend `XapRepository<T, ID>` interface and define your domain class.
+Crud repository allows you to use crud operations with minimal efforts. To start with it you have to simply extend `GigaspacesRepository<T, ID>` interface and define your domain class.
 
 To run the example, refer to `CrudMain` class. It will delegate configuration to `CrudExample` which will show several query operations available in `CrudRepository` interface. Running the example should produce the next output:
 

@@ -1,6 +1,6 @@
 ## <a name="appendix-a"/>Appendix A: Supported Query Keywords
 
-The following table lists the keywords is supported by the Spring Data XAP repository query derivation mechanism:
+The following table lists the keywords is supported by the Spring Data Gigaspaces Repository query derivation mechanism:
 
 Logical keyword | Keyword expressions
 --- | ---
@@ -28,7 +28,7 @@ REGEX | Regex, MatchesRegex, Matches
 STARTING_WITH | StartingWith, IsStartingWith, StartsWith
 TRUE | True, IsTrue
 
-Next keywords are not supported in XAP Repositories:
+Next keywords are not supported in Gigaspaces Repositories:
 
 Logical keyword | Keyword expressions
 --- | ---

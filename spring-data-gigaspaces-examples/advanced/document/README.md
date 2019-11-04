@@ -1,12 +1,12 @@
-Spring Data XAP - Document Storage Support
+Spring Data Gigaspaces - Document Storage Support
 ==========================================
 
-The Spring Data XAP supports the [Document API](http://docs.gigaspaces.com/xap101/document-api.html) which exposes the space as Document Store. A document, which is represented by the class `SpaceDocument`, is a collection of key-value pairs, where the keys are strings and the values are primitives, `String`, `Date`, other documents, or collections thereof. Most importantly, the Space is aware of the internal structure of a document, and thus can index document properties at any nesting level and expose rich query semantics for retrieving documents.
+The Spring Data Gigaspaces Supports the [Document API](http://docs.gigaspaces.com/latest/dev-java/document-api.html) which exposes the space as Document Store. A document, which is represented by the class `SpaceDocument`, is a collection of key-value pairs, where the keys are strings and the values are primitives, `String`, `Date`, other documents, or collections thereof. Most importantly, the Space is aware of the internal structure of a document, and thus can index document properties at any nesting level and expose rich query semantics for retrieving documents.
 
 In this example, simple and extended documents usage is displayed. There are several points to pay attention to:
 * document schema is defined in `spring-context.xml` in Space declaration
 * type-safe wrapper `PersonDocument` is created over `SpaceDocument` enabling both static and dynamic schema
-* repository interfaces `MeetingDocumentRepository` and `PersonDocumentRepository` extends the `XapDocumentRepository` which provides basic CRUD operations over `SpaceDocument`
+* repository interfaces `MeetingDocumentRepository` and `PersonDocumentRepository` extends the `GigaspacesDocumentRepository` which provides basic CRUD operations over `SpaceDocument`
 
 Running the example (`DocumentApiMain` class) will produce the next output:
 
@@ -25,4 +25,4 @@ Got Person documents with custom field: [... {age=30,name=Paul,customField=custo
 ...
 ```
 
-To read more on this topic, please, refer to [XAP Document Storage Support](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation#document).
+To read more on this topic, please, refer to [Gigaspaces Document Storage Support](https://github.com/meirfarajGig/spring-data-gigaspaces/wiki/Reference-Documentation#document).

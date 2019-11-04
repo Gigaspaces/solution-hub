@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:xap-data="http://www.springframework.org/schema/data/xap"
+       xmlns:gigaspaces-data="http://www.springframework.org/schema/data/gigaspaces"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-         http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd">
+         http://www.springframework.org/schema/data/gigaspaces http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd">
 
-  <xap-data:repositories base-package="com.yourcompany.foo.bar"/>
+  <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar"/>
 
   <!-- other configuration omitted -->
 

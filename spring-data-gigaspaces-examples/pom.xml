@@ -20,7 +20,7 @@
         <module>common</module>
         <module>basic/query</module>
         <module>basic/crud</module>
-        <module>basic/xap-native</module>
+        <module>basic/gigaspaces-native</module>
         <module>advanced/querydsl</module>
         <module>advanced/projection</module>
         <module>advanced/changeapi</module>

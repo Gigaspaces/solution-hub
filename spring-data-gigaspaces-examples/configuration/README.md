@@ -1,3 +1,3 @@
-XAP Spring Data - Configuration
+Spring Data Gigaspaces - Configuration
 =======
-These examples cover basic configuration ways of Spring Data XAP: java based and xml.
+These examples cover basic configuration ways of Spring Data Gigaspaces: java based and xml.

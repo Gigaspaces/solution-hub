@@ -1,16 +1,16 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:xap-data="http://www.springframework.org/schema/data/xap"
+       xmlns:gigaspaces-data="http://www.springframework.org/schema/data/gigaspaces"
        xmlns:os-core="http://www.openspaces.org/schema/core"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-           http://www.springframework.org/schema/data/xap http://www.springframework.org/schema/data/xap/spring-xap-1.0.xsd
+           http://www.springframework.org/schema/data/gigaspaces http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd
            http://www.openspaces.org/schema/core http://www.openspaces.org/schema/11.0/core/openspaces-core.xsd">
 
   <!-- Initializes repositories in .operational with operationalGSpace -->
-  <xap-data:repositories base-package="com.yourcompany.foo.bar.repository.operational" gigaspace="operationalGSpace"/>
+  <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar.repository.operational" gigaspace="operationalGSpace"/>
   <!-- Initializes repositories in .billing with billingGSpace -->
-  <xap-data:repositories base-package="com.yourcompany.foo.bar.repository.billing" gigaspace="billingGSpace"/>
+  <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar.repository.billing" gigaspace="billingGSpace"/>
 
   <os-core:space-proxy id="billingSpace" name="billing"/>
   <os-core:giga-space id="billingGSpace" space="billingSpace"/>

@@ -1,2 +1,2 @@
-public interface PersonRepository extends XapRepository<Person, String>, XapQueryDslPredicateExecutor<Person> {
+public interface PersonRepository extends GigaspacesRepository<Person, String>, GigaspacesQueryDslPredicateExecutor<Person> {
 }

@@ -15,7 +15,7 @@
             </goals>
             <configuration>
               <outputDirectory>target/generated-sources/java</outputDirectory>
-              <processor>org.springframework.data.xap.querydsl.XapQueryDslAnnotationProcessor</processor>
+              <processor>org.springframework.data.gigaspaces.querydsl.GigaspacesQueryDslAnnotationProcessor</processor>
             </configuration>
           </execution>
         </executions>

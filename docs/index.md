@@ -1,4 +1,4 @@
-Spring Data XAP - Reference Documentation
+Spring Data Gigaspaces - Reference Documentation
 ============================
 ## Table of Contents
 _[Preface](#preface)_
@@ -11,7 +11,7 @@ _[Reference Documentation](#reference)_
 
 2. [Configuration](#configuration)
 
-  2.1 [XAP Support](#support)
+  2.1 [Gigaspaces Support](#support)
   
   * [Connecting to space using XML based metadata](#support-xml)
 
@@ -23,11 +23,11 @@ _[Reference Documentation](#reference)_
 
   * [Modeling your data](#support-pojo)
   
-  2.2 [XAP Repositories](#repositories)
+  2.2 [Gigaspaces Repositories](#repositories)
 
-  * [Registering XAP repositories using XML-based metadata](#repositories-xml)
+  * [Registering Gigaspaces Repositories using XML-based metadata](#repositories-xml)
 
-  * [Registering XAP repositories using Java-based metadata](#repositories-java)
+  * [Registering Gigaspaces Repositories using Java-based metadata](#repositories-java)
 
   * [Excluding custom interfaces from the search](#repositories-exclude)
 
@@ -41,19 +41,19 @@ _[Reference Documentation](#reference)_
 
 4. [Advanced Usage](#advanced)
 
-  4.1 [XAP Projection API](#projection)
+  4.1 [Gigaspaces Projection API](#projection)
   
   4.2 [Querydsl Support](#querydsl)
   
-  4.3 [XAP Change API](#change)
+  4.3 [Gigaspaces Change API](#change)
   
-  4.4 [XAP Take Operations](#take)
+  4.4 [Gigaspaces Take Operations](#take)
   
-  4.5 [XAP Lease Time](#lease)
+  4.5 [Gigaspaces Lease Time](#lease)
   
-  4.6 [XAP Transactions](#transaction)
+  4.6 [Gigaspaces Transactions](#transaction)
 
-  4.7 [XAP Document Storage Support](#document)
+  4.7 [Gigaspaces Document Storage Support](#document)
 
 _[Other Resources](#resources)_
 

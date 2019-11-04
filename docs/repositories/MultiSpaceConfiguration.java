@@ -5,7 +5,7 @@ public class ContextConfiguration {
 }
 
 @Configuration
-@EnableXapRepositories(basePackages = "com.yourcompany.foo.bar.repository.operational", gigaspace = "operationalGSpace")
+@EnableGigaspacesRepositories(basePackages = "com.yourcompany.foo.bar.repository.operational", gigaspace = "operationalGSpace")
 class OperationalRepositories {
     /**
      * @return embedded operational space configuration
@@ -17,7 +17,7 @@ class OperationalRepositories {
 }
 
 @Configuration
-@EnableXapRepositories(basePackages = "com.yourcompany.foo.bar.repository.billing", gigaspace = "billingGSpace")
+@EnableGigaspacesRepositories(basePackages = "com.yourcompany.foo.bar.repository.billing", gigaspace = "billingGSpace")
 class BillingRepositories {
     /**
      * @return proxy billing space configuration

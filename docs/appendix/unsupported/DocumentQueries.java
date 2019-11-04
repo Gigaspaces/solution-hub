@@ -1,6 +1,6 @@
 @SpaceDocumentName("Person")
 public interface DocumentQueries
-        extends XapDocumentRepository<SpaceDocument, String> {
+        extends GigaspacesDocumentRepository<SpaceDocument, String> {
 
     @Query("name = ?")
     List<SpaceDocument> findByName(String name);

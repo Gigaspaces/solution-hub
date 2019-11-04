@@ -1,6 +1,6 @@
-Spring Data XAP
+Spring Data Gigaspaces
 ============================
 
-* [Reference Documentation](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation)
-* [Guide](https://github.com/Gigaspaces/xap-spring-data/tree/master/guide)
-* [Examples](https://github.com/Gigaspaces/xap-spring-data/tree/master/examples)
+* [Reference Documentation](https://https://github.com/meirfarajGig/spring-data-gigaspaces/tree/spring-data-gigaspaces-14.5/wiki/Reference-Documentation)
+* [Spring Data Gigaspaces Guide](https://github.com/meirfarajGig/spring-data-gigaspaces/tree/spring-data-gigaspaces-14.5/spring-data-gigaspaces-guide)
+* [Spring Data Gigaspaces Examples](https://github.com/meirfarajGig/spring-data-gigaspaces/tree/spring-data-gigaspaces-14.5/spring-data-gigaspaces-examples)

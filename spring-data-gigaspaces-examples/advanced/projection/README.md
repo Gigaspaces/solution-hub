@@ -1,15 +1,15 @@
-Spring Data XAP - Projection API
+Spring Data Gigaspaces - Projection API
 ================================
 
 > This example runs using Querydsl code, to compile it you will require `Q...` classes for POJOs. To generate them, simply execute next maven command in project root: `mvn clean install`
 
-The Spring Data XAP supports [XAP Projection](http://docs.gigaspaces.com/xap101/query-partial-results.html) which allows to read only certain properties for the objects (a.k.a. delta read). This approach reduces network overhead, garbage memory generation and CPU overhead due to decreased serialization time.
+The Spring Data Gigaspaces Supports [Gigaspaces Projection](http://docs.gigaspaces.com/latest/dev-java/query-partial-results.html) which allows to read only certain properties for the objects (a.k.a. delta read). This approach reduces network overhead, garbage memory generation and CPU overhead due to decreased serialization time.
 
-`XapRepository` interface provides you with basic `find` methods extended with `Projection` argument.
+`GigaspacesRepository` interface provides you with basic `find` methods extended with `Projection` argument.
 
 You can also supply your query methods with `Projection`, just by adding an additional argument to the method declaration.
 
-In the example you will see the usage of Projection API with both Querydsl syntax and XAP Projection syntax. Running the example should produce next output:
+In the example you will see the usage of Projection API with both Querydsl syntax and Gigaspaces Projection syntax. Running the example should produce next output:
 
 ```
 PROJECTION EXAMPLE
@@ -39,4 +39,4 @@ Person{id=null, name='Mary', active=null, position='teacher', age=null}
 
 > It is preferable to use Querydsl syntax since projections will break during compilation and not in run-time. With the second approach you could rename POJOs fields and keep invalid field names in the `Projection`
 
-To read more on this topic, please, refer to [XAP Projection API](https://github.com/Gigaspaces/xap-spring-data/wiki/Reference-Documentation#projection).
+To read more on this topic, please, refer to [Gigaspaces Projection API](https://github.com/meirfarajGig/spring-data-gigaspaces/wiki/Reference-Documentation#projection).

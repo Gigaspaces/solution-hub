@@ -1,3 +1,3 @@
 @SpaceDocumentName(PersonDocument.TYPE_NAME)
-public interface PersonDocumentRepository extends XapDocumentRepository<PersonDocument, String> {
+public interface PersonDocumentRepository extends GigaspacesDocumentRepository<PersonDocument, String> {
 }

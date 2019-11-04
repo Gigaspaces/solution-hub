@@ -1,5 +1,5 @@
 @Configuration
-@EnableXapRepositories("com.yourcompany.foo.bar")
+@EnableGigaspacesRepositories("com.yourcompany.foo.bar")
 public class ContextConfiguration {
     
     @Bean

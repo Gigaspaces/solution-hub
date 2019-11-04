@@ -1,12 +1,12 @@
-#### <a name="repositories"/>2.2 XAP Repositories
+#### <a name="repositories"/>2.2 Gigaspaces Repositories
 
-This part of the document explains how to configure and start using XAP Repositories with Spring Data. While one can try to directly operate with `GigaSpace` created from the [previous section](#support) to perform read and write operations, it is generally easier to use Spring Data Repositories for the same purposes. This approach significantly reduces the amount of boilerplate code from your data-access layer as well as gives you more flexibility and cleaner code which is easy to read and support. `GigaSpace` will be still available with `space()` method at `XapRepository` interface.
+This part of the document explains how to configure and start using Gigaspaces Repositories with Spring Data. While one can try to directly operate with `GigaSpace` created from the [previous section](#support) to perform read and write operations, it is generally easier to use Spring Data Repositories for the same purposes. This approach significantly reduces the amount of boilerplate code from your data-access layer as well as gives you more flexibility and cleaner code which is easy to read and support. `GigaSpace` will be still available with `space()` method at `GigaspacesRepository` interface.
 
-> Spring Data XAP supports all Spring Data Commons configuration features like exclude filters, standalone configuration, manual wiring, etc. For more details on how to apply them, please, refer to [Creating Repository Instances](http://docs.spring.io/spring-data/commons/docs/current/reference/html/#repositories.create-instances).
+> Spring Data Gigaspaces Supports all Spring Data Commons configuration features like exclude filters, standalone configuration, manual wiring, etc. For more details on how to apply them, please, refer to [Creating Repository Instances](http://docs.spring.io/spring-data/commons/docs/current/reference/html/#repositories.create-instances).
 
-To start with handy Spring Data XAP features you will need to create your repository interface extending `XapRepository` and tell Spring Container to look for such classes.
+To start with handy Spring Data Gigaspaces features you will need to create your repository interface extending `GigaspacesRepository` and tell Spring Container to look for such classes.
 
-> Spring Data XAP does not support `ignoreCase` and `nullHandling` in query expressions and `Sort`.
+> Spring Data Gigaspaces does not support `ignoreCase` and `nullHandling` in query expressions and `Sort`.
 
 An example of such user-defined repository with no additional functionality is given below:
 ```java
@@ -14,25 +14,25 @@ ${PersonRepository.java}
 ```
 > Note that you define the type of data to be stored and the type of it's id.
 
-##### <a name="repositories-xml"/>Registering XAP repositories using XML-based metadata
+##### <a name="repositories-xml"/>Registering Gigaspaces Repositories using XML-based metadata
 
-While you can use Spring’s traditional `<beans/>` XML namespace to register an instance of your repository implementing `XapRepository` with the container, the XML can be quite verbose as it is general purpose. To simplify configuration, Spring Data XAP provides a dedicated XML namespace.
+While you can use Spring’s traditional `<beans/>` XML namespace to register an instance of your repository implementing `GigaspacesRepository` with the container, the XML can be quite verbose as it is general purpose. To simplify configuration, Spring Data Gigaspaces provides a dedicated XML namespace.
 
 To enable Spring search for repositories, add the next configuration if you are using XML-based metadata:
 ```xml
 ${repository-context.xml}
 ```
-> Note that Spring Container will search for interfaces extending `XapRepository` in package and it's subpackages defined under `base-package` attribute.
+> Note that Spring Container will search for interfaces extending `GigaspacesRepository` in package and it's subpackages defined under `base-package` attribute.
 
-Repositories will look for `GigaSpace` bean by type in the context, if this behaviour is not overridden. If you have several space declarations, repositories will not be able to wire the space automatically. To define the space to be used by XAP Repositories, just add a `gigaspace` attribute with a proper bean id. An example can be found [below](#repositories-multi).
+Repositories will look for `GigaSpace` bean by type in the context, if this behaviour is not overridden. If you have several space declarations, repositories will not be able to wire the space automatically. To define the space to be used by Gigaspaces Repositories, just add a `gigaspace` attribute with a proper bean id. An example can be found [below](#repositories-multi).
 
-##### <a name="repositories-java"/>Registering XAP repositories using Java-based metadata
+##### <a name="repositories-java"/>Registering Gigaspaces Repositories using Java-based metadata
 
-To achieve the same configuration with Java-based bean metadata, simply add `@EnableXapRepositories` annotation to configuration class:
+To achieve the same configuration with Java-based bean metadata, simply add `@EnableGigaspacesRepositories` annotation to configuration class:
 ```java
 ${JavaConfiguration.java}
 ```
-> Note that `base-package` can be defined as a value of `@EnableXapRepositories` annotation. Also, `GigaSpace` bean will be automatically found in the context by type or can be explicitly wired with `gigaspace` attribute. An example can be found [below](#repositories-multi).
+> Note that `base-package` can be defined as a value of `@EnableGigaspacesRepositories` annotation. Also, `GigaSpace` bean will be automatically found in the context by type or can be explicitly wired with `gigaspace` attribute. An example can be found [below](#repositories-multi).
 
 ##### <a name="repositories-exclude"/>Excluding custom interfaces from the search
 
