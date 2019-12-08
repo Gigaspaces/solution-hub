@@ -39,7 +39,7 @@ public class Person {
         this.id = id;
     }
     
-    @SpaceIndex(type = SpaceIndexType.EXTENDED)
+    @SpaceIndex(type = SpaceIndexType.EQUAL_AND_ORDERED)
     public String getName() {
         return name;
     }

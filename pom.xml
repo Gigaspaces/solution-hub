@@ -16,5 +16,6 @@
         <module>spring-data-gigaspaces</module>
 		<module>spring-data-gigaspaces-examples</module>
         <module>spring-data-gigaspaces-guide</module>
+        <module>spring-data-gigaspaces-docs</module>
     </modules>
 </project>

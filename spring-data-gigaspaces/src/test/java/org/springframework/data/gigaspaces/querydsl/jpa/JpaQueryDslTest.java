@@ -32,6 +32,7 @@ public class JpaQueryDslTest extends BaseRepositoryTest {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     @Test
     public void testFindOneWithPredicate() {
         assertEquals(
