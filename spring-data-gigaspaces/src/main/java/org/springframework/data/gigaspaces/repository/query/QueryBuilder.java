@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.parser.Part;
-import org.springframework.util.Assert;
 
 import java.util.Iterator;
 
-import static org.springframework.data.gigaspaces.querydsl.GigaspacesQueryDslUtils.*;
+import static java.lang.String.format;
+import static org.springframework.data.gigaspaces.querydsl.GigaspacesQueryDslUtils.isPaged;
+import static org.springframework.data.gigaspaces.querydsl.GigaspacesQueryDslUtils.isSorted;
+import static org.springframework.util.Assert.notNull;
+
 public class QueryBuilder {
 
     Logger logger = LoggerFactory.getLogger(QueryBuilder.class);
@@ -78,7 +81,7 @@ public class QueryBuilder {
             return;
         }
         String rowNum = query.isEmpty() ? "ROWNUM(%s, %s)" : " AND ROWNUM(%s, %s)";
-        query = query + String.format(rowNum, pageable.getOffset() + 1, pageable.getOffset() + pageable.getPageSize());
+        query = query + format(rowNum, pageable.getOffset() + 1, pageable.getOffset() + pageable.getPageSize());
         logger.info("applyPaging({})",query);
     }
 
@@ -92,7 +95,7 @@ public class QueryBuilder {
          * @param part must not be {@literal null}.
          */
         public AtomicPredicate(Part part) {
-            Assert.notNull(part);
+            notNull(part,"[Assertion failed] - part argument is required; it must not be null");
             this.part = part;
         }
 
@@ -100,7 +103,7 @@ public class QueryBuilder {
         public String toString() {
             Part.Type type = part.getType();
 
-            return String.format("%s %s",
+            return format("%s %s",
                     part.getProperty().toDotPath(), toClause(type));
         }
 
@@ -108,15 +111,15 @@ public class QueryBuilder {
             switch (type) {
                 case FALSE:
                 case TRUE:
-                    return String.format("%1$s %2$s", getOperator(type), Part.Type.TRUE.equals(type));
+                    return format("%1$s %2$s", getOperator(type), Part.Type.TRUE.equals(type));
                 case IS_NULL:
                 case IS_NOT_NULL:
-                    return String.format("%s NULL", getOperator(type));
+                    return format("%s NULL", getOperator(type));
                 case BETWEEN:
-                    return String.format("%s ? and ?", getOperator(type));
+                    return format("%s ? and ?", getOperator(type));
                 default:
                     //return String.format("%s $%s", getOperator(type), value.next());
-                    return String.format("%s ?", getOperator(type));
+                    return format("%s ?", getOperator(type));
             }
         }
 
@@ -164,7 +167,7 @@ public class QueryBuilder {
                 case REGEX:
                     return "rlike";
                 default:
-                    throw new UnsupportedOperationException(String.format("Unsupported operator %s!", type));
+                    throw new UnsupportedOperationException(format("Unsupported operator %s!", type));
             }
         }
     }
