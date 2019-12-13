@@ -278,7 +278,7 @@ public class SpaceDocumentRepositoryTest {
         assertNull(person1);
         assertNull(person2);
     }
-    
+
     @Test
     public void test20TakeAll() {
         List<PersonDocument> result = Lists.newArrayList(personRepository.takeAll());

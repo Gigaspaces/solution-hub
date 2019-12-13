@@ -5,7 +5,7 @@
        xmlns:os-core="http://www.openspaces.org/schema/core"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/data/gigaspaces
            http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd
                    http://www.springframework.org/schema/context

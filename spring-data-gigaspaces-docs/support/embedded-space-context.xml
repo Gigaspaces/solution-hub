@@ -4,9 +4,9 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
          http://www.openspaces.org/schema/core
-         http://www.openspaces.org/schema/11.0/core/openspaces-core.xsd
+         http://www.openspaces.org/schema/14.5/core/openspaces-core.xsd
          http://www.springframework.org/schema/beans
-         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <!-- A bean representing an embedded space -->
   <os-core:embedded-space id="space" name="space"/>
