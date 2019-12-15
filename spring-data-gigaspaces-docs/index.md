@@ -1,17 +1,17 @@
 Spring Data Gigaspaces - Reference Documentation
 ============================
 ## Table of Contents
-_[Preface](preface.md)_
+_[Preface](#preface)_
 
-_[Requirements](requirements.md)_
+_[Requirements](#requirements)_
 
-_[Reference Documentation](structure.md)_
+_[Reference Documentation](#reference)_
 
-1. [Document Structure](structure.md)
+1. [Document Structure](#structure)
 
-2. [Configuration](configuration.md)
+2. [Configuration](#configuration)
 
-  2.1 [Gigaspaces Support](support/support.md)
+  2.1 [Gigaspaces Support](#support)
   
   * [Connecting to space using XML based metadata](#support-xml)
 
@@ -23,7 +23,7 @@ _[Reference Documentation](structure.md)_
 
   * [Modeling your data](#support-pojo)
   
-  2.2 [Gigaspaces Repositories](repositories/repositories.md)
+  2.2 [Gigaspaces Repositories](#repositories)
 
   * [Registering Gigaspaces Repositories using XML-based metadata](#repositories-xml)
 
@@ -59,19 +59,34 @@ _[Other Resources](#resources)_
 
 _[Appendix](#appendix)_
 
-  - _[Appendix A: Supported Query Keywords](appendix/appendix-a.md)_
+  - _[Appendix A: Supported Query Keywords](#appendix-a)_
 
-  - _[Appendix B: Supported Querydsl Methods](appendix/appendix-b.md)_
+  - _[Appendix B: Supported Querydsl Methods](#appendix-b)_
 
-  - _[Appendix C: Supported Change API methods](appendix/appendix-c.md)_
+  - _[Appendix C: Supported Change API methods](#appendix-c)_
 
-  - _[Appendix D: Unsupported operations](appendix/appendix-d.md)_
+  - _[Appendix D: Unsupported operations](#appendix-d)_
+
+-------------
+${preface.md}
+-------------
+${requirements.md}
+-------------
+
+## <a name="reference"/>Reference Documentation
+${structure.md}
 
 -------------------
+${configuration.md}
+-------------------
+${support/support.md}
+---------------------
+${repositories/repositories.md}
+
 -----------
 ${basic.md}
 -----------------
-${query/query.md}
+{% include_relative query/query.md %}
 -------------------
 ${custom/custom.md}
 
@@ -91,11 +106,14 @@ ${lease/lease.md}
 ${transaction/transaction.md}
 -----------------------
 ${document/document.md}
+
 ---------------------------------------
-## <a name="appendix"/> [Other Resources](resources.md)
+## <a name="resources"/>Other Resources
+${resources.md}
+
 -------------------------------
 ## <a name="appendix"/>Appendix
-[Appendix A](appendix/appendix-a.md)\
-[Appendix B](appendix/appendix-b.md)\
-[Appendix C](appendix/appendix-c.md)\
-[Appendix D](appendix/appendix-d.md)
+{% include_relative appendix/appendix-a.md %}
+{% include_relative appendix/appendix-b.md %}
+{% include_relative appendix/appendix-c.md %}
+{% include_relative appendix/appendix-d.md %}
