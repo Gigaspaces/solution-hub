@@ -1,17 +1,17 @@
 Spring Data Gigaspaces - Reference Documentation
 ============================
 ## Table of Contents
-_[Preface](#preface)_
+_[Preface](preface.md)_
 
-_[Requirements](#requirements)_
+_[Requirements](requirements.md)_
 
-_[Reference Documentation](#reference)_
+_[Reference Documentation](structure.md)_
 
-1. [Document Structure](#structure)
+1. [Document Structure](structure.md)
 
-2. [Configuration](#configuration)
+2. [Configuration](configuration.md)
 
-  2.1 [Gigaspaces Support](#support)
+  2.1 [Gigaspaces Support](support/support.md)
   
   * [Connecting to space using XML based metadata](#support-xml)
 
@@ -23,7 +23,7 @@ _[Reference Documentation](#reference)_
 
   * [Modeling your data](#support-pojo)
   
-  2.2 [Gigaspaces Repositories](#repositories)
+  2.2 [Gigaspaces Repositories](repositories/repositories.md)
 
   * [Registering Gigaspaces Repositories using XML-based metadata](#repositories-xml)
 
@@ -59,30 +59,15 @@ _[Other Resources](#resources)_
 
 _[Appendix](#appendix)_
 
-  - _[Appendix A: Supported Query Keywords](#appendix-a)_
+  - _[Appendix A: Supported Query Keywords](appendix/appendix-a.md)_
 
-  - _[Appendix B: Supported Querydsl Methods](#appendix-b)_
+  - _[Appendix B: Supported Querydsl Methods](appendix/appendix-b.md)_
 
-  - _[Appendix C: Supported Change API methods](#appendix-c)_
+  - _[Appendix C: Supported Change API methods](appendix/appendix-c.md)_
 
-  - _[Appendix D: Unsupported operations](#appendix-d)_
-
--------------
-${preface.md}
--------------
-${requirements.md}
--------------
-
-## <a name="reference"/>Reference Documentation
-${structure.md}
+  - _[Appendix D: Unsupported operations](appendix/appendix-d.md)_
 
 -------------------
-${configuration.md}
--------------------
-${support/support.md}
----------------------
-${repositories/repositories.md}
-
 -----------
 ${basic.md}
 -----------------
@@ -106,14 +91,11 @@ ${lease/lease.md}
 ${transaction/transaction.md}
 -----------------------
 ${document/document.md}
-
 ---------------------------------------
-## <a name="resources"/>Other Resources
-${resources.md}
-
+## <a name="appendix"/> [Other Resources](resources.md)
 -------------------------------
 ## <a name="appendix"/>Appendix
-${appendix/appendix-a.md}
-${appendix/appendix-b.md}
-${appendix/appendix-c.md}
-${appendix/appendix-d.md}
+[Appendix A](appendix/appendix-a.md)\
+[Appendix B](appendix/appendix-b.md)\
+[Appendix C](appendix/appendix-c.md)\
+[Appendix D](appendix/appendix-d.md)
