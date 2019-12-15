@@ -409,6 +409,7 @@
     </dependencyManagement>
 
     <profiles>
+    <!--
         <profile>
             <id>GS15SDMoore</id>
             <properties>
@@ -416,7 +417,7 @@
                 <spring-data-release.version>Moore-SR2</spring-data-release.version>
 
             </properties>
-        </profile>
+        </profile>-->
         <profile>
             <id>GS14_5SDMoore</id>
             <properties>

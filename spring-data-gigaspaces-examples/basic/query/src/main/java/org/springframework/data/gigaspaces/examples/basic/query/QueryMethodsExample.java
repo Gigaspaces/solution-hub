@@ -79,10 +79,10 @@ public class QueryMethodsExample {
         log.info(persons.toString());
 
         log.info("Find active persons, page 1 (two items)");
-        persons = personRepository.findByActiveTrue(PageRequest.of(0, 2, null));
+        persons = personRepository.findByActiveTrue(PageRequest.of(0, 2));
         log.info(persons.toString());
         log.info("page 2");
-        persons = personRepository.findByActiveTrue(PageRequest.of(1, 2, null));
+        persons = personRepository.findByActiveTrue(PageRequest.of(1, 2));
         log.info(persons.toString());
 
 
