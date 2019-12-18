@@ -1,0 +1,1173 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%md\n##  \u003d\u003d  [Getting Started - Part 1 or 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED) \u003d\u003d\n##  \u003d\u003d\u003e Getting Started - Part 2 or 2 \u003c\u003d\u003d",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-02 14:04:38.385",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e\u003d\u003d \u003ca href\u003d\"#/notebook/INSIGHTEDGE-GETTING-STARTED\"\u003eGetting Started - Part 1 or 2\u003c/a\u003e \u003d\u003d\u003c/h2\u003e\n\u003ch2\u003e\u003d\u003d\u0026gt; Getting Started - Part 2 or 2 \u0026lt;\u003d\u003d\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575295467917_1569100696",
+      "id": "20191202-140427_1777828485",
+      "dateCreated": "2019-12-02 14:04:27.918",
+      "dateStarted": "2019-12-02 14:04:38.403",
+      "dateFinished": "2019-12-02 14:04:38.438",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n### Enriching the Flight Data\n\nAfter the data has been prepared, the next step is to fetch the daily weather data for the required time period and merge it with the flight delay data. (We have this data stored in a CSV file. If you don't have access to the data for some reason, you can download it from <https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip>.) \n\n**DistributedTasks** - To merge the weather data with the flight delay data we use the DistributedTasks capability, which lets us define code that executes in a distributed fashion over the in-memory data. This feature can also leverage the performance gains from the co-location of the logic/process and the data in the same Space.\n\nAfter the data is merged, we query it to verify that the new fields were added.\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:10:59+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Enriching the Flight Data</h3>\n<p>After the data has been prepared, the next step is to fetch the daily weather data for the required time period and merge it with the flight delay data. (We have this data stored in a CSV file. If you don&rsquo;t have access to the data for some reason, you can download it from <a href=\"https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip\">https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip</a>.) </p>\n<p><strong>DistributedTasks</strong> - To merge the weather data with the flight delay data we use the DistributedTasks capability, which lets us define code that executes in a distributed fashion over the in-memory data. This feature can also leverage the performance gains from the co-location of the logic/process and the data in the same Space.</p>\n<p>After the data is merged, we query it to verify that the new fields were added.</p>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212523_-336217485",
+      "id": "20190826-022957_1704419410",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:10:59+0000",
+      "dateFinished": "2019-10-31T10:10:59+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6465"
+    },
+    {
+      "title": "Restart interpreter before using '%dep' & '%define'",
+      "text": "%sh\nwget --method=PUT -O /dev/null http://localhost:9090/api/interpreter/setting/restart/spark\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:11:00+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/sh",
+        "editorHide": false,
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "--2019-10-31 10:11:00--  http://localhost:9090/api/interpreter/setting/restart/spark\nResolving localhost... 127.0.0.1, ::1\nConnecting to localhost|127.0.0.1|:9090... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 3924 (3.8K) [application/json]\nSaving to: '/dev/null'\n\n     0K ...                                                   100%  518M=0s\n\n2019-10-31 10:11:03 (518 MB/s) - '/dev/null' saved [3924/3924]\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1571819457458_-606767870",
+      "id": "20191023-083057_1327164381",
+      "dateCreated": "2019-10-23T08:30:57+0000",
+      "dateStarted": "2019-10-31T10:11:00+0000",
+      "dateFinished": "2019-10-31T10:11:03+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6466"
+    },
+    {
+      "title": "Register packages for later use",
+      "text": "%dep\n\nz.load(\"org.apache.spark:spark-streaming-kafka-0-8_2.11:2.2.0\")\nz.load(\"com.google.code.gson:gson:2.8.5\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:11:03+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency = org.apache.zeppelin.dep.Dependency@7b4a5962\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569409009077_145616743",
+      "id": "20190925-105649_2122430845",
+      "dateCreated": "2019-09-25T10:56:49+0000",
+      "dateStarted": "2019-10-31T10:11:03+0000",
+      "dateFinished": "2019-10-31T10:11:25+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6467",
+      "title": "Load external libraries"
+    },
+    {
+      "text": "%define\npackage model.v1\n\nimport com.gigaspaces.metadata._\nimport com.gigaspaces.metadata.index.SpaceIndexType;\nimport java.lang\nimport scala.beans.{BeanProperty}\nimport org.insightedge.scala.annotation._\nimport org.insightedge.spark.implicits.all._\n\n\n//Describe the data as Scala Case Class\n\ncase class FlightDelaysWithWeather(\n  @BeanProperty \n  @SpaceId\n  var id: String,\n  @BeanProperty \n  @SpaceIndex\n  var carrier: String,\n  @BeanProperty \n  @SpaceIndex\n  var flight_number: String,\n  @SpaceIndex\n  @BeanProperty \n  var year: Integer,\n  @BeanProperty \n  var month: String,\n  @BeanProperty \n  var dayofMonth: String,\n  @BeanProperty \n  var dayOfWeek: String,\n  @BeanProperty \n  var crsDepTime: String,\n  @SpaceIndex\n  @BeanProperty \n  var depDelay15: java.lang.Double,\n  @BeanProperty \n  var depDelay: java.lang.Double,\n  @SpaceIndex\n  @BeanProperty \n  var origin: String,\n  @BeanProperty \n  var dest: String,\n  @BeanProperty \n  var awnd: String,\n  @BeanProperty \n  var prcp: String,\n  @BeanProperty \n  var snow: String,\n  @BeanProperty \n  var tmax: String,\n  @BeanProperty \n  var tmin: String,\n  @BeanProperty \n  var cancelled: String,\n  @BeanProperty\n  var date: Integer,\n  @BeanProperty \n  var prediction: String ) {\n  def this() = this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)\n  def generate_id() = {id = \"%04d:%s:%s:%s:%s:%s\".format(year, month, dayofMonth, dayOfWeek, crsDepTime, flight_number)}\n}\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:11:25+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: org.apache.zeppelin.dep.Dependency = org.apache.zeppelin.dep.Dependency@793afefd\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569409051545_-141692955",
+      "id": "20190925-105731_273091578",
+      "dateCreated": "2019-09-25T10:57:31+0000",
+      "dateStarted": "2019-10-31T10:11:25+0000",
+      "dateFinished": "2019-10-31T10:11:32+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6468",
+      "title": "Re-introduce the data model Case Class that was defined in the previous notebook"
+    },
+    {
+      "title": "Enrich the FlightDelay data with weather data",
+      "text": "%spark\nimport org.apache.spark.SparkContext._\n\nimport spark.implicits._\n\n\nval weatherDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(\"/opt/gigaspaces/weather2017_8.csv\")\n\n\n//Add task for merging the weather and flight delays",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:11:32+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.SparkContext._\nimport spark.implicits._\nweatherDataFrame: org.apache.spark.sql.DataFrame = [Date: int, Station: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212523_258618609",
+      "id": "20190818-160913_12361618",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:11:33+0000",
+      "dateFinished": "2019-10-31T10:12:04+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6469"
+    },
+    {
+      "text": "%spark\n\nimport org.insightedge.spark.implicits.all._\nimport org.insightedge.spark.context.InsightEdgeConfig\n\n//Change space name here if not working with default\nval ieConfig = new InsightEdgeConfig(\"flights_space\")\n\nsc.initializeInsightEdgeContext(ieConfig)\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:12:04+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.insightedge.spark.implicits.all._\nimport org.insightedge.spark.context.InsightEdgeConfig\nieConfig: org.insightedge.spark.context.InsightEdgeConfig = InsightEdgeConfig(flights_space,None,None)\nres1: org.apache.spark.SparkContext = org.apache.spark.SparkContext@4e8ec119\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569418436965_201427215",
+      "id": "20190925-133356_683462357",
+      "dateCreated": "2019-09-25T13:33:56+0000",
+      "dateStarted": "2019-10-31T10:12:04+0000",
+      "dateFinished": "2019-10-31T10:12:05+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6470"
+    },
+    {
+      "title": "Register the additional \"Weather\" Type with the data grid",
+      "text": "import model.v1._\nimport com.gigaspaces.metadata._\nimport com.gigaspaces.metadata.index.SpaceIndexType;\nimport java.lang\nimport scala.beans.{BeanProperty}\nimport org.insightedge.scala.annotation._\nimport org.insightedge.spark.implicits.all._\n\n\nval typeDescriptor: SpaceTypeDescriptor = new SpaceTypeDescriptorBuilder(\"Weather\").idProperty(\"id\", true)\n                .addFixedProperty(\"Date\", \"java.lang.Integer\")\n                .addFixedProperty(\"Station\", \"java.lang.String\")\n                .addPropertyIndex(\"Date\", SpaceIndexType.EQUAL)\n                .addPropertyIndex(\"Station\", SpaceIndexType.EQUAL)\n                .routingProperty(\"Date\")\n                .create();\n                \n        // Register type:\nsc.grid.getTypeManager().registerTypeDescriptor(typeDescriptor)\nsc.grid.getTypeManager.registerTypeDescriptor(classOf[FlightDelaysWithWeather])\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:12:05+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "2019-10-31 10:12:08,525 CONFIG [com.gigaspaces.logger] - Log file: /opt/gigaspaces/logs/2019-10-31~10.12-gigaspaces-service-10.4.1.141-792.log\nimport model.v1._\nimport com.gigaspaces.metadata._\nimport com.gigaspaces.metadata.index.SpaceIndexType\nimport java.lang\nimport scala.beans.BeanProperty\nimport org.insightedge.scala.annotation._\nimport org.insightedge.spark.implicits.all._\ntypeDescriptor: com.gigaspaces.metadata.SpaceTypeDescriptor = TypeDesc[typeName=Weather, checksum=2012354847, codebase=null, superTypesNames=[Weather, java.lang.Object], supportsDynamicProperties=true, supportsOptimisticLocking=false, systemType=false, replicatable=true, blobstoreEnabled=true, storageType=OBJECT, fifoSupport=OFF, idPropertyName=id, idAutoGenerate=true, routingPropertyName=Date, fifoGroupingPropertyName=null, sequenceNumberPropertyName=null, objectClass=, documentWrapperClass=com.gigaspaces.document.SpaceDocument, fixedProperties=[Prope..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212524_6434100",
+      "id": "20190827-234813_998795403",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:12:05+0000",
+      "dateFinished": "2019-10-31T10:12:11+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6471"
+    },
+    {
+      "title": "Write the weather data to memory",
+      "text": "%spark\nimport org.apache.spark.sql.SaveMode\n\nsc.grid.clear(\"Weather\")\nweatherDataFrame.write.mode(SaveMode.Overwrite).grid(\"Weather\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:12:11+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.SaveMode\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212524_-90377343",
+      "id": "20190827-235037_392240904",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:12:11+0000",
+      "dateFinished": "2019-10-31T10:12:15+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6472"
+    },
+    {
+      "text": "%md\n\n## Merge the weather and flight delays data together\n##### In the previous notebook we wrote the Flight Delays data to the memory grid\n##### In the notebook we wrote weather data for the same time period to the memory grid\n##### in the next paragraph, we define a distributed task that we will excute on the memory grid, \n##### this task will be sent to all the grid partitions and will execute the code below which will merge the weather data to the Flight Delays objects.\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:12:15+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572515778068_837362096",
+      "id": "20191031-095618_1420923713",
+      "dateCreated": "2019-10-31T09:56:18+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "focus": true,
+      "$$hashKey": "object:12081",
+      "dateFinished": "2019-10-31T10:12:15+0000",
+      "dateStarted": "2019-10-31T10:12:15+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h2>Merge the weather and flight delays data together</h2>\n<h5>In the previous notebook we wrote the Flight Delays data to the memory grid</h5>\n<h5>In the notebook we wrote weather data for the same time period to the memory grid</h5>\n<h5>in the next paragraph, we define a distributed task that we will excute on the memory grid,</h5>\n<h5>this task will be sent to all the grid partitions and will execute the code below which will merge the weather data to the Flight Delays objects.</h5>\n</div>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Define a task to enrich the flights delay records with relevant weather metrics",
+      "text": "%spark\nimport  model.v1._\nimport com.gigaspaces.async.AsyncResult\nimport org.openspaces.core.executor.DistributedTask\nimport org.insightedge.scala.annotation._\nimport scala.collection.JavaConversions._\nimport org.slf4j.{Logger, LoggerFactory}\nimport org.openspaces.core.GigaSpace\nimport org.openspaces.core.executor.TaskGigaSpace\nimport scala.beans.{BeanProperty}\nimport com.gigaspaces.document.SpaceDocument\nimport scala.collection.mutable.ListBuffer\nimport com.j_spaces.core.client.SQLQuery\n\n\nclass MergeTask extends DistributedTask[java.lang.Integer, java.lang.Integer] {\n  import scala.collection.JavaConversions._\n  private val logger = LoggerFactory.getLogger(classOf[MergeTask])\n  @TaskGigaSpace @transient private val gs: GigaSpace = null\n\noverride def execute(): Integer = {\n    if(gs != null) {\n      val clusteredProxy = gs.getClustered()\n      logger.info(\"execute returned from: \" + gs.getSpaceName)\n        val template =new SQLQuery[FlightDelaysWithWeather](classOf[FlightDelaysWithWeather], \"tmin is null\")\n        val weatherTemplate =new SpaceDocument(\"Weather\");\n        var writtenCount:Integer = 0\n        var retArray:Array[FlightDelaysWithWeather] = null\n        logger.info(\"Created template\")\n        try {\n            while ( {retArray = gs.takeMultiple(template, 1000);retArray  != null && retArray.length > 0}) {\n                var writeCollection = new ListBuffer[FlightDelaysWithWeather]\n                for (rec <- retArray) {\n                  val dateField:Int = (\"%d%02d%02d\".format(rec.year.toInt, rec.month.toInt, rec.dayofMonth.toInt)).toInt\n                  val origin:String =  rec.origin\n                  weatherTemplate.setProperty(\"Date\", dateField)\n                  weatherTemplate.setProperty(\"Station\", origin)\n                  val weather = clusteredProxy.read(weatherTemplate)\n                  if (weather != null) {\n                    rec.awnd = \"\" + weather.getProperty(\"AWND\")\n                    rec.prcp = \"\" + weather.getProperty(\"PRCP\")\n                    rec.snow = \"\" + weather.getProperty(\"SNOW\")\n                    rec.tmin = \"\" + weather.getProperty(\"TMIN\")\n                    rec.tmax = \"\" + weather.getProperty(\"TMAX\")\n                    rec.date =  dateField\n                    writeCollection += rec\n                  }\n                }\n                if(writeCollection.length > 0) {\n                    gs.writeMultiple(writeCollection.toArray)\n                } \n                writtenCount += writeCollection.length\n            }\n        } catch {\n            case e: Exception => logger.warn(e.getMessage, e)\n        }\n      logger.info(\"Finished task \" + writtenCount)\n\n      return writtenCount\n    } else {\n      logger.info(\"gs Proxy not available\")\n        return -1\n        \n    }\n  }\n  override def reduce(results: java.util.List[AsyncResult[Integer]]): java.lang.Integer = {\n    logger.info(\"In Reduce\")\n    return results.map(_.getResult().intValue()).sum\n  }}\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:12:15+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import model.v1._\nimport com.gigaspaces.async.AsyncResult\nimport org.openspaces.core.executor.DistributedTask\nimport org.insightedge.scala.annotation._\nimport scala.collection.JavaConversions._\nimport org.slf4j.{Logger, LoggerFactory}\nimport org.openspaces.core.GigaSpace\nimport org.openspaces.core.executor.TaskGigaSpace\nimport scala.beans.BeanProperty\nimport com.gigaspaces.document.SpaceDocument\nimport scala.collection.mutable.ListBuffer\nimport com.j_spaces.core.client.SQLQuery\ndefined class MergeTask\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569401411681_1667034538",
+      "id": "20190925-085011_609572142",
+      "dateCreated": "2019-09-25T08:50:11+0000",
+      "dateStarted": "2019-10-31T10:12:15+0000",
+      "dateFinished": "2019-10-31T10:12:17+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6473"
+    },
+    {
+      "title": "Execute the distributed task and get the enriched data as a Spark dataframe",
+      "text": "%spark\nimport com.gigaspaces.async.AsyncFuture;\nimport org.insightedge.spark.implicits.all._\n\nval future:AsyncFuture[Integer] = sc.grid.execute(new MergeTask())\nval result = future.get()\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:12:17+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import com.gigaspaces.async.AsyncFuture\nimport org.insightedge.spark.implicits.all._\nfuture: com.gigaspaces.async.AsyncFuture[Integer] = org.openspaces.core.transaction.internal.InternalAsyncFuture@f43b664\nresult: Integer = 525155\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212526_-1931848953",
+      "id": "20190831-224510_2052488220",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:12:18+0000",
+      "dateFinished": "2019-10-31T10:13:33+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6474"
+    },
+    {
+      "title": "Review the enriched data",
+      "text": "%insightedge_jdbc\n\nselect carrier , origin, dest, depDelay, awnd, prcp, snow, tmin, tmax   from FlightDelaysWithWeather where awnd is not null limit 20\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:13:33+0000",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "carrier": "string",
+                      "origin": "string",
+                      "dest": "string",
+                      "depDelay": "string",
+                      "awnd": "string",
+                      "prcp": "string",
+                      "snow": "string",
+                      "tmin": "string",
+                      "tmax": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "carrier\torigin\tdest\tdepDelay\tawnd\tprcp\tsnow\ttmin\ttmax\nB6\tSFO\tFLL\t86.0\t28\t76\t0\t72\t111\nB6\tORD\tBOS\t-7.0\t43\t122\t0\t17\t39\nB6\tSFO\tBOS\t-12.0\t33\t46\t0\t67\t111\nB6\tDEN\tBOS\t3.0\t56\t0\t0\t-93\t111\nB6\tSFO\tBOS\t2.0\t38\t0\t0\t50\t106\nB6\tORD\tFLL\t11.0\t43\t122\t0\t17\t39\nB6\tSFO\tFLL\t-7.0\t18\t0\t0\t50\t111\nB6\tSFO\tJFK\t-8.0\t35\t0\t0\t67\t122\nF9\tDEN\tDTW\t-3.0\t49\t0\t0\t-77\t44\nF9\tDEN\tRSW\t-3.0\t49\t0\t0\t-77\t44\nF9\tDEN\tMSY\t12.0\t17\t0\t0\t-77\t39\nF9\tDFW\tDEN\t27.0\t48\t51\t0\t50\t94\nF9\tDEN\tPDX\t12.0\t17\t0\t0\t-77\t39\nF9\tDEN\tMSY\t15.0\t26\t0\t0\t-55\t56\nF9\tDEN\tIND\t28.0\t26\t0\t0\t-55\t56\nF9\tORD\tLAX\t-4.0\t21\t0\t0\t-60\t17\nF9\tDEN\tCLE\t-7.0\t26\t0\t0\t-55\t56\nF9\tSFO\tCVG\t12.0\t12\t0\t0\t50\t111\nF9\tDEN\tTPA\t1.0\t26\t0\t0\t-55\t17\nF9\tDEN\tCVG\t-7.0\t26\t0\t0\t-55\t17\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212527_529455456",
+      "id": "20190818-171934_1385212060",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:13:33+0000",
+      "dateFinished": "2019-10-31T10:13:35+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6475"
+    },
+    {
+      "text": "%md\n\n### Preparing Feature Vectors\n\nIn the last stage of the data processing, we use the merged data to prepare feature vectors for all the fields we want to fit in our model, and label each vector with the resulting delay. nAs mentioned earlier, a positive number is the delay (in minutes) while a negative number indicates a flight that was early.\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:13:35+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Preparing Feature Vectors</h3>\n<p>In the last stage of the data processing, we use the merged data to prepare feature vectors for all the fields we want to fit in our model, and label each vector with the resulting delay. nAs mentioned earlier, a positive number is the delay (in minutes) while a negative number indicates a flight that was early.</p>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212527_-2064864035",
+      "id": "20190826-023258_963848778",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:13:35+0000",
+      "dateFinished": "2019-10-31T10:13:35+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6476"
+    },
+    {
+      "title": "Prepare the feature vector for the ML model",
+      "text": "%spark\nimport spark.implicits._\nimport org.apache.spark.rdd.RDD\nimport org.apache.spark.sql.Dataset\nimport org.apache.spark.mllib.regression.LabeledPoint\nimport org.apache.spark.mllib.linalg.Vectors\nimport org.apache.spark.mllib.feature.StandardScaler\nimport org.insightedge.scala.annotation._\nimport scala.beans.{BeanProperty}\n\n\ndef parseData(vals: Array[Double]): LabeledPoint = {\n   LabeledPoint(vals(0), Vectors.dense(vals.drop(1)))\n}\n\ndef prepareFeaturesLabeledPoint(_flightDelayswithWeatherDataSet: Dataset[FlightDelaysWithWeather]): RDD[LabeledPoint] = {\n    val featuresVectors = _flightDelayswithWeatherDataSet.map((o: FlightDelaysWithWeather) => Array(o.depDelay15.doubleValue(),  o.month.toDouble, o.dayOfWeek.toDouble,\n        (\"%04d\".format(o.crsDepTime.toInt).take(2)).toDouble, o.awnd.toDouble, o.prcp.toDouble, o.tmax.toDouble, o.tmin.toDouble))    \n     featuresVectors.rdd.map(parseData)\n} \n\nval FlightDelaysWithWeatherDataframe =  spark.read.grid[FlightDelaysWithWeather].as[FlightDelaysWithWeather]\n\nval traningData = prepareFeaturesLabeledPoint(FlightDelaysWithWeatherDataframe.filter(\"Year = 2017\"))\nval validationData = prepareFeaturesLabeledPoint(FlightDelaysWithWeatherDataframe.filter(\"Year = 2018\"))\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:13:35+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import spark.implicits._\nimport org.apache.spark.rdd.RDD\nimport org.apache.spark.sql.Dataset\nimport org.apache.spark.mllib.regression.LabeledPoint\nimport org.apache.spark.mllib.linalg.Vectors\nimport org.apache.spark.mllib.feature.StandardScaler\nimport org.insightedge.scala.annotation._\nimport scala.beans.BeanProperty\nparseData: (vals: Array[Double])org.apache.spark.mllib.regression.LabeledPoint\nprepareFeaturesLabeledPoint: (_flightDelayswithWeatherDataSet: org.apache.spark.sql.Dataset[model.v1.FlightDelaysWithWeather])org.apache.spark.rdd.RDD[org.apache.spark.mllib.regression.LabeledPoint]\nFlightDelaysWithWeatherDataframe: org.apache.spark.sql.Dataset[model.v1.FlightDelaysWithWeather] = [id: string, carrier: string ... 18 more fields]\ntraningData: org.apache.spark.rdd.RDD[org.apache.spa..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212530_1726418726",
+      "id": "20190819-134542_2030099805",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:13:36+0000",
+      "dateFinished": "2019-10-31T10:13:46+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6477"
+    },
+    {
+      "text": "%md\n\n### Training the ML Model\n\nWe are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model.  The result is a fitted or trained model.\n\nAfter we train the model, we'll evalute it using the helper `eval_metrics` and `Metrics` class to rate each prediction as follows:\n\n* TP - True Positive\n* TN - True Negative\n* FP - False Positive\n* FN - False Negative \n\nWe can then sum it to evalute the model's accuracy.\n\nAfter the training with the 2017 data, we'll run the model with the 2018 data and decide if the accuracy satisfies our requirements.\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:13:46+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Training the ML Model</h3>\n<p>We are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model. The result is a fitted or trained model.</p>\n<p>After we train the model, we&rsquo;ll evalute it using the helper <code>eval_metrics</code> and <code>Metrics</code> class to rate each prediction as follows:</p>\n<ul>\n  <li>TP - True Positive</li>\n  <li>TN - True Negative</li>\n  <li>FP - False Positive</li>\n  <li>FN - False Negative</li>\n</ul>\n<p>We can then sum it to evalute the model&rsquo;s accuracy.</p>\n<p>After the training with the 2017 data, we&rsquo;ll run the model with the 2018 data and decide if the accuracy satisfies our requirements.</p>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212530_-1509481850",
+      "id": "20190826-025537_806156844",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:13:46+0000",
+      "dateFinished": "2019-10-31T10:13:46+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6478"
+    },
+    {
+      "title": "Train the ML model and save it to the data grid",
+      "text": "%spark\n\nimport org.apache.spark.mllib.tree.RandomForest\nimport org.apache.spark.mllib.tree.configuration.Strategy\nimport org.insightedge.spark.implicits.all._\n\n\nval treeStrategy = Strategy.defaultStrategy(\"Classification\")\nval numTrees = 10 \nval featureSubsetStrategy = \"auto\" // Let the algorithm choose\nval predictFlightDelaysRFModel = RandomForest.trainClassifier(traningData, treeStrategy, numTrees, featureSubsetStrategy, seed = 123)\n//predictFlightDelaysRFModel.saveToGrid(sc, \"predictFlightDelaysRFModel\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:13:46+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.mllib.tree.RandomForest\nimport org.apache.spark.mllib.tree.configuration.Strategy\nimport org.insightedge.spark.implicits.all._\ntreeStrategy: org.apache.spark.mllib.tree.configuration.Strategy = org.apache.spark.mllib.tree.configuration.Strategy@54bf88e4\nnumTrees: Int = 10\nfeatureSubsetStrategy: String = auto\npredictFlightDelaysRFModel: org.apache.spark.mllib.tree.model.RandomForestModel =\nTreeEnsembleModel classifier with 10 trees\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212531_40481042",
+      "id": "20190820-105429_26620422",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:13:46+0000",
+      "dateFinished": "2019-10-31T10:14:52+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6479"
+    },
+    {
+      "title": "Define the performance metrics",
+      "text": "%spark\nimport org.apache.spark.rdd._\nimport org.apache.spark.rdd.RDD\n\n// Function to compute evaluation metrics\ndef eval_metrics(labelsAndPreds: RDD[(Double, Double)]) : Tuple2[Array[Double], Array[Double]] = {\n    val tp = labelsAndPreds.filter(r => r._1==1 && r._2==1).count.toDouble\n    val tn = labelsAndPreds.filter(r => r._1==0 && r._2==0).count.toDouble\n    val fp = labelsAndPreds.filter(r => r._1==1 && r._2==0).count.toDouble\n    val fn = labelsAndPreds.filter(r => r._1==0 && r._2==1).count.toDouble\n    \n    val precision = tp / (tp+fp)\n    val recall = tp / (tp+fn)\n    val F_measure = 2*precision*recall / (precision+recall)\n    val accuracy = (tp+tn) / (tp+tn+fp+fn)\n    new Tuple2(Array(tp, tn, fp, fn), Array(precision, recall, F_measure, accuracy))\n}\n\n\nclass Metrics(labelsAndPreds: RDD[(Double, Double)]) extends java.io.Serializable {\n\n    private def filterCount(lftBnd:Int,rtBnd:Int):Double = labelsAndPreds\n                                                           .map(x => (x._1.toInt, x._2.toInt))\n                                                           .filter(_ == (lftBnd,rtBnd)).count()\n\n    lazy val tp = filterCount(1,1)  // true positives\n    lazy val tn = filterCount(0,0)  // true negatives\n    lazy val fp = filterCount(0,1)  // false positives\n    lazy val fn = filterCount(1,0)  // false negatives\n\n    lazy val precision = tp / (tp+fp)\n    lazy val recall = tp / (tp+fn)\n    lazy val F1 = 2*precision*recall / (precision+recall)\n    lazy val accuracy = (tp+tn) / (tp+tn+fp+fn)\n}",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:14:52+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.rdd._\nimport org.apache.spark.rdd.RDD\neval_metrics: (labelsAndPreds: org.apache.spark.rdd.RDD[(Double, Double)])(Array[Double], Array[Double])\ndefined class Metrics\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212531_-1159061363",
+      "id": "20190825-015117_1946128941",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:14:52+0000",
+      "dateFinished": "2019-10-31T10:14:53+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6480"
+    },
+    {
+      "title": "Evaluate the model on the test data",
+      "text": "%spark\nprintln(validationData)\nval predictionsResultsComparedToActual = validationData.map { point =>\n    val prediction = predictFlightDelaysRFModel.predict(point.features)\n    (point.label, prediction)\n}\npredictionsResultsComparedToActual.map(println)\nval modelMetrics = new Metrics(predictionsResultsComparedToActual)\nprintln(\"accuracy = %.2f\"\n        .format(modelMetrics.accuracy))\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:14:53+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "MapPartitionsRDD[30] at map at <console>:88\naccuracy = 0.79\npredictionsResultsComparedToActual: org.apache.spark.rdd.RDD[(Double, Double)] = MapPartitionsRDD[70] at map at <console>:98\nmodelMetrics: Metrics = Metrics@216770f8\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569132212532_1605416256",
+      "id": "20190825-003059_736568661",
+      "dateCreated": "2019-09-22T06:03:32+0000",
+      "dateStarted": "2019-10-31T10:14:53+0000",
+      "dateFinished": "2019-10-31T10:15:41+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6481"
+    },
+    {
+      "text": "%md\n\n### Stream flights data via Kafka to the memory grid\n\nIn the backgroud, feeder pushes flights data events to Kafka.\nIn the next paragraph Kafka streaming is use to write this data from Kafka to the memory grid.\nThe event prediction field is set to \"for_calc\" before a prediction is made.\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-11-11T12:44:30+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1573475946282_-1420859346",
+      "id": "20191111-123906_159111927",
+      "dateCreated": "2019-11-11T12:39:06+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "focus": true,
+      "$$hashKey": "object:5969",
+      "dateFinished": "2019-11-11T12:44:33+0000",
+      "dateStarted": "2019-11-11T12:44:30+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Stream flights data via Kafka to the memory grid</h3>\n<p>In the backgroud, feeder pushes flights data events to Kafka.<br/>In the next paragraph Kafka streaming is use to write this data from Kafka to the memory grid.<br/>The event prediction field is set to &ldquo;for_calc&rdquo; before a prediction is made.</p>\n</div>"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark\nimport _root_.kafka.serializer.StringDecoder\nimport model.v1._\nimport org.apache.spark.streaming._\nimport org.apache.spark.streaming.kafka._\nimport com.google.gson.Gson\n\n\n\n    val ssc = new StreamingContext(sc, Seconds(2))\n    val topics = \"flights\"\n    val topicsSet = topics.split(\",\").toSet\n    val kafkaParams = Map[String, String](\"metadata.broker.list\" -> System.getenv(\"KAFKA_URL\"))\n    val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](\n      ssc, kafkaParams, topicsSet)\n    messages.map { o =>\n        val gson = new Gson()\n        val fd = gson.fromJson( o._2, classOf[FlightDelaysWithWeather])\n        fd.generate_id()\n        fd.prediction = \"for_calc\"\n        fd\n   }.saveToGrid()\n\nssc.start\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:28:27+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import kafka.serializer.StringDecoder\nimport model.v1._\nimport org.apache.spark.streaming._\nimport org.apache.spark.streaming.kafka._\nimport com.google.gson.Gson\nssc: org.apache.spark.streaming.StreamingContext = org.apache.spark.streaming.StreamingContext@23122298\ntopics: String = flights\ntopicsSet: scala.collection.immutable.Set[String] = Set(flights)\nkafkaParams: scala.collection.immutable.Map[String,String] = Map(metadata.broker.list -> nofl6-kafka-headless:9092)\nmessages: org.apache.spark.streaming.dstream.InputDStream[(String, String)] = org.apache.spark.streaming.kafka.DirectKafkaInputDStream@30fc9b9f\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1569409233858_-2070858439",
+      "id": "20190925-110033_1852097161",
+      "dateCreated": "2019-09-25T11:00:33+0000",
+      "dateStarted": "2019-10-31T10:15:41+0000",
+      "dateFinished": "2019-10-31T10:15:44+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6482",
+      "title": "Use Spark Streaming for streaming flights data from Kafka and store it in the memory grid"
+    },
+    {
+      "text": "%spark\n\nval for_clac = spark.read.grid[FlightDelaysWithWeather].as[FlightDelaysWithWeather].where(\"prediction == 'for_calc'\")\n\nval flightDelayPredictions = for_clac.map{fd => \n                        val featuresVector = Array(fd.month.toDouble, fd.dayOfWeek.toDouble,\n                            (\"%04d\".format(fd.crsDepTime.toInt).take(2)).toDouble, fd.awnd.toDouble, fd.prcp.toDouble, fd.tmax.toDouble, fd.tmin.toDouble)\n                        val prediction = predictFlightDelaysRFModel.predict( Vectors.dense(featuresVector))\n                        if(prediction > 0)\n                            fd.prediction = \"Delayed\"\n                        else\n                            fd.prediction = \"OK\"\n\n                        fd\n       \n   }.rdd.saveToGrid()\nprintln(\"Updated predictions for \" + for_clac.count + \" records\")",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:32:24+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "_1": "string",
+                      "_2": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Updated predictions for 20 records\nfor_clac: org.apache.spark.sql.Dataset[model.v1.FlightDelaysWithWeather] = [id: string, carrier: string ... 18 more fields]\nflightDelayPredictions: Unit = ()\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1571820266071_-1676134140",
+      "id": "20191023-084426_853931483",
+      "dateCreated": "2019-10-23T08:44:26+0000",
+      "dateStarted": "2019-10-31T10:32:24+0000",
+      "dateFinished": "2019-10-31T10:32:29+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6483",
+      "title": "Read the Flights data from the memory grid and run our model prediction on it"
+    },
+    {
+      "text": "%insightedge_jdbc \n\nselect * from FlightDelaysWithWeather where prediction is not null limit 50\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:31:59+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "awnd": "string",
+                      "cancelled": "string",
+                      "carrier": "string",
+                      "crsDepTime": "string",
+                      "date": "string",
+                      "dayOfWeek": "string",
+                      "dayofMonth": "string",
+                      "depDelay": "string",
+                      "depDelay15": "string",
+                      "dest": "string",
+                      "flight_number": "string",
+                      "id": "string",
+                      "month": "string",
+                      "origin": "string",
+                      "prcp": "string",
+                      "prediction": "string",
+                      "snow": "string",
+                      "tmax": "string",
+                      "tmin": "string",
+                      "year": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "awnd\tcancelled\tcarrier\tcrsDepTime\tdate\tdayOfWeek\tdayofMonth\tdepDelay\tdepDelay15\tdest\tflight_number\tid\tmonth\torigin\tprcp\tprediction\tsnow\ttmax\ttmin\tyear\n0\t0.0\tOO\t1040\tnull\t7.0\t13.0\t-4.0\t0.0\tJAC\t5903\t2019:1.0:13.0:7.0:1040:5903\t1.0\tSFO\t13\tDelayed\t0\t0\t150\t2019\n0\t0.0\tOO\t1740\tnull\t7.0\t13.0\t4.0\t0.0\tBNA\t5917\t2019:1.0:13.0:7.0:1740:5917\t1.0\tDEN\t34\tDelayed\t0\t0\t17\t2019\n0\t0.0\tOO\t725\tnull\t7.0\t13.0\t-6.0\t0.0\tPSP\t5933\t2019:1.0:13.0:7.0:725:5933\t1.0\tSFO\t13\tOK\t0\t0\t150\t2019\n0\t0.0\tOO\t1115\tnull\t7.0\t13.0\t-6.0\t0.0\tCOD\t5969\t2019:1.0:13.0:7.0:1115:5969\t1.0\tDEN\t34\tDelayed\t0\t0\t17\t2019\n0\t0.0\tOO\t1905\tnull\t7.0\t13.0\t38.0\t1.0\tBFL\t5978\t2019:1.0:13.0:7.0:1905:5978\t1.0\tDEN\t34\tDelayed\t0\t0\t17\t2019\n0\t0.0\tOO\t1040\tnull\t7.0\t13.0\t-10.0\t0.0\tEGE\t5986\t2019:1.0:13.0:7.0:1040:5986\t1.0\tSFO\t13\tDelayed\t0\t0\t150\t2019\n0\t0.0\tOO\t1252\tnull\t7.0\t13.0\t-3.0\t0.0\tOMA\t5989\t2019:1.0:13.0:7.0:1252:5989\t1.0\tORD\t56\tOK\t3\t8\t-5\t2019\n0\t0.0\tOO\t1605\tnull\t7.0\t13.0\t-6.0\t0.0\tMFR\t5993\t2019:1.0:13.0:7.0:1605:5993\t1.0\tSFO\t13\tDelayed\t0\t0\t150\t2019\n0\t0.0\tOO\t1705\tnull\t7.0\t13.0\t-9.0\t0.0\tPHX\t5996\t2019:1.0:13.0:7.0:1705:5996\t1.0\tSFO\t13\tDelayed\t0\t0\t150\t2019\n0\t0.0\tOO\t1430\tnull\t1.0\t14.0\t-6.0\t0.0\tBTR\t2952\t2019:1.0:14.0:1.0:1430:2952\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t2035\tnull\t1.0\t14.0\t-9.0\t0.0\tJLN\t2959\t2019:1.0:14.0:1.0:2035:2959\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1115\tnull\t1.0\t14.0\t15.0\t1.0\tHDN\t2966\t2019:1.0:14.0:1.0:1115:2966\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t2036\tnull\t1.0\t14.0\t673.0\t1.0\tBNA\t2972\t2019:1.0:14.0:1.0:2036:2972\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t1817\tnull\t1.0\t14.0\t-3.0\t0.0\tDTW\t2984\t2019:1.0:14.0:1.0:1817:2984\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t950\tnull\t1.0\t14.0\t-8.0\t0.0\tASE\t2992\t2019:1.0:14.0:1.0:950:2992\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t715\tnull\t1.0\t14.0\t14.0\t0.0\tDTW\t2998\t2019:1.0:14.0:1.0:715:2998\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t840\tnull\t1.0\t14.0\t-6.0\t0.0\tSDF\t3008\t2019:1.0:14.0:1.0:840:3008\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t1635\tnull\t1.0\t14.0\t-3.0\t0.0\tHOU\t3025\t2019:1.0:14.0:1.0:1635:3025\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1848\tnull\t1.0\t14.0\t-9.0\t0.0\tHPN\t3045\t2019:1.0:14.0:1.0:1848:3045\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t2033\tnull\t1.0\t14.0\t13.0\t0.0\tGRB\t3053\t2019:1.0:14.0:1.0:2033:3053\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t1325\tnull\t1.0\t14.0\t11.0\t0.0\tDTW\t3076\t2019:1.0:14.0:1.0:1325:3076\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t815\tnull\t1.0\t14.0\t-2.0\t0.0\tIND\t3093\t2019:1.0:14.0:1.0:815:3093\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t835\tnull\t1.0\t14.0\t-5.0\t0.0\tMKE\t3113\t2019:1.0:14.0:1.0:835:3113\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t2200\tnull\t1.0\t14.0\t-5.0\t0.0\tICT\t3124\t2019:1.0:14.0:1.0:2200:3124\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t1529\tnull\t1.0\t14.0\t-8.0\t0.0\tPIB\t3128\t2019:1.0:14.0:1.0:1529:3128\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1450\tnull\t1.0\t14.0\t84.0\t1.0\tIND\t3141\t2019:1.0:14.0:1.0:1450:3141\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t2055\tnull\t1.0\t14.0\t-4.0\t0.0\tCLL\t3146\t2019:1.0:14.0:1.0:2055:3146\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t2235\tnull\t1.0\t14.0\t-4.0\t0.0\tSAF\t3164\t2019:1.0:14.0:1.0:2235:3164\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1855\tnull\t1.0\t14.0\t-11.0\t0.0\tECP\t3168\t2019:1.0:14.0:1.0:1855:3168\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1739\tnull\t1.0\t14.0\t-2.0\t0.0\tDTW\t3181\t2019:1.0:14.0:1.0:1739:3181\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t1655\tnull\t1.0\t14.0\t-8.0\t0.0\tBTR\t3185\t2019:1.0:14.0:1.0:1655:3185\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t2216\tnull\t1.0\t14.0\t-3.0\t0.0\tIND\t3190\t2019:1.0:14.0:1.0:2216:3190\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t1010\tnull\t1.0\t14.0\t-5.0\t0.0\tOKC\t3192\t2019:1.0:14.0:1.0:1010:3192\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t700\tnull\t1.0\t14.0\t-1.0\t0.0\tBNA\t3203\t2019:1.0:14.0:1.0:700:3203\t1.0\tDFW\t22\tOK\t0\t0\t72\t2019\n0\t0.0\tOO\t1441\tnull\t1.0\t14.0\t-7.0\t0.0\tHOU\t3212\t2019:1.0:14.0:1.0:1441:3212\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t705\tnull\t1.0\t14.0\t-1.0\t0.0\tBNA\t3225\t2019:1.0:14.0:1.0:705:3225\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t1223\tnull\t1.0\t14.0\t18.0\t1.0\tBTR\t3233\t2019:1.0:14.0:1.0:1223:3233\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t2226\tnull\t1.0\t14.0\t-7.0\t0.0\tROW\t3245\t2019:1.0:14.0:1.0:2226:3245\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t850\tnull\t1.0\t14.0\t-11.0\t0.0\tASE\t3250\t2019:1.0:14.0:1.0:850:3250\t1.0\tDFW\t22\tOK\t0\t0\t72\t2019\n0\t0.0\tOO\t2050\tnull\t1.0\t14.0\t0.0\t0.0\tMLU\t3257\t2019:1.0:14.0:1.0:2050:3257\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1430\tnull\t1.0\t14.0\t1.0\t0.0\tJAN\t3268\t2019:1.0:14.0:1.0:1430:3268\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1020\tnull\t1.0\t14.0\t-2.0\t0.0\tBTR\t3290\t2019:1.0:14.0:1.0:1020:3290\t1.0\tDFW\t22\tDelayed\t0\t0\t72\t2019\n0\t0.0\tOO\t1150\tnull\t1.0\t14.0\t-8.0\t0.0\tDAL\t3406\t2019:1.0:14.0:1.0:1150:3406\t1.0\tSFO\t24\tOK\t0\t0\t139\t2019\n0\t0.0\tOO\t700\tnull\t1.0\t14.0\t-4.0\t0.0\tJFK\t3595\t2019:1.0:14.0:1.0:700:3595\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t1644\tnull\t1.0\t14.0\t-1.0\t0.0\tSLC\t3636\t2019:1.0:14.0:1.0:1644:3636\t1.0\tSFO\t24\tOK\t0\t0\t139\t2019\n0\t0.0\tOO\t730\tnull\t1.0\t14.0\t0.0\t0.0\tLGA\t3757\t2019:1.0:14.0:1.0:730:3757\t1.0\tORD\t37\tOK\t0\t0\t-27\t2019\n0\t0.0\tOO\t1530\tnull\t1.0\t14.0\t25.0\t1.0\tLGA\t3779\t2019:1.0:14.0:1.0:1530:3779\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t1330\tnull\t1.0\t14.0\t18.0\t1.0\tLGA\t3786\t2019:1.0:14.0:1.0:1330:3786\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t1930\tnull\t1.0\t14.0\t111.0\t1.0\tLGA\t3803\t2019:1.0:14.0:1.0:1930:3803\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n0\t0.0\tOO\t1230\tnull\t1.0\t14.0\t12.0\t0.0\tLGA\t3806\t2019:1.0:14.0:1.0:1230:3806\t1.0\tORD\t37\tDelayed\t0\t0\t-27\t2019\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1571833561691_-2036157628",
+      "id": "20191023-122601_348040933",
+      "dateCreated": "2019-10-23T12:26:01+0000",
+      "dateStarted": "2019-10-31T10:31:59+0000",
+      "dateFinished": "2019-10-31T10:32:00+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6484",
+      "title": "Look at the predictions data"
+    },
+    {
+      "text": "%insightedge_jdbc\nselect prediction, count(*) as \"count\" from FlightDelaysWithWeather group by prediction\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T10:33:22+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "prediction": "string",
+                      "count": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/sql",
+        "title": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "prediction\tcount\nDelayed\t4412\nfor_calc\t50\nOK\t5608\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1571833929754_948864732",
+      "id": "20191023-123209_886208345",
+      "dateCreated": "2019-10-23T12:32:09+0000",
+      "dateStarted": "2019-10-31T10:32:31+0000",
+      "dateFinished": "2019-10-31T10:32:32+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:6485"
+    }
+  ],
+  "name": "Getting Started/Flight Delays 2",
+  "id": "INSIGHTEDGE-GETTING-STARTED-2",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "sh:shared_process": [],
+    "insightedge_jdbc:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}

@@ -1,0 +1,1214 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%md\n##  \u003d\u003d\u003e  Getting Started - Part 1 or 2 \u003c\u003d\u003d\n##  \u003d\u003d [Getting Started - Part 2 or 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED-2) \u003d\u003d",
+      "user": "anonymous",
+      "dateUpdated": "2019-12-02 14:04:38.385",
+      "config": {
+        "colWidth": 12.0,
+        "fontSize": 9.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e\u003d\u003d\u0026gt; Getting Started - Part 1 or 2 \u0026lt;\u003d\u003d\u003c/h2\u003e\n\u003ch2\u003e\u003d\u003d \u003ca href\u003d\"#/notebook/INSIGHTEDGE-GETTING-STARTED-2\"\u003eGetting Started - Part 2 or 2\u003c/a\u003e \u003d\u003d\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1575295467917_1569100696",
+      "id": "20191202-140427_1777828485",
+      "dateCreated": "2019-12-02 14:04:27.918",
+      "dateStarted": "2019-12-02 14:04:38.403",
+      "dateFinished": "2019-12-02 14:04:38.438",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },    {
+      "text": "%md\n> Exploring data, training a model, and making predictions\n\n## Welcome to Getting Started with InsightEdge\n\nThis sample application uses flight delay data to make binary predictions (yes/no) about which flights are likely to get delayed. It takes you through the following steps:\n\n* Fetching data and loading it to the InsightEdge platform\n* Exploring the data using Spark and SQL queries\n* Enriching the data and processing it to get the relevant feature vector\n* Building and training a Machine Learning (ML) model for predicting flight delays\n* Testing the ML model with real data\n\nTo run the code and see the results in the notebook, click  the `Run` icon in each paragraph (located in the top right corner).\n\n### Fetching and Exploring the Data\n\nFor this application, we'll load sample data from a CSV file to the data grid. We can then explore it a bit using SQL queries. \n\n### Processing the Data for the ML Model\n\nWe will use InsightEdge Spark queries to transform the flight data information to get what we need to train the ML model, so that it can make accurate flight delay predictions. The initial data includes (per flight) date, airport of origin, destination, airline, departure delay, etc. This data will then be enriched with basic weather data at the airport of origin at the time of departure.\n\n### Selecting an ML Model\n\nThere are many ML models available. The model that we felt is best suited for this task is the `Random (Decision) Forest`. \nFlight delays are measured in minutes, positive number is the delay in minutes while negative number indicate a flight that was early.\nWe will use data such as the month, day and departure time as well as origin and destination airports as features we will feed into an ML model, in our case, Random Forest, to train it for best accuracy. \nWe will also supplement the feature vector with weather related data such as rain, wind and temperature. \n\n##### We will use:\n*2017 data for training our model\n*2018 data for evaluating our model accuracy\n*Then we will stream 2019 data and predict if the flight will get delayed.",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:36:35+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "title": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<blockquote>\n  <p>Exploring data, training a model, and making predictions</p>\n</blockquote>\n<h2>Welcome to Getting Started with InsightEdge</h2>\n<p>This sample application uses flight delay data to make binary predictions (yes/no) about which flights are likely to get delayed. It takes you through the following steps:</p>\n<ul>\n  <li>Fetching data and loading it to the InsightEdge platform</li>\n  <li>Exploring the data using Spark and SQL queries</li>\n  <li>Enriching the data and processing it to get the relevant feature vector</li>\n  <li>Building and training a Machine Learning (ML) model for predicting flight delays</li>\n  <li>Testing the ML model with real data</li>\n</ul>\n<p>To run the code and see the results in the notebook, click the <code>Run</code> icon in each paragraph (located in the top right corner).</p>\n<h3>Fetching and Exploring the Data</h3>\n<p>For this application, we&rsquo;ll load sample data from a CSV file to the data grid. We can then explore it a bit using SQL queries. </p>\n<h3>Processing the Data for the ML Model</h3>\n<p>We will use InsightEdge Spark queries to transform the flight data information to get what we need to train the ML model, so that it can make accurate flight delay predictions. The initial data includes (per flight) date, airport of origin, destination, airline, departure delay, etc. This data will then be enriched with basic weather data at the airport of origin at the time of departure.</p>\n<h3>Selecting an ML Model</h3>\n<p>There are many ML models available. The model that we felt is best suited for this task is the <code>Random (Decision) Forest</code>.<br/>Flight delays are measured in minutes, positive number is the delay in minutes while negative number indicate a flight that was early.<br/>We will use data such as the month, day and departure time as well as origin and destination airports as features we will feed into an ML model, in our case, Random Forest, to train it for best accuracy.<br/>We will also supplement the feature vector with weather related data such as rain, wind and temperature. </p>\n<h5>We will use:</h5>\n<p>*2017 data for training our model<br/>*2018 data for evaluating our model accuracy<br/>*Then we will stream 2019 data and predict if the flight will get delayed.</p>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263421_150876518",
+      "id": "20190821-232519_1860033659",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "focus": true,
+      "$$hashKey": "object:357",
+      "dateFinished": "2019-10-31T13:28:29+0000",
+      "dateStarted": "2019-10-31T13:28:29+0000"
+    },
+    {
+      "text": "%md\r\n### Fetching and Exploring the Data\r\n\r\nThe data is in CSV file format. (If the data is not available for some reason, you can download it from: <https://insightedge-gettingstarted.s3.amazonaws.com/flightdelays20172018.csv.zip>)\r\nAfter the data is loaded, explore the data with the provided SQL statements to understand the schema and how it behaves.",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:28:29+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Fetching and Exploring the Data</h3>\n<p>The data is in CSV file format. (If the data is not available for some reason, you can download it from: <a href=\"https://insightedge-gettingstarted.s3.amazonaws.com/flightdelays20172018.csv.zip\">https://insightedge-gettingstarted.s3.amazonaws.com/flightdelays20172018.csv.zip</a>)<br/>After the data is loaded, explore the data with the provided SQL statements to understand the schema and how it behaves.</p>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263424_-2109347326",
+      "id": "20190826-021256_100418820",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:358",
+      "dateFinished": "2019-10-31T13:28:29+0000",
+      "dateStarted": "2019-10-31T13:28:29+0000"
+    },
+    {
+      "title": "Restart interpreter before we use '%define'",
+      "text": "%sh\nwget --method=PUT -O /dev/null http://localhost:9090/api/interpreter/setting/restart/spark\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:28:29+0000",
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "--2019-10-31 13:28:33--  http://localhost:9090/api/interpreter/setting/restart/spark\nResolving localhost... 127.0.0.1, ::1\nConnecting to localhost|127.0.0.1|:9090... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 3924 (3.8K) [application/json]\nSaving to: '/dev/null'\n\n     0K ...                                                   100%  572M=0s\n\n2019-10-31 13:28:33 (572 MB/s) - '/dev/null' saved [3924/3924]\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263425_1906657164",
+      "id": "20191023-083057_1327164381",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:359",
+      "dateFinished": "2019-10-31T13:28:33+0000",
+      "dateStarted": "2019-10-31T13:28:29+0000"
+    },
+    {
+      "text": "%define\npackage model.v1\n\nimport com.gigaspaces.metadata._\nimport com.gigaspaces.metadata.index.SpaceIndexType;\nimport java.lang\nimport scala.beans.{BeanProperty}\nimport org.insightedge.scala.annotation._\nimport org.insightedge.spark.implicits.all._\n\n\n//Describe the data as Scala Case Class\n\ncase class FlightDelaysWithWeather(\n  @BeanProperty \n  @SpaceId\n  var id: String,\n  @BeanProperty \n  @SpaceIndex\n  var carrier: String,\n  @BeanProperty \n  @SpaceIndex\n  var flight_number: String,\n  @SpaceIndex\n  @BeanProperty \n  var year: Integer,\n  @BeanProperty \n  var month: String,\n  @BeanProperty \n  var dayofMonth: String,\n  @BeanProperty \n  var dayOfWeek: String,\n  @BeanProperty \n  var crsDepTime: String,\n  @SpaceIndex\n  @BeanProperty \n  var depDelay15: java.lang.Double,\n  @BeanProperty \n  var depDelay: java.lang.Double,\n  @SpaceIndex\n  @BeanProperty \n  var origin: String,\n  @BeanProperty \n  var dest: String,\n  @BeanProperty \n  var awnd: String,\n  @BeanProperty \n  var prcp: String,\n  @BeanProperty \n  var snow: String,\n  @BeanProperty \n  var tmax: String,\n  @BeanProperty \n  var tmin: String,\n  @BeanProperty \n  var cancelled: String,\n  @BeanProperty \n  var date: Integer,\n  @BeanProperty \n  var prediction: String) {\n  def this() = this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)\n  def generate_id() = {id = \"%04d:%s:%s:%s:%s:%s\".format(year, month, dayofMonth, dayOfWeek, crsDepTime, flight_number)}\n}\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:28:33+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency = org.apache.zeppelin.dep.Dependency@77ec3bf4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263426_-2084588016",
+      "id": "20190901-004515_1420239656",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:360",
+      "dateFinished": "2019-10-31T13:29:01+0000",
+      "dateStarted": "2019-10-31T13:28:34+0000"
+    },
+    {
+      "title": "Load the FlightDelay data",
+      "text": "%spark\n//explore data before we continue\n//WN - SouthWest, OO - SkyWest Airlines Inc., \"EV\" - ExpressJet Airlines LLC, \"B6\" - JetBlue, \"AS\" Alaska Airlines Inc. \"NK\" - Spirit Air Lines\", \"F9\" - \"Frontier Airlines Inc.\"\nval airlines = List (\"UA\",\"OO\",\"B6\",\"NK\", \"F9\")\n// ORD - Chicago, DFW - Dallas, DEN - Denver, SFO - San Francisco\nval airports = List (\"ORD\",\"DFW\",\"DEN\",\"SFO\")\nval flightDelaysDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(\"/opt/gigaspaces/flightdelays20172018.csv\").filter($\"Reporting_Airline\".isin(airlines:_*)).filter($\"Origin\".isin(airports:_*)).filter($\"cancelled\" === 0.0).filter($\"DayofMonth\" < 20.0)\nflightDelaysDataFrame.printSchema()\n// Create a temp view that we can query by SQL\nflightDelaysDataFrame.createOrReplaceTempView(\"FlightDelays\")\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:29:01+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- Year: integer (nullable = true)\n |-- Month: integer (nullable = true)\n |-- DayofMonth: integer (nullable = true)\n |-- DayOfWeek: integer (nullable = true)\n |-- Reporting_Airline: string (nullable = true)\n |-- Tail_Number: string (nullable = true)\n |-- Flight_Number: integer (nullable = true)\n |-- Origin: string (nullable = true)\n |-- Dest: string (nullable = true)\n |-- CRSDepTime: integer (nullable = true)\n |-- DepDelay: double (nullable = true)\n |-- DepDel15: double (nullable = true)\n |-- cancelled: double (nullable = true)\n\nairlines: List[String] = List(UA, OO, B6, NK, F9)\nairports: List[String] = List(ORD, DFW, DEN, SFO)\nflightDelaysDataFrame: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [Year: int, Month: int ... 11 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263427_1125920972",
+      "id": "20190812-123228_1439056817",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:361",
+      "dateFinished": "2019-10-31T13:30:56+0000",
+      "dateStarted": "2019-10-31T13:29:01+0000",
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=0",
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=1"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      }
+    },
+    {
+      "title": "Review a sample of the data",
+      "text": "%sql\nselect * from FlightDelays order by DepDelay Desc limit 5\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:30:56+0000",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {
+                    "columns": [
+                      {
+                        "name": "Year",
+                        "visible": true,
+                        "width": 150,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "Month",
+                        "visible": true,
+                        "width": 150,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "DayofMonth",
+                        "visible": true,
+                        "width": 150,
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "DayOfWeek",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "Reporting_Airline",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "Tail_Number",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "Origin",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "Dest",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "CRSDepTime",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "DepDelay",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "DepDel15",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {},
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      },
+                      {
+                        "name": "cancelled",
+                        "visible": true,
+                        "width": "*",
+                        "sort": {
+                          "priority": 0,
+                          "direction": "desc"
+                        },
+                        "filters": [
+                          {}
+                        ],
+                        "pinned": ""
+                      }
+                    ],
+                    "scrollFocus": {},
+                    "selection": [],
+                    "grouping": {
+                      "grouping": [],
+                      "aggregations": [],
+                      "rowExpandedStates": {}
+                    },
+                    "treeView": {},
+                    "pagination": {
+                      "paginationCurrentPage": 1,
+                      "paginationPageSize": 250
+                    }
+                  },
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Year": "string",
+                      "Month": "string",
+                      "DayofMonth": "string",
+                      "DayOfWeek": "string",
+                      "Reporting_Airline": "string",
+                      "Tail_Number": "string",
+                      "Flight_Number": "string",
+                      "Origin": "string",
+                      "Dest": "string",
+                      "CRSDepTime": "string",
+                      "DepDelay": "string",
+                      "DepDel15": "string",
+                      "cancelled": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Year\tMonth\tDayofMonth\tDayOfWeek\tReporting_Airline\tTail_Number\tFlight_Number\tOrigin\tDest\tCRSDepTime\tDepDelay\tDepDel15\tcancelled\n2017\t3\t8\t3\tUA\tN213UA\t328\tDEN\tHNL\t1200\t1495.0\t1.0\t0.0\n2017\t6\t13\t2\tOO\tN898SK\t4478\tORD\tSLC\t754\t1437.0\t1.0\t0.0\n2018\t1\t3\t3\tOO\tN464SW\t3128\tDFW\tPIB\t1230\t1416.0\t1.0\t0.0\n2018\t3\t2\t5\tOO\tN145SY\t5483\tDFW\tSFO\t1931\t1396.0\t1.0\t0.0\n2018\t2\t9\t5\tOO\tN712SK\t2999\tDFW\tASE\t1640\t1377.0\t1.0\t0.0\n"
+          },
+          {
+            "type": "TEXT",
+            "data": ""
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263428_551027076",
+      "id": "20190818-160607_881523454",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:362",
+      "dateFinished": "2019-10-31T13:32:02+0000",
+      "dateStarted": "2019-10-31T13:30:56+0000",
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=2"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      }
+    },
+    {
+      "title": "Total number of flights vs. number of delayed flights (by airport of origin)",
+      "text": "%sql\n\nselect Origin, count(*) as TotalFlights, SUM(DepDel15) as DelayedFlightsCount from FlightDelays group by Origin order by  DelayedFlightsCount/TotalFlights desc limit 15\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:36:35+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "Origin": "string",
+                      "TotalFlights": "string",
+                      "DelayedFlights": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "stackedAreaChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                },
+                "lineChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Origin",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "TotalFlights",
+                  "index": 1,
+                  "aggr": "sum"
+                },
+                {
+                  "name": "DelayedFlightsCount",
+                  "index": 2,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Origin\tTotalFlights\tDelayedFlightsCount\nSFO\t127175\t27298.0\nORD\t203768\t43373.0\nDFW\t27611\t5154.0\nDEN\t166684\t28475.0\n"
+          },
+          {
+            "type": "TEXT",
+            "data": ""
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263428_528828698",
+      "id": "20190814-105136_1961434103",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:363",
+      "dateFinished": "2019-10-31T13:32:52+0000",
+      "dateStarted": "2019-10-31T13:32:03+0000",
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=3"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      }
+    },
+    {
+      "title": "Airport popularity",
+      "text": "%sql\nselect origin, count(*) as vol from  FlightDelays group by origin order by vol desc",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:32:52+0000",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "origin": "string",
+                      "vol": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "origin\tvol\nORD\t203768\nDEN\t166684\nSFO\t127175\nDFW\t27611\n"
+          },
+          {
+            "type": "TEXT",
+            "data": ""
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263429_534450370",
+      "id": "20190814-130922_1525095978",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:364",
+      "dateFinished": "2019-10-31T13:33:32+0000",
+      "dateStarted": "2019-10-31T13:32:52+0000",
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=4"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      }
+    },
+    {
+      "text": "%md\n\n### Transforming and Enriching the Flight Data\n\nThis step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. the data is processed as follows:\n\n* Configure an InsightEdge context\n* Provide InsightEdge with Type information about the data that was loaded\n* Load the data to the InsightEdge in-memory store (to speed up data access)\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:33:32+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Transforming and Enriching the Flight Data</h3>\n<p>This step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. the data is processed as follows:</p>\n<ul>\n  <li>Configure an InsightEdge context</li>\n  <li>Provide InsightEdge with Type information about the data that was loaded</li>\n  <li>Load the data to the InsightEdge in-memory store (to speed up data access)</li>\n</ul>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263429_536556282",
+      "id": "20190826-022330_1347205260",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:365",
+      "dateFinished": "2019-10-31T13:33:32+0000",
+      "dateStarted": "2019-10-31T13:33:32+0000"
+    },
+    {
+      "title": "Initialize Spark with InsightEdge context ",
+      "text": "%spark\n\nimport org.insightedge.spark.implicits.all._\nimport org.insightedge.spark.context.InsightEdgeConfig\n\n//Change space name here if not working with default\nval ieConfig = new InsightEdgeConfig(\"flights_space\")\n\nsc.initializeInsightEdgeContext(ieConfig)\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:33:32+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.insightedge.spark.implicits.all._\nimport org.insightedge.spark.context.InsightEdgeConfig\nieConfig: org.insightedge.spark.context.InsightEdgeConfig = InsightEdgeConfig(flights_space,None,None)\nres2: org.apache.spark.SparkContext = org.apache.spark.SparkContext@19f18fd4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263430_-1884570368",
+      "id": "20190814-133229_440702495",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:366",
+      "dateFinished": "2019-10-31T13:33:33+0000",
+      "dateStarted": "2019-10-31T13:33:32+0000"
+    },
+    {
+      "title": "Write the FlightDelay data to the in-memory store",
+      "text": "%spark\nimport org.apache.spark.sql.SaveMode\nimport model.v1._\n\nprint(\"Writing to in-memory store \" + flightDelaysDataFrame.count + \"entries\")\n\nval flightDelaysRDD = flightDelaysDataFrame.map{rec =>  val fdww = FlightDelaysWithWeather(null, \"\"+rec.getAs(\"Reporting_Airline\") , \"\"+rec.getAs(\"Flight_Number\") ,(\"\"+rec.getAs(\"Year\")).toInt,\"\"+rec.getAs(\"Month\"),\"\"+rec(2),\"\"+rec.getAs(\"DayOfWeek\"),\"\"+rec.getAs(\"CRSDepTime\"),(\"\"+rec.getAs(\"DepDel15\")).toDouble,(\"\"+rec.getAs(\"DepDelay\")).toDouble,\"\"+rec.getAs(\"Origin\"),\"\"+rec.getAs(\"Dest\"), null, null, null, null, null, null, null, null)\n                                                        fdww.generate_id()\n                                                        fdww\n                                                }\nsc.grid.clear(\"FlightDelaysWithWeather\")\nflightDelaysRDD.rdd.saveToGrid()",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:33:33+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Writing to in-memory store 525238entries2019-10-31 13:34:17,192 CONFIG [com.gigaspaces.logger] - Log file: /opt/gigaspaces/logs/2019-10-31~13.34-gigaspaces-service-10.4.1.142-284.log\nimport org.apache.spark.sql.SaveMode\nimport model.v1._\nflightDelaysRDD: org.apache.spark.sql.Dataset[model.v1.FlightDelaysWithWeather] = [id: string, carrier: string ... 18 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263431_-1882480965",
+      "id": "20190814-141337_971258379",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:367",
+      "dateFinished": "2019-10-31T13:35:51+0000",
+      "dateStarted": "2019-10-31T13:33:33+0000",
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=5",
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=6"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      }
+    },
+    {
+      "title": "Query the data directly from the in-memory data grid",
+      "text": "%insightedge_jdbc\n\nselect id, \"year\", \"month\", dayofMonth, dayOfWeek, crsDepTime, flight_number, origin, dest, depDelay from FlightDelaysWithWeather limit 5\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:35:51+0000",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "editorHide": false,
+        "title": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "id": "string",
+                      "year": "string",
+                      "month": "string",
+                      "dayofMonth": "string",
+                      "dayOfWeek": "string",
+                      "crsDepTime": "string",
+                      "flight_number": "string",
+                      "origin": "string",
+                      "dest": "string",
+                      "depDelay": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                }
+              },
+              "commonSetting": {}
+            }
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "id\tyear\tmonth\tdayofMonth\tdayOfWeek\tcrsDepTime\tflight_number\torigin\tdest\tdepDelay\n2017:1:1:7:2235:278\t2017\t1\t1\t7\t2235\t278\tSFO\tFLL\t-7.0\n2017:1:8:7:2227:278\t2017\t1\t8\t7\t2227\t278\tSFO\tFLL\t649.0\n2017:1:14:6:2227:278\t2017\t1\t14\t6\t2227\t278\tSFO\tFLL\t-4.0\n2017:1:4:3:1320:312\t2017\t1\t4\t3\t1320\t312\tORD\tBOS\t-8.0\n2017:1:12:4:1320:312\t2017\t1\t12\t4\t1320\t312\tORD\tBOS\t6.0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263431_-827510790",
+      "id": "20190814-163709_2074768724",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:368",
+      "dateFinished": "2019-10-31T13:36:25+0000",
+      "dateStarted": "2019-10-31T13:35:51+0000"
+    },
+    {
+      "title": "Access the in-memory store using InsightEdge's predicate pushdown for better performance",
+      "text": "%spark\n\nval airports = List (\"ORD\",\"DFW\",\"DEN\",\"SFO\")\n\n\nval origin =  z.select(\"origin\", Seq((\"ORD\",\"O'hare International (chicago)\"),\n                                                  (\"DFW\",\"Dallas International\"),\n                                                  (\"DEN\", \"Denver\"), \n                                                  (\"SFO\", \"San Francissco\")))\nval filtered_df = spark.read.grid[FlightDelaysWithWeather].where(\"depDelay > 0 and origin = '\" + origin  + \"'\")\nfiltered_df.describe(\"depDelay\").show\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:36:25+0000",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "runOnSelectionChange": true,
+        "title": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {
+          "carrier": "ORD",
+          "origin": "SFO",
+          "day": ""
+        },
+        "forms": {
+          "origin": {
+            "type": "Select",
+            "options": [
+              {
+                "value": "ORD",
+                "displayName": "O'hare International (chicago)",
+                "$$hashKey": "object:5885"
+              },
+              {
+                "value": "DFW",
+                "displayName": "Dallas International",
+                "$$hashKey": "object:5886"
+              },
+              {
+                "value": "DEN",
+                "displayName": "Denver",
+                "$$hashKey": "object:5887"
+              },
+              {
+                "value": "SFO",
+                "displayName": "San Francissco",
+                "$$hashKey": "object:5888"
+              }
+            ],
+            "name": "origin",
+            "displayName": "origin",
+            "defaultValue": "",
+            "hidden": false,
+            "$$hashKey": "object:5880"
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+-----------------+\n|summary|         depDelay|\n+-------+-----------------+\n|  count|            45388|\n|   mean|43.67257865515114|\n| stddev|62.62244949685084|\n|    min|              1.0|\n|    max|           1241.0|\n+-------+-----------------+\n\nairports: List[String] = List(ORD, DFW, DEN, SFO)\norigin: Object = SFO\nfiltered_df: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [id: string, carrier: string ... 18 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263432_-1025916971",
+      "id": "20190825-225726_1724838668",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:369",
+      "dateFinished": "2019-10-31T13:36:31+0000",
+      "dateStarted": "2019-10-31T13:36:25+0000",
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://kw5uc-insightedge-zeppelin-0:4040/jobs/job?id=7"
+          ],
+          "interpreterSettingId": "spark"
+        }
+      }
+    },
+    {
+      "text": "%insightedge_jdbc\n\nselect flight_number,  (1 -sum( depDelay15)/count(depDelay15)) as on_time_ratio, max(depDelay) as max_delay from FlightDelaysWithWeather group by flight_number  having   count(depDelay15) > 100 order by on_time_ratio desc  limit 10\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:36:31+0000",
+      "config": {
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sql",
+        "fontSize": 9,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300,
+              "optionOpen": false,
+              "setting": {
+                "table": {
+                  "tableGridState": {},
+                  "tableColumnTypeState": {
+                    "names": {
+                      "flight_number": "string",
+                      "on_time_ratio": "string",
+                      "max_delay": "string"
+                    },
+                    "updated": false
+                  },
+                  "tableOptionSpecHash": "[{\"name\":\"useFilter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable filter for columns\"},{\"name\":\"showPagination\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable pagination for better navigation\"},{\"name\":\"showAggregationFooter\",\"valueType\":\"boolean\",\"defaultValue\":false,\"widget\":\"checkbox\",\"description\":\"Enable a footer for displaying aggregated values\"}]",
+                  "tableOptionValue": {
+                    "useFilter": false,
+                    "showPagination": false,
+                    "showAggregationFooter": false
+                  },
+                  "updated": false,
+                  "initialized": false
+                },
+                "multiBarChart": {
+                  "rotate": {
+                    "degree": "-45"
+                  },
+                  "xLabelStatus": "default"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "flight_number",
+                  "index": 0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "on_time_ratio",
+                  "index": 1,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "flight_number\ton_time_ratio\tmax_delay\n2405\t0.9708994708994709\t215.0\n2107\t0.9705882352941176\t78.0\n44\t0.9606741573033708\t518.0\n2192\t0.9570552147239264\t111.0\n261\t0.9553264604810997\t138.0\n867\t0.9534368070953437\t167.0\n237\t0.9503205128205128\t207.0\n1896\t0.9487179487179487\t1086.0\n1192\t0.9464882943143813\t134.0\n1187\t0.946058091286307\t270.0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263433_-1499982371",
+      "id": "20190908-004421_1841609863",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:370",
+      "dateFinished": "2019-10-31T13:36:35+0000",
+      "dateStarted": "2019-10-31T13:36:31+0000"
+    },
+    {
+      "text": "%md\n### Visit the second part of this notebook at [part 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED-2)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:36:35+0000",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h3>Visit the second part of this notebook at <a href=\"#/notebook/INSIGHTEDGE-GETTING-STARTED-2\">part 2</a></h3>\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528263433_79529249",
+      "id": "20190821-004202_1739500621",
+      "dateCreated": "2019-10-31T13:24:23+0000",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500,
+      "$$hashKey": "object:371",
+      "dateFinished": "2019-10-31T13:36:35+0000",
+      "dateStarted": "2019-10-31T13:36:35+0000"
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-31T13:36:35+0000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1572528995748_-1483611618",
+      "id": "20191031-133635_728314609",
+      "dateCreated": "2019-10-31T13:36:35+0000",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500,
+      "focus": true,
+      "$$hashKey": "object:5893"
+    }
+  ],
+  "name": "Getting Started/FlightDelays",
+  "id": "INSIGHTEDGE-GETTING-STARTED",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {
+    "md:shared_process": [],
+    "sh:shared_process": [],
+    "insightedge_jdbc:shared_process": [],
+    "spark:shared_process": []
+  },
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {}
+}
