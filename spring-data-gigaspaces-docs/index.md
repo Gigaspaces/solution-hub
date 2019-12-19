@@ -1,27 +1,17 @@
 Spring Data Gigaspaces - Reference Documentation
 ============================
 ## Table of Contents
-_[Preface](#preface)_
-
-_[Requirements](#requirements)_
-
-_[Reference Documentation](#reference)_
-
-1. [Document Structure](#structure)
-
-2. [Configuration](#configuration)
-
-  2.1 [Gigaspaces Support](#support)
-  
-  * [Connecting to space using XML based metadata](#support-xml)
-
-  * [Connecting to space using Java based metadata](#support-java)
-
-  * [Other commonly used space configurations](#support-space)
-
-  * [Using native write and read operation](#support-usage)
-
-  * [Modeling your data](#support-pojo)
+1. _[Preface](preface.md)_  
+1. _[Requirements](requirements.md)_  
+1. _Reference Documentation_
+    1. _[Document Structure](structure.md)_  
+    1. _[Configuration](configuration.md)_
+1. _[Gigaspaces Support](support/support.md)_
+    1. _[Connecting to space using XML based metadata](support/support.md#support-xml)_
+    1. _[Connecting to space using Java based metadata](support/support.md#support-java)_
+    1. _[Other commonly used space configurations](support/support.md#support-space)_
+    1. _[Using native write and read operation](support/support.md#support-usage)_
+    1. _[Modeling your data](support/support.md#support-pojo)_
   
   2.2 [Gigaspaces Repositories](#repositories)
 
@@ -39,47 +29,36 @@ _[Reference Documentation](#reference)_
   
   3.2 [Custom Methods](#custom)
 
-4. [Advanced Usage](#advanced)
+* [Advanced Usage](advanced.md)
 
-  4.1 [Gigaspaces Projection API](#projection)
+  * [Gigaspaces Projection API](projection/projection.md)
   
-  4.2 [Querydsl Support](#querydsl)
+  * [Querydsl Support](querydsl/querydsl.md)
   
-  4.3 [Gigaspaces Change API](#change)
+  4.3 [Gigaspaces Change API](change/change.md)
   
-  4.4 [Gigaspaces Take Operations](#take)
+  4.4 [Gigaspaces Take Operations](take/take.md)
   
-  4.5 [Gigaspaces Lease Time](#lease)
+  4.5 [Gigaspaces Lease Time](lease/lease.md)
   
-  4.6 [Gigaspaces Transactions](#transaction)
+  4.6 [Gigaspaces Transactions](transaction/transaction.md)
 
-  4.7 [Gigaspaces Document Storage Support](#document)
+  4.7 [Gigaspaces Document Storage Support](document/document.md)
 
 _[Other Resources](#resources)_
 
 _[Appendix](#appendix)_
 
-  - _[Appendix A: Supported Query Keywords](#appendix-a)_
+  - _[Appendix A: Supported Query Keywords](appendix/appendix-a.md)_
 
-  - _[Appendix B: Supported Querydsl Methods](#appendix-b)_
+  - _[Appendix B: Supported Querydsl Methods](appendix/appendix-b.md)_
 
-  - _[Appendix C: Supported Change API methods](#appendix-c)_
+  - _[Appendix C: Supported Change API methods](appendix/appendix-c.md)_
 
-  - _[Appendix D: Unsupported operations](#appendix-d)_
-
--------------
-${preface.md}
--------------
-${requirements.md}
--------------
-
-## <a name="reference"/>Reference Documentation
-${structure.md}
+  - _[Appendix D: Unsupported operations](appendix/appendix-d.md)_
 
 -------------------
-${configuration.md}
--------------------
-${support/support.md}
+${}
 ---------------------
 ${repositories/repositories.md}
 
@@ -91,29 +70,4 @@ ${basic.md}
 ${custom/custom.md}
 
 --------------
-${advanced.md}
----------------------------
-${projection/projection.md}
------------------------
-${querydsl/querydsl.md}
--------------------
-${change/change.md}
----------------
-${take/take.md}
------------------
-${lease/lease.md}
------------------------------
-${transaction/transaction.md}
------------------------
-${document/document.md}
-
----------------------------------------
-## <a name="resources"/>Other Resources
-${resources.md}
-
--------------------------------
-## <a name="appendix"/>Appendix
-{% include_relative appendix/appendix-a.md %}
-{% include_relative appendix/appendix-b.md %}
-{% include_relative appendix/appendix-c.md %}
-{% include_relative appendix/appendix-d.md %}
+${}

@@ -1,4 +1,4 @@
-#### <a name="support"/>2.1 Gigaspaces Support
+#### Gigaspaces Support
 
 The first task to handle while developing Gigaspaces application using Spring would be to configure a connection to the active space inside the Spring IoC container. This part of the document will show you how basic connection can be applied using XML or Java based Spring configurations.
 
@@ -18,7 +18,7 @@ Then in your project (assuming you build it with [Maven](http://maven.apache.org
 ${data-dependency.xml}
 ```
 
-##### <a name="support-xml"/>Connecting to space using XML based metadata
+##### <a name="support-xml"/> Connecting to space using XML based metadata
 
 To use Gigaspaces Repository you need to provide a connection to space with an instance of `GigaSpace`. Basic access can be easily configured with next Spring XML configuration:
 
