@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:spring-context.xml")
+@ContextConfiguration("classpath*:spring-context.xml")
 public class ChangeApiTest {
 
     @Autowired
