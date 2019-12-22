@@ -1,8 +1,0 @@
-<dependencies>
-    <!-- other dependency elements omitted -->
-    <dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-gigaspaces</artifactId>
-        <version>14.5-SNAPSHOT</version>
-    </dependency>
-</dependencies>

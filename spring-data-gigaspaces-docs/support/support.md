@@ -9,13 +9,26 @@ To use the Embedded Space you don't need to start any additional processes on yo
 To start the Data Grid refer to [Gigaspaces Quick Start guide](http://docs.gigaspaces.com/latest/dev-java/your-first-data-grid-application.html) for an explanation on how to startup a space storage. Once installed, deploying Data Grid is typically a matter of executing the next commands from the `GS_HOME/bin` folder:
 
 ```
-${gsa-script.txt}
+*Windows*
+gs-agent.bat
+gs.bat deploy-space -cluster total_members=1,1 space
+
+*Unix*
+./gs-agent.sh
+./gs.sh deploy-space -cluster total_members=1,1 space
 ```
 
 Then in your project (assuming you build it with [Maven](http://maven.apache.org/)) add the following to `pom.xml` dependencies section:
 
 ```xml
-${data-dependency.xml}
+<dependencies>
+    <!-- other dependency elements omitted -->
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-gigaspaces</artifactId>
+        <version>14.5-SNAPSHOT</version>
+    </dependency>
+</dependencies>
 ```
 
 ##### <a name="support-xml"/> Connecting to space using XML based metadata
@@ -23,13 +36,47 @@ ${data-dependency.xml}
 To use Gigaspaces Repository you need to provide a connection to space with an instance of `GigaSpace`. Basic access can be easily configured with next Spring XML configuration:
 
 ```xml
-${space-proxy-context.xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:os-core="http://www.openspaces.org/schema/core"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+         http://www.openspaces.org/schema/core
+         http://www.openspaces.org/schema/14.5/core/openspaces-core.xsd
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- A bean representing space proxy (requires active data grid with the same name) -->
+  <os-core:space-proxy id="space" name="space"/>
+
+  <!-- GigaSpace interface implementation used for SpaceClient injection -->
+  <os-core:giga-space id="gigaSpace" space="space"/>
+
+</beans>
+
 ```
 
 If you want to use an Embedded Space, the next configuration will suite your needs:
 
 ```xml
-${embedded-space-context.xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:os-core="http://www.openspaces.org/schema/core"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+         http://www.openspaces.org/schema/core
+         http://www.openspaces.org/schema/14.5/core/openspaces-core.xsd
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- A bean representing an embedded space -->
+  <os-core:embedded-space id="space" name="space"/>
+
+  <!-- GigaSpace interface implementation used for SpaceClient injection -->
+  <os-core:giga-space id="gigaSpace" space="space"/>
+
+</beans>
+
 ```
 
 ##### <a name="support-java"/>Connecting to space using Java based metadata
@@ -37,13 +84,33 @@ ${embedded-space-context.xml}
 The same configuration can be achieved with next Java-based bean metadata:
 
 ```java
-${JavaConfiguration.java}
+@Configuration
+public class ContextConfiguration {
+    /**
+     * Builds a space instance with settings that allow it to connect to the 'space'.
+     */
+    @Bean
+    public GigaSpace space() {
+        UrlSpaceConfigurer urlSpaceConfigurer = new UrlSpaceConfigurer("jini://*/*/space");
+        return new GigaSpaceConfigurer(urlSpaceConfigurer).gigaSpace();
+    }
+}
 ```
 
 Or for the Embedded Space:
 
 ```java
-${JavaEmbeddedConfiguration.java}
+@Configuration
+public class ContextConfiguration {
+    /**
+     * Builds a space instance with settings that allow it start the embedded space with name 'space'.
+     */
+    @Bean
+    public GigaSpace space() {
+        UrlSpaceConfigurer urlSpaceConfigurer = new UrlSpaceConfigurer("/./space");
+        return new GigaSpaceConfigurer(urlSpaceConfigurer).gigaSpace();
+    }
+}
 ```
 
 ##### <a name="support-space"/>Other commonly used space configurations
@@ -82,13 +149,49 @@ To find out more about security configuration, please, refer to [Security Guide]
 
 `GigaSpace` configured above can be used directly to perform interaction with space. To do so, you can simply inject `GigaSpace` bean into your Repository classes. Let's see an example of such usage. First, here is an example of POJO class:
 ```java
-${Person.java}
+@SpaceClass
+public class Person {
+    private Integer id;
+    private String name;
+    private Integer age;
+
+    public Person() {
+    }
+
+    @SpaceId(autoGenerate = true)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    // getters and setters for other fields are omitted
+    
+}
 ```
 > Note that class is marked with `@SpaceClass` annotation - it allows Spring Gigaspaces to look for entities in your data model and automatically handle their structure. Also, the `getId()` method is marked with `@SpaceId(autogenerate = true)` annotation - it will tell the space to handle ids automatically.
 
 Now `GigaSpace` can be injected and used directly in Repository layer:
 ```java
-${GigaspacesPersonRepository.java}
+@Repository
+public class GigaspacesPersonRepository implements PersonRepository {
+
+    @Autowired
+    private GigaSpace space;
+
+    public void create(Person person) {
+        space.write(person);
+    }
+
+    public List<Person> findById(String personId) {
+        return space.readById(Person.class, personId);
+    }
+
+    ...
+
+}
 ```
 
 ##### <a name="support-pojo"/>Modeling your data

@@ -6,7 +6,19 @@ There are two possible ways you can use Change API within Gigaspaces Repositorie
 
 The second option would be to use `GigaspacesQueryDslPredicateExecutor.change` method built in Querydsl style. It accepts `QChangeSet` argument that is literally a `ChangeSet` with Querydsl syntax:
 ```java
-${PersonServiceImpl.java}
+@Service
+public class PersonServiceImpl implements PersonService {
+    @Autowired
+    private PersonRepository repository;
+
+    public void increaseAgeByName(String name) {
+        repository.change(
+                QPerson.person.name.eq(name),
+                QChangeSet.changeSet().increment(QPerson.person.age, 1)
+        );
+    }
+
+}
 ```
 > To start using Querydsl Change API syntax, refer to [Querydsl Support](#querydsl)
 
