@@ -1,2 +1,0 @@
-mvn clean process-sources
-mvn clean install

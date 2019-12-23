@@ -10,7 +10,8 @@ To start with handy Spring Data Gigaspaces features you will need to create your
 
 An example of such user-defined repository with no additional functionality is given below:
 ```java
-${PersonRepository.java}
+public interface PersonRepository extends GigaspacesRepository<Person, String> {
+}
 ```
 > Note that you define the type of data to be stored and the type of it's id.
 
@@ -20,7 +21,19 @@ While you can use Spring’s traditional `<beans/>` XML namespace to register an
 
 To enable Spring search for repositories, add the next configuration if you are using XML-based metadata:
 ```xml
-${repository-context.xml}
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:gigaspaces-data="http://www.springframework.org/schema/data/gigaspaces"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/data/gigaspaces http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd">
+
+  <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar"/>
+
+  <!-- other configuration omitted -->
+
+</beans>
 ```
 > Note that Spring Container will search for interfaces extending `GigaspacesRepository` in package and it's subpackages defined under `base-package` attribute.
 
@@ -30,7 +43,11 @@ Repositories will look for `GigaSpace` bean by type in the context, if this beha
 
 To achieve the same configuration with Java-based bean metadata, simply add `@EnableGigaspacesRepositories` annotation to configuration class:
 ```java
-${JavaConfiguration.java}
+@Configuration
+@EnableGigaspacesRepositories("com.yourcompany.foo.bar")
+public class ContextConfiguration {
+    // bean definitions omitted
+}
 ```
 > Note that `base-package` can be defined as a value of `@EnableGigaspacesRepositories` annotation. Also, `GigaSpace` bean will be automatically found in the context by type or can be explicitly wired with `gigaspace` attribute. An example can be found [below](#repositories-multi).
 
@@ -38,7 +55,16 @@ ${JavaConfiguration.java}
 
 If you need to have an interface that won't be treated as a Repository by Spring Container, you can mark it with `@NoRepositoryBean` annotation:
 ```java
-${BaseRepository.java}
+@NoRepositoryBean
+public interface BaseRepository<T, ID extends Serializable> extends GigaspacesRepository<T, ID> {
+
+    // you can define methods that apply to all other repositories
+
+    T findByName(String name);
+
+    ...
+
+}
 ```
 
 ##### <a name="repositories-multi"/>Multi-space configuration
@@ -47,10 +73,61 @@ Sometimes it is required to have different groups of repositories to store and e
 
 Here is an example of multi-space configuration in XML-based metadata:
 ```xml
-${multi-space-context.xml}
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:gigaspaces-data="http://www.springframework.org/schema/data/gigaspaces"
+       xmlns:os-core="http://www.openspaces.org/schema/core"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/data/gigaspaces http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd
+           http://www.openspaces.org/schema/core http://www.openspaces.org/schema/14.5/core/openspaces-core.xsd">
+
+  <!-- Initializes repositories in .operational with operationalGSpace -->
+  <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar.repository.operational" gigaspace="operationalGSpace"/>
+  <!-- Initializes repositories in .billing with billingGSpace -->
+  <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar.repository.billing" gigaspace="billingGSpace"/>
+
+  <os-core:space-proxy id="billingSpace" name="billing"/>
+  <os-core:giga-space id="billingGSpace" space="billingSpace"/>
+
+  <os-core:embedded-space id="operationalSpace" name="operational"/>
+  <os-core:giga-space id="operationalGSpace" space="operationalSpace"/>
+
+  <!-- other configuration omitted -->
+
+</beans>
+
 ```
 
 In Java-based configuration you would have to separate groups of repositories into different sub-contexts:
 ```java
-${MultiSpaceConfiguration.java}
+@Configuration
+@Import({OperationalRepositories.class, BillingRepositories.class})
+public class ContextConfiguration {
+    /* other beans declaration omitted */
+}
+
+@Configuration
+@EnableGigaspacesRepositories(basePackages = "com.yourcompany.foo.bar.repository.operational", gigaspace = "operationalGSpace")
+class OperationalRepositories {
+    /**
+     * @return embedded operational space configuration
+     */
+    @Bean
+    public GigaSpace operationalGSpace() {
+        return new GigaSpaceConfigurer(new UrlSpaceConfigurer("/./operational")).gigaSpace();
+    }
+}
+
+@Configuration
+@EnableGigaspacesRepositories(basePackages = "com.yourcompany.foo.bar.repository.billing", gigaspace = "billingGSpace")
+class BillingRepositories {
+    /**
+     * @return proxy billing space configuration
+     */
+    @Bean
+    public GigaSpace billingGSpace() {
+        return new GigaSpaceConfigurer(new UrlSpaceConfigurer("jini://*/*/billing")).gigaSpace();
+    }
+}
 ```
