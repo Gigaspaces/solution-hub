@@ -7,18 +7,18 @@
     <parent>
         <groupId>org.gigaspaces</groupId>
         <artifactId>xap</artifactId>
-        <version>14.5.0</version>
+        <version>15.0.0</version>
     </parent>
     <groupId>org.springframework.data</groupId>
     <artifactId>spring-data-gigaspaces-parent</artifactId>
     <packaging>pom</packaging>
-    <version>14.5-SNAPSHOT</version>
+    <version>15.0-SNAPSHOT</version>
     <name>Spring Data GigaSpaces</name>
     <description>Spring Data GigaSpaces Parent</description>
 
     <properties>
         <jdk.version>1.8</jdk.version>
-        <gsVersion>14.5.0</gsVersion>
+        <gsVersion>15.0.0</gsVersion>
 
         <!-- test dependencies -->
         <spring-test-junit5.version>1.5.0</spring-test-junit5.version>
@@ -26,13 +26,13 @@
         <junit5-platform.version>1.6.0-M1</junit5-platform.version>
 
         <!-- dependencies version-->
-        <spring-data-release.version>Lovelace-SR13</spring-data-release.version>
+        <spring-data-release.version>Moore-SR2</spring-data-release.version>
         <guava.version>28.1-jre</guava.version>
         <querydsl.version>4.2.1</querydsl.version>
         <openjpa.version>2.2.2</openjpa.version><!--latest 3.1.0 ia not compatible-->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
 
-        <spring.version>5.1.7.RELEASE</spring.version><!--was 5.1.7.RELEASE in gs-->
+        <spring.version>5.2.2.RELEASE</spring.version><!--was 5.1.7.RELEASE in gs-->
         <!-- project configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
@@ -419,19 +419,11 @@
             </properties>
         </profile>-->
         <profile>
-            <id>GS14_5SDMoore</id>
+            <id>GS15_0SDMoore</id>
             <properties>
-                <spring.version>5.2.0.RELEASE</spring.version>
+                <spring.version>5.2.2.RELEASE</spring.version>
                 <spring-data-release.version>Moore-SR2</spring-data-release.version>
 
-            </properties>
-        </profile>
-
-        <profile>
-            <id>GS14_5SDLovelace</id>
-            <properties>
-                <spring.version>5.1.7.RELEASE</spring.version>
-                <spring-data-release.version>Lovelace-SR13</spring-data-release.version>
             </properties>
         </profile>
 
