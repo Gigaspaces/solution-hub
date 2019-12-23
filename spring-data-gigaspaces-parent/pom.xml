@@ -26,7 +26,7 @@
         <junit5-platform.version>1.6.0-M1</junit5-platform.version>
 
         <!-- dependencies version-->
-        <spring-data-release.version>Moore-SR2</spring-data-release.version>
+        <spring-data-release.version>Moore-SR3</spring-data-release.version>
         <guava.version>28.1-jre</guava.version>
         <querydsl.version>4.2.1</querydsl.version>
         <openjpa.version>2.2.2</openjpa.version><!--latest 3.1.0 ia not compatible-->
@@ -422,7 +422,7 @@
             <id>GS15_0SDMoore</id>
             <properties>
                 <spring.version>5.2.2.RELEASE</spring.version>
-                <spring-data-release.version>Moore-SR2</spring-data-release.version>
+                <spring-data-release.version>Moore-SR3</spring-data-release.version>
 
             </properties>
         </profile>
