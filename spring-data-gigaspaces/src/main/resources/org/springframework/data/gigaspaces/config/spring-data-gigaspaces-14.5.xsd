@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.springframework.org/schema/data/gigaspaces"
+            xmlns:repository="http://www.springframework.org/schema/data/repository"
+            xmlns:tool="http://www.springframework.org/schema/tool"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.springframework.org/schema/data/gigaspaces"
+            elementFormDefault="qualified"
+            version="14.5">
+
+    <xsd:import namespace="http://www.springframework.org/schema/beans"/>
+    <xsd:import namespace="http://www.springframework.org/schema/context"
+                schemaLocation="http://www.springframework.org/schema/context/spring-context.xsd" />
+    <xsd:import namespace="http://www.springframework.org/schema/data/repository"
+                schemaLocation="http://www.springframework.org/schema/data/repository/spring-repository.xsd"/>
+    <xsd:import namespace="http://www.springframework.org/schema/tool"/>
+
+    <!-- -->
+    <xsd:annotation>
+        <xsd:documentation><![CDATA[
+            Namespace support for the Spring Data Gigaspaces.
+        ]]></xsd:documentation>
+    </xsd:annotation>
+
+    <!-- Repositories -->
+    <xsd:element name="repositories">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="repository:repositories">
+                    <xsd:attribute name="gigaspace" type="spaceRefType"/>
+                    <xsd:attributeGroup ref="repository:repository-attributes" />
+                    <!-- TODO: ? -->
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:simpleType name="spaceRefType">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <tool:annotation kind="ref">
+                    <tool:expected-type type="org.openspaces.core.GigaSpace"/>
+                </tool:annotation>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:union memberTypes="xsd:string"/>
+    </xsd:simpleType>
+
+
+</xsd:schema>

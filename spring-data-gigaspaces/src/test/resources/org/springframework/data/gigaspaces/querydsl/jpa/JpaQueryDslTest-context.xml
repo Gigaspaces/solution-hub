@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:gigaspaces-data="http://www.springframework.org/schema/data/gigaspaces"
+
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/data/gigaspaces http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd">
+
+  <import resource="classpath:/space-context.xml"/>
+
+  <context:component-scan base-package="org.springframework.data.gigaspaces">
+    <context:exclude-filter type="regex" expression="org.springframework.data.gigaspaces.integration.javaconfig.*"/>
+  </context:component-scan>
+
+    <gigaspaces-data:repositories
+            base-package="org.springframework.data.gigaspaces.repository"
+            gigaspace="gigaSpace"/>
+
+  <!-- Entity manager factory definition -->
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+    <property name="persistenceUnitName" value="gigaspaces"/>
+    <property name="jpaVendorAdapter">
+      <bean class="org.openspaces.jpa.OpenSpacesJpaVendorAdapter">
+        <property name="space" value="#{gigaSpace.space}"/>
+      </bean>
+    </property>
+  </bean>
+
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:os-core="http://www.openspaces.org/schema/core"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.openspaces.org/schema/core
+         http://www.openspaces.org/schema/14.5/core/openspaces-core.xsd
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <os-core:embedded-space id="space" name="space">
+        <os-core:space-type type-name="Person">
+            <os-core:id property="id"/>
+            <os-core:routing property="age"/>
+            <os-core:basic-index path="name"/>
+            <os-core:document-class>org.springframework.data.gigaspaces.model.PersonDocument</os-core:document-class>
+        </os-core:space-type>
+    </os-core:embedded-space>
+
+    <os-core:giga-space id="gigaSpace" space="space"/>
+
+    <os-core:embedded-space id="space1" name="space1"/>
+    <os-core:giga-space id="gigaSpace1" space="space1"/>
+
+
+</beans>
