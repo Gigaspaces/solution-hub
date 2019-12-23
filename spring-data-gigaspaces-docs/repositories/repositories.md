@@ -80,7 +80,7 @@ Here is an example of multi-space configuration in XML-based metadata:
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/data/gigaspaces http://www.springframework.org/schema/data/gigaspaces/spring-data-gigaspaces.xsd
-           http://www.openspaces.org/schema/core http://www.openspaces.org/schema/14.5/core/openspaces-core.xsd">
+           http://www.openspaces.org/schema/core http://www.openspaces.org/schema/15.0/core/openspaces-core.xsd">
 
   <!-- Initializes repositories in .operational with operationalGSpace -->
   <gigaspaces-data:repositories base-package="com.yourcompany.foo.bar.repository.operational" gigaspace="operationalGSpace"/>

@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-gigaspaces-parent</artifactId>
-        <version>15.0-SNAPSHOT</version>
-        <relativePath>../spring-data-gigaspaces-parent</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.2.RELEASE</version>
     </parent>
-    <groupId>org.springframework.data</groupId>
-    <artifactId>spring-data-gigaspaces-examples</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>configuration/configuration-xml</module>
-        <module>configuration/configuration-java</module>
-        <module>configuration/configuration-common</module>
-        <module>common</module>
-        <module>basic/query</module>
-        <module>basic/crud</module>
-        <module>basic/gigaspaces-native</module>
-        <module>quickstart</module>
-        <module>advanced/querydsl</module>
-        <module>advanced/projection</module>
-        <module>advanced/changeapi</module>
-        <module>advanced/document</module>
-        <module>basic/custom</module>
-        <module>advanced/transaction</module>
-        <module>advanced/several-spaces</module>
-    </modules>
-    <name>Spring Data Gigaspaces Examples</name>
-    <description>Spring Data Gigaspaces Examples</description>
+    <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>quickstart</artifactId>
+
+    <repositories>
+        <repository>
+            <id>org.openspaces</id>
+            <url>http://maven-repository.openspaces.org</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.data</groupId>
-                <artifactId>common</artifactId>
-                <version>${project.version}</version>
+                <artifactId>spring-data-gigaspaces-parent</artifactId>
+                <version>15.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>org.gigaspaces</groupId>
             <artifactId>xap-openspaces</artifactId>
@@ -59,15 +69,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-gigaspaces</artifactId>
-            <version>${project.version}</version>
+            <version>15.0-SNAPSHOT</version>
         </dependency>
 
         <!-- test -->
@@ -128,5 +134,18 @@
             <artifactId>spring-test-junit5</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
