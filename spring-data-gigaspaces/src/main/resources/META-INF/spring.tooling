@@ -1,0 +1,4 @@
+# Tooling related information for the Gigaspaces DB namespace
+http\://www.springframework.org/schema/data/gigaspaces@name=Gigaspaces Namespace
+http\://www.springframework.org/schema/data/gigaspaces@prefix=gigaspaces
+http\://www.springframework.org/schema/data/gigaspaces@icon=org/springframework/jdbc/config/spring-jdbc.gif

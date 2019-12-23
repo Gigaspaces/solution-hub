@@ -1,0 +1,1 @@
+http\://www.springframework.org/schema/data/gigaspaces=org.springframework.data.gigaspaces.config.GigaspacesDataNamespaceHandler

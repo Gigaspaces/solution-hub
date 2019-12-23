@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-gigaspaces-parent</artifactId>
+        <version>15.0-SNAPSHOT</version>
+        <relativePath>../spring-data-gigaspaces-parent</relativePath>
+    </parent>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-gigaspaces-guide</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>initial</module>
+        <module>complete</module>
+    </modules>
+    <name>Spring Data Gigaspaces Guide</name>
+    <description>Spring Data Gigaspaces Guide</description>
+</project>

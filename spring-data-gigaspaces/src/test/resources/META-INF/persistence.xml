@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+  <persistence-unit name="gigaspaces" transaction-type="RESOURCE_LOCAL">
+    <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+    <properties>
+
+      <property name="BrokerFactory" value="org.openspaces.jpa.BrokerFactory"/>
+      <property name="LockManager" value="none"/>
+      <!-- enable this if you want to see error logs for OpenJPA -->
+      <property name="openjpa.Log" value="DefaultLevel=TRACE"/>
+    </properties>
+  </persistence-unit>
+</persistence>
