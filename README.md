@@ -1,4 +1,4 @@
-# solution-hub
+GigaSpaces Solution Hub
 The content provided here is a collection of known patterns, solutions and best practices for GigaSpaces products, many of which are based on real-life use cases. Each topic is listed with its author/origin, and the latest product release that it was used with. 
 The Solution Hub content is organized in the following categories:
 * Integrations - read about integrations with visual tools, legacy systems, and third-party platforms
