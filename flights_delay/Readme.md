@@ -35,47 +35,47 @@ Installing and configuring the prediction model involves the following steps:
 InsightEdge provides Apache Zeppelin as part of its standard software package. To use the flight delay prediction model, you need the  INSIGHTEDGE-GETTING-STARTED web notebook, along with the INSIGHTEDGE-GETTING-STARTED-2 notebook. Configure the following:
 
 1. Copy the demo notebooks from the Zeppelin notebook folder in the InsightEdge installation directory:
-```sh
-$ cp -R ./zeppelin_notebooks/* <InsightEdge Install Dir>/insightedge/zeppelin/notebook/
-```
+   ```sh
+   $ cp -R ./zeppelin_notebooks/* <InsightEdge Install Dir>/insightedge/zeppelin/notebook/
+   ```
 
 1. Set the kafka server URL for the prediction model:
-```sh
-$ export KAFKA_URL=192.168.99.102:29092
-```
+   ```sh
+   $ export KAFKA_URL=192.168.99.102:29092
+   ```
 
 ### Preparing the Data Files
 
 In order to use the flight delay prediction model, you need to feed data to InsightEdge and then query it to create the predictions. This data is contained in the following files that need to be downloaded and extracted.
 
 1. Download the following two  files from AWS: 
-```sh
-$ wget https://insightedge-gettingstarted.s3.amazonaws.com/flightdelays20172018.csv.zip
-$ wget https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip
-```
+   ```sh
+   $ wget https://insightedge-gettingstarted.s3.amazonaws.com/flightdelays20172018.csv.zip
+   $ wget https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip
+   ```
 
 1. Unzip the files, and export the file path:
-```sh
-$ unzip flightdelays20172018.csv.zip
-$ export flight_delay_path=<data file path>
-
-$ unzip weather2017_8.csv.zip
-$ export weather_info=<data file path>
-```
+   ```sh
+   $ unzip flightdelays20172018.csv.zip
+   $ export flight_delay_path=<data file path>
+   
+   $ unzip weather2017_8.csv.zip
+   $ export weather_info=<data file path>
+   ```
 
 ### Setting Up InsightEdge
 
 You need to run InsightEdge with the following configuration to support the prediction model.
 
 1. Start InsightEdge  with 5 GSCs:
-```sh
-$ ./gs.sh host run-agent --auto --gsc=5
-```
+   ```sh
+   $ ./gs.sh host run-agent --auto --gsc=5
+   ```
 
 1. Start an in-memory space called 'flights_space' with 4 partitions:
-```sh
-$ ./gs.sh space deploy --partitions=4 flights_space
-```
+   ```sh
+   $ ./gs.sh space deploy --partitions=4 flights_space
+   ```
 
 ### Setting up the Apache Zeppelin Notebook
 
