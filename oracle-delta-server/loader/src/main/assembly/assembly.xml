@@ -1,0 +1,42 @@
+<assembly>
+	<id>assemble-pu</id>
+	<formats>
+		<format>jar</format>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>target/classes</directory>
+			<lineEnding>keep</lineEnding>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>**/**</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<useTransitiveDependencies>false</useTransitiveDependencies>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>
+				<exclude>junit:junit</exclude>
+				<exclude>postgresql:postgresql</exclude>
+			</excludes>
+		</dependencySet>
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<useTransitiveDependencies>true</useTransitiveDependencies>
+			<useTransitiveFiltering>true</useTransitiveFiltering>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>
+				<exclude>oracle-delta-server:loaderPU</exclude>
+			</excludes>
+
+			<includes>
+				<!-- include>/lib/ojdbc6.jar</include -->
+			</includes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

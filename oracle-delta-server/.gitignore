@@ -1,0 +1,29 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+
+# OS generated files #
+######################
+.DS_Store
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+
+# maven directories #
+#####################
+target/
+dist/
+
+# Eclipse
+.classpath
+.project
+.settings/
+/bin

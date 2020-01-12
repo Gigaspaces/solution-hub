@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:os-core="http://www.openspaces.org/schema/core" xmlns:os-events="http://www.openspaces.org/schema/events"
+	xmlns:os-remoting="http://www.openspaces.org/schema/remoting" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:os-sla="http://www.openspaces.org/schema/sla"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+   http://www.openspaces.org/schema/core http://www.openspaces.org/schema/9.6/core/openspaces-core.xsd
+   http://www.openspaces.org/schema/events http://www.openspaces.org/schema/9.6/events/openspaces-events.xsd
+   http://www.openspaces.org/schema/remoting http://www.openspaces.org/schema/9.6/remoting/openspaces-remoting.xsd
+   http://www.openspaces.org/schema/sla http://www.openspaces.org/schema/9.6/sla/openspaces-sla.xsd">
+
+
+	<!-- Enables to configure Spring beans through annotations -->
+	<context:annotation-config />
+
+	<!-- Enable @PostPrimary and others annotation support. -->
+	<os-core:annotation-support />
+
+	<!-- Enables using @Polling and @Notify annotations to creating polling 
+		and notify containers -->
+	<os-events:annotation-support />
+
+	<!-- Enables using @RemotingService and other remoting related annotations -->
+	<os-remoting:annotation-support />
+
+	<!-- A bean representing a space (an IJSpace implementation) -->
+	<!-- os-core:space id="space" url="jini://*/*/deltaSpace" / -->
+	
+		<os-core:space id="space" url="/./deltaSpace" />
+
+	<!-- Defines a distributed transaction manager. -->
+	<os-core:distributed-tx-manager id="txManager" />
+	
+
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<!-- tx:annotation-driven transaction-manager="transactionManager" / -->
+
+	<!-- Define the GigaSpace instance that the application will use to access 
+		the space -->
+	<os-core:giga-space id="deltaSpace" space="space"
+		tx-manager="txManager" />
+
+	<!-- os-remoting:service-exporter id="serviceExporter" / -->
+</beans>

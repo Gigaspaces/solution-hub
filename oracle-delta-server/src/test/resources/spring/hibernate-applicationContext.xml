@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans	   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	 http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<context:property-placeholder location="classpath:service.properties" />
+
+	<!-- Publishing session factory to be able view statistics we want to get 
+		it from the main EntityManager -->
+	<bean id="sessionFactory" factory-method="getSessionFactory"
+		factory-bean="entityManagerFactory" />
+
+	<!-- == Entity Manager == -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="oracleNotificationPersistenceUnit" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>xap.oracle</value>
+			</list>
+		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.dialect" value="${db.dialect}" />
+				<entry key="hibernate.show_sql" value="true" />
+				<entry key="hibernate.format_sql" value="true" />
+				<entry key="hibernate.generateDdl" value="true" />
+				<entry key="hibernate.jdbc.batch_size" value="20" />
+				<entry key="hibernate.connection.release_mode" value="after_transaction" />
+				<entry key="hibernate.generate_statistics" value="true" />
+				<!-- entry key="hibernate.hbm2ddl.auto" value="validate" /-->
+				<!-- Enable this when you want to create the schema -->
+				<!-- entry key="hibernate.hbm2ddl.auto" value="create" / -->
+			</map>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<tx:annotation-driven />
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- post-processors for all standard config annotations -->
+	<context:annotation-config />
+
+</beans>
