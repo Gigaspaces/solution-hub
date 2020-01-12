@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+
+<project name="helloworld" default="usage" basedir=".">
+
+    <property name="common-dir" location="${basedir}/common"/>
+    <property name="feeder-dir" location="${basedir}/feeder"/>
+    <property name="processor-dir" location="${basedir}/processor"/>
+    <property name="jms-dir" location="${basedir}/jms-client"/>
+	<property file="build.properties"/>
+
+	
+	<condition property="gshome.dir" value="../../">
+        <not>
+            <isset property="gshome.dir"/>
+        </not>
+    </condition>
+	
+	
+    <property name="common-src" value="${common-dir}/src"/>
+    <property name="common-classes" value="${common-dir}/classes"/>
+    <property name="common-dist" value="${common-dir}/dist"/>
+    <property name="common-jar" value="${common-dist}/hello-common.jar"/>
+
+    <property name="feeder-src" value="${feeder-dir}/src"/>
+	<property name="feeder-classes" value="${feeder-dir}/classes"/>
+    <property name="feeder-lib" value="${feeder-dir}/lib"/>
+
+    <property name="processor-src" value="${processor-dir}/src"/>
+    <property name="processor-pu" value="${processor-dir}/pu/hello-processor"/>
+	<property name="processor-pu-jar" location="${processor-dir}/pu/hello-processor.jar"/>
+	<property name="processor-dist" value="${processor-dir}/dist"/>
+    <property name="processor-lib" value="${processor-pu}/lib"/>
+
+    <property name="jms-src" value="${jms-dir}/src"/>
+    <property name="jms-classes" value="${jms-dir}/classes"/>
+
+    <path id="gs-libs">
+        <fileset dir="${gshome.dir}/lib">
+            <include name="**/*.jar"/>
+            <exclude name="**/mule-os.jar" />
+        </fileset>
+    </path>
+
+    <path id="other-libs">
+        <fileset dir="${basedir}/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="Helloworld build script"/>
+        <echo message="-----------------------------------------"/>
+        <echo message=""/>
+        <echo message="Among the available targets are:"/>
+        <echo message=""/>
+        <echo message="copy-libs                --> Copies required libraries"/>
+        <echo message="clean                    --> Cleans all output dirs"/>
+        <echo message="build                    --> Builds all; don't create JARs"/>
+        <echo message="dist                     --> Builds the distribution"/>        
+        <echo message="deploy-processor         --> Deploys the processor onto the service grid"/>
+		<echo message="run-feeder               --> Starts the feeder"/>
+		<echo message="jms-client               --> Starts the JMS client"/>
+        <echo message=""/>
+    </target>
+
+    <target name="copy-libs">
+        <!-- copy activemq libs -->
+        <copy todir="${basedir}/lib" flatten="true" preservelastmodified="true">
+			<fileset dir="${activemq.dir}/">
+				<include name="activemq-all-5.5.0.jar"/>
+				<include name="lib/activation-1.1.jar"/>
+				<include name="lib/activemq-core-5.5.0.jar"/>
+				<include name="lib/optional/activemq-spring-5.5.0.jar"/>
+				<include name="lib/optional/xbean-spring-3.7.jar"/>
+				<include name="lib/optional/slf4j-log4j12-1.5.11.jar"/>
+				<include name="lib/optional/log4j-1.2.14.jar"/>
+			</fileset>
+        </copy>
+
+		<!-- copy atomikos libs -->
+        <copy todir="${basedir}/lib" flatten="true" preservelastmodified="true">
+			<fileset dir="${atomikos.dir}">
+				<include name="dist/atomikos-util.jar"/>
+				<include name="dist/transactions.jar"/>
+				<include name="dist/transactions-api.jar"/>
+				<include name="dist/transactions-jms.jar"/>
+				<include name="dist/transactions-jta.jar"/>
+				<include name="dist/transactions-osgi.jar"/>
+			</fileset>
+        </copy>
+    </target>
+
+    <target name="clean">
+        <delete dir="${common-classes}"/>
+        <delete dir="${common-dist}"/>
+        <delete dir="${feeder-classes}"/>
+		<delete dir="${feeder-lib}"/>
+        <delete dir="${processor-dir}/pu"/>				
+        <delete dir="${jms-classes}"/>
+    </target>
+
+    <target name="build" depends="clean">
+	    <build src="${common-src}" classes="${common-classes}" additional-classpath=""/>
+        <build src="${feeder-src}" classes="${feeder-classes}" additional-classpath="${common-classes}"/>
+        <build src="${processor-src}" classes="${processor-pu}" additional-classpath="${common-classes}"/>
+        <build src="${jms-src}" classes="${jms-classes}" additional-classpath="${common-classes}"/>
+    </target>
+
+    <target name="dist" depends="build">
+        <!-- Build the common jar file -->
+        <mkdir dir="${common-dist}"/>
+        <jar basedir="${common-classes}" jarfile="${common-jar}"/>
+        
+		<!-- Copy over the common jar file to the processor lib -->
+        <mkdir dir="${processor-lib}"/>
+        <copy todir="${processor-lib}" file="${common-jar}"/>
+		
+        <copy todir="${processor-lib}" preservelastmodified="true">
+                <fileset dir="lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+        </copy>
+		<!-- Create a jar file containing the processor -->
+		<jar basedir="${processor-pu}" jarfile="${processor-pu-jar}"/>	
+		
+		<!-- Copy over the common jar file to the feeder lib -->
+        <mkdir dir="${feeder-lib}"/>
+        <copy todir="${feeder-lib}" file="${common-jar}"/>
+    </target>    
+
+    <target name="deploy-processor" depends="dist">
+	    <deploy locators="${locators}" name="${processor-pu-jar}" />
+    </target>    
+		
+	<target name="run-feeder" depends="dist">
+		<java classname="org.openspaces.example.helloworld.feeder.Feeder" fork="false">
+            <classpath refid="gs-libs"/>
+            <classpath refid="other-libs"/>
+			<classpath location="${feeder-classes}"/>
+			<classpath location="${feeder-lib}/hello-common.jar"/>
+			<!-- the space-to-feed-url is set in the build.properties file-->
+			<arg value="${space-to-feed-url}"/>
+	    </java>
+	</target>    
+	
+	<target name="jms-client" depends="build">
+		<java classname="jms.client.JMSReceiveClient" fork="false">
+            <classpath refid="gs-libs"/>
+	        <classpath refid="other-libs"/>
+			<classpath location="${jms-classes}"/>
+			<classpath location="${common-classes}"/>
+			<!-- the space-to-feed-url is set in the build.properties file-->
+			<arg value="${space-to-feed-url}"/>
+	    </java>
+	</target>    
+
+    <macrodef name="build">
+        <attribute name="src"/>
+        <attribute name="classes"/>
+        <attribute name="additional-classpath"/>
+        <sequential>
+            <mkdir dir="@{classes}"/>
+
+            <javac destdir="@{classes}" source="1.5" target="1.5" debug="on"
+                   deprecation="false" optimize="false" failonerror="true">
+                <src path="@{src}"/>
+                <classpath refid="gs-libs"/>
+                <classpath refid="other-libs"/>
+                <classpath location="@{additional-classpath}"/>
+            </javac>
+
+            <copy todir="@{classes}" preservelastmodified="true">
+                <fileset dir="@{src}">
+                    <include name="**/*.properties"/>
+                    <include name="**/*.handlers"/>
+                    <include name="**/*.schemas"/>
+                    <include name="**/*.xml"/>
+                    <include name="**/*.dtd"/>
+                    <include name="**/*.xsd"/>
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="deploy">
+        <attribute name="locators"/>
+        <attribute name="name"/>
+        <sequential>
+            <java classname="org.openspaces.pu.container.servicegrid.deploy.Deploy" fork="false">
+				<arg value="-locators"/>
+				<arg value="@{locators}"/>
+				<arg value="@{name}"/>
+			</java>
+        </sequential>
+    </macrodef>
+</project>
