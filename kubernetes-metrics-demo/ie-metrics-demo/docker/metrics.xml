@@ -1,0 +1,41 @@
+<metrics-configuration>
+    <!-- This file determines the settings for monitoring and metrics. For more information see: -->
+    <!-- http://docs.gigaspaces.com/xap/14.0/admin/web-management-monitoring.html -->
+    <!-- http://docs.gigaspaces.com/xap/14.0/admin/metrics-overview.html -->
+
+    <!-- Configure which reporter(s) will be used to collect data from the system -->
+    <reporters>
+        <reporter name="influxdb">
+            <property name="host" value="ie-metrics-influxdb.default"/>
+            <property name="database" value="demodb"/>
+        </reporter>
+    </reporters>
+
+
+    <!-- define which sampling rates can be assigned to a metric -->
+    <samplers>
+        <!-- 'default' is configured to sample (and report) its metrics every 5 seconds -->
+        <sampler name="default" sample-rate="5s" />
+        <!-- 'high' is configured to sample its metrics every second, and report in batch every 5 seconds -->
+        <sampler name="high" sample-rate="1s" report-rate="5s" />
+        <!-- 'low' is configured to sample (and report) its metrics every minute -->
+        <sampler name="low" sample-rate="1m" />
+        <!-- 'off' is configured to never sample (and report) its metrics -->
+        <sampler name="off" sample-rate="0" />
+    </samplers>
+
+    <!-- Define how metrics are assigned to samplers. -->
+    <metrics>
+        <!-- By default, all metrics are assigned to the 'default' sampler.
+        A metric (or a group of metrics) can be assigned to a different sampler. For example, suppose:
+        1. we want most os metrics to use the `low` sampler, but...
+        2. we want os_memory metrics to use the `high` sampler, and...
+        3. we don't want os_cpu metrics at all
+
+        <metric prefix="os"        sampler="low"/>
+        <metric prefix="os_memory" sampler="high"/>
+        <metric prefix="os_cpu"    sampler="off"/>
+        -->
+    </metrics>
+
+</metrics-configuration>
