@@ -1,0 +1,15 @@
+package Application
+
+import com.gigaspaces.droolsintegration.model.facts.*;
+import java.util.Date;
+
+rule "ValidateApplicationRule"
+when
+	$application : Application( dateApproved == null && applicantApproved == true )
+then
+	$application.setDateApproved(new Date());
+	$application.setProcessed(true);
+	    
+	System.out.println("Application is approved and will be processed");
+	update($application);    
+end

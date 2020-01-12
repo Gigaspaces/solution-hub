@@ -1,0 +1,15 @@
+package Application
+
+import com.gigaspaces.droolsintegration.model.facts.*;
+
+rule "ValidAgeRule"
+when
+	$applicant : Applicant( age > 18 )
+	$application : Application( processed == false )
+then
+	System.out.println("Applicant is of valid age: " + $applicant.getAge());
+	$application.setApplicantId($applicant.getId());
+	$application.setApplicantName($applicant.getName());
+	$application.setApplicantApproved(true);
+	update($application);
+end

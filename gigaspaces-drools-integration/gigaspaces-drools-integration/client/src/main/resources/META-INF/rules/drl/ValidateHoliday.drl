@@ -1,0 +1,11 @@
+package Holiday
+
+import com.gigaspaces.droolsintegration.model.facts.*;
+import org.apache.log4j.*;
+
+rule "validate holiday"
+when
+   $h1 : Holiday( `when` == "july" )
+then
+    Logger.getLogger("optum-rules-space").info($h1.getName() + ":" + $h1.getWhen());
+end
