@@ -1,0 +1,7 @@
+DailySales,com.gigaspaces.DailySales,longDate,total,product
+OnTimeDelivery,com.gigaspaces.OnTimeDelivery,longDate,precentage,type
+WeeklyInventory,com.gigaspaces.WeeklyInventory,longDate,count,type
+TelemetryVolt,com.gigaspaces.Telemetry,longDate,volt,machineID
+TelemetryRotate,com.gigaspaces.Telemetry,longDate,rotate,machineID
+TelemetryPressure,com.gigaspaces.Telemetry,longDate,pressure,machineID
+TelemetryVibration,com.gigaspaces.Telemetry,longDate,vibration,machineID
