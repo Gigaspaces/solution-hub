@@ -46,7 +46,7 @@ InsightEdge provides Apache Zeppelin as part of its standard software package. T
 
 ### Preparing the Data Files
 
-In order to use the Flight Delay prediction model, you need to feed data to InsightEdge and then query it to create the predictions. This data is contained in the following files that need to be downloaded and extracted.
+Using the Flight Delay prediction model requires feeding data to InsightEdge and then querying it to create the predictions. This data is contained in the following files that must be downloaded and extracted.
 
 1. Download the following two  files from AWS: 
    ```sh
@@ -65,7 +65,7 @@ In order to use the Flight Delay prediction model, you need to feed data to Insi
 
 ### Setting Up InsightEdge
 
-You need to run InsightEdge with the following configuration to support the prediction model.
+Run InsightEdge with the following configuration to support the prediction model.
 
 1. Start InsightEdge  with 5 GSCs:
    ```sh
@@ -79,7 +79,7 @@ You need to run InsightEdge with the following configuration to support the pred
 
 ### Setting up the Apache Zeppelin Notebook
 
-After the InsightEdge platform has been started, you need to set up the INSIGHTEDGE-GETTING-STARTED web notebook to point to the prediction model data.
+After the InsightEdge platform has been started, the next step is to set up the INSIGHTEDGE-GETTING-STARTED web notebook to point to the prediction model data.
 
 1. Launch the Apache Zeppelin notebook in your web browser using the following URL: `http://<InsightEdge IP>:9090/#/notebook/INSIGHTEDGE-GETTING-STARTED`
 1. From the top right dropdown menu, select **Interpreter** and change the insightedge_jdbc default.url value from `demo` to `flights_space`.
@@ -88,7 +88,7 @@ After the InsightEdge platform has been started, you need to set up the INSIGHTE
 
 ### Starting a Kafka Producer
 
-This model simulates a flight data feeder component. Kafka needs to be deployed as a producer (feeder unit) so it can stream the 2019 flight data to InsightEdge.
+This model simulates a flight data feeder component. Kafka must be deployed as a producer (feeder unit) so it can stream the 2019 flight data to InsightEdge.
 
 1. Configure the following properties:
    * kafka.bootstrapServer: The IP address of the Apache Zookeeper module used by Kafka.
@@ -102,7 +102,7 @@ This model simulates a flight data feeder component. Kafka needs to be deployed 
 1. Copy the feeder data file from its location at `./data/data.csv` to `/tmp/data.csv`.
 1. Use the following command to set up the Kafka producer:  
    ```sh
-   $ <InsightEdge_Dir>/bin/gs.sh pu deploy --property=kafka.bootstrapServer=127.0.0.1 --property=feeder.flights.path=/tmp/data.csv feeder ./kafkaFeederPU/target/kafka-pers-feeder.jar
+   $ <InsightEdge_Dir>/bin/gs.sh pu deploy --property=kafka.bootstrapServer=127.0.0.1 --property=feeder.flights.path=/tmp/data.csv feeder./kafkaFeederPU/target/kafka-pers-feeder.jar
    ```
 
 ### Running the Prediction Simulation
