@@ -81,18 +81,25 @@ You need to run InsightEdge with the following configuration to support the pred
 
 After the InsightEdge platform has been started, you need to set up the INSIGHTEDGE-GETTING-STARTED web notebook to point to the prediction model data.
 
-1. Launch the Apache Zeppelin notebook in your web browser using the following URL: `http://<InsightEdge IP>:9092/#/notebook/INSIGHTEDGE-GETTING-STARTED`
-1. Update the notebook to reference the local 'flightdelays20172018.csv' file that was extracted in a previous procedure.
+1. Launch the Apache Zeppelin notebook in your web browser using the following URL: `http://<InsightEdge IP>:9090/#/notebook/INSIGHTEDGE-GETTING-STARTED`
 1. From the top right dropdown menu, select **Interpreter** and change the insightedge_jdbc default.url value from 'demo' to 'flights_space'.
 1. Save your changes and return to the notebook.
 1. Run the notebook (you will see the data populated) and wait until all the paragraphs are run.
 
 ### Starting a Kafka Producer
 
+
 This model simulates a flight data feeder component. Kafka needs to be deployed as a producer (feeder unit) so it can stream the 2019 flight data to InsightEdge.This requires configuring the following properties:
 
 * kafka.bootstrapServer: The IP of the Apache Zookeeper module used by Kafka.
 * feeder.flights.path: The full path that is used to save the data file. 
+
+Build the Feeder pu jar by running:
+
+```sh
+$ mvn clean package -f ./kafkaFeederPU/pom.xml
+```
+Copy the feeder data file from ./data/data.csv to /tmp/data.csv
 
 Use the following command to set up the Kafka producer:
 

@@ -212,7 +212,7 @@
     },
     {
       "title": "Enrich the FlightDelay data with weather data",
-      "text": "%spark\nimport org.apache.spark.SparkContext._\n\nimport spark.implicits._\n\n\nval weatherDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(\"/opt/gigaspaces/weather2017_8.csv\")\n\n\n//Add task for merging the weather and flight delays",
+      "text": "%spark\nimport org.apache.spark.SparkContext._\n\nimport spark.implicits._\n\n val data_file_path = System.getenv(\"weather_info\");\nval weatherDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(data_file_path)\n\n\n//Add task for merging the weather and flight delays",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:11:32+0000",
       "config": {
