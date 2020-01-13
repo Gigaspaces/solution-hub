@@ -1,7 +1,7 @@
 ﻿{
   "paragraphs": [
     {
-      "text": "%md\n##  \u003d\u003d  [Getting Started - Part 1 or 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED) \u003d\u003d\n##  \u003d\u003d\u003e Getting Started - Part 2 or 2 \u003c\u003d\u003d",
+      "text": "%md\n##  \u003d\u003d  [Getting Started - Part 1 of 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED) \u003d\u003d\n##  \u003d\u003d\u003e Getting Started - Part 2 of 2 \u003c\u003d\u003d",
       "user": "anonymous",
       "dateUpdated": "2019-12-02 14:04:38.385",
       "config": {
@@ -27,7 +27,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e\u003d\u003d \u003ca href\u003d\"#/notebook/INSIGHTEDGE-GETTING-STARTED\"\u003eGetting Started - Part 1 or 2\u003c/a\u003e \u003d\u003d\u003c/h2\u003e\n\u003ch2\u003e\u003d\u003d\u0026gt; Getting Started - Part 2 or 2 \u0026lt;\u003d\u003d\u003c/h2\u003e\n\u003c/div\u003e"
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e\u003d\u003d \u003ca href\u003d\"#/notebook/INSIGHTEDGE-GETTING-STARTED\"\u003eGetting Started - Part 1 of 2\u003c/a\u003e \u003d\u003d\u003c/h2\u003e\n\u003ch2\u003e\u003d\u003d\u0026gt; Getting Started - Part 2 of 2 \u0026lt;\u003d\u003d\u003c/h2\u003e\n\u003c/div\u003e"
           }
         ]
       },
@@ -1154,7 +1154,7 @@
       "$$hashKey": "object:6485"
     }
   ],
-  "name": "Getting Started/Flight Delays 2",
+  "name": "GigaSpaces Studio/Flight Delays 2",
   "id": "INSIGHTEDGE-GETTING-STARTED-2",
   "noteParams": {},
   "noteForms": {},
