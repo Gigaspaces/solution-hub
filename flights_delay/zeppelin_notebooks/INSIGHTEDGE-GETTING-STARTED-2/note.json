@@ -41,7 +41,7 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%md\n\n### Enriching the Flight Data\n\nAfter the data has been prepared, the next step is to fetch the daily weather data for the required time period and merge it with the flight delay data. (We have this data stored in a CSV file. If you don't have access to the data for some reason, you can download it from <https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip>.) \n\n**DistributedTasks** - To merge the weather data with the flight delay data we use the DistributedTasks capability, which lets us define code that executes in a distributed fashion over the in-memory data. This feature can also leverage the performance gains from the co-location of the logic/process and the data in the same Space.\n\nAfter the data is merged, we query it to verify that the new fields were added.\n",
+      "text": "%md\n\n### Enriching the Flight Data\n\nAfter the data has been prepared, the next step is to fetch the daily weather data for the required time period and merge it with the flight data. (We have this data stored in a CSV file. If you don't have access to the data for some reason, you can download it from <https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip>.) \n\n**DistributedTasks** - To merge the weather data with the flight data we use the DistributedTasks capability, which lets us define code that executes in a distributed fashion over the in-memory data. This feature can also leverage the performance gains from the co-location of the logic/process and the data in the same Space.\n\nAfter the data is merged, we query it to verify that the new fields were added.\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:10:59+0000",
       "config": {
@@ -68,7 +68,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Enriching the Flight Data</h3>\n<p>After the data has been prepared, the next step is to fetch the daily weather data for the required time period and merge it with the flight delay data. (We have this data stored in a CSV file. If you don&rsquo;t have access to the data for some reason, you can download it from <a href=\"https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip\">https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip</a>.) </p>\n<p><strong>DistributedTasks</strong> - To merge the weather data with the flight delay data we use the DistributedTasks capability, which lets us define code that executes in a distributed fashion over the in-memory data. This feature can also leverage the performance gains from the co-location of the logic/process and the data in the same Space.</p>\n<p>After the data is merged, we query it to verify that the new fields were added.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Enriching the Flight Data</h3>\n<p>After the data has been prepared, the next step is to fetch the daily weather data for the required time period and merge it with the flight data. (We have this data stored in a CSV file. If you don&rsquo;t have access to the data for some reason, you can download it from <a href=\"https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip\">https://insightedge-gettingstarted.s3.amazonaws.com/weather2017_8.csv.zip</a>.) </p>\n<p><strong>DistributedTasks</strong> - To merge the weather data with the flight data we use the DistributedTasks capability, which lets us define code that executes in a distributed fashion over the in-memory data. This feature can also leverage the performance gains from the co-location of the logic/process and the data in the same Space.</p>\n<p>After the data is merged, we query it to verify that the new fields were added.</p>\n</div>"
           }
         ]
       },
@@ -211,7 +211,7 @@
       "title": "Re-introduce the Case Class data model that was defined in the previous notebook"
     },
     {
-      "title": "Enrich the Flight Delay data with weather data",
+      "title": "Enrich the flight data with weather data",
       "text": "%spark\nimport org.apache.spark.SparkContext._\n\nimport spark.implicits._\n\n val data_file_path = System.getenv(\"weather_info\");\nval weatherDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(data_file_path)\n\n\n//Add task for merging the weather and flight delays",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:11:32+0000",
@@ -378,7 +378,7 @@
       "$$hashKey": "object:6472"
     },
     {
-      "text": "%md\n\n## Merging the Weather and Flight Data\n In the previous notebook, we wrote the Flight Delay data to the in-memory data grid. In this notebook, we wrote weather data for the same time period to the in-memory data grid.\n In the next paragraph, we define a distributed task that we excute on the memory grid. This task is sent to all the grid partitions, and executes the code below that merges the weather data with the Flight Delay objects.\n",
+      "text": "%md\n\n## Merging the Weather and Flight Data\n In the previous notebook, we wrote the flight data to GigaSpaces. In this notebook, we wrote weather data for the same time period to GigaSpaces.\n In the next paragraph, we define a distributed task that we excute on the data grid. This task is sent to all the grid partitions, and executes the code below that merges the weather data with the FlightDelay objects.\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:12:15+0000",
       "config": {
@@ -415,7 +415,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h2>Merging the Weather and Flight Data</h2>\n<p>In the previous notebook, we wrote the Flight Delay data to the in-memory data grid. In this notebook, we wrote weather data for the same time period to the in-memory data grid.</p>\n<p>in the next paragraph, we define a distributed task that we excute on the memory grid. This task is sent to all the grid partitions, and executes the code below that merges the weather data with the Flight Delay objects.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h2>Merging the Weather and Flight Data</h2>\n<p>In the previous notebook, we wrote the flight data to GigaSpaces. In this notebook, we wrote weather data for the same time period to GigaSpaces.</p>\n<p>in the next paragraph, we define a distributed task that we excute on the data grid. This task is sent to all the grid partitions, and executes the code below that merges the weather data with the FlightDelay objects.</p>\n</div>"
           }
         ]
       }
@@ -669,7 +669,7 @@
       "$$hashKey": "object:6477"
     },
     {
-      "text": "%md\n\n### Training the ML Model\n\nWe are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model.  The result is a fitted or trained model.\n\nAfter we train the model, we'll evalute it using the helper `eval_metrics` and `Metrics` class to rate each prediction as follows:\n\n* TP - True Positive\n* TN - True Negative\n* FP - False Positive\n* FN - False Negative \n\nWe can then sum it up to evalute the model's accuracy.\n\nAfter the training with the 2017 data, we'll run the model with the 2018 data and decide if the accuracy satisfies our requirements.\n\n",
+      "text": "%md\n\n### Training the ML Model\n\nWe are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model. The result is a fitted or trained model.\n\nAfter we train the model, we'll evalute it using the helper `eval_metrics` and `Metrics` class to rate each prediction as follows:\n\n* TP - True Positive\n* TN - True Negative\n* FP - False Positive\n* FN - False Negative \n\nWe can then sum it up to evalute the model's accuracy.\n\nAfter the training with the 2017 data, we'll run the model with the 2018 data and decide if the accuracy satisfies our requirements.\n\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:13:46+0000",
       "config": {
@@ -839,7 +839,7 @@
       "$$hashKey": "object:6481"
     },
     {
-      "text": "%md\n\n### Streaming Flight Data via Kafka to the Memory Grid\n\nIn the background, the feeder pushes flight data events to Kafka.\nIn the next paragraph, Kafka streaming is used to write this data from Kafka to the memory grid.\nThe event prediction field is set to \"for_calc\" before a prediction is made.\n",
+      "text": "%md\n\n### Streaming Flight Data via Kafka to the Data Grid\n\nIn the background, the feeder pushes flight data events to Kafka.\nIn the next paragraph, Kafka streaming is used to write this data from Kafka to the data grid.\nThe event prediction field is set to \"for_calc\" before a prediction is made.\n",
       "user": "anonymous",
       "dateUpdated": "2019-11-11T12:44:30+0000",
       "config": {
@@ -876,7 +876,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Streaming Flight Data via Kafka to the Memory Grid</h3>\n<p>In the background, the feeder pushes flight data events to Kafka.<br/>In the next paragraph, Kafka streaming is used to write this data from Kafka to the memory grid.<br/>The event prediction field is set to &ldquo;for_calc&rdquo; before a prediction is made.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Streaming Flight Data via Kafka to the Data Grid</h3>\n<p>In the background, the feeder pushes flight data events to Kafka.<br/>In the next paragraph, Kafka streaming is used to write this data from Kafka to the data grid.<br/>The event prediction field is set to &ldquo;for_calc&rdquo; before a prediction is made.</p>\n</div>"
           }
         ]
       }
@@ -921,7 +921,7 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500,
       "$$hashKey": "object:6482",
-      "title": "Use Spark Streaming to stream flight data from Kafka and store it in the memory grid"
+      "title": "Use Spark Streaming to stream flight data from Kafka and store it in the data grid"
     },
     {
       "text": "%spark\n\nval for_clac = spark.read.grid[FlightDelaysWithWeather].as[FlightDelaysWithWeather].where(\"prediction == 'for_calc'\")\n\nval flightDelayPredictions = for_clac.map{fd => \n                        val featuresVector = Array(fd.month.toDouble, fd.dayOfWeek.toDouble,\n                            (\"%04d\".format(fd.crsDepTime.toInt).take(2)).toDouble, fd.awnd.toDouble, fd.prcp.toDouble, fd.tmax.toDouble, fd.tmin.toDouble)\n                        val prediction = predictFlightDelaysRFModel.predict( Vectors.dense(featuresVector))\n                        if(prediction > 0)\n                            fd.prediction = \"Delayed\"\n                        else\n                            fd.prediction = \"OK\"\n\n                        fd\n       \n   }.rdd.saveToGrid()\nprintln(\"Updated predictions for \" + for_clac.count + \" records\")",
@@ -992,7 +992,7 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500,
       "$$hashKey": "object:6483",
-      "title": "Read the flight data from the memory grid and run our model prediction on it"
+      "title": "Read the flight data from the data grid and run our model prediction on it"
     },
     {
       "text": "%insightedge_jdbc \n\nselect * from FlightDelaysWithWeather where prediction is not null limit 50\n",

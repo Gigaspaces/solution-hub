@@ -40,7 +40,7 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },    {
-      "text": "%md\n> Exploring data, training a model, and making predictions\n\n## Welcome to Getting Started with InsightEdge\n\nThis sample application uses flight and weather data to make binary predictions (yes/no) about which flights are likely to get delayed. It takes you through the following steps:\n\n* Fetching data and loading it to the InsightEdge platform\n* Exploring the data using Spark and SQL queries\n* Enriching the data and processing it to get the relevant feature vector\n* Building and training a Machine Learning (ML) model for predicting flight delays\n* Testing the ML model with real data\n\nTo run the code and see the results in the notebook, click  the `Run` icon in each paragraph (located in the top right corner).\n\n### Fetching and Exploring the Data\n\nFor this application, we'll load sample data from a CSV file to the data grid. We can then explore it a bit using SQL queries. \n\n### Processing the Data for the ML Model\n\nWe'll use InsightEdge Spark queries to transform the flight data information to get what we need to train the ML model, so that it can make accurate flight delay predictions. The initial data includes (per flight) date, airport of origin, destination, airline, departure delay, etc. This data will then be enriched with basic weather data at the airport of origin at the time of departure.\n\n### Selecting an ML Model\n\nThere are many ML models available. The model that we felt is best suited for this task is the `Random (Decision) Forest`. \nFlight delays are measured in minutes; a positive number is the delay in minutes, while a negative number indicates a flight that was early.\nWe'll use data such as the month, day and departure time, in addition to origin and destination airports as features that we feed into an ML model (in our case the Random Forest model) to train it for the most accurate results. \nWe'll also supplement the feature vector with weather-related data such as rain, wind and temperature. \n\n##### We'll get the model ready as follows:\n*Use 2017 data to train our model.\n*Use 2018 data to evaluate our model accuracy.\n*Stream 2019 data and predict whether flights will be delayed.",
+      "text": "%md\n> Exploring data, training a model, and making predictions\n\n## Welcome to Getting Started with InsightEdge\n\nThis sample application uses flight and weather data to make binary predictions (yes/no) about which flights are likely to get delayed. It takes you through the following steps:\n\n* Fetching data and loading it to the InsightEdge platform\n* Exploring the data using Spark and SQL queries\n* Enriching the data and processing it to get the relevant feature vector\n* Building and training a Machine Learning (ML) model for predicting flight delays\n* Testing the ML model with real data\n\nTo run the code and see the results in the notebook, click  the `Run` icon in each paragraph (located in the top right corner).\n\n### Fetching and Exploring the Data\n\nFor this application, we'll load sample data from a CSV file to the data grid. We can then explore it a bit using SQL queries. \n\n### Processing the Data for the ML Model\n\nWe'll use InsightEdge Spark queries to transform the flight data information to get what we need to train the ML model, so that it can make accurate flight delay predictions. The initial data includes (per flight) date, airport of origin, destination, airline, departure delay, etc. This data will then be enriched with basic weather data at the airport of origin at the time of departure.\n\n### Selecting an ML Model\n\nThere are many ML models available. The model that we felt is best suited for this task is the `Random (Decision) Forest`. \nFlight delays are measured in minutes; a positive number is the delay in minutes, while a negative number indicates that a flight was early.\nWe'll use data such as the month, day and departure time, in addition to origin and destination airports as features that we feed into an ML model (in our case the Random Forest model) to train it for the most accurate results. \nWe'll also supplement the feature vector with weather-related data such as rain, wind and temperature. \n\n##### We'll get the model ready as follows:\n*Use 2017 data to train our model.\n*Use 2018 data to evaluate our model accuracy.\n*Stream 2019 data and predict whether flights will be delayed.",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:36:35+0000",
       "config": {
@@ -68,7 +68,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<blockquote>\n  <p>Exploring data, training a model, and making predictions</p>\n</blockquote>\n<h2>Welcome to Getting Started with InsightEdge</h2>\n<p>This sample application uses flight and weather data to make binary predictions (yes/no) about which flights are likely to get delayed. It takes you through the following steps:</p>\n<ul>\n  <li>Fetching data and loading it to the InsightEdge platform</li>\n  <li>Exploring the data using Spark and SQL queries</li>\n  <li>Enriching the data and processing it to get the relevant feature vector</li>\n  <li>Building and training a Machine Learning (ML) model for predicting flight delays</li>\n  <li>Testing the ML model with real data</li>\n</ul>\n<p>To run the code and see the results in the notebook, click the <code>Run</code> icon in each paragraph (located in the top right corner).</p>\n<h3>Fetching and Exploring the Data</h3>\n<p>For this application, we&rsquo;ll load sample data from a CSV file to the data grid. We can then explore it a bit using SQL queries. </p>\n<h3>Processing the Data for the ML Model</h3>\n<p>We&rsquo;ll use InsightEdge Spark queries to transform the flight data information to get what we need to train the ML model, so that it can make accurate flight delay predictions. The initial data includes (per flight) date, airport of origin, destination, airline, departure delay, etc. This data will then be enriched with basic weather data at the airport of origin at the time of departure.</p>\n<h3>Selecting an ML Model</h3>\n<p>There are many ML models available. The model that we felt is best suited for this task is the <code>Random (Decision) Forest</code>.<br/>Flight delays are measured in minutes; a positive number is the delay in minutes, while a negative number indicates a flight that was early.<br/>We&rsquo;ll use data such as the month, day and departure time in addition to origin and destination airports as features that we  feed into an ML model (in our case, the Random Forest model) to train it for the most accurate results.<br/>We&rsquo;ll also supplement the feature vector with weather-related data such as rain, wind and temperature. </p>\n<h5>We&rsquo;ll get the model ready as follows:</h5>\n<p>*Use 2017 data to train our model.<br/>*Use 2018 data to evaluate our model accuracy.<br/>*Stream 2019 data and predict whether the flights will be delayed.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<blockquote>\n  <p>Exploring data, training a model, and making predictions</p>\n</blockquote>\n<h2>Welcome to Getting Started with InsightEdge</h2>\n<p>This sample application uses flight and weather data to make binary predictions (yes/no) about which flights are likely to get delayed. It takes you through the following steps:</p>\n<ul>\n  <li>Fetching data and loading it to the InsightEdge platform</li>\n  <li>Exploring the data using Spark and SQL queries</li>\n  <li>Enriching the data and processing it to get the relevant feature vector</li>\n  <li>Building and training a Machine Learning (ML) model for predicting flight delays</li>\n  <li>Testing the ML model with real data</li>\n</ul>\n<p>To run the code and see the results in the notebook, click the <code>Run</code> icon in each paragraph (located in the top right corner).</p>\n<h3>Fetching and Exploring the Data</h3>\n<p>For this application, we&rsquo;ll load sample data from a CSV file to the data grid. We can then explore it a bit using SQL queries. </p>\n<h3>Processing the Data for the ML Model</h3>\n<p>We&rsquo;ll use InsightEdge Spark queries to transform the flight data information to get what we need to train the ML model, so that it can make accurate flight delay predictions. The initial data includes (per flight) date, airport of origin, destination, airline, departure delay, etc. This data will then be enriched with basic weather data at the airport of origin at the time of departure.</p>\n<h3>Selecting an ML Model</h3>\n<p>There are many ML models available. The model that we felt is best suited for this task is the <code>Random (Decision) Forest</code>.<br/>Flight delays are measured in minutes; a positive number is the delay in minutes, while a negative number indicates that a flight was early.<br/>We&rsquo;ll use data such as the month, day and departure time in addition to origin and destination airports as features that we  feed into an ML model (in our case, the Random Forest model) to train it for the most accurate results.<br/>We&rsquo;ll also supplement the feature vector with weather-related data such as rain, wind and temperature. </p>\n<h5>We&rsquo;ll get the model ready as follows:</h5>\n<p>*Use 2017 data to train our model.<br/>*Use 2018 data to evaluate our model accuracy.<br/>*Stream 2019 data and predict whether the flights will be delayed.</p>\n</div>"
           }
         ]
       },
@@ -209,7 +209,7 @@
       "dateStarted": "2019-10-31T13:28:34+0000"
     },
     {
-      "title": "Load the Flight Delay data",
+      "title": "Load the flight data",
       "text": "%spark\n//explore data before we continue\n//WN - SouthWest, OO - SkyWest Airlines Inc., \"EV\" - ExpressJet Airlines LLC, \"B6\" - JetBlue, \"AS\" Alaska Airlines Inc. \"NK\" - Spirit Air Lines\", \"F9\" - \"Frontier Airlines Inc.\"\nval airlines = List (\"UA\",\"OO\",\"B6\",\"NK\", \"F9\")\n// ORD - Chicago, DFW - Dallas, DEN - Denver, SFO - San Francisco\nval airports = List (\"ORD\",\"DFW\",\"DEN\",\"SFO\")\n val data_file_path = System.getenv(\"flight_delay_path\");\n val flightDelaysDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(data_file_path).filter($\"Reporting_Airline\".isin(airlines:_*)).filter($\"Origin\".isin(airports:_*)).filter($\"cancelled\" === 0.0).filter($\"DayofMonth\" < 20.0)\nflightDelaysDataFrame.printSchema()\n// Create a temp view that we can query by SQL\nflightDelaysDataFrame.createOrReplaceTempView(\"FlightDelays\")\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:29:01+0000",
@@ -720,7 +720,7 @@
       }
     },
     {
-      "text": "%md\n\n### Transforming and Enriching the Flight Data\n\nThis step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. The data is processed as follows:\n\n* Configure an InsightEdge context.\n* Provide InsightEdge with Type information about the data that was loaded.\n* Load the data to the InsightEdge in-memory store (to speed up data access).\n",
+      "text": "%md\n\n### Transforming and Enriching the Flight Data\n\nThis step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. The data is processed as follows:\n\n* Configure an InsightEdge context.\n* Provide InsightEdge with Type information about the data that was loaded.\n* Load the data to the data grid (to speed up data access).\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:33:32+0000",
       "config": {
@@ -747,7 +747,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Transforming and Enriching the Flight Data</h3>\n<p>This step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. The data is processed as follows:</p>\n<ul>\n  <li>Configure an InsightEdge context.</li>\n  <li>Provide InsightEdge with Type information about the data that was loaded.</li>\n  <li>Load the data to the InsightEdge in-memory store (to speed up data access).</li>\n</ul>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Transforming and Enriching the Flight Data</h3>\n<p>This step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. The data is processed as follows:</p>\n<ul>\n  <li>Configure an InsightEdge context.</li>\n  <li>Provide InsightEdge with Type information about the data that was loaded.</li>\n  <li>Load the data to the data grid (to speed up data access).</li>\n</ul>\n</div>"
           }
         ]
       },
@@ -762,7 +762,7 @@
       "dateStarted": "2019-10-31T13:33:32+0000"
     },
     {
-      "title": "Initialize Spark with InsightEdge context ",
+      "title": "Initialize Spark with InsightEdge context",
       "text": "%spark\n\nimport org.insightedge.spark.implicits.all._\nimport org.insightedge.spark.context.InsightEdgeConfig\n\n//Change space name here if not working with default\nval ieConfig = new InsightEdgeConfig(\"flights_space\")\n\nsc.initializeInsightEdgeContext(ieConfig)\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:33:32+0000",
@@ -805,7 +805,7 @@
       "dateStarted": "2019-10-31T13:33:32+0000"
     },
     {
-      "title": "Write the Flight Delay data to the in-memory store",
+      "title": "Write the flight data to the data grid",
       "text": "%spark\nimport org.apache.spark.sql.SaveMode\nimport model.v1._\n\nprint(\"Writing to in-memory store \" + flightDelaysDataFrame.count + \"entries\")\n\nval flightDelaysRDD = flightDelaysDataFrame.map{rec =>  val fdww = FlightDelaysWithWeather(null, \"\"+rec.getAs(\"Reporting_Airline\") , \"\"+rec.getAs(\"Flight_Number\") ,(\"\"+rec.getAs(\"Year\")).toInt,\"\"+rec.getAs(\"Month\"),\"\"+rec(2),\"\"+rec.getAs(\"DayOfWeek\"),\"\"+rec.getAs(\"CRSDepTime\"),(\"\"+rec.getAs(\"DepDel15\")).toDouble,(\"\"+rec.getAs(\"DepDelay\")).toDouble,\"\"+rec.getAs(\"Origin\"),\"\"+rec.getAs(\"Dest\"), null, null, null, null, null, null, null, null)\n                                                        fdww.generate_id()\n                                                        fdww\n                                                }\nsc.grid.clear(\"FlightDelaysWithWeather\")\nflightDelaysRDD.rdd.saveToGrid()",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:33:33+0000",
@@ -861,7 +861,7 @@
       }
     },
     {
-      "title": "Query the data directly from the in-memory data grid",
+      "title": "Query the data directly from the data grid",
       "text": "%insightedge_jdbc\n\nselect id, \"year\", \"month\", dayofMonth, dayOfWeek, crsDepTime, flight_number, origin, dest, depDelay from FlightDelaysWithWeather limit 5\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:35:51+0000",
@@ -941,7 +941,7 @@
       "dateStarted": "2019-10-31T13:35:51+0000"
     },
     {
-      "title": "Access the in-memory store using InsightEdge's predicate pushdown for better performance",
+      "title": "Access the data grid using InsightEdge's predicate pushdown for better performance",
       "text": "%spark\n\nval airports = List (\"ORD\",\"DFW\",\"DEN\",\"SFO\")\n\n\nval origin =  z.select(\"origin\", Seq((\"ORD\",\"O'hare International (chicago)\"),\n                                                  (\"DFW\",\"Dallas International\"),\n                                                  (\"DEN\", \"Denver\"), \n                                                  (\"SFO\", \"San Francissco\")))\nval filtered_df = spark.read.grid[FlightDelaysWithWeather].where(\"depDelay > 0 and origin = '\" + origin  + \"'\")\nfiltered_df.describe(\"depDelay\").show\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:36:25+0000",
