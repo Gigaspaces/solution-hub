@@ -208,10 +208,10 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500,
       "$$hashKey": "object:6468",
-      "title": "Re-introduce the data model Case Class that was defined in the previous notebook"
+      "title": "Re-introduce the Case Class data model that was defined in the previous notebook"
     },
     {
-      "title": "Enrich the FlightDelay data with weather data",
+      "title": "Enrich the Flight Delay data with weather data",
       "text": "%spark\nimport org.apache.spark.SparkContext._\n\nimport spark.implicits._\n\n val data_file_path = System.getenv(\"weather_info\");\nval weatherDataFrame = sqlContext.read.option(\"header\", \"true\").option(\"inferschema\", \"true\").csv(data_file_path)\n\n\n//Add task for merging the weather and flight delays",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:11:32+0000",
@@ -378,7 +378,7 @@
       "$$hashKey": "object:6472"
     },
     {
-      "text": "%md\n\n## Merge the weather and flight delays data together\n##### In the previous notebook we wrote the Flight Delays data to the memory grid\n##### In the notebook we wrote weather data for the same time period to the memory grid\n##### in the next paragraph, we define a distributed task that we will excute on the memory grid, \n##### this task will be sent to all the grid partitions and will execute the code below which will merge the weather data to the Flight Delays objects.\n",
+      "text": "%md\n\n## Merging the Weather and Flight Data\n In the previous notebook, we wrote the Flight Delay data to the in-memory data grid. In this notebook, we wrote weather data for the same time period to the in-memory data grid.\n In the next paragraph, we define a distributed task that we excute on the memory grid. This task is sent to all the grid partitions, and executes the code below that merges the weather data with the Flight Delay objects.\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:12:15+0000",
       "config": {
@@ -415,13 +415,13 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h2>Merge the weather and flight delays data together</h2>\n<h5>In the previous notebook we wrote the Flight Delays data to the memory grid</h5>\n<h5>In the notebook we wrote weather data for the same time period to the memory grid</h5>\n<h5>in the next paragraph, we define a distributed task that we will excute on the memory grid,</h5>\n<h5>this task will be sent to all the grid partitions and will execute the code below which will merge the weather data to the Flight Delays objects.</h5>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h2>Merging the Weather and Flight Data</h2>\n<p>In the previous notebook, we wrote the Flight Delay data to the in-memory data grid. In this notebook, we wrote weather data for the same time period to the in-memory data grid.</p>\n<p>in the next paragraph, we define a distributed task that we excute on the memory grid. This task is sent to all the grid partitions, and executes the code below that merges the weather data with the Flight Delay objects.</p>\n</div>"
           }
         ]
       }
     },
     {
-      "title": "Define a task to enrich the flights delay records with relevant weather metrics",
+      "title": "Define a task that enriches the flight records with the relevant weather metrics",
       "text": "%spark\nimport  model.v1._\nimport com.gigaspaces.async.AsyncResult\nimport org.openspaces.core.executor.DistributedTask\nimport org.insightedge.scala.annotation._\nimport scala.collection.JavaConversions._\nimport org.slf4j.{Logger, LoggerFactory}\nimport org.openspaces.core.GigaSpace\nimport org.openspaces.core.executor.TaskGigaSpace\nimport scala.beans.{BeanProperty}\nimport com.gigaspaces.document.SpaceDocument\nimport scala.collection.mutable.ListBuffer\nimport com.j_spaces.core.client.SQLQuery\n\n\nclass MergeTask extends DistributedTask[java.lang.Integer, java.lang.Integer] {\n  import scala.collection.JavaConversions._\n  private val logger = LoggerFactory.getLogger(classOf[MergeTask])\n  @TaskGigaSpace @transient private val gs: GigaSpace = null\n\noverride def execute(): Integer = {\n    if(gs != null) {\n      val clusteredProxy = gs.getClustered()\n      logger.info(\"execute returned from: \" + gs.getSpaceName)\n        val template =new SQLQuery[FlightDelaysWithWeather](classOf[FlightDelaysWithWeather], \"tmin is null\")\n        val weatherTemplate =new SpaceDocument(\"Weather\");\n        var writtenCount:Integer = 0\n        var retArray:Array[FlightDelaysWithWeather] = null\n        logger.info(\"Created template\")\n        try {\n            while ( {retArray = gs.takeMultiple(template, 1000);retArray  != null && retArray.length > 0}) {\n                var writeCollection = new ListBuffer[FlightDelaysWithWeather]\n                for (rec <- retArray) {\n                  val dateField:Int = (\"%d%02d%02d\".format(rec.year.toInt, rec.month.toInt, rec.dayofMonth.toInt)).toInt\n                  val origin:String =  rec.origin\n                  weatherTemplate.setProperty(\"Date\", dateField)\n                  weatherTemplate.setProperty(\"Station\", origin)\n                  val weather = clusteredProxy.read(weatherTemplate)\n                  if (weather != null) {\n                    rec.awnd = \"\" + weather.getProperty(\"AWND\")\n                    rec.prcp = \"\" + weather.getProperty(\"PRCP\")\n                    rec.snow = \"\" + weather.getProperty(\"SNOW\")\n                    rec.tmin = \"\" + weather.getProperty(\"TMIN\")\n                    rec.tmax = \"\" + weather.getProperty(\"TMAX\")\n                    rec.date =  dateField\n                    writeCollection += rec\n                  }\n                }\n                if(writeCollection.length > 0) {\n                    gs.writeMultiple(writeCollection.toArray)\n                } \n                writtenCount += writeCollection.length\n            }\n        } catch {\n            case e: Exception => logger.warn(e.getMessage, e)\n        }\n      logger.info(\"Finished task \" + writtenCount)\n\n      return writtenCount\n    } else {\n      logger.info(\"gs Proxy not available\")\n        return -1\n        \n    }\n  }\n  override def reduce(results: java.util.List[AsyncResult[Integer]]): java.lang.Integer = {\n    logger.info(\"In Reduce\")\n    return results.map(_.getResult().intValue()).sum\n  }}\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:12:15+0000",
@@ -584,7 +584,7 @@
       "$$hashKey": "object:6475"
     },
     {
-      "text": "%md\n\n### Preparing Feature Vectors\n\nIn the last stage of the data processing, we use the merged data to prepare feature vectors for all the fields we want to fit in our model, and label each vector with the resulting delay. nAs mentioned earlier, a positive number is the delay (in minutes) while a negative number indicates a flight that was early.\n",
+      "text": "%md\n\n### Preparing Feature Vectors\n\nIn the last stage of the data processing, we use the merged data to prepare feature vectors for all the fields we want to fit in our model, and label each vector with the resulting delay. As mentioned earlier, a positive number is the delay (in minutes) while a negative number indicates a flight that was early.\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:13:35+0000",
       "config": {
@@ -611,7 +611,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Preparing Feature Vectors</h3>\n<p>In the last stage of the data processing, we use the merged data to prepare feature vectors for all the fields we want to fit in our model, and label each vector with the resulting delay. nAs mentioned earlier, a positive number is the delay (in minutes) while a negative number indicates a flight that was early.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Preparing Feature Vectors</h3>\n<p>In the last stage of the data processing, we use the merged data to prepare feature vectors for all the fields we want to fit in our model, and label each vector with the resulting delay. As mentioned earlier, a positive number is the delay (in minutes) while a negative number indicates a flight that was early.</p>\n</div>"
           }
         ]
       },
@@ -669,7 +669,7 @@
       "$$hashKey": "object:6477"
     },
     {
-      "text": "%md\n\n### Training the ML Model\n\nWe are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model.  The result is a fitted or trained model.\n\nAfter we train the model, we'll evalute it using the helper `eval_metrics` and `Metrics` class to rate each prediction as follows:\n\n* TP - True Positive\n* TN - True Negative\n* FP - False Positive\n* FN - False Negative \n\nWe can then sum it to evalute the model's accuracy.\n\nAfter the training with the 2017 data, we'll run the model with the 2018 data and decide if the accuracy satisfies our requirements.\n\n",
+      "text": "%md\n\n### Training the ML Model\n\nWe are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model.  The result is a fitted or trained model.\n\nAfter we train the model, we'll evalute it using the helper `eval_metrics` and `Metrics` class to rate each prediction as follows:\n\n* TP - True Positive\n* TN - True Negative\n* FP - False Positive\n* FN - False Negative \n\nWe can then sum it up to evalute the model's accuracy.\n\nAfter the training with the 2017 data, we'll run the model with the 2018 data and decide if the accuracy satisfies our requirements.\n\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T10:13:46+0000",
       "config": {
@@ -696,7 +696,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Training the ML Model</h3>\n<p>We are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model. The result is a fitted or trained model.</p>\n<p>After we train the model, we&rsquo;ll evalute it using the helper <code>eval_metrics</code> and <code>Metrics</code> class to rate each prediction as follows:</p>\n<ul>\n  <li>TP - True Positive</li>\n  <li>TN - True Negative</li>\n  <li>FP - False Positive</li>\n  <li>FN - False Negative</li>\n</ul>\n<p>We can then sum it to evalute the model&rsquo;s accuracy.</p>\n<p>After the training with the 2017 data, we&rsquo;ll run the model with the 2018 data and decide if the accuracy satisfies our requirements.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Training the ML Model</h3>\n<p>We are using the Random Forest model (forest of decision trees) with the Classification strategy. The 2017 data, which we prepared before, will be used to train the model. The result is a fitted or trained model.</p>\n<p>After we train the model, we&rsquo;ll evalute it using the helper <code>eval_metrics</code> and <code>Metrics</code> class to rate each prediction as follows:</p>\n<ul>\n  <li>TP - True Positive</li>\n  <li>TN - True Negative</li>\n  <li>FP - False Positive</li>\n  <li>FN - False Negative</li>\n</ul>\n<p>We can then sum it up to evalute the model&rsquo;s accuracy.</p>\n<p>After the training with the 2017 data, we&rsquo;ll run the model with the 2018 data and decide if the accuracy satisfies our requirements.</p>\n</div>"
           }
         ]
       },
@@ -839,7 +839,7 @@
       "$$hashKey": "object:6481"
     },
     {
-      "text": "%md\n\n### Stream flights data via Kafka to the memory grid\n\nIn the backgroud, feeder pushes flights data events to Kafka.\nIn the next paragraph Kafka streaming is use to write this data from Kafka to the memory grid.\nThe event prediction field is set to \"for_calc\" before a prediction is made.\n",
+      "text": "%md\n\n### Streaming Flight Data via Kafka to the Memory Grid\n\nIn the background, the feeder pushes flight data events to Kafka.\nIn the next paragraph, Kafka streaming is used to write this data from Kafka to the memory grid.\nThe event prediction field is set to \"for_calc\" before a prediction is made.\n",
       "user": "anonymous",
       "dateUpdated": "2019-11-11T12:44:30+0000",
       "config": {
@@ -876,7 +876,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Stream flights data via Kafka to the memory grid</h3>\n<p>In the backgroud, feeder pushes flights data events to Kafka.<br/>In the next paragraph Kafka streaming is use to write this data from Kafka to the memory grid.<br/>The event prediction field is set to &ldquo;for_calc&rdquo; before a prediction is made.</p>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Streaming Flight Data via Kafka to the Memory Grid</h3>\n<p>In the background, the feeder pushes flight data events to Kafka.<br/>In the next paragraph, Kafka streaming is used to write this data from Kafka to the memory grid.<br/>The event prediction field is set to &ldquo;for_calc&rdquo; before a prediction is made.</p>\n</div>"
           }
         ]
       }
@@ -921,7 +921,7 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500,
       "$$hashKey": "object:6482",
-      "title": "Use Spark Streaming for streaming flights data from Kafka and store it in the memory grid"
+      "title": "Use Spark Streaming to stream flight data from Kafka and store it in the memory grid"
     },
     {
       "text": "%spark\n\nval for_clac = spark.read.grid[FlightDelaysWithWeather].as[FlightDelaysWithWeather].where(\"prediction == 'for_calc'\")\n\nval flightDelayPredictions = for_clac.map{fd => \n                        val featuresVector = Array(fd.month.toDouble, fd.dayOfWeek.toDouble,\n                            (\"%04d\".format(fd.crsDepTime.toInt).take(2)).toDouble, fd.awnd.toDouble, fd.prcp.toDouble, fd.tmax.toDouble, fd.tmin.toDouble)\n                        val prediction = predictFlightDelaysRFModel.predict( Vectors.dense(featuresVector))\n                        if(prediction > 0)\n                            fd.prediction = \"Delayed\"\n                        else\n                            fd.prediction = \"OK\"\n\n                        fd\n       \n   }.rdd.saveToGrid()\nprintln(\"Updated predictions for \" + for_clac.count + \" records\")",
@@ -992,7 +992,7 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500,
       "$$hashKey": "object:6483",
-      "title": "Read the Flights data from the memory grid and run our model prediction on it"
+      "title": "Read the flight data from the memory grid and run our model prediction on it"
     },
     {
       "text": "%insightedge_jdbc \n\nselect * from FlightDelaysWithWeather where prediction is not null limit 50\n",
@@ -1080,7 +1080,7 @@
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500,
       "$$hashKey": "object:6484",
-      "title": "Look at the predictions data"
+      "title": "Review the prediction data"
     },
     {
       "text": "%insightedge_jdbc\nselect prediction, count(*) as \"count\" from FlightDelaysWithWeather group by prediction\n",

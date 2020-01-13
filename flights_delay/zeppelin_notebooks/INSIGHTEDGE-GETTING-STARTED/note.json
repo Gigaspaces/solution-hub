@@ -720,7 +720,7 @@
       }
     },
     {
-      "text": "%md\n\n### Transforming and Enriching the Flight Data\n\nThis step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. the data is processed as follows:\n\n* Configure an InsightEdge context\n* Provide InsightEdge with Type information about the data that was loaded\n* Load the data to the InsightEdge in-memory store (to speed up data access)\n",
+      "text": "%md\n\n### Transforming and Enriching the Flight Data\n\nThis step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. The data is processed as follows:\n\n* Configure an InsightEdge context.\n* Provide InsightEdge with Type information about the data that was loaded.\n* Load the data to the InsightEdge in-memory store (to speed up data access).\n",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:33:32+0000",
       "config": {
@@ -747,7 +747,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Transforming and Enriching the Flight Data</h3>\n<p>This step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. the data is processed as follows:</p>\n<ul>\n  <li>Configure an InsightEdge context</li>\n  <li>Provide InsightEdge with Type information about the data that was loaded</li>\n  <li>Load the data to the InsightEdge in-memory store (to speed up data access)</li>\n</ul>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Transforming and Enriching the Flight Data</h3>\n<p>This step applies InsightEdge capabilities to transform the data into the required format, and enrich it with weather data. The data is processed as follows:</p>\n<ul>\n  <li>Configure an InsightEdge context.</li>\n  <li>Provide InsightEdge with Type information about the data that was loaded.</li>\n  <li>Load the data to the InsightEdge in-memory store (to speed up data access).</li>\n</ul>\n</div>"
           }
         ]
       },
@@ -805,7 +805,7 @@
       "dateStarted": "2019-10-31T13:33:32+0000"
     },
     {
-      "title": "Write the FlightDelay data to the in-memory store",
+      "title": "Write the Flight Delay data to the in-memory store",
       "text": "%spark\nimport org.apache.spark.sql.SaveMode\nimport model.v1._\n\nprint(\"Writing to in-memory store \" + flightDelaysDataFrame.count + \"entries\")\n\nval flightDelaysRDD = flightDelaysDataFrame.map{rec =>  val fdww = FlightDelaysWithWeather(null, \"\"+rec.getAs(\"Reporting_Airline\") , \"\"+rec.getAs(\"Flight_Number\") ,(\"\"+rec.getAs(\"Year\")).toInt,\"\"+rec.getAs(\"Month\"),\"\"+rec(2),\"\"+rec.getAs(\"DayOfWeek\"),\"\"+rec.getAs(\"CRSDepTime\"),(\"\"+rec.getAs(\"DepDel15\")).toDouble,(\"\"+rec.getAs(\"DepDelay\")).toDouble,\"\"+rec.getAs(\"Origin\"),\"\"+rec.getAs(\"Dest\"), null, null, null, null, null, null, null, null)\n                                                        fdww.generate_id()\n                                                        fdww\n                                                }\nsc.grid.clear(\"FlightDelaysWithWeather\")\nflightDelaysRDD.rdd.saveToGrid()",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:33:33+0000",
@@ -1123,7 +1123,7 @@
       "dateStarted": "2019-10-31T13:36:31+0000"
     },
     {
-      "text": "%md\n### Visit the second part of this notebook at [part 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED-2)",
+      "text": "%md\n### Continue to the second part of this notebook in [part 2] (#/notebook/INSIGHTEDGE-GETTING-STARTED-2)",
       "user": "anonymous",
       "dateUpdated": "2019-10-31T13:36:35+0000",
       "config": {
@@ -1150,7 +1150,7 @@
         "msg": [
           {
             "type": "HTML",
-            "data": "<div class=\"markdown-body\">\n<h3>Visit the second part of this notebook at <a href=\"#/notebook/INSIGHTEDGE-GETTING-STARTED-2\">part 2</a></h3>\n</div>"
+            "data": "<div class=\"markdown-body\">\n<h3>Continue to the second part of this notebook in <a href=\"#/notebook/INSIGHTEDGE-GETTING-STARTED-2\">part 2</a></h3>\n</div>"
           }
         ]
       },
