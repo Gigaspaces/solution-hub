@@ -32,21 +32,21 @@ Installing and configuring the prediction model involves the following steps:
 
 #### Configuring Apache Zeppelin
 
-InsightEdge provides Apache Zeppelin as part of its standard software package. To use the flight delay prediction model, you need the  INSIGHTEDGE-GETTING-STARTED web notebook, along with the INSIGHTEDGE-GETTING-STARTED-2 notebook. Configure the following:
+InsightEdge provides Apache Zeppelin as part of its standard software package. To use the Flight Delay prediction model, you need the  INSIGHTEDGE-GETTING-STARTED web notebook, along with the INSIGHTEDGE-GETTING-STARTED-2 notebook. Configure the following:
 
 1. Copy the demo notebooks from the Zeppelin notebook folder in the InsightEdge installation directory:
    ```sh
    $ cp -R ./zeppelin_notebooks/* <InsightEdge Install Dir>/insightedge/zeppelin/notebook/
    ```
 
-1. Set the kafka server URL for the prediction model:
+1. Set the Kafka server URL for the prediction model:
    ```sh
    $ export KAFKA_URL=192.168.99.102:29092
    ```
 
 ### Preparing the Data Files
 
-In order to use the flight delay prediction model, you need to feed data to InsightEdge and then query it to create the predictions. This data is contained in the following files that need to be downloaded and extracted.
+In order to use the Flight Delay prediction model, you need to feed data to InsightEdge and then query it to create the predictions. This data is contained in the following files that need to be downloaded and extracted.
 
 1. Download the following two  files from AWS: 
    ```sh
@@ -72,7 +72,7 @@ You need to run InsightEdge with the following configuration to support the pred
    $ ./gs.sh host run-agent --auto --gsc=5
    ```
 
-1. Start an in-memory space called 'flights_space' with 4 partitions:
+1. Start an in-memory Space called `flights_space` with 4 partitions:
    ```sh
    $ ./gs.sh space deploy --partitions=4 flights_space
    ```
@@ -82,30 +82,28 @@ You need to run InsightEdge with the following configuration to support the pred
 After the InsightEdge platform has been started, you need to set up the INSIGHTEDGE-GETTING-STARTED web notebook to point to the prediction model data.
 
 1. Launch the Apache Zeppelin notebook in your web browser using the following URL: `http://<InsightEdge IP>:9090/#/notebook/INSIGHTEDGE-GETTING-STARTED`
-1. From the top right dropdown menu, select **Interpreter** and change the insightedge_jdbc default.url value from 'demo' to 'flights_space'.
+1. From the top right dropdown menu, select **Interpreter** and change the insightedge_jdbc default.url value from `demo` to `flights_space`.
 1. Save your changes and return to the notebook.
 1. Run the notebook (you will see the data populated) and wait until all the paragraphs are run.
 
 ### Starting a Kafka Producer
 
+This model simulates a flight data feeder component. Kafka needs to be deployed as a producer (feeder unit) so it can stream the 2019 flight data to InsightEdge.
 
-This model simulates a flight data feeder component. Kafka needs to be deployed as a producer (feeder unit) so it can stream the 2019 flight data to InsightEdge.This requires configuring the following properties:
+1. Configure the following properties:
+   * kafka.bootstrapServer: The IP address of the Apache Zookeeper module used by Kafka.
+   * feeder.flights.path: The full path that is used to save the data file. 
 
-* kafka.bootstrapServer: The IP of the Apache Zookeeper module used by Kafka.
-* feeder.flights.path: The full path that is used to save the data file. 
+1. To build the feeder service (Processing Unit) JAR, run the following:
+   ```sh
+   $ mvn clean package -f ./kafkaFeederPU/pom.xml
+   ```
 
-Build the Feeder pu jar by running:
-
-```sh
-$ mvn clean package -f ./kafkaFeederPU/pom.xml
-```
-Copy the feeder data file from ./data/data.csv to /tmp/data.csv
-
-Use the following command to set up the Kafka producer:
-
-```sh
-$ <InsightEdge_Dir>/bin/gs.sh pu deploy --property=kafka.bootstrapServer=127.0.0.1 --property=feeder.flights.path=/tmp/data.csv feeder ./kafkaFeederPU/target/kafka-pers-feeder.jar
-```
+1. Copy the feeder data file from its location at `./data/data.csv` to `/tmp/data.csv`.
+1. Use the following command to set up the Kafka producer:  
+   ```sh
+   $ <InsightEdge_Dir>/bin/gs.sh pu deploy --property=kafka.bootstrapServer=127.0.0.1 --property=feeder.flights.path=/tmp/data.csv feeder ./kafkaFeederPU/target/kafka-pers-feeder.jar
+   ```
 
 ### Running the Prediction Simulation
 
