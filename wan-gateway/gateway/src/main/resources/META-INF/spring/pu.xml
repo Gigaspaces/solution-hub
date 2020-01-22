@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:os-gateway="http://www.openspaces.org/schema/core/gateway"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.openspaces.org/schema/core/gateway
+       http://www.openspaces.org/schema/15.0/core/gateway/openspaces-gateway.xsd">
+
+
+    <bean id="propertiesConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="properties">
+            <props>
+                <prop key="local-gateway-name">us-south</prop>
+                <prop key="remote-gateway-name">us-east</prop>
+                <prop key="local-spaceUrl">jini://*/*/mySpace</prop>
+                <prop key="local-lookup-host">localhost</prop>
+                <prop key="local-lookup-port">4174</prop>
+                <prop key="local-communication-port">8200</prop>
+                <prop key="remote-lookup-host">localhost</prop>
+                <prop key="remote-lookup-port">4175</prop>
+                <prop key="remote-communication-port">8200</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <os-gateway:delegator id="delegator" local-gateway-name="${local-gateway-name}" gateway-lookups="gatewayLookups" start-embedded-lus="false">
+        <os-gateway:delegation target="${remote-gateway-name}"/>
+    </os-gateway:delegator>
+
+    <os-gateway:sink id="sink" local-gateway-name="${local-gateway-name}" gateway-lookups="gatewayLookups" start-embedded-lus="false"
+                     local-space-url="${local-spaceUrl}">
+        <os-gateway:sources>
+            <os-gateway:source name="${remote-gateway-name}"/>
+        </os-gateway:sources>
+    </os-gateway:sink>
+
+    <os-gateway:lookups id="gatewayLookups">
+        <os-gateway:lookup gateway-name="${local-gateway-name}"  host="${local-lookup-host}"  discovery-port="${local-lookup-port}"  communication-port="${local-communication-port}"/>
+        <os-gateway:lookup gateway-name="${remote-gateway-name}" host="${remote-lookup-host}" discovery-port="${remote-lookup-port}" communication-port="${remote-communication-port}"/>
+    </os-gateway:lookups>
+</beans>
