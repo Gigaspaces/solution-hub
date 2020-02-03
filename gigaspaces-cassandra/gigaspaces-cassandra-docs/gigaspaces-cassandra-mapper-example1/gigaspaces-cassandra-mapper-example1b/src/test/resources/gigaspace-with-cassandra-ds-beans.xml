@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:os-core="http://www.openspaces.org/schema/core"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="
+	                    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	                    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	                    http://www.openspaces.org/schema/core http://www.openspaces.org/schema/15.0/core/openspaces-core.xsd">
+
+	<context:annotation-config />
+	<context:property-placeholder location="classpath:/application.properties"/>
+	<import resource="classpath:cassandra.xml" />
+	<bean id="cassandraResourcePool" class="org.openspaces.persistency.cassandra.pool.CassandraResourcePoolFactoryBean">
+		<property name="cassandraDataSource" ref="cassandraDataSource" ></property>
+		<property name="minimumNumberOfConnections" value="${cassandra.ds.minconnections}" ></property>
+		<property name="maximumNumberOfConnections" value="${cassandra.ds.maxconnections}" ></property>
+	</bean>
+	<bean id="cassandraTypeRepository" class=" org.openspaces.persistency.cassandra.types.CassandraTypeRepositoryFactoryBean">
+		<property name="connectionPool" ref="cassandraResourcePool" ></property>
+		<property name="entitiesPackages">
+			<util:list  list-class="java.util.ArrayList" value-type="java.lang.String">
+				<value>org.openspaces.persistency.cassandra.example1.entities</value>
+			</util:list>
+		</property>
+		<property name="defaultKeyspace" value="inventory"></property>
+	</bean>
+
+	<bean id="cassandraSpaceDataSource" class="org.openspaces.persistency.cassandra.datasource.CassandraSpaceDataSourceFactoryBean">
+		<property name="cassandraTypeRepository" ref="cassandraTypeRepository"></property>
+		<property name="batchLimit" value="${cassandra.ds.batchlimit}" ></property>
+	</bean>
+
+	<bean id="cassandraSpaceSyncEndpoint" class="org.openspaces.persistency.cassandra.CassandraSpaceSynchronizationEndpointFactoryBean">
+		<property name="cassandraTypeRepository" ref="cassandraTypeRepository"></property>
+	</bean>
+
+	<os-core:embedded-space id="space" space-name="dataSourceSpace"
+							space-data-source="cassandraSpaceDataSource"
+							space-sync-endpoint="cassandraSpaceSyncEndpoint">
+		<os-core:properties>
+			<props>
+				<prop key="com.j_spaces.core.container.directory_services.jini_lus.start-embedded-lus">false</prop>
+			</props>
+		</os-core:properties>
+	</os-core:embedded-space>
+	<os-core:giga-space id="gigaSpace" space="space" />
+</beans>
