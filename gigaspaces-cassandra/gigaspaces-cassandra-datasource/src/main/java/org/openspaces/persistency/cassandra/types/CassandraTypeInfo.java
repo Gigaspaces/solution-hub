@@ -207,6 +207,16 @@ public class CassandraTypeInfo {
         session.execute(boundStatementBuilder.build());
     }
 
+
+    public void remove(CqlSession session, Object obj) {
+        if(!obj.getClass().isAssignableFrom(type)){
+            throw new IllegalArgumentException("object "+obj+" not an instance of "+type);
+        }
+        BoundStatementBuilder boundStatementBuilder = boundDeleteStatementBuilder();
+        ((EntityHelperBase)getEntityHelper()).set(type.cast(obj), boundStatementBuilder, NullSavingStrategy.DO_NOT_SET);
+        session.execute(boundStatementBuilder.build());
+    }
+
     private void initAsync(MapperContext context) throws IllegalStateException{
         logger.debug("[{}] Initializing new instance for keyspace = {} and table = {}",
                 context.getSession().getName(),
@@ -261,6 +271,10 @@ public class CassandraTypeInfo {
 
     public BoundStatementBuilder boundSaveStatementBuilder() {
         return saveStatement.boundStatementBuilder();
+    }
+
+    public BoundStatementBuilder boundDeleteStatementBuilder() {
+        return deleteStatement.boundStatementBuilder();
     }
 
 }

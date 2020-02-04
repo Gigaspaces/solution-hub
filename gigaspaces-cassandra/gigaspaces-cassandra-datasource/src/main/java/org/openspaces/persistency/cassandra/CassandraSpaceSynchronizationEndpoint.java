@@ -16,9 +16,6 @@
 package org.openspaces.persistency.cassandra;
 
 import com.datastax.oss.driver.api.core.CqlSession;
-import com.datastax.oss.driver.api.core.cql.BoundStatement;
-import com.datastax.oss.driver.api.core.cql.BoundStatementBuilder;
-import com.datastax.oss.driver.api.mapper.entity.saving.NullSavingStrategy;
 import com.datastax.oss.driver.internal.mapper.entity.EntityHelperBase;
 import com.gigaspaces.sync.*;
 import com.j_spaces.kernel.pool.IResourcePool;
@@ -76,8 +73,16 @@ public class CassandraSpaceSynchronizationEndpoint
                 switch(dataSyncOperation.getDataSyncOperationType()) {
                     case WRITE:
                         cassandraTypeInfo.insert(session, spaceObj);
+                        break;
 
-                        //execute(boundStatement);
+                    case REMOVE:
+                        cassandraTypeInfo.remove(session, spaceObj);
+                        break;
+                    default:
+                    {
+                        throw new IllegalStateException("Unsupported data sync operation type: " +
+                                dataSyncOperation.getDataSyncOperationType());
+                    }
                 }
 /*           String keyName = metadata.getKeyName();
             Object keyValue = spaceDoc.getProperty(keyName);

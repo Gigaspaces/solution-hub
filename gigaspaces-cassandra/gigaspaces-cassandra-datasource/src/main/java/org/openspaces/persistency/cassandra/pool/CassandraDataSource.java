@@ -16,12 +16,19 @@ public class CassandraDataSource {
     private final static Logger logger = LoggerFactory.getLogger(CassandraDataSource.class);
     private final String localDatacenter;
     private final Set<InetSocketAddress> contactPointsLst = new HashSet<>();
+    private final String applicationVersion;
+    private final String applicationName;
+    private final UUID   clientId;
 
-    public CassandraDataSource(){
-        this(null,null);
-    }
-
-    public CassandraDataSource(String localDatacenter,String... contactPoints){
+    public CassandraDataSource(
+            String applicationName,
+            String applicationVersion,
+            UUID   clientId,
+            String localDatacenter,
+            String... contactPoints){
+        this.applicationName=applicationName;
+        this.clientId=clientId;
+        this.applicationVersion=applicationVersion;
         this.localDatacenter=localDatacenter;
         if(contactPoints!=null) {
             for (String contactPoint : contactPoints) {
@@ -74,6 +81,16 @@ public class CassandraDataSource {
         CqlSessionBuilder builder=new CqlSessionBuilder().addContactPoints(contactPointsLst);
         if(this.localDatacenter!=null){
             builder.withLocalDatacenter(this.localDatacenter);
+        }
+        if(this.applicationName!=null){
+            builder.withApplicationName(applicationName);
+        }
+        if(this.applicationVersion!=null){
+            builder.withApplicationName(applicationVersion);
+        }
+        //Todo:check if it is relevant
+        if(this.clientId!=null){
+            builder.withClientId(clientId);
         }
         return builder.build();
     }
