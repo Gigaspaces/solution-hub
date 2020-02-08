@@ -13,8 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>gigaspaces-cassandra-parent</module>
-        <module>gigaspaces-cassandra-mapper-processor</module>
-        <module>gigaspaces-cassandra-mapper-runtime</module>
         <module>gigaspaces-cassandra-datasource</module>
         <module>gigaspaces-cassandra-docs</module>
     </modules>

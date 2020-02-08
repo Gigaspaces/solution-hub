@@ -9,8 +9,6 @@ The project is divided in few modules:
 
 * gigaspaces-cassandra-datasource : This is the main module that define the datasource and mirror for cassandra.
 
-* gigaspaces-cassandra-mapper-processor and gigaspaces-cassandra-mapper-runtime : are extension to cassandra mappers
-
 * [gigaspaces-cassandra-docs](gigaspaces-cassandra-docs/index.md) : This is the place where to start the examples and documentation.
 
 --------------------
