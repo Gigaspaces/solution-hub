@@ -1,0 +1,11 @@
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\Worker.exe.config
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\Worker.exe
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\Worker.pdb
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\GigaSpaces.Core.dll
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\GigaSpaces.NetToJava.dll
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\Model.dll
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\GigaSpaces.Core.xml
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\bin\x64\Debug\Model.pdb
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\obj\x64\Debug\Worker.csprojResolveAssemblyReference.cache
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\obj\x64\Debug\Worker.exe
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Worker\obj\x64\Debug\Worker.pdb

@@ -1,0 +1,45 @@
+8
+
+dir
+1162
+svn://10.10.10.237/development/benchmarks/ExecutorBenchmark/src/META-INF
+svn://10.10.10.237/development
+add
+
+
+2008-09-22T20:55:14.437562Z
+1162
+shay
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+copied
+svn://10.10.10.237/development/benchmarks/ExecutorBenchmark/resources/META-INF
+1162
+
+spring
+dir
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+copied
+

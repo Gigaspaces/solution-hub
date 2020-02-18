@@ -1,0 +1,43 @@
+8
+
+dir
+1162
+svn://10.10.10.237/development/benchmarks/ExecutorBenchmark/src/META-INF/spring
+svn://10.10.10.237/development
+
+
+
+2008-09-22T20:55:14.437562Z
+1162
+shay
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+copied
+
+pu.xml
+file
+
+
+
+
+2009-01-01T17:03:10.044000Z
+f51c3e031f07ebb0b212d363279fceca
+2008-09-22T20:55:14.437562Z
+1162
+shay
+
+
+
+
+
+
+
+
+copied
+

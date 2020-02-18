@@ -1,0 +1,2 @@
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\Debug\Master.exe.config
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\obj\Debug\Master.csprojResolveAssemblyReference.cache

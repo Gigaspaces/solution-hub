@@ -1,0 +1,10 @@
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\Master.exe.config
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\Master.exe
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\Master.pdb
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\GigaSpaces.Core.dll
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\GigaSpaces.NetToJava.dll
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\Model.dll
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\GigaSpaces.Core.xml
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\bin\x64\Debug\Model.pdb
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\obj\x64\Debug\Master.exe
+C:\GigaSpaces\XAP.NET-11.0.0-x64\NET v4.0\Examples\MasterWorker\Master\obj\x64\Debug\Master.pdb

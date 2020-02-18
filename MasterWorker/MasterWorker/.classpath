@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/gigaspaces-xap-premium-7.0.0-ga/lib/required/commons-logging.jar"/>
+	<classpathentry kind="lib" path="D:/gigaspaces-xap-premium-7.0.0-ga/lib/required/gs-openspaces.jar"/>
+	<classpathentry kind="lib" path="D:/gigaspaces-xap-premium-7.0.0-ga/lib/required/gs-runtime.jar"/>
+	<classpathentry kind="lib" path="D:/gigaspaces-xap-premium-7.0.0-ga/lib/required/spring.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="D:/gigaspaces-xap-premium-6.6.2-ga/lib/JSpaces.jar" kind="lib"/>
+	<classpathentry path="D:/gigaspaces-xap-premium-6.6.2-ga/lib/common/commons-logging.jar" kind="lib"/>
+	<classpathentry path="D:/gigaspaces-xap-premium-6.6.2-ga/lib/openspaces/openspaces.jar" kind="lib"/>
+	<classpathentry path="D:/gigaspaces-xap-premium-6.6.2-ga/lib/jini/jsk-lib.jar" kind="lib"/>
+	<classpathentry path="D:/gigaspaces-xap-premium-6.6.2-ga/lib/jini/jsk-platform.jar" kind="lib"/>
+	<classpathentry path="D:/gigaspaces-xap-premium-6.6.2-ga/lib/spring/spring.jar" kind="lib"/>
+	<classpathentry path="classes" kind="output"/>
+</classpath>
