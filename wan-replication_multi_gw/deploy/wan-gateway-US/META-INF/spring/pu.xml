@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:os-gateway="http://www.openspaces.org/schema/core/gateway"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.openspaces.org/schema/core/gateway
+       http://www.openspaces.org/schema/10.0/core/gateway/openspaces-gateway.xsd">
+
+    <os-gateway:delegator id="delegator" local-gateway-name="US${clusterInfo.instanceId}" gateway-lookups="gatewayLookups">
+        <os-gateway:delegation target="GB${clusterInfo.instanceId}" />
+    </os-gateway:delegator>
+
+    <os-gateway:lookups id="gatewayLookups">
+        <os-gateway:lookup gateway-name="US1" host="localhost" discovery-port="10769" communication-port="9000"/>
+        <os-gateway:lookup gateway-name="GB1" host="localhost" discovery-port="10768" communication-port="8000"/>
+        <os-gateway:lookup gateway-name="US2" host="localhost" discovery-port="10767" communication-port="7000"/>
+        <os-gateway:lookup gateway-name="GB2" host="localhost" discovery-port="10766" communication-port="6000"/>
+    </os-gateway:lookups>
+
+</beans>
+
+
