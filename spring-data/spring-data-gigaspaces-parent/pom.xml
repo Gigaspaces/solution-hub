@@ -27,7 +27,7 @@
 
         <!-- dependencies version-->
         <spring-data-release.version>Moore-SR3</spring-data-release.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
         <querydsl.version>4.2.1</querydsl.version>
         <openjpa.version>2.2.2</openjpa.version><!--latest 3.1.0 ia not compatible-->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
