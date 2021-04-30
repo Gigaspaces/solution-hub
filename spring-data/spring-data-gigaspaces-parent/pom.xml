@@ -32,7 +32,7 @@
         <openjpa.version>2.2.2</openjpa.version><!--latest 3.1.0 ia not compatible-->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
 
-        <spring.version>5.2.2.RELEASE</spring.version><!--was 5.1.7.RELEASE in gs-->
+        <spring.version>5.3.6</spring.version><!--was 5.1.7.RELEASE in gs-->
         <!-- project configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
