@@ -27,7 +27,7 @@
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <gsVersion>15.0.0</gsVersion>
         <cassandra.driver.version>4.4.0</cassandra.driver.version>
-        <cassandra.version>3.11.5</cassandra.version>
+        <cassandra.version>3.11.10</cassandra.version>
         <slf4j.version>1.7.30</slf4j.version>
         <spring.version>5.1.7.RELEASE</spring.version>
         <!-- test dependencies -->
