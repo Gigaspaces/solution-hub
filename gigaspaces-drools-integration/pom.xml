@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gigaspaces.version>10.0.1-ga</gigaspaces.version>
-        <spring.version>3.2.4.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
         <drools.version>5.6.0.Final</drools.version>
 	</properties>
 	<modules>
